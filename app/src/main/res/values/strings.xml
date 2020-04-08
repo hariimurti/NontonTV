@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Nonton TV</string>
+
+    <string name="something_went_wrong">Ada sesuatu yang salah!!!</string>
+    <string name="source_offline">Siaran tidak dapat diakses!!!</string>
+    <string name="retry">akan dicoba ulang otomatis dalam 5</string>
+    <string name="retry_time">akan dicoba ulang otomatis dalam %d</string>
+    <string name="no_network">Tidak ada koneksi internet!!!</string>
+
+    <string name="api_channel">https://github.com/hariimurti/NontonTV/raw/master/json/playlist.json</string>
+</resources>

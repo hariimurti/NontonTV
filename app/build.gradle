@@ -1,0 +1,80 @@
+apply plugin: 'com.android.application'
+
+android {
+    def versionPropsFile = file('version.prop')
+    Properties versionProps = new Properties()
+    if (versionPropsFile.exists())
+        versionProps.load(new FileInputStream(versionPropsFile))
+
+    def _versionCode = (versionProps['VERSION_CODE'] ?: "0").toInteger()
+    def _major = (versionProps['VERSION_MAJOR'] ?: "1").toInteger()
+    def _minor = (versionProps['VERSION_MINOR'] ?: "-1").toInteger()
+
+    List<String> runTasks = gradle.startParameter.getTaskNames()
+    for (String item : runTasks) {
+        if (item.contains("assembleDebug") || item.contains("assembleRelease")) {
+            _versionCode = _versionCode + 1
+        }
+        if (item.contains("assembleRelease")) {
+            _minor = _minor + 1
+        }
+    }
+
+    if (_minor >= 100) {
+        _minor = 0
+        _major = _major + 1
+    }
+
+    versionProps['VERSION_CODE'] = _versionCode.toString()
+    versionProps['VERSION_MAJOR'] = _major.toString()
+    versionProps['VERSION_MINOR'] = _minor.toString()
+    versionProps.store(versionPropsFile.newWriter(), null)
+
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        applicationId "net.harimurti.tv"
+        minSdkVersion 19
+        targetSdkVersion 29
+        versionCode _versionCode
+        versionName "${_major}.${_minor}"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            applicationVariants.all { variant ->
+                variant.outputs.all {
+                    outputFileName = "${defaultConfig.applicationId}_v${defaultConfig.versionName}_b${defaultConfig.versionCode}.apk"
+                }
+            }
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'androidx.recyclerview:recyclerview:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+    implementation 'com.google.android.exoplayer:exoplayer:2.11.3'
+    //noinspection GradleDependency
+    implementation 'com.squareup.okhttp3:okhttp:3.12.2'
+    implementation 'com.google.code.gson:gson:2.8.6'
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
