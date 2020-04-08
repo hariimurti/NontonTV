@@ -4,7 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
-import net.harimurti.tv.MainFragment;
+import net.harimurti.tv.GridViewFragment;
 import net.harimurti.tv.data.Category;
 import net.harimurti.tv.data.Channel;
 import net.harimurti.tv.data.Playlist;
@@ -24,13 +24,12 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
 
     @Override
     public Fragment createFragment(int position) {
-        int cid = categories.get(position).id;
         ArrayList<Channel> contents = new ArrayList<>();
         for (Channel channel : channels) {
-            if (channel.cid == cid)
+            if (channel.cid == categories.get(position).id)
                 contents.add(channel);
         }
-        return MainFragment.newInstance(contents);
+        return GridViewFragment.newFragment(contents);
     }
 
     @Override

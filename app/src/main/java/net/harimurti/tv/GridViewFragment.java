@@ -16,35 +16,31 @@ import net.harimurti.tv.data.Channel;
 
 import java.util.ArrayList;
 
-@SuppressWarnings("unchecked")
-public class MainFragment extends Fragment {
+public class GridViewFragment extends Fragment {
     private static final String CHANNELS = "channels";
-    private ArrayList<Channel> channels;
+    private ArrayList<Channel> channels = new ArrayList<>();
 
-    public static MainFragment newInstance(ArrayList<Channel> arrayList) {
+    public static GridViewFragment newFragment(ArrayList<Channel> arrayList) {
         Bundle args = new Bundle();
-        args.putSerializable(CHANNELS, arrayList);
-
-        MainFragment fragment = new MainFragment();
+        args.putParcelableArrayList(CHANNELS, arrayList);
+        GridViewFragment fragment = new GridViewFragment();
         fragment.setArguments(args);
         return fragment;
     }
 
-    public MainFragment() {}
+    public GridViewFragment() {}
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            channels = (ArrayList<Channel>)getArguments().getSerializable(CHANNELS);
-        } else {
-            channels = new ArrayList<>();
+            channels = getArguments().getParcelableArrayList(CHANNELS);
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle bundle) {
-        return inflater.inflate(R.layout.fragment_main, container, false);
+        return inflater.inflate(R.layout.fragment_gridview, container, false);
     }
 
     @Override public void onViewCreated(@NonNull View view, @Nullable Bundle bundle) {
