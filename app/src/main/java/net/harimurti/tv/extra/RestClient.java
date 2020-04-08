@@ -1,7 +1,6 @@
 package net.harimurti.tv.extra;
 
 import android.content.Context;
-import android.os.Handler;
 import android.util.Log;
 
 import com.google.gson.Gson;
@@ -35,17 +34,13 @@ public class RestClient {
         return this;
     }
 
-    private void runOnUiThread(Runnable task) {
-        new Handler(context.getMainLooper()).post(task);
-    }
-
     public RestClient(Context context){
         this.context = context;
     }
 
     @SuppressWarnings("all")
     public void GetChannels() {
-        runOnUiThread(()-> onClientResult.onProgress(true));
+        onClientResult.onProgress(true);
         Request request = new Request.Builder()
                 .url(context.getString(R.string.api_channel))
                 .build();
@@ -53,10 +48,8 @@ public class RestClient {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.e(TAG, e.getMessage());
-                runOnUiThread(() -> {
-                    onClientResult.onFailure(e.getMessage());
-                    onClientResult.onProgress(false);
-                });
+                onClientResult.onFailure(e.getMessage());
+                onClientResult.onProgress(false);
             }
 
             @Override
@@ -65,16 +58,14 @@ public class RestClient {
                     // convert json to channel
                     Playlist playlist = new Gson().fromJson(response.body().string(), Playlist.class);
 
-                    runOnUiThread(() -> {
-                        onClientResult.onSuccess(playlist);
-                    });
+                    onClientResult.onSuccess(playlist);
                 }
                 catch (Exception e) {
                     Log.e(TAG, e.getMessage());
-                    runOnUiThread(() -> onClientResult.onFailure(e.getMessage()));
+                    onClientResult.onFailure(e.getMessage());
                 }
                 finally {
-                    runOnUiThread(() -> onClientResult.onProgress(false));
+                    onClientResult.onProgress(false);
                 }
             }
         });

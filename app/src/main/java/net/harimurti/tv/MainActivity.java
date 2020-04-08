@@ -19,9 +19,6 @@ import net.harimurti.tv.extra.RestClient;
 import net.harimurti.tv.extra.RestClient.OnClientResult;
 
 public class MainActivity extends AppCompatActivity {
-    private TabLayout tabLayout;
-    private ViewPager2 viewPager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         FragmentActivity fa = this;
 
         // define some view
-        tabLayout = findViewById(R.id.tab_layout);
-        viewPager = findViewById(R.id.view_pager);
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        ViewPager2 viewPager = findViewById(R.id.view_pager);
         RelativeLayout layoutMessage = findViewById(R.id.layout_status);
         SpinKitView spinKit = findViewById(R.id.spin_kit);
         TextView textMessage = findViewById(R.id.text_status);
@@ -40,25 +37,31 @@ public class MainActivity extends AppCompatActivity {
         client.setOnClientResult(new OnClientResult() {
             @Override
             public void onFailure(String status) {
-                layoutMessage.setVisibility(View.VISIBLE);
-                spinKit.setVisibility(View.INVISIBLE);
-                textMessage.setVisibility(View.VISIBLE);
-                textMessage.setText(status);
+                runOnUiThread(() -> {
+                    layoutMessage.setVisibility(View.VISIBLE);
+                    spinKit.setVisibility(View.INVISIBLE);
+                    textMessage.setVisibility(View.VISIBLE);
+                    textMessage.setText(status);
+                });
             }
 
             @Override
             public void onProgress(boolean status) {
-                layoutMessage.setVisibility(status ? View.VISIBLE : View.GONE);
-                spinKit.setVisibility(View.VISIBLE);
-                textMessage.setVisibility(View.GONE);
+                runOnUiThread(() -> {
+                    layoutMessage.setVisibility(status ? View.VISIBLE : View.GONE);
+                    spinKit.setVisibility(View.VISIBLE);
+                    textMessage.setVisibility(View.GONE);
+                });
             }
 
             @Override
             public void onSuccess(Playlist playlist) {
-                viewPager.setAdapter(new ViewPagerAdapter(fa, playlist));
-                new TabLayoutMediator(
-                        tabLayout, viewPager, (tab, i) -> tab.setText(playlist.categories.get(i).name)
-                ).attach();
+                runOnUiThread(() -> {
+                    viewPager.setAdapter(new ViewPagerAdapter(fa, playlist));
+                    new TabLayoutMediator(
+                            tabLayout, viewPager, (tab, i) -> tab.setText(playlist.categories.get(i).name)
+                    ).attach();
+                });
             }
         }).GetChannels();
     }
