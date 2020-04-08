@@ -30,26 +30,44 @@
         android:background="@color/color_dark_transparent"
         android:visibility="gone">
 
+        <LinearLayout
+            android:id="@+id/layout_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/text_status"
+                style="@style/TextAppearance.AppCompat.Large"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/something_went_wrong"
+                android:textAlignment="center"
+                android:textColor="@color/color_text"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/text_retry"
+                style="@style/TextAppearance.AppCompat.Medium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="@string/retry"
+                android:textAlignment="center"
+                android:textColor="@color/color_text"
+                android:textStyle="italic" />
+
+        </LinearLayout>
+
         <com.github.ybq.android.spinkit.SpinKitView
-            android:id="@+id/spin_kit"
+            android:id="@+id/layout_spin"
             style="@style/SpinKitView.Large.FadingCircle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_gravity="center"
             app:SpinKit_Color="@color/color_red_light" />
-
-        <TextView
-            android:id="@+id/text_status"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:paddingStart="50dp"
-            android:paddingEnd="50dp"
-            android:text="@string/something_went_wrong"
-            android:textAlignment="center"
-            android:visibility="gone" />
 
     </RelativeLayout>
 
