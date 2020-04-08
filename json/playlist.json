@@ -18,7 +18,7 @@
     },
     {
       "id": 4,
-      "name": "Pengetahuan"
+      "name": "Edukasi"
     },
     {
       "id": 5,
@@ -166,6 +166,11 @@
       "stream_url": "http://203.153.218.28:9981/stream/channelid/756717990?ticket=397900FDAB149520DA6CD0E3E8F82F901132A27B&profile=pass"
     },
     {
+      "cid": 6,
+      "name": "Fox Sports News",
+      "stream_url": "https://austchannel-live.akamaized.net/hls/live/2002736/austchannel-sport/master1280x720.m3u8"
+    },
+    {
       "cid": 0,
       "name": "GTV",
       "stream_url": "https://linier.akamaized.net/live/eds/GTV_Logo/sa_hls/GTV_Logo-1000000=3-64000=2.m3u8"
@@ -199,11 +204,6 @@
       "cid": 5,
       "name": "I AM CHANNEL",
       "stream_url": "http://iamchannel.org:1935/tes/1/chunklist.m3u8"
-    },
-    {
-      "cid": 5,
-      "name": "IKIM TV",
-      "stream_url": "http://edge.vediostream.com/abr/tvikim/live/tvikim_480p/chunks.m3u8"
     },
     {
       "cid": 0,
@@ -262,8 +262,23 @@
     },
     {
       "cid": 2,
+      "name": "Movie Kingdom",
+      "stream_url": "https://a.jsrdn.com/broadcast/e9b4093a41/+0000/high/c.m3u8"
+    },
+    {
+      "cid": 2,
       "name": "Movies Now",
       "stream_url": "https://timesnow.airtel.tv/live/MN_pull/chunklist_3.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "MTV",
+      "stream_url": "http://unilivemtveu-lh.akamaihd.net/i/mtvno_1@346424/master.m3u8?fluxustv.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Music Now",
+      "stream_url": "http://livecdnh1.tvanywhere.ae/hls/music_now/index.m3u8"
     },
     {
       "cid": 2,
@@ -376,6 +391,11 @@
       "stream_url": "http://stream.spacetoon.com:1935/live/stchannel/smil:livesmil.smil/playlist.m3u8"
     },
     {
+      "cid": 2,
+      "name": "Star Movies",
+      "stream_url": "http://livecdnh1.tvanywhere.ae/hls/star_movies/index.m3u8"
+    },
+    {
       "cid": 5,
       "name": "Tahfidz TV",
       "stream_url": "http://119.235.249.58:1935/tahfidztv/live/playlist.m3u8"
@@ -404,6 +424,11 @@
       "cid": 0,
       "name": "Trans TV",
       "stream_url": "https://video.detik.com/transtv/smil:transtv.smil/playlist.m3u8"
+    },
+    {
+      "cid": 5,
+      "name": "TV Ikim",
+      "stream_url": "http://edge.vediostream.com/abr/tvikim/live/tvikim_480p/chunks.m3u8"
     },
     {
       "cid": 1,
