@@ -11,10 +11,9 @@ import net.harimurti.tv.data.Playlist;
 
 import java.util.ArrayList;
 
-@SuppressWarnings("all")
 public class ViewPagerAdapter extends FragmentStateAdapter {
-    private static ArrayList<Category> categories;
-    private static ArrayList<Channel> channels;
+    private ArrayList<Category> categories;
+    private ArrayList<Channel> channels;
 
     public ViewPagerAdapter(FragmentActivity activity, Playlist playlist) {
         super(activity);
@@ -22,6 +21,7 @@ public class ViewPagerAdapter extends FragmentStateAdapter {
         this.channels = playlist.channels;
     }
 
+    @SuppressWarnings("all")
     @Override
     public Fragment createFragment(int position) {
         ArrayList<Channel> contents = new ArrayList<>();

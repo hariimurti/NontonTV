@@ -70,10 +70,9 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.1.0'
     implementation 'com.google.android.material:material:1.1.0'
     implementation 'com.google.android.exoplayer:exoplayer:2.11.3'
-    //noinspection GradleDependency
-    implementation 'com.squareup.okhttp3:okhttp:3.12.2'
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
+    implementation 'com.android.volley:volley:1.1.1'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'

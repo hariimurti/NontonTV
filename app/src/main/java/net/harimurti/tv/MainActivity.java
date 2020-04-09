@@ -1,33 +1,46 @@
 package net.harimurti.tv;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.os.Build;
+import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.BaseHttpStack;
+import com.android.volley.toolbox.HurlStack;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 
 import net.harimurti.tv.adapter.ViewPagerAdapter;
 import net.harimurti.tv.data.Playlist;
 import net.harimurti.tv.extra.AsyncSleep;
 import net.harimurti.tv.extra.Network;
-import net.harimurti.tv.extra.RestClient;
-import net.harimurti.tv.extra.RestClient.OnClientResult;
+import net.harimurti.tv.extra.TLSSocketFactory;
+
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
-    private RestClient client;
     private View layoutStatus, layoutSpin, layoutText;
     private TextView tvStatus, tvRetry;
+
+    private StringRequest request;
+    private RequestQueue volley;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        FragmentActivity fa = this;
 
         // define some view
         TabLayout tabLayout = findViewById(R.id.tab_layout);
@@ -38,58 +51,32 @@ public class MainActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.text_status);
         tvRetry = findViewById(R.id.text_retry);
 
-        // create client & set listener -> getchannels
-        client = new RestClient(this);
-        client.setOnClientResult(new OnClientResult() {
-            @Override
-            public void onFailure(String status) {
-                runOnUiThread(() -> {
-                    ShowLayoutMessage(View.VISIBLE, true);
-                    tvStatus.setText(status);
+        request = new StringRequest(Request.Method.GET,
+                getString(R.string.json_playlist),
+                response -> {
+                    try {
+                        Playlist playlist = new Gson().fromJson(response, Playlist.class);
+                        viewPager.setAdapter(new ViewPagerAdapter(this, playlist));
+                        new TabLayoutMediator(
+                                tabLayout, viewPager, (tab, i) -> tab.setText(playlist.categories.get(i).name)
+                        ).attach();
+                        ShowLayoutMessage(View.GONE, false);
+                    } catch (JsonSyntaxException error) {
+                        ShowErrorMessage(error.getMessage(), false);
+                    }
+                },
+                error -> ShowErrorMessage(error.getMessage(), true));
 
-                    // try fetching later
-                    RetryGetChannels();
-                });
+        BaseHttpStack stack = new HurlStack();
+        if (Build.VERSION.SDK_INT == VERSION_CODES.KITKAT) {
+            try {
+                stack = new HurlStack(null, new TLSSocketFactory());
+            } catch (KeyManagementException | NoSuchAlgorithmException e) {
+                Log.e("Volley", "Could not create new stack for TLS v1.2");
             }
-
-            @Override
-            public void onProgress(boolean status) {
-                runOnUiThread(() -> {
-                    ShowLayoutMessage(status ? View.VISIBLE : View.GONE, false);
-                });
-            }
-
-            @Override
-            public void onSuccess(Playlist playlist) {
-                runOnUiThread(() -> {
-                    viewPager.setAdapter(new ViewPagerAdapter(fa, playlist));
-                    new TabLayoutMediator(
-                            tabLayout, viewPager, (tab, i) -> tab.setText(playlist.categories.get(i).name)
-                    ).attach();
-                });
-            }
-        });
-        client.GetChannels();
-    }
-
-    private void RetryGetChannels() {
-        Network network = new Network(this);
-        new AsyncSleep(this).task(new AsyncSleep.Task() {
-            @Override
-            public void onCountDown(int left) {
-                if (!network.IsConnected())
-                    tvStatus.setText(getString(R.string.no_network));
-
-                tvRetry.setText(String.format(getString(R.string.retry_time), left));
-            }
-            @Override
-            public void onFinish() {
-                if (network.IsConnected())
-                    client.GetChannels();
-                else
-                    RetryGetChannels();
-            }
-        }).start(5);
+        }
+        volley = Volley.newRequestQueue(this, stack);
+        volley.add(request);
     }
 
     private void ShowLayoutMessage(int visibility, boolean isMessage) {
@@ -101,6 +88,39 @@ public class MainActivity extends AppCompatActivity {
             layoutSpin.setVisibility(View.GONE);
             layoutText.setVisibility(View.VISIBLE);
         }
+    }
+
+    private void ShowErrorMessage(String error, boolean retry) {
+        tvStatus.setText(error);
+        tvRetry.setText(R.string.text_auto_retry);
+        ShowLayoutMessage(View.VISIBLE, true);
+
+        if (!retry) return;
+
+        Network network = new Network(this);
+        new AsyncSleep(this).task(new AsyncSleep.Task() {
+            @Override
+            public void onCountDown(int left) {
+                if (!network.IsConnected()) {
+                    tvStatus.setText(R.string.no_network);
+                }
+                if (left == 0) {
+                    tvRetry.setText(R.string.text_auto_retry_now);
+                }
+                else {
+                    tvRetry.setText(String.format(getString(R.string.text_auto_retry_second), left));
+                }
+            }
+            @Override
+            public void onFinish() {
+                if (network.IsConnected()) {
+                    volley.add(request);
+                }
+                else {
+                    ShowErrorMessage(getString(R.string.no_network), true);
+                }
+            }
+        }).start(5);
     }
 
     @Override

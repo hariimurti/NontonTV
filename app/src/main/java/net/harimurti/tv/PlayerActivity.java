@@ -2,7 +2,6 @@ package net.harimurti.tv;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -32,7 +31,6 @@ public class PlayerActivity extends AppCompatActivity {
     private View layoutStatus, layoutSpin, layoutText;
     private TextView tvStatus, tvRetry;
 
-    @SuppressLint("all")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +79,7 @@ public class PlayerActivity extends AppCompatActivity {
                 if (playbackState == Player.STATE_IDLE || playbackState == Player.STATE_ENDED) {
                     ShowLayoutMessage(View.VISIBLE, true);
                     tvStatus.setText(R.string.source_offline);
-                    tvRetry.setText(R.string.retry);
+                    tvRetry.setText(R.string.text_auto_retry);
                     RetryPlaying();
                 }
             }
@@ -91,7 +89,7 @@ public class PlayerActivity extends AppCompatActivity {
                 ShowLayoutMessage(View.VISIBLE, true);
                 if (error.type == ExoPlaybackException.TYPE_SOURCE) {
                     tvStatus.setText(R.string.source_offline);
-                    tvRetry.setText(R.string.retry);
+                    tvRetry.setText(R.string.text_auto_retry);
                     tvRetry.setVisibility(View.VISIBLE);
                     RetryPlaying();
                 } else {
@@ -128,17 +126,24 @@ public class PlayerActivity extends AppCompatActivity {
         new AsyncSleep(this).task(new AsyncSleep.Task() {
             @Override
             public void onCountDown(int left) {
-                if (!network.IsConnected())
-                    tvStatus.setText(getString(R.string.no_network));
-
-                tvRetry.setText(String.format(getString(R.string.retry_time), left));
+                if (!network.IsConnected()) {
+                    tvStatus.setText(R.string.no_network);
+                }
+                if (left == 0) {
+                    tvRetry.setText(R.string.text_auto_retry_now);
+                }
+                else {
+                    tvRetry.setText(String.format(getString(R.string.text_auto_retry_second), left));
+                }
             }
             @Override
             public void onFinish() {
-                if (network.IsConnected())
+                if (network.IsConnected()) {
                     player.prepare(mediaSource);
-                else
+                }
+                else {
                     RetryPlaying();
+                }
             }
         }).start(5);
     }

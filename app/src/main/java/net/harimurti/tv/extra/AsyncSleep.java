@@ -3,7 +3,6 @@ package net.harimurti.tv.extra;
 import android.content.Context;
 import android.os.Handler;
 
-@SuppressWarnings("all")
 public class AsyncSleep {
     private Task task = null;
     private Context context;
@@ -28,10 +27,12 @@ public class AsyncSleep {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (left == 0)
-                        runOnUiThread(()->task.onFinish());
-                    else
-                        runOnUiThread(()->task.onCountDown(left));
+                    runOnUiThread(()-> {
+                        task.onCountDown(left);
+                        if (left == 0) {
+                            task.onFinish();
+                        }
+                    });
                 }
             }, i * 1000);
         }
