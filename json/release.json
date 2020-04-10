@@ -1,6 +1,6 @@
 {
-    "versionCode": 327,
-    "versionName": "v1.0",
-    "changelog": ["rilisan pertama", "upto 87 channel"],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.0/net.harimurti.tv_v1.0_b327.apk"
+    "versionCode": 384,
+    "versionName": "v1.1",
+    "changelog": ["perbaikan ssl error (android 4.4)", "pemberitahuan pembaharuan", "perubahan lain"],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.1/net.harimurti.tv_v1.1_b384.apk"
 }

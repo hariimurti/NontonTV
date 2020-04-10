@@ -1,8 +1,12 @@
 package net.harimurti.tv;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.annotation.SuppressLint;
+import android.app.DownloadManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
@@ -23,8 +27,10 @@ import com.google.gson.JsonSyntaxException;
 
 import net.harimurti.tv.adapter.ViewPagerAdapter;
 import net.harimurti.tv.data.Playlist;
+import net.harimurti.tv.data.Release;
 import net.harimurti.tv.extra.AsyncSleep;
 import net.harimurti.tv.extra.Network;
+import net.harimurti.tv.extra.Preferences;
 import net.harimurti.tv.extra.TLSSocketFactory;
 
 import java.security.KeyManagementException;
@@ -34,13 +40,16 @@ public class MainActivity extends AppCompatActivity {
     private View layoutStatus, layoutSpin, layoutText;
     private TextView tvStatus, tvRetry;
 
-    private StringRequest request;
+    private StringRequest playlist;
     private RequestQueue volley;
 
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Preferences preferences = new Preferences();
 
         // define some view
         TabLayout tabLayout = findViewById(R.id.tab_layout);
@@ -51,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.text_status);
         tvRetry = findViewById(R.id.text_retry);
 
-        request = new StringRequest(Request.Method.GET,
+        playlist = new StringRequest(Request.Method.GET,
                 getString(R.string.json_playlist),
                 response -> {
                     try {
@@ -67,16 +76,49 @@ public class MainActivity extends AppCompatActivity {
                 },
                 error -> ShowErrorMessage(error.getMessage(), true));
 
+        StringRequest update = new StringRequest(Request.Method.GET,
+                getString(R.string.json_release),
+                response -> {
+                    try {
+                        Release release = new Gson().fromJson(response, Release.class);
+                        preferences.setLastCheckUpdate();
+
+                        if (release.versionCode <= BuildConfig.VERSION_CODE) return;
+
+                        StringBuilder message = new StringBuilder(
+                                String.format(getString(R.string.message_update),
+                                        BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE,
+                                        release.versionName, release.versionCode));
+                        for (String log : release.changelog) {
+                            message.append(String.format(getString(R.string.message_update_changelog), log));
+                        }
+                        if (release.changelog.size() == 0) {
+                            message.append(getString(R.string.message_update_no_changelog));
+                        }
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setTitle(R.string.alert_new_update);
+                        builder.setMessage(message.toString())
+                                .setPositiveButton(R.string.alert_download, (dialog, id) ->
+                                        DownloadFile(release.downloadUrl))
+                                .setNegativeButton(R.string.alert_close, (dialog, id) ->
+                                        dialog.cancel());
+                        builder.create().show();
+                    } catch (Exception ignore) {}
+                }, null);
+
         BaseHttpStack stack = new HurlStack();
         if (Build.VERSION.SDK_INT == VERSION_CODES.KITKAT) {
             try {
                 stack = new HurlStack(null, new TLSSocketFactory());
             } catch (KeyManagementException | NoSuchAlgorithmException e) {
-                Log.e("Volley", "Could not create new stack for TLS v1.2");
+                Log.e("HttpStack", "Could not create new stack for TLS v1.2");
             }
         }
         volley = Volley.newRequestQueue(this, stack);
-        volley.add(request);
+        volley.add(playlist);
+        if (!preferences.isCheckedUpdate()) {
+            volley.add(update);
+        }
     }
 
     private void ShowLayoutMessage(int visibility, boolean isMessage) {
@@ -114,13 +156,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if (network.IsConnected()) {
-                    volley.add(request);
+                    volley.add(playlist);
                 }
                 else {
                     ShowErrorMessage(getString(R.string.no_network), true);
                 }
             }
         }).start(5);
+    }
+
+    private void DownloadFile(String url) {
+        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
+        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
+        DownloadManager manager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+        if (manager != null) {
+            manager.enqueue(request);
+        }
     }
 
     @Override
