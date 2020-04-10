@@ -42,6 +42,11 @@
     },
     {
       "cid": 5,
+      "name": "Al Quran Al Kareem TV",
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586504534~acl=/hls-p/ingest_6852_*/*~hmac=3c1a5f09fde6cafe9bed159876b234f74c21203e626a3afa2d853e6e89e9c983/hls-p/ingest_6852_720p/index.m3u8"
+    },
+    {
+      "cid": 5,
       "name": "Aljazeera English",
       "stream_url": "https://live-hls-web-aje.getaj.net/AJE/index.m3u8"
     },
@@ -82,7 +87,7 @@
     },
     {
       "cid": 1,
-      "name": "Berita Satu",
+      "name": "BeritaSatu",
       "stream_url": "http://edge.linknetott.swiftserve.com/live/BsNew/amlst:beritasatunewsbs/playlist.m3u8"
     },
     {
@@ -101,6 +106,11 @@
       "stream_url": "http://210.210.155.35/qwr9ew/s/s33/index.m3u8"
     },
     {
+      "cid": 1,
+      "name": "Channel News Asia",
+      "stream_url": "https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8"
+    },
+    {
       "cid": 2,
       "name": "Cinema World",
       "stream_url": "http://210.210.155.35/uq2663/h/h04/index2.m3u8"
@@ -117,18 +127,18 @@
     },
     {
       "cid": 1,
-      "name": "CNA",
-      "stream_url": "https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8"
-    },
-    {
-      "cid": 1,
-      "name": "CNBC",
+      "name": "CNBC Indonesia",
       "stream_url": "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil/playlist.m3u8"
     },
     {
       "cid": 1,
-      "name": "CNN",
+      "name": "CNN Indonesia",
       "stream_url": "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil/playlist.m3u8"
+    },
+    {
+      "cid": 5,
+      "name": "DAAI TV",
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586503752~acl=/hls-p/ingest_6482_*/*~hmac=f886d6de1f7cbb7d5f9733d21bb72c3b5a3f28ec249ecba1a16ec1eb42be39e2/hls-p/ingest_6482_720p/index.m3u8"
     },
     {
       "cid": 4,
@@ -144,6 +154,11 @@
       "cid": 3,
       "name": "Disney Junior Asia",
       "stream_url": "http://103.47.132.164/PLTV/88888888/224/3221226011/index.m3u8"
+    },
+    {
+      "cid": 1,
+      "name": "DW English",
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586505087~acl=/hls-p/ingest_5075_*/*~hmac=898bd805af1203707e75b98ffdf97082558c9c90cbb82a3574f31432d595bb53/hls-p/ingest_5075_720p/index.m3u8"
     },
     {
       "cid": 5,
@@ -208,7 +223,7 @@
     {
       "cid": 0,
       "name": "Indosiar",
-      "stream_url": "https://delivery.macan.live/stream/id_indosiar/index.m3u8?token=gratisan"
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586503580~acl=/hls-p/ingest_205_*/*~hmac=237bd3053ab41d40c3e8fe8e182325696ab4e149d6e75882dd347a594ca7ebd5/hls-p/ingest_205_720p/index.m3u8"
     },
     {
       "cid": 1,
@@ -219,6 +234,11 @@
       "cid": 5,
       "name": "Insan TV",
       "stream_url": "http://wz.insantv.net/group/ngrp:insantv_mobile/playlist.m3u8"
+    },
+    {
+      "cid": 0,
+      "name": "JakTV",
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586504080~acl=/hls-p/ingest_5415_*/*~hmac=80ffe5513136aa45bf9ead7b031433310433ee13fe5be88c537c6134d87745e1/hls-p/ingest_5415_720p/index.m3u8"
     },
     {
       "cid": 1,
@@ -261,6 +281,11 @@
       "stream_url": "https://livetvhooq.akamaized.net/3127bcd58c9149b298b664b1ec828285/ap-southeast-1/5493668622001/profile_0/chunklist.m3u8?hdnts=st=1536005897~exp=9007200790746888~acl=/3127bcd58c9149b298b664b1ec828285/*/profile_0/chunklist.m3u8*~hmac=99928fa4d986fe186b165d47ed653d126327c06e772b228dbf2b4387beda9502"
     },
     {
+      "cid": 6,
+      "name": "Mola Sports",
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586504973~acl=/hls-p/ingest_geo_6840_*/*~hmac=5ed2ade94c65e63fd8001170c8c184a1cec503d7f0e2e945ac7a78343fc5bf68/hls-p/ingest_geo_6840_720p/index.m3u8"
+    },
+    {
       "cid": 2,
       "name": "Movie Kingdom",
       "stream_url": "https://a.jsrdn.com/broadcast/e9b4093a41/+0000/high/c.m3u8"
@@ -286,6 +311,11 @@
       "stream_url": "http://live-edge01.telecentro.net.ar/live/smil:musictop.smil/playlist.m3u8"
     },
     {
+      "cid": 0,
+      "name": "MyTV",
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586504187~acl=/hls-p/ingest_6711_*/*~hmac=0ac7e331cbb04b553e2c7f72c24c95339e96cd5cb2f26c844f8619deb1685976/hls-p/ingest_6711_720p/index.m3u8"
+    },
+    {
       "cid": 5,
       "name": "Nabawi TV",
       "stream_url": "http://stream2.ninmedia.tv/nabawitv/nabawitv_360p/playlist.m3u8"
@@ -307,13 +337,18 @@
     },
     {
       "cid": 0,
-      "name": "NET TV",
-      "stream_url": "http://210.210.155.35/qwr9ew/s/s08/01.m3u8"
+      "name": "NET. TV",
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586505958~acl=/hls-p/ingest_875_*/*~hmac=cbcdd69209feaf30fb4e1e082f810543df6acb52b5102d1ab8d8ae32df565479/hls-p/ingest_875_720p/index.m3u8"
     },
     {
       "cid": 2,
       "name": "NHK World",
       "stream_url": "http://210.210.155.66/h/h23/02.m3u8"
+    },
+    {
+      "cid": 1,
+      "name": "O Channel TV",
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586503916~acl=/hls-p/ingest_206_*/*~hmac=9c973cff2ab60721fe48f2839556568fce7f833d6b6a4a1b68a90062111cbd67/hls-p/ingest_206_720p/index.m3u8"
     },
     {
       "cid": 0,
@@ -426,6 +461,11 @@
       "stream_url": "https://video.detik.com/transtv/smil:transtv.smil/playlist.m3u8"
     },
     {
+      "cid": 4,
+      "name": "TV Edukasi",
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586505166~acl=/hls-p/ingest_6838_*/*~hmac=bac4fcdf36b4b45fc20281f9adfa13add4c2c7f036efa475de720baca148177a/hls-p/ingest_6838_720p/index.m3u8"
+    },
+    {
       "cid": 5,
       "name": "TV Ikim",
       "stream_url": "http://edge.vediostream.com/abr/tvikim/live/tvikim_480p/chunks.m3u8"
@@ -479,6 +519,11 @@
       "cid": 1,
       "name": "TVRI Yogyakarta",
       "stream_url": "http://118.97.50.107/Content/HLS/Live/Channel(TVRIYOGYAKARTA)/index.m3u8"
+    },
+    {
+      "cid": 5,
+      "name": "U-Channel TV",
+      "stream_url": "https://etslive-2-vidio-com.akamaized.net/exp=1586504662~acl=/hls-p/ingest_6898_*/*~hmac=4ffc564b275c370f81b6afd918ed6a8ab57973fd65fdcbe01afa7b4a1ec28fdf/hls-p/ingest_6898_720p/index.m3u8"
     },
     {
       "cid": 2,
