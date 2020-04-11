@@ -63,7 +63,7 @@
     {
       "cid": 0,
       "name": "ANTV",
-      "stream_url": "https://delivery.macan.live/stream/id_antv/index.m3u8?token=gratisan"
+      "stream_url": "https://vcdnjt.useetv.com/joss/15/antv/chunklist_w1883572553_b894100_sleng.m3u8"
     },
     {
       "cid": 2,
@@ -207,6 +207,16 @@
     },
     {
       "cid": 2,
+      "name": "FLIK",
+      "stream_url": "https://vcdnjt.useetv.com/joss/15/flik/.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Food Food",
+      "stream_url": "https://sonyent.pc.cdn.bitgravity.com/sonyent/live/food_food.smil/chunklist_b1300000.m3u8"
+    },
+    {
+      "cid": 2,
       "name": "Fox Movies",
       "stream_url": "http://203.153.218.28:9981/stream/channelid/756717990?ticket=397900FDAB149520DA6CD0E3E8F82F901132A27B&profile=pass"
     },
@@ -229,6 +239,11 @@
       "cid": 2,
       "name": "HBO Family",
       "stream_url": "http://203.153.218.28:9981/stream/channelid/1316004766?ticket=6A230BCD275160BC241A718EFB00115CB1F94794&profile=pass"
+    },
+    {
+      "cid": 2,
+      "name": "Hi Indo!",
+      "stream_url": "https://cdn-accedo-01.akamaized.net/Content/HLS/Live/channel(dd5267e3-7a01-4e8d-81d8-a7bb927636e9)/index.m3u8"
     },
     {
       "cid": 5,
@@ -263,7 +278,7 @@
     {
       "cid": 0,
       "name": "Indosiar",
-      "stream_url": "https://delivery.macan.live/stream/id_indosiar/index.m3u8?token=gratisan"
+      "stream_url": "https://vcdnjt.useetv.com/joss/15/indosiar/chunklist_w958610128_b894100_sleng.m3u8"
     },
     {
       "cid": 1,
@@ -274,6 +289,11 @@
       "cid": 5,
       "name": "Insan TV",
       "stream_url": "http://wz.insantv.net/group/ngrp:insantv_mobile/playlist.m3u8"
+    },
+    {
+      "cid": 1,
+      "name": "Jakarta Globe",
+      "stream_url": "http://edge.linknetott.swiftserve.com/live/BsNew/amlst:bsenglish/chunklist_b2288000.m3u8"
     },
     {
       "cid": 0,
@@ -429,6 +449,11 @@
       "cid": 1,
       "name": "RRI Net",
       "stream_url": "http://36.89.47.217:11935/rrinet/live/index.m3u8"
+    },
+    {
+      "cid": 6,
+      "name": "RTM Sports",
+      "stream_url": "https://rtm6hdmobile.secureswiftcontent.com/Origin2/ngrp:RTM2/chunklist_b2064000.m3u8"
     },
     {
       "cid": 0,
