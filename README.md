@@ -24,4 +24,4 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 
 
 ## Notes
-*bantu mengupdate siaran [disini](https://github.com/hariimurti/NontonTV/blob/master/json/playlist.json)*
+*bantu mengupdate siaran [disini](https://github.com/hariimurti/NontonTV/blob/master/json/playlist.json), gunakan [soft ini](https://github.com/hariimurti/NontonTV/releases/download/v1.0/IPTV.Manager.zip).*
