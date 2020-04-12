@@ -307,6 +307,11 @@
     },
     {
       "cid": 0,
+      "name": "Jogja TV",
+      "stream_url": "https://stream.jogjatv.co.id/jtvlive/stream/index.m3u8"
+    },
+    {
+      "cid": 0,
       "name": "JTV",
       "stream_url": "http://122.248.43.138:1935/ch2/myStream/playlist.m3u8"
     },
@@ -509,6 +514,11 @@
       "cid": 5,
       "name": "Tahfidz TV",
       "stream_url": "http://119.235.249.58:1935/tahfidztv/live/playlist.m3u8"
+    },
+    {
+      "cid": 0,
+      "name": "TATV",
+      "stream_url": "http://video2.onlivestreaming.net/tatv/live.sdp/playlist.m3u8"
     },
     {
       "cid": 5,
