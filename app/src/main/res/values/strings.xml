@@ -20,4 +20,9 @@
     <string name="message_update">Versi\n• Terpasang : %s (%d)\n• Terkini : %s (%d)\n\nPerubahan :</string>
     <string name="message_update_changelog">\n• %s</string>
     <string name="message_update_no_changelog">\n• lain-lain</string>
+
+    <!-- settings -->
+    <string name="settings">Pengaturan</string>
+    <string name="launch_at_boot">Jalankan app saat boot</string>
+    <string name="open_last_watched">Putar terakhir dilihat</string>
 </resources>

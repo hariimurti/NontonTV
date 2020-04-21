@@ -10,6 +10,9 @@ import java.util.Date;
 
 public class Preferences {
     private static final String LAST_CHECK_UPDATE = "LAST_CHECK_UPDATE";
+    private static final String LAST_WATCHED = "LAST_WATCHED";
+    private static final String OPEN_LAST_WATCHED = "OPEN_LAST_WATCHED";
+    private static final String LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT";
 
     private SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -43,5 +46,35 @@ public class Preferences {
         catch (Exception ignore) {
             return false;
         }
+    }
+
+    public void setLaunchAtBoot(boolean value) {
+        editor = preferences.edit();
+        editor.putBoolean(LAUNCH_AT_BOOT, value);
+        editor.apply();
+    }
+
+    public boolean isLaunchAtBoot() {
+        return preferences.getBoolean(LAUNCH_AT_BOOT, false);
+    }
+
+    public void setOpenLastWatched(boolean value) {
+        editor = preferences.edit();
+        editor.putBoolean(OPEN_LAST_WATCHED, value);
+        editor.apply();
+    }
+
+    public boolean isOpenLastWatched() {
+        return preferences.getBoolean(OPEN_LAST_WATCHED, false);
+    }
+
+    public void setLastWatched(String value) {
+        editor = preferences.edit();
+        editor.putString(LAST_WATCHED, value);
+        editor.apply();
+    }
+
+    public String getLastWatched() {
+        return  preferences.getString(LAST_WATCHED, "");
     }
 }

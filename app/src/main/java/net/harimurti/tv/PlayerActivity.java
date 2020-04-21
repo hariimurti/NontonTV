@@ -24,8 +24,10 @@ import com.google.android.exoplayer2.util.Util;
 
 import net.harimurti.tv.extra.AsyncSleep;
 import net.harimurti.tv.extra.Network;
+import net.harimurti.tv.extra.Preferences;
 
 public class PlayerActivity extends AppCompatActivity {
+    public static boolean isFirst = true;
     private SimpleExoPlayer player;
     private MediaSource mediaSource;
     private View layoutStatus, layoutSpin, layoutText;
@@ -35,6 +37,9 @@ public class PlayerActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player);
+
+        isFirst = false;
+        Preferences preferences = new Preferences();
 
         // hide navigation bar
         getWindow().getDecorView().setSystemUiVisibility(
@@ -72,6 +77,7 @@ public class PlayerActivity extends AppCompatActivity {
             public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
                 if (playbackState == Player.STATE_READY) {
                     ShowLayoutMessage(View.GONE, false);
+                    preferences.setLastWatched(url);
                 }
                 if (playbackState == Player.STATE_BUFFERING) {
                     ShowLayoutMessage(View.VISIBLE, false);

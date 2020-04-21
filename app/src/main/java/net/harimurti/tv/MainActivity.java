@@ -6,12 +6,16 @@ import androidx.viewpager2.widget.ViewPager2;
 
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.RelativeLayout;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import com.android.volley.Request;
@@ -37,7 +41,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
-    private View layoutStatus, layoutSpin, layoutText;
+    private View layoutSettings, layoutStatus, layoutSpin, layoutText;
     private TextView tvStatus, tvRetry;
 
     private StringRequest playlist;
@@ -59,6 +63,20 @@ public class MainActivity extends AppCompatActivity {
         layoutText = findViewById(R.id.layout_text);
         tvStatus = findViewById(R.id.text_status);
         tvRetry = findViewById(R.id.text_retry);
+        layoutSettings = findViewById(R.id.layout_settings);
+        layoutSettings.setOnClickListener(view -> {
+            layoutSettings.setVisibility(View.GONE);
+        });
+        Switch swLaunch = findViewById(R.id.launch_at_boot);
+        swLaunch.setChecked(preferences.isLaunchAtBoot());
+        swLaunch.setOnClickListener(view -> {
+            preferences.setLaunchAtBoot(swLaunch.isChecked());
+        });
+        Switch swOpenLast = findViewById(R.id.open_last_watched);
+        swOpenLast.setChecked(preferences.isOpenLastWatched());
+        swOpenLast.setOnClickListener(view -> {
+            preferences.setOpenLastWatched(swOpenLast.isChecked());
+        });
 
         playlist = new StringRequest(Request.Method.GET,
                 getString(R.string.json_playlist),
@@ -119,6 +137,13 @@ public class MainActivity extends AppCompatActivity {
         if (!preferences.isCheckedUpdate()) {
             volley.add(update);
         }
+
+        String streamUrl = preferences.getLastWatched();
+        if (preferences.isOpenLastWatched() && !streamUrl.equals("") && PlayerActivity.isFirst) {
+            Intent intent = new Intent(this, PlayerActivity.class);
+            intent.putExtra("channel_url", streamUrl);
+            this.startActivity(intent);
+        }
     }
 
     private void ShowLayoutMessage(int visibility, boolean isMessage) {
@@ -175,8 +200,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            layoutSettings.setVisibility(View.VISIBLE);
+            return true;
+        }
+        else {
+            return super.onKeyUp(keyCode, event);
+        }
+    }
+
+    @Override
     public void onBackPressed() {
-        //super.onBackPressed();
-        this.finish();
+        if (layoutSettings.getVisibility() == View.VISIBLE) {
+            layoutSettings.setVisibility(View.GONE);
+        }
+        else {
+            //super.onBackPressed();
+            this.finish();
+        }
     }
 }
