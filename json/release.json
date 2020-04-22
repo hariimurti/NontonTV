@@ -1,6 +1,6 @@
 {
-    "versionCode": 384,
-    "versionName": "v1.1",
-    "changelog": ["perbaikan ssl error (android 4.4)", "pemberitahuan pembaharuan", "perubahan lain"],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.1/net.harimurti.tv_v1.1_b384.apk"
+    "versionCode": 390,
+    "versionName": "v1.2",
+    "changelog": ["menu pengaturan", "jalankan app saat boot", "putar terakhir dilihat"],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.2/net.harimurti.tv_v1.2_b390.apk"
 }
