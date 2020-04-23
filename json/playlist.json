@@ -31,6 +31,16 @@
   ],
   "channels": [
     {
+      "cid": 6,
+      "name": "Action Sports 4U",
+      "stream_url": "https://nimble.dashmedia.tv/onestudio/actionsportstv/playlist.m3u8?fluxustv.m3u8"
+    },
+    {
+      "cid": 6,
+      "name": "Adventure Sports Network",
+      "stream_url": "https://dai2.xumo.com/amagi_hls_data_xumo1212A-adventuresportsnetwork/CDN/768x432_1200000/index.m3u8"
+    },
+    {
       "cid": 5,
       "name": "Ahsan TV",
       "stream_url": "http://119.82.224.75:1935/live/ahsantv/playlist.m3u8"
@@ -63,7 +73,7 @@
     {
       "cid": 0,
       "name": "ANTV",
-      "stream_url": "https://vcdnjt.useetv.com/joss/15/antv/chunklist_w1883572553_b894100_sleng.m3u8"
+      "stream_url": "http://202.80.222.130/000001/2/ch14061215034900095272/1000.m3u8?virtualDomain=000001.live_hls.zte.com"
     },
     {
       "cid": 2,
@@ -94,6 +104,11 @@
       "cid": 1,
       "name": "BeritaSatu",
       "stream_url": "http://edge.linknetott.swiftserve.com/live/BsNew/amlst:beritasatunewsbs/playlist.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Blue Ant Extreme",
+      "stream_url": "http://45.126.83.51/dr9445/h/h15/01.m3u8"
     },
     {
       "cid": 2,
@@ -217,8 +232,23 @@
     },
     {
       "cid": 2,
+      "name": "Fox",
+      "stream_url": "http://203.153.218.28:9981/stream/channelid/1910872088?ticket=1FE514A47371AF385F3866E79BE3A4D04BB182F4&profile=pass"
+    },
+    {
+      "cid": 2,
+      "name": "Fox Family",
+      "stream_url": "http://203.153.218.28:9981/stream/channelid/1949182550?ticket=39C98E4111054C7CF2A242280A406A438219FEA8&profile=pass"
+    },
+    {
+      "cid": 2,
       "name": "Fox Movies",
       "stream_url": "http://203.153.218.28:9981/stream/channelid/756717990?ticket=397900FDAB149520DA6CD0E3E8F82F901132A27B&profile=pass"
+    },
+    {
+      "cid": 2,
+      "name": "Fox Movies",
+      "stream_url": "http://203.153.218.28:9981/stream/channelid/756717990?ticket=D9CDD7DB18E80023C22954FE693F71DB745D5CE7&profile=pass"
     },
     {
       "cid": 6,
@@ -278,7 +308,7 @@
     {
       "cid": 0,
       "name": "Indosiar",
-      "stream_url": "https://vcdnjt.useetv.com/joss/15/indosiar/chunklist_w958610128_b894100_sleng.m3u8"
+      "stream_url": "http://45.126.83.51/qwr9ew/s/s04/01.m3u8"
     },
     {
       "cid": 1,
@@ -376,6 +406,16 @@
       "stream_url": "http://live-edge01.telecentro.net.ar/live/smil:musictop.smil/playlist.m3u8"
     },
     {
+      "cid": 2,
+      "name": "My Cinema",
+      "stream_url": "http://210.210.155.35/x6bnqe/s/s31/S4/mnf.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "My Kids",
+      "stream_url": "http://210.210.155.35/qwr9ew/s/s30/index2.m3u8"
+    },
+    {
       "cid": 0,
       "name": "MyTV",
       "stream_url": "https://livetvhooq.akamaized.net/b2fec42490a14386ac53eafa47f590a7/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598371~exp=9007200841339362~acl=/b2fec42490a14386ac53eafa47f590a7/*/profile_2/chunklist.m3u8*~hmac=b8264204dd64c189ad51d0a4a41f2b0bf922923004b842af1f717882b6e3fd3f"
@@ -412,6 +452,11 @@
     },
     {
       "cid": 6,
+      "name": "Olympic Channel",
+      "stream_url": "http://ott-live.olympicchannel.com/out/u/OC1_2.m3u8"
+    },
+    {
+      "cid": 6,
       "name": "Outdoor Channel",
       "stream_url": "https://livetvhooq.akamaized.net/4333904e5f68426cae808a645e882206/eu-central-1/5493668622001/profile_3/chunklist.m3u8?hdnts=st=1586598149~exp=9007200841339140~acl=/4333904e5f68426cae808a645e882206/*/profile_3/chunklist.m3u8*~hmac=ac25750268cd9a86c23a25a17d79ce932c70fc776d9caf3fe40c3e66e7babcba"
     },
@@ -419,6 +464,11 @@
       "cid": 2,
       "name": "People are Awesome",
       "stream_url": "https://livetvhooq.akamaized.net/e8b42cfc307e44eca6b8d862ce9837ac/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598471~exp=9007200841339462~acl=/e8b42cfc307e44eca6b8d862ce9837ac/*/profile_2/chunklist.m3u8*~hmac=fa326e66083c6cebedf163b42144ab1437947eed1a5e8d04736b72d531b2cec0"
+    },
+    {
+      "cid": 2,
+      "name": "Rai Movie",
+      "stream_url": "http://b2everyrai-lh.akamaihd.net/i/raimovie_1@67348/master.m3u8"
     },
     {
       "cid": 0,
@@ -476,9 +526,14 @@
       "stream_url": "https://cdn-livetv5.metube.id/hls/sctv_480/index.m3u8"
     },
     {
-      "cid": 6,
+      "cid": 2,
+      "name": "Sinema Indonesia",
+      "stream_url": "http://210.210.155.35/x6bnqe/s/s71/S4/mnf.m3u8"
+    },
+    {
+      "cid": 2,
       "name": "Sony One",
-      "stream_url": "http://210.210.155.66/h/h143/01.m3u8"
+      "stream_url": "http://210.210.155.35/session/c30d8c14-f1bc-11e8-89c0-aa35b2893d02/uq2663/h/h143/01.m3u8"
     },
     {
       "cid": 6,
