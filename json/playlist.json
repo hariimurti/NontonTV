@@ -91,6 +91,11 @@
       "stream_url": "http://210.210.155.66/h/h141/02.m3u8"
     },
     {
+      "cid": 3,
+      "name": "Baby First",
+      "stream_url": "http://ms003.happytv.com.tw/live/F9YMztT5DcwWEr1f/index.m3u8"
+    },
+    {
       "cid": 2,
       "name": "Baeble Music - Concert",
       "stream_url": "https://livetvhooq.akamaized.net/f17ef07681bb44069d2e2f376e92e9c0/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598599~exp=9007200841339590~acl=/f17ef07681bb44069d2e2f376e92e9c0/*/profile_2/chunklist.m3u8*~hmac=91c85540c818226145d0a6f8026c1622787b507375e6b0d069b638d9ff968626"
@@ -109,6 +114,11 @@
       "cid": 2,
       "name": "Blue Ant Extreme",
       "stream_url": "http://45.126.83.51/dr9445/h/h15/01.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "Boing TV",
+      "stream_url": "https://mdslivehlsb-i.akamaihd.net/hls/live/623616/boing/bitrate_2.m3u8"
     },
     {
       "cid": 2,
@@ -186,6 +196,16 @@
       "stream_url": "http://103.47.132.164/PLTV/88888888/224/3221226011/index.m3u8"
     },
     {
+      "cid": 6,
+      "name": "DSport",
+      "stream_url": "http://jiocgehub.jio.ril.com/Dsports_HD/Dsports_HD_800.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "Duck TV",
+      "stream_url": "http://livecdnh3.tvanywhere.ae/hls/duck/index.m3u8"
+    },
+    {
       "cid": 1,
       "name": "DW English",
       "stream_url": "https://livetvhooq.akamaized.net/e97d916eaf2a4c888a0a43cb633c54e3/eu-central-1/5493668622001/profile_0/chunklist.m3u8?hdnts=st=1586598976~exp=9007200841339967~acl=/e97d916eaf2a4c888a0a43cb633c54e3/*/profile_0/chunklist.m3u8*~hmac=96faea83b2f1f1136611e7b487324792550a20c450bd15d919f6f9f6e6f13726"
@@ -194,6 +214,11 @@
       "cid": 5,
       "name": "Elshinta TV",
       "stream_url": "http://210.210.155.35/qwr9ew/s/s10/index.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "English Club",
+      "stream_url": "http://livecdnh2.tvanywhere.ae/hls/english_club/index.m3u8"
     },
     {
       "cid": 2,
@@ -232,6 +257,11 @@
     },
     {
       "cid": 2,
+      "name": "Food Network",
+      "stream_url": "http://5.135.92.133:52841/out/u/502_1.m3u8"
+    },
+    {
+      "cid": 2,
       "name": "Fox",
       "stream_url": "http://203.153.218.28:9981/stream/channelid/1910872088?ticket=1FE514A47371AF385F3866E79BE3A4D04BB182F4&profile=pass"
     },
@@ -246,9 +276,9 @@
       "stream_url": "http://203.153.218.28:9981/stream/channelid/756717990?ticket=397900FDAB149520DA6CD0E3E8F82F901132A27B&profile=pass"
     },
     {
-      "cid": 2,
-      "name": "Fox Movies",
-      "stream_url": "http://203.153.218.28:9981/stream/channelid/756717990?ticket=D9CDD7DB18E80023C22954FE693F71DB745D5CE7&profile=pass"
+      "cid": 6,
+      "name": "Fox Sports",
+      "stream_url": "http://13.250.204.68/session/usee_tv/dakocan-premium/fs1.m3u8"
     },
     {
       "cid": 6,
@@ -371,9 +401,24 @@
       "stream_url": "http://ws.flv.nimo.tv/live/su1599512427560r1e0b7afba22fec0a5191643a588e9f06_high.flv"
     },
     {
+      "cid": 5,
+      "name": "Madinah TV",
+      "stream_url": "http://45.126.83.51:80/qwr9ew/s/s27/01.m3u8"
+    },
+    {
+      "cid": 5,
+      "name": "Makkah TV",
+      "stream_url": "http://45.126.83.51:80/qwr9ew/s/s28/01.m3u8"
+    },
+    {
       "cid": 1,
       "name": "Metro TV",
       "stream_url": "http://edge.metrotvnews.com:1935/live-edge/smil:metro.smil/playlist.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "Miao Mi",
+      "stream_url": "https://d3kw4vhbdpgtqk.cloudfront.net/hls/miaomipcweb/04.m3u8"
     },
     {
       "cid": 0,
@@ -384,6 +429,11 @@
       "cid": 0,
       "name": "MNC TV HD",
       "stream_url": "https://linier3.rctiplus.id/live/eds/MNCTV_Logo/sa_hls/MNCTV_Logo-avc1_2000000=1.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "MNX Movies",
+      "stream_url": "https://timesnow.airtel.tv/live/MNX_pull/chunklist_3.m3u8"
     },
     {
       "cid": 2,
@@ -469,6 +519,16 @@
       "cid": 2,
       "name": "People are Awesome",
       "stream_url": "https://livetvhooq.akamaized.net/e8b42cfc307e44eca6b8d862ce9837ac/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598471~exp=9007200841339462~acl=/e8b42cfc307e44eca6b8d862ce9837ac/*/profile_2/chunklist.m3u8*~hmac=fa326e66083c6cebedf163b42144ab1437947eed1a5e8d04736b72d531b2cec0"
+    },
+    {
+      "cid": 2,
+      "name": "Prambors",
+      "stream_url": "https://cdn-accedo-01.akamaized.net/Content/DASH/Live/channel(d38de229-8abc-4072-91d4-2c42935f7e3b)/manifest.mpd"
+    },
+    {
+      "cid": 6,
+      "name": "Racing.com",
+      "stream_url": "https://racingvic-i.akamaized.net/hls/live/598695/racingvic/1500.m3u8"
     },
     {
       "cid": 2,
@@ -576,6 +636,11 @@
       "stream_url": "http://livecdnh1.tvanywhere.ae/hls/star_movies/index.m3u8"
     },
     {
+      "cid": 2,
+      "name": "Star World",
+      "stream_url": "http://livecdnh1.tvanywhere.ae/hls/star_world/index.m3u8"
+    },
+    {
       "cid": 5,
       "name": "Tahfidz TV",
       "stream_url": "http://119.235.249.58:1935/tahfidztv/live/playlist.m3u8"
@@ -609,6 +674,11 @@
       "cid": 3,
       "name": "Tom Jerry TV",
       "stream_url": "https://ws.flv.nimo.tv/live/su1599512427554r538093ee8e9c2edd24251f82cda6fd16_high.flv"
+    },
+    {
+      "cid": 3,
+      "name": "Toonmax",
+      "stream_url": "http://45.126.83.51/qwr9ew/s/s50/index.m3u8"
     },
     {
       "cid": 0,
