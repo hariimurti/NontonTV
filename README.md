@@ -21,7 +21,6 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 ## Thanks to
 - [iptv.org](https://github.com/iptv-org/iptv)
 - [exodiver](https://github.com/exodiver/IPTV)
-- [hooq](https://www.hooq.tv/)
 - dan lain-lain
 
 

@@ -96,16 +96,6 @@
       "stream_url": "http://ms003.happytv.com.tw/live/F9YMztT5DcwWEr1f/index.m3u8"
     },
     {
-      "cid": 2,
-      "name": "Baeble Music - Concert",
-      "stream_url": "https://livetvhooq.akamaized.net/f17ef07681bb44069d2e2f376e92e9c0/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598599~exp=9007200841339590~acl=/f17ef07681bb44069d2e2f376e92e9c0/*/profile_2/chunklist.m3u8*~hmac=91c85540c818226145d0a6f8026c1622787b507375e6b0d069b638d9ff968626"
-    },
-    {
-      "cid": 2,
-      "name": "Baeble Music - Session",
-      "stream_url": "https://livetvhooq.akamaized.net/94d7194614e148059bca126206f13321/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598637~exp=9007200841339628~acl=/94d7194614e148059bca126206f13321/*/profile_2/chunklist.m3u8*~hmac=3bcd5c27e822b3f95d31bf98ac52deada5f03fc2709bfbd935a63189c333532a"
-    },
-    {
       "cid": 1,
       "name": "BeritaSatu",
       "stream_url": "http://edge.linknetott.swiftserve.com/live/BsNew/amlst:beritasatunewsbs/playlist.m3u8"
@@ -124,16 +114,6 @@
       "cid": 2,
       "name": "Boomerang",
       "stream_url": "http://livecdnh3.tvanywhere.ae/hls/boomerang/index.m3u8"
-    },
-    {
-      "cid": 2,
-      "name": "BuzzFeed - Nifty",
-      "stream_url": "https://livetvhooq.akamaized.net/1648324ea85b498897752a6385bb5e08/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598522~exp=9007200841339513~acl=/1648324ea85b498897752a6385bb5e08/*/profile_2/chunklist.m3u8*~hmac=9a902bd1bffc47472aa6feb261f888cf9384ab93d00ab7f9b30f0d066df1c065"
-    },
-    {
-      "cid": 2,
-      "name": "BuzzFeed - Tasty",
-      "stream_url": "https://livetvhooq.akamaized.net/930b6b972ba74d8f8347361bf59e0200/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598569~exp=9007200841339560~acl=/930b6b972ba74d8f8347361bf59e0200/*/profile_2/chunklist.m3u8*~hmac=798bc2df9c8dbf7e5378a8e6df9f4ef9fb32bd39f6483df897b2f4d28981e022"
     },
     {
       "cid": 3,
@@ -161,11 +141,6 @@
       "stream_url": "http://203.153.218.28:9981/stream/channelid/255605374?ticket=8419D5E6A24EE915F246B23011407540BE9B0E50&profile=pass"
     },
     {
-      "cid": 2,
-      "name": "Clubbing TV",
-      "stream_url": "https://livetvhooq.akamaized.net/923e04bf28d6488e85831094a2cfc33d/eu-central-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598853~exp=9007200841339844~acl=/923e04bf28d6488e85831094a2cfc33d/*/profile_2/chunklist.m3u8*~hmac=df8085efc5cdfb85cf719c698f9e53b7c4a49721101c3541648326458a5db6cc"
-    },
-    {
       "cid": 1,
       "name": "CNBC Indonesia",
       "stream_url": "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil/playlist.m3u8"
@@ -174,11 +149,6 @@
       "cid": 1,
       "name": "CNN Indonesia",
       "stream_url": "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil/playlist.m3u8"
-    },
-    {
-      "cid": 0,
-      "name": "DAAI TV",
-      "stream_url": "https://livetvhooq.akamaized.net/a62c36fd75ff415da7a75c71a732034f/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586599126~exp=9007200841340117~acl=/a62c36fd75ff415da7a75c71a732034f/*/profile_2/chunklist.m3u8*~hmac=6de48f54a7d64dfbc319eb32a4ad4f1eb7c5b8fe5b950f900c887d0635678f63"
     },
     {
       "cid": 4,
@@ -206,11 +176,6 @@
       "stream_url": "http://livecdnh3.tvanywhere.ae/hls/duck/index.m3u8"
     },
     {
-      "cid": 1,
-      "name": "DW English",
-      "stream_url": "https://livetvhooq.akamaized.net/e97d916eaf2a4c888a0a43cb633c54e3/eu-central-1/5493668622001/profile_0/chunklist.m3u8?hdnts=st=1586598976~exp=9007200841339967~acl=/e97d916eaf2a4c888a0a43cb633c54e3/*/profile_0/chunklist.m3u8*~hmac=96faea83b2f1f1136611e7b487324792550a20c450bd15d919f6f9f6e6f13726"
-    },
-    {
       "cid": 5,
       "name": "Elshinta TV",
       "stream_url": "http://210.210.155.35/qwr9ew/s/s10/index.m3u8"
@@ -222,21 +187,6 @@
     },
     {
       "cid": 2,
-      "name": "Entertainment Weekly",
-      "stream_url": "https://livetvhooq.akamaized.net/37882cebae53494fbb9e86e68eae4673/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586599025~exp=9007200841340016~acl=/37882cebae53494fbb9e86e68eae4673/*/profile_2/chunklist.m3u8*~hmac=f98799a2a56124f92aaeb824582adce0b87dc8022106b219bce1c300d6547d65"
-    },
-    {
-      "cid": 1,
-      "name": "Euronews",
-      "stream_url": "https://livetvhooq.akamaized.net/10efd311a8054e2d9b96e39460acfa8b/eu-central-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598327~exp=9007200841339318~acl=/10efd311a8054e2d9b96e39460acfa8b/*/profile_2/chunklist.m3u8*~hmac=e9e447c701131d79e867361848bff0d07db29c09db4fc64dc0becbb1936157ad"
-    },
-    {
-      "cid": 2,
-      "name": "Fail Army",
-      "stream_url": "https://livetvhooq.akamaized.net/166d36fe333a41e7846c47c07aa4919c/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598679~exp=9007200841339670~acl=/166d36fe333a41e7846c47c07aa4919c/*/profile_2/chunklist.m3u8*~hmac=be8bdb604543acdcb4a4004c9d9aadaa85c50dd633ee2c8f724949bb5545ceab"
-    },
-    {
-      "cid": 2,
       "name": "Fashion TV",
       "stream_url": "https://fash1043.cloudycdn.services/slive/_definst_/ftv_ftv_pg13_zw9_27065_ftv_pg13_196_hls.smil/chunklist==.m3u8"
     },
@@ -244,11 +194,6 @@
       "cid": 2,
       "name": "Fashion TV Midnight",
       "stream_url": "https://fash1043.cloudycdn.services/slive/_definst_/ftv_midnite_secrets_adaptive.smil/chunklist==.m3u8"
-    },
-    {
-      "cid": 2,
-      "name": "FLIK",
-      "stream_url": "https://vcdnjt.useetv.com/joss/15/flik/.m3u8"
     },
     {
       "cid": 2,
@@ -321,19 +266,9 @@
       "stream_url": "http://edge.linknetott.swiftserve.com/live/BSgroup/amlst:homelivinghd/playlist.m3u8"
     },
     {
-      "cid": 2,
-      "name": "HOOQ Food - My Recipes",
-      "stream_url": "https://livetvhooq.akamaized.net/135463756ae94a429ae807ed69919055/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598759~exp=9007200841339750~acl=/135463756ae94a429ae807ed69919055/*/profile_2/chunklist.m3u8*~hmac=80af0b0437ce0928f86357dbb8ead26ceb782ceef98768c895b56924075f62d9"
-    },
-    {
       "cid": 5,
       "name": "I AM CHANNEL",
       "stream_url": "http://iamchannel.org:1935/tes/1/chunklist.m3u8"
-    },
-    {
-      "cid": 0,
-      "name": "idKU",
-      "stream_url": "https://livetvhooq.akamaized.net/8d310f35fdf349daab8e0610161060f1/eu-central-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586599091~exp=9007200841340082~acl=/8d310f35fdf349daab8e0610161060f1/*/profile_2/chunklist.m3u8*~hmac=7b2a902759c887151d637ceee37b6950cdb25c508a917fb656f8b11198ab2545"
     },
     {
       "cid": 0,
@@ -357,16 +292,6 @@
     },
     {
       "cid": 0,
-      "name": "JakTV",
-      "stream_url": "https://livetvhooq.akamaized.net/7393cf95fc9644f59c57815f6d086522/ap-southeast-1/5493668622001/profile_0/chunklist.m3u8?hdnts=st=1586598413~exp=9007200841339404~acl=/7393cf95fc9644f59c57815f6d086522/*/profile_0/chunklist.m3u8*~hmac=219375635e870bcc38bf34c823aec64d84997736036f9dfc523dbbd3d0cf291b"
-    },
-    {
-      "cid": 1,
-      "name": "Jawapos TV",
-      "stream_url": "https://livetvhooq.akamaized.net:443/448282ebe21e4ddaa20ffac3f5725086/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1573600053~exp=9007200828341044~acl=/448282ebe21e4ddaa20ffac3f5725086/*/profile_2/chunklist.m3u8*~hmac=34668c3a5d65ee732b03c74c8c5fe7f2bd27db8a18a14541660649e8fae2dfc4"
-    },
-    {
-      "cid": 0,
       "name": "Jogja TV",
       "stream_url": "https://stream.jogjatv.co.id/jtvlive/stream/index.m3u8"
     },
@@ -374,11 +299,6 @@
       "cid": 0,
       "name": "JTV",
       "stream_url": "http://122.248.43.138:1935/ch2/myStream/playlist.m3u8"
-    },
-    {
-      "cid": 2,
-      "name": "K Drama",
-      "stream_url": "https://livetvhooq.akamaized.net/8b4f753fdcc94067bfcd243350f36999/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598715~exp=9007200841339706~acl=/8b4f753fdcc94067bfcd243350f36999/*/profile_2/chunklist.m3u8*~hmac=454191757119fa9c8463a2460c2db6f01f6bd6ad099bd0d7e96210b97d2147ca"
     },
     {
       "cid": 2,
@@ -466,11 +386,6 @@
       "stream_url": "http://210.210.155.35/qwr9ew/s/s30/index2.m3u8"
     },
     {
-      "cid": 0,
-      "name": "MyTV",
-      "stream_url": "https://livetvhooq.akamaized.net/b2fec42490a14386ac53eafa47f590a7/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598371~exp=9007200841339362~acl=/b2fec42490a14386ac53eafa47f590a7/*/profile_2/chunklist.m3u8*~hmac=b8264204dd64c189ad51d0a4a41f2b0bf922923004b842af1f717882b6e3fd3f"
-    },
-    {
       "cid": 5,
       "name": "Nabawi TV",
       "stream_url": "http://stream2.ninmedia.tv/nabawitv/nabawitv_360p/playlist.m3u8"
@@ -504,16 +419,6 @@
       "cid": 6,
       "name": "Olympic Channel",
       "stream_url": "http://ott-live.olympicchannel.com/out/u/OC1_2.m3u8"
-    },
-    {
-      "cid": 6,
-      "name": "Outdoor Channel",
-      "stream_url": "https://livetvhooq.akamaized.net/4333904e5f68426cae808a645e882206/eu-central-1/5493668622001/profile_3/chunklist.m3u8?hdnts=st=1586598149~exp=9007200841339140~acl=/4333904e5f68426cae808a645e882206/*/profile_3/chunklist.m3u8*~hmac=ac25750268cd9a86c23a25a17d79ce932c70fc776d9caf3fe40c3e66e7babcba"
-    },
-    {
-      "cid": 2,
-      "name": "People are Awesome",
-      "stream_url": "https://livetvhooq.akamaized.net/e8b42cfc307e44eca6b8d862ce9837ac/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586598471~exp=9007200841339462~acl=/e8b42cfc307e44eca6b8d862ce9837ac/*/profile_2/chunklist.m3u8*~hmac=fa326e66083c6cebedf163b42144ab1437947eed1a5e8d04736b72d531b2cec0"
     },
     {
       "cid": 2,
@@ -572,16 +477,6 @@
     },
     {
       "cid": 0,
-      "name": "RTV",
-      "stream_url": "https://livetvhooq.akamaized.net/902d04d98a094dc6a78e73166d108e3d/ap-southeast-1/5493668622001/profile_0/chunklist.m3u8?hdnts=st=1586602817~exp=9007200841343808~acl=/902d04d98a094dc6a78e73166d108e3d/*/profile_0/chunklist.m3u8*~hmac=6e87320c0742a5eca3646fd5cef4d9bc89d57fd15b69c214ba205c0b93534db2"
-    },
-    {
-      "cid": 4,
-      "name": "Ruang Terampil",
-      "stream_url": "https://livetvhooq.akamaized.net/b1b6d552c80f4ef78bd4c10bfb32268d/eu-central-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586599061~exp=9007200841340052~acl=/b1b6d552c80f4ef78bd4c10bfb32268d/*/profile_2/chunklist.m3u8*~hmac=463249e47228b8b33c7ddc8e5be4938c4f8994c4cf10c6ab0db0f9e1f425543a"
-    },
-    {
-      "cid": 0,
       "name": "SCTV",
       "stream_url": "https://cdn-livetv5.metube.id/hls/sctv_480/index.m3u8"
     },
@@ -616,11 +511,6 @@
       "stream_url": "http://stream.spacetoon.com:1935/live/stchannel/smil:livesmil.smil/playlist.m3u8"
     },
     {
-      "cid": 6,
-      "name": "Sports Illustrated",
-      "stream_url": "https://livetvhooq.akamaized.net/aead26cfa8f6495c98e63a02d4e2f20e/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586599165~exp=9007200841340156~acl=/aead26cfa8f6495c98e63a02d4e2f20e/*/profile_2/chunklist.m3u8*~hmac=43bc7c31449e83e06a8474959bdfc3c242b4b1cda8712fb8be2be8ed789a2039"
-    },
-    {
       "cid": 2,
       "name": "Star Movies",
       "stream_url": "http://livecdnh1.tvanywhere.ae/hls/star_movies/index.m3u8"
@@ -644,16 +534,6 @@
       "cid": 5,
       "name": "Tegar TV",
       "stream_url": "http://wms.klikhost.com/tegartv/live/playlist.m3u8"
-    },
-    {
-      "cid": 1,
-      "name": "The Indonesia Channel",
-      "stream_url": "https://livetvhooq.akamaized.net/7cc9279e8a0f400aa27052ad2146a774/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586519320~exp=9007200841260311~acl=/7cc9279e8a0f400aa27052ad2146a774/*/profile_2/chunklist.m3u8*~hmac=04879d6b8b6d978073e57151845ac475a4812bcf5b441b8d0afc748c5d392567"
-    },
-    {
-      "cid": 2,
-      "name": "The Pet Collective",
-      "stream_url": "https://livetvhooq.akamaized.net/b31c750a9bbe45fcbe58d72534e6b8f6/ap-southeast-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586599214~exp=9007200841340205~acl=/b31c750a9bbe45fcbe58d72534e6b8f6/*/profile_2/chunklist.m3u8*~hmac=f7b783b8bd79a822a6d7ea40ccdc6f52ebee4d6d53e982b5664d80fcc3025918"
     },
     {
       "cid": 2,
@@ -734,11 +614,6 @@
       "cid": 1,
       "name": "TVRI Yogyakarta",
       "stream_url": "http://118.97.50.107/Content/HLS/Live/Channel(TVRIYOGYAKARTA)/index.m3u8"
-    },
-    {
-      "cid": 2,
-      "name": "USEE PRIME",
-      "stream_url": "https://livetvhooq.akamaized.net/8eb1108c494240ef94c5c8ae7e572c29/eu-central-1/5493668622001/profile_2/chunklist.m3u8?hdnts=st=1586603233~exp=9007200841344224~acl=/8eb1108c494240ef94c5c8ae7e572c29/*/profile_2/chunklist.m3u8*~hmac=6ca1e9d8b1814c01293a26b3b306bb3f47dc3871348d0412589f52181ad05be3"
     },
     {
       "cid": 2,
