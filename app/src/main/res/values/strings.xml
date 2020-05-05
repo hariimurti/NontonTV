@@ -2,21 +2,28 @@
     <string name="app_name">Nonton TV</string>
 
     <!-- some text -->
-    <string name="something_went_wrong">Ada sesuatu yang salah!!!</string>
-    <string name="source_offline">Siaran tidak dapat diakses!!!</string>
+    <string name="something_went_wrong">Ada sesuatu yang salah!</string>
+    <string name="source_offline">Siaran tidak dapat diakses!</string>
     <string name="text_auto_retry">akan dicoba ulang otomatis dalam 5</string>
     <string name="text_auto_retry_second">akan dicoba ulang otomatis dalam %d</string>
     <string name="text_auto_retry_now">akan dicoba ulang otomatis sekarang</string>
-    <string name="no_network">Tidak ada koneksi internet!!!</string>
+    <string name="no_network">Tidak ada koneksi internet!</string>
 
     <!-- json link -->
     <string name="json_playlist">https://github.com/hariimurti/NontonTV/raw/master/json/playlist.json</string>
     <string name="json_release">https://github.com/hariimurti/NontonTV/raw/master/json/release.json</string>
 
+    <!-- alert playlist error -->
+    <string name="alert_title_playlist_error">Ada masalah</string>
+    <string name="error_4xx">File playlist tidak dapat diakses!\nKode respon : %d</string>
+    <string name="error_5xx">Server tidak dapat diakses!\nKode respon : %d</string>
+    <string name="dialog_retry">Coba lagi</string>
+    <string name="dialog_cached">Gunakan cache</string>
+
     <!-- alert update -->
-    <string name="alert_new_update">Pembaharuan!!!</string>
-    <string name="alert_download">Unduh</string>
-    <string name="alert_close">Tutup</string>
+    <string name="alert_new_update">Pembaharuan</string>
+    <string name="dialog_download">Unduh</string>
+    <string name="dialog_close">Tutup</string>
     <string name="message_update">Versi\n• Terpasang : %s (%d)\n• Terkini : %s (%d)\n\nPerubahan :</string>
     <string name="message_update_changelog">\n• %s</string>
     <string name="message_update_no_changelog">\n• lain-lain</string>

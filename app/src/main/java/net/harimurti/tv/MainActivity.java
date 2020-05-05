@@ -14,9 +14,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.RelativeLayout;
 import android.widget.Switch;
-import android.widget.TextView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -32,7 +30,7 @@ import com.google.gson.JsonSyntaxException;
 import net.harimurti.tv.adapter.ViewPagerAdapter;
 import net.harimurti.tv.data.Playlist;
 import net.harimurti.tv.data.Release;
-import net.harimurti.tv.extra.AsyncSleep;
+import net.harimurti.tv.extra.JsonPlaylist;
 import net.harimurti.tv.extra.Network;
 import net.harimurti.tv.extra.Preferences;
 import net.harimurti.tv.extra.TLSSocketFactory;
@@ -41,11 +39,14 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
-    private View layoutSettings, layoutStatus, layoutSpin, layoutText;
-    private TextView tvStatus, tvRetry;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
+    private View layoutSettings, layoutLoading;
 
-    private StringRequest playlist;
-    private RequestQueue volley;
+    private static Playlist playlist, cachedPlaylist;
+    private Preferences preferences;
+    private StringRequest reqPlaylist;
+    private RequestQueue request;
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -53,16 +54,14 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Preferences preferences = new Preferences();
+        // get preferences
+        preferences = new Preferences();
+        cachedPlaylist = new JsonPlaylist(this).read();
 
         // define some view
-        TabLayout tabLayout = findViewById(R.id.tab_layout);
-        ViewPager2 viewPager = findViewById(R.id.view_pager);
-        layoutStatus = findViewById(R.id.layout_status);
-        layoutSpin = findViewById(R.id.layout_spin);
-        layoutText = findViewById(R.id.layout_text);
-        tvStatus = findViewById(R.id.text_status);
-        tvRetry = findViewById(R.id.text_retry);
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager = findViewById(R.id.view_pager);
+        layoutLoading = findViewById(R.id.layout_loading);
         layoutSettings = findViewById(R.id.layout_settings);
         layoutSettings.setOnClickListener(view -> {
             layoutSettings.setVisibility(View.GONE);
@@ -78,23 +77,33 @@ public class MainActivity extends AppCompatActivity {
             preferences.setOpenLastWatched(swOpenLast.isChecked());
         });
 
-        playlist = new StringRequest(Request.Method.GET,
+        reqPlaylist = new StringRequest(Request.Method.GET,
                 getString(R.string.json_playlist),
                 response -> {
                     try {
-                        Playlist playlist = new Gson().fromJson(response, Playlist.class);
-                        viewPager.setAdapter(new ViewPagerAdapter(this, playlist));
-                        new TabLayoutMediator(
-                                tabLayout, viewPager, (tab, i) -> tab.setText(playlist.categories.get(i).name)
-                        ).attach();
-                        ShowLayoutMessage(View.GONE, false);
+                        playlist = new Gson().fromJson(response, Playlist.class);
+                        setPlaylistToViewPager();
+                        new JsonPlaylist(this).write(response);
                     } catch (JsonSyntaxException error) {
-                        ShowErrorMessage(error.getMessage(), false);
+                        showAlertError(error.getMessage());
                     }
                 },
-                error -> ShowErrorMessage(error.getMessage(), true));
+                error -> {
+                    String message = getString(R.string.something_went_wrong);
+                    if (error.networkResponse != null) {
+                        int errorcode = error.networkResponse.statusCode;
+                        if (400 <= errorcode && errorcode < 500)
+                            message = String.format(getString(R.string.error_4xx), errorcode);
+                        if (500 <= errorcode && errorcode < 600)
+                            message = String.format(getString(R.string.error_5xx), errorcode);
+                    }
+                    else if (!Network.IsConnected()) {
+                        message = getString(R.string.no_network);
+                    }
+                    showAlertError(message);
+                });
 
-        StringRequest update = new StringRequest(Request.Method.GET,
+        StringRequest reqUpdate = new StringRequest(Request.Method.GET,
                 getString(R.string.json_release),
                 response -> {
                     try {
@@ -113,15 +122,8 @@ public class MainActivity extends AppCompatActivity {
                         if (release.changelog.size() == 0) {
                             message.append(getString(R.string.message_update_no_changelog));
                         }
-                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                        builder.setTitle(R.string.alert_new_update);
-                        builder.setMessage(message.toString())
-                                .setPositiveButton(R.string.alert_download, (dialog, id) ->
-                                        DownloadFile(release.downloadUrl))
-                                .setNegativeButton(R.string.alert_close, (dialog, id) ->
-                                        dialog.cancel());
-                        builder.create().show();
-                    } catch (Exception ignore) {}
+                        showAlertUpdate(message.toString(), release.downloadUrl);
+                    } catch (Exception e) { Log.e("Volley", "Could not check new update!", e); }
                 }, null);
 
         BaseHttpStack stack = new HurlStack();
@@ -129,13 +131,19 @@ public class MainActivity extends AppCompatActivity {
             try {
                 stack = new HurlStack(null, new TLSSocketFactory());
             } catch (KeyManagementException | NoSuchAlgorithmException e) {
-                Log.e("HttpStack", "Could not create new stack for TLS v1.2");
+                Log.e("Volley", "Could not create new stack for TLS v1.2!", e);
             }
         }
-        volley = Volley.newRequestQueue(this, stack);
-        volley.add(playlist);
+
+        request = Volley.newRequestQueue(this, stack);
+        if (playlist == null) {
+            request.add(reqPlaylist);
+        }
+        else {
+            setPlaylistToViewPager();
+        }
         if (!preferences.isCheckedUpdate()) {
-            volley.add(update);
+            request.add(reqUpdate);
         }
 
         String streamUrl = preferences.getLastWatched();
@@ -146,51 +154,40 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void ShowLayoutMessage(int visibility, boolean isMessage) {
-        layoutStatus.setVisibility(visibility);
-        if (!isMessage) {
-            layoutSpin.setVisibility(View.VISIBLE);
-            layoutText.setVisibility(View.GONE);
-        } else {
-            layoutSpin.setVisibility(View.GONE);
-            layoutText.setVisibility(View.VISIBLE);
+    private void setPlaylistToViewPager() {
+        viewPager.setAdapter(new ViewPagerAdapter(this, playlist));
+        new TabLayoutMediator(
+                tabLayout, viewPager, (tab, i) -> tab.setText(playlist.categories.get(i).name)
+        ).attach();
+        layoutLoading.setVisibility(View.GONE);
+    }
+
+    private void showAlertError(String error) {
+        String message = error == null ? getString(R.string.something_went_wrong) : error;
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(R.string.alert_title_playlist_error)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton(R.string.dialog_retry, (dialog, id) -> request.add(reqPlaylist));
+        if (cachedPlaylist != null) {
+            alert.setNegativeButton(R.string.dialog_cached, (dialog, id) -> {
+                playlist = cachedPlaylist;
+                setPlaylistToViewPager();
+            });
         }
+        alert.create().show();
     }
 
-    private void ShowErrorMessage(String error, boolean retry) {
-        tvStatus.setText(error);
-        tvRetry.setText(R.string.text_auto_retry);
-        ShowLayoutMessage(View.VISIBLE, true);
-
-        if (!retry) return;
-
-        Network network = new Network(this);
-        new AsyncSleep(this).task(new AsyncSleep.Task() {
-            @Override
-            public void onCountDown(int left) {
-                if (!network.IsConnected()) {
-                    tvStatus.setText(R.string.no_network);
-                }
-                if (left == 0) {
-                    tvRetry.setText(R.string.text_auto_retry_now);
-                }
-                else {
-                    tvRetry.setText(String.format(getString(R.string.text_auto_retry_second), left));
-                }
-            }
-            @Override
-            public void onFinish() {
-                if (network.IsConnected()) {
-                    volley.add(playlist);
-                }
-                else {
-                    ShowErrorMessage(getString(R.string.no_network), true);
-                }
-            }
-        }).start(5);
+    private void showAlertUpdate(String message, String fileUrl) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(R.string.alert_new_update)
+                .setMessage(message)
+                .setPositiveButton(R.string.dialog_download, (dialog, id) -> downloadFile(fileUrl))
+                .setNegativeButton(R.string.dialog_close, (dialog, id) -> dialog.cancel());
+        alert.create().show();
     }
 
-    private void DownloadFile(String url) {
+    private void downloadFile(String url) {
         DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
         request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
         DownloadManager manager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
@@ -216,7 +213,7 @@ public class MainActivity extends AppCompatActivity {
             layoutSettings.setVisibility(View.GONE);
         }
         else {
-            //super.onBackPressed();
+            super.onBackPressed();
             this.finish();
         }
     }

@@ -128,11 +128,10 @@ public class PlayerActivity extends AppCompatActivity {
     }
 
     private void RetryPlaying() {
-        Network network = new Network(this);
         new AsyncSleep(this).task(new AsyncSleep.Task() {
             @Override
             public void onCountDown(int left) {
-                if (!network.IsConnected()) {
+                if (!Network.IsConnected()) {
                     tvStatus.setText(R.string.no_network);
                 }
                 if (left == 0) {
@@ -144,7 +143,7 @@ public class PlayerActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-                if (network.IsConnected()) {
+                if (Network.IsConnected()) {
                     player.prepare(mediaSource);
                 }
                 else {
@@ -167,7 +166,7 @@ public class PlayerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        //super.onBackPressed();
+        super.onBackPressed();
         this.finish();
     }
 
