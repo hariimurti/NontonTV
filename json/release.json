@@ -1,6 +1,6 @@
 {
-    "versionCode": 390,
-    "versionName": "v1.2",
-    "changelog": ["menu pengaturan", "jalankan app saat boot", "putar terakhir dilihat"],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.2/net.harimurti.tv_v1.2_b390.apk"
+    "versionCode": 411,
+    "versionName": "v1.3",
+    "changelog": ["perubahan notifikasi error", "perbaikan saat rotasi layar", "perbaikan download"],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.3/net.harimurti.tv_v1.3_b411.apk"
 }
