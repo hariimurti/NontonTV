@@ -22,8 +22,8 @@
 
     <!-- alert update -->
     <string name="alert_new_update">Pembaharuan</string>
-    <string name="dialog_download">Unduh</string>
-    <string name="dialog_close">Tutup</string>
+    <string name="dialog_download">Unduh APK</string>
+    <string name="dialog_skip">Abaikan Sehari</string>
     <string name="message_update">Versi\n• Terpasang : %s (%d)\n• Terkini : %s (%d)\n\nPerubahan :</string>
     <string name="message_update_changelog">\n• %s</string>
     <string name="message_update_no_changelog">\n• lain-lain</string>

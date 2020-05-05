@@ -2,19 +2,25 @@ package net.harimurti.tv;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -102,7 +108,6 @@ public class MainActivity extends AppCompatActivity {
                 response -> {
                     try {
                         Release release = new Gson().fromJson(response, Release.class);
-                        preferences.setLastCheckUpdate();
 
                         if (release.versionCode <= BuildConfig.VERSION_CODE) return;
 
@@ -173,20 +178,36 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showAlertUpdate(String message, String fileUrl) {
+        if (Build.VERSION.SDK_INT >= VERSION_CODES.M
+                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },1000);
+        }
+
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.alert_new_update)
                 .setMessage(message)
                 .setPositiveButton(R.string.dialog_download, (dialog, id) -> downloadFile(fileUrl))
-                .setNegativeButton(R.string.dialog_close, (dialog, id) -> dialog.cancel());
+                .setNegativeButton(R.string.dialog_skip, (dialog, id) -> preferences.setLastCheckUpdate());
         alert.create().show();
     }
 
     private void downloadFile(String url) {
-        DownloadManager.Request request = new DownloadManager.Request(Uri.parse(url));
-        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-        DownloadManager manager = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
-        if (manager != null) {
-            manager.enqueue(request);
+        DownloadManager dm = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+        if (dm == null) return;
+
+        Uri uri = Uri.parse(url);
+        DownloadManager.Request request = new DownloadManager.Request(uri)
+                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, uri.getLastPathSegment())
+                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                .setVisibleInDownloadsUi(true);
+
+        try {
+            dm.enqueue(request);
+        }
+        catch (Exception e) {
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
 
