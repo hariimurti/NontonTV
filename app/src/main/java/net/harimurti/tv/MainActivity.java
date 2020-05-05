@@ -63,19 +63,13 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.view_pager);
         layoutLoading = findViewById(R.id.layout_loading);
         layoutSettings = findViewById(R.id.layout_settings);
-        layoutSettings.setOnClickListener(view -> {
-            layoutSettings.setVisibility(View.GONE);
-        });
+        layoutSettings.setOnClickListener(view -> layoutSettings.setVisibility(View.GONE));
         Switch swLaunch = findViewById(R.id.launch_at_boot);
         swLaunch.setChecked(preferences.isLaunchAtBoot());
-        swLaunch.setOnClickListener(view -> {
-            preferences.setLaunchAtBoot(swLaunch.isChecked());
-        });
+        swLaunch.setOnClickListener(view -> preferences.setLaunchAtBoot(swLaunch.isChecked()));
         Switch swOpenLast = findViewById(R.id.open_last_watched);
         swOpenLast.setChecked(preferences.isOpenLastWatched());
-        swOpenLast.setOnClickListener(view -> {
-            preferences.setOpenLastWatched(swOpenLast.isChecked());
-        });
+        swOpenLast.setOnClickListener(view -> preferences.setOpenLastWatched(swOpenLast.isChecked()));
 
         reqPlaylist = new StringRequest(Request.Method.GET,
                 getString(R.string.json_playlist),
