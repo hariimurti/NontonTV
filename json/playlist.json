@@ -155,6 +155,11 @@
       "stream_url": "http://livecdnh3.tvanywhere.ae/hls/boomerang/index.m3u8"
     },
     {
+      "cid": 3,
+      "name": "Box Hits",
+      "stream_url": "http://csm-e.tm.yospace.com/csm/extlive/boxplus01,boxhits-desktop.m3u8?yo.up=http%3a%2f%2fboxtv-origin-elb.cds1.yospace.com%2fuploads%2fboxhits%2f"
+    },
+    {
       "cid": 4,
       "name": "Cartoon Network",
       "stream_url": "http://203.153.218.28:9981/stream/channelid/251475608?ticket=5B6244F9555D96BA8A9DF1BBBA2BA2F8BDB05A86&profile=pass"
@@ -208,6 +213,26 @@
       "cid": 4,
       "name": "Disney Junior Asia",
       "stream_url": "http://103.47.132.164/PLTV/88888888/224/3221226011/index.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "DJing Hits",
+      "stream_url": "https://www.djing.com/tv/hits.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "DJing Karaoke",
+      "stream_url": "https://www.djing.com/tv/karaoke.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "DJing Live",
+      "stream_url": "https://www.djing.com/tv/live.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "DJing Summer Vibes",
+      "stream_url": "https://www.djing.com/tv/session_summer-vibes.m3u8"
     },
     {
       "cid": 5,
@@ -450,7 +475,7 @@
       "stream_url": "https://a.jsrdn.com/broadcast/e9b4093a41/+0000/high/c.m3u8"
     },
     {
-      "cid": 3,
+      "cid": 2,
       "name": "Movies Now",
       "stream_url": "https://timesnow.airtel.tv/live/MN_pull/chunklist_3.m3u8"
     },
@@ -503,6 +528,11 @@
       "cid": 5,
       "name": "Nat Geo Wild",
       "stream_url": "http://livecdnh1.tvanywhere.ae/hls/nat_geo_wild/index.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "National Geographic",
+      "stream_url": "http://livecdnh1.tvanywhere.ae/hls/nat_geo/05.m3u8"
     },
     {
       "cid": 0,
@@ -683,6 +713,11 @@
       "cid": 4,
       "name": "Toonmax",
       "stream_url": "http://45.126.83.51/qwr9ew/s/s50/index.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "Trace Urban",
+      "stream_url": "https://d2ktlibtvvj8vp.cloudfront.net/trace_urbaninter/5/prog_index.m3u8"
     },
     {
       "cid": 0,
