@@ -38,10 +38,12 @@ public class ContentAdapter extends ArrayAdapter<Channel> {
     private class ContentHolder {
         RelativeLayout layout;
         TextView textView;
+        ImageView imageView;
 
         public ContentHolder(View v) {
             layout = v.findViewById(R.id.layout);
             textView = v.findViewById(R.id.textview);
+            imageView = v.findViewById(R.id.logoview);
         }
     }
 
@@ -65,6 +67,10 @@ public class ContentAdapter extends ArrayAdapter<Channel> {
                     (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 60, dm);
         }
         viewHolder.textView.setText(data.name);
+        Picasso.get().load(data.logo)
+                .placeholder(R.drawable.logo_placeholder)
+                .error(R.drawable.logo_placeholder_error)
+                .into(viewHolder.imageView);
         viewHolder.layout.setOnClickListener(v -> {
             Intent intent = new Intent(context, PlayerActivity.class);
             intent.putExtra("channel_url", data.stream_url);
