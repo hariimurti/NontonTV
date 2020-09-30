@@ -221,6 +221,17 @@ public class MainActivity extends AppCompatActivity {
             return super.onKeyUp(keyCode, event);
         }
     }
+    
+        @Override
+    public boolean  onKeyLongPress (int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            layoutSettings.setVisibility(View.VISIBLE);
+            return true;
+        }
+        else {
+            return super.onKeyLongPress(keyCode, event);
+        }
+    }
 
     @Override
     public void onBackPressed() {
