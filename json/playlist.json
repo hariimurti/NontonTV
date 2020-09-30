@@ -67,6 +67,7 @@
     {
       "cid": 1,
       "name": "Al Jazeera English",
+      "logo" : "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Al-jazeera-logo.jpg/330px-Al-jazeera-logo.jpg",
       "stream_url": "https://live-hls-web-aje.getaj.net/AJE/index.m3u8"
     },
     {
@@ -77,6 +78,7 @@
     {
       "cid": 4,
       "name": "Animax Asia",
+      "logo" : "https://upload.wikimedia.org/wikipedia/commons/d/dc/Animax3.png",
       "stream_url": "http://210.210.155.35/session/b184e90e-89a3-11e9-8411-c81f66f89318/dr9445/h/h144/02.m3u8"
     },
     {
