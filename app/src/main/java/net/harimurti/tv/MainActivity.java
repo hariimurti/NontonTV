@@ -154,6 +154,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setPlaylistToViewPager() {
+        viewPager.setPageTransformer(new MarginPageTransformer(48));
         viewPager.setAdapter(new ViewPagerAdapter(this, playlist));
         new TabLayoutMediator(
                 tabLayout, viewPager, (tab, i) -> tab.setText(playlist.categories.get(i).name)
