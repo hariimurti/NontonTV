@@ -6,11 +6,13 @@ import android.os.Parcelable;
 public class Channel implements Parcelable {
     public int cid;
     public String name;
+    public String logo;
     public String stream_url;
 
     private Channel(Parcel in) {
         cid = in.readInt();
         name = in.readString();
+        logo = in.readString();
         stream_url = in.readString();
     }
 
@@ -35,6 +37,7 @@ public class Channel implements Parcelable {
     public void writeToParcel(Parcel parcel, int i) {
         parcel.writeInt(cid);
         parcel.writeString(name);
+        parcel.writeString(logo);
         parcel.writeString(stream_url);
     }
 }
