@@ -86,11 +86,10 @@ public class PlayerActivity extends AppCompatActivity {
 
         // define mediasource
         int contentType = Util.inferContentType(uri);
-        mediaSource = new ProgressiveMediaSource.Factory(factory).createMediaSource(uri);
         if (contentType == C.TYPE_HLS) {
             mediaSource = new HlsMediaSource.Factory(factory).createMediaSource(uri);
         }
-        if (contentType == C.TYPE_DASH) {
+        else if (contentType == C.TYPE_DASH) {
             if (drmLicense.isEmpty()) {
                 mediaSource = new DashMediaSource.Factory(factory).createMediaSource(uri);
             }
@@ -103,8 +102,11 @@ public class PlayerActivity extends AppCompatActivity {
                 mediaSource = new DashMediaSource.Factory(factory).setDrmSessionManager(drmSessionManager).createMediaSource(uri);
             }
         }
-        if (contentType == C.TYPE_SS) {
+        else if (contentType == C.TYPE_SS) {
             mediaSource = new SsMediaSource.Factory(factory).createMediaSource(uri);
+        }
+        else {
+            mediaSource = new ProgressiveMediaSource.Factory(factory).createMediaSource(uri);
         }
 
         // create player & set listener
