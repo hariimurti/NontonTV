@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -12,6 +13,10 @@ import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.Player.EventListener;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.drm.DefaultDrmSessionManager;
+import com.google.android.exoplayer2.drm.DrmSessionManager;
+import com.google.android.exoplayer2.drm.FrameworkMediaDrm;
+import com.google.android.exoplayer2.drm.HttpMediaDrmCallback;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
@@ -20,9 +25,13 @@ import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
+import net.harimurti.tv.data.License;
+import net.harimurti.tv.data.Playlist;
 import net.harimurti.tv.extra.AsyncSleep;
+import net.harimurti.tv.extra.JsonPlaylist;
 import net.harimurti.tv.extra.Network;
 import net.harimurti.tv.extra.Preferences;
 
@@ -56,6 +65,21 @@ public class PlayerActivity extends AppCompatActivity {
         String url = getIntent().getStringExtra("channel_url");
         Uri uri = Uri.parse(url);
 
+        // get drm license
+        String drmLicense = "";
+        Playlist playlist = new JsonPlaylist(this).read();
+        try {
+            for (License license: playlist.licenses) {
+                if (license.domain.isEmpty() || url.contains(license.domain)) {
+                    drmLicense = license.drm_url;
+                    break;
+                }
+            }
+        }
+        catch (Exception e) {
+            Log.e("PLAYER", "Can't find a license.", e);
+        }
+
         // prepare player user-agent
         String playerAgent = Util.getUserAgent(this, "ExoPlayer2");
         DataSource.Factory factory = new DefaultDataSourceFactory(this, playerAgent);
@@ -63,12 +87,25 @@ public class PlayerActivity extends AppCompatActivity {
         // define mediasource
         int contentType = Util.inferContentType(uri);
         mediaSource = new ProgressiveMediaSource.Factory(factory).createMediaSource(uri);
-        if (contentType == C.TYPE_HLS)
+        if (contentType == C.TYPE_HLS) {
             mediaSource = new HlsMediaSource.Factory(factory).createMediaSource(uri);
-        if (contentType == C.TYPE_DASH)
-            mediaSource = new DashMediaSource.Factory(factory).createMediaSource(uri);
-        if (contentType == C.TYPE_SS)
+        }
+        if (contentType == C.TYPE_DASH) {
+            if (drmLicense.isEmpty()) {
+                mediaSource = new DashMediaSource.Factory(factory).createMediaSource(uri);
+            }
+            else {
+                HttpMediaDrmCallback drmCallback = new HttpMediaDrmCallback(drmLicense,
+                        new DefaultHttpDataSourceFactory(playerAgent));
+                DrmSessionManager<?> drmSessionManager = new DefaultDrmSessionManager.Builder()
+                        .setUuidAndExoMediaDrmProvider(C.WIDEVINE_UUID, FrameworkMediaDrm.DEFAULT_PROVIDER)
+                        .build(drmCallback);
+                mediaSource = new DashMediaSource.Factory(factory).setDrmSessionManager(drmSessionManager).createMediaSource(uri);
+            }
+        }
+        if (contentType == C.TYPE_SS) {
             mediaSource = new SsMediaSource.Factory(factory).createMediaSource(uri);
+        }
 
         // create player & set listener
         player = new SimpleExoPlayer.Builder(this).build();
