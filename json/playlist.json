@@ -195,6 +195,11 @@
       "stream_url": "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil/playlist.m3u8"
     },
     {
+      "cid": 7,
+      "name": "DD Sports",
+      "stream_url": "http://103.199.161.254/Content/ddsports/Live/Channel(DDSPORTS)/index.m3u8"
+    },
+    {
       "cid": 3,
       "name": "Deluxe Music",
       "stream_url": "http://188.35.9.5:10007/stolen/200b/parasite.install"
@@ -255,6 +260,36 @@
       "stream_url": "http://livecdnh3.tvanywhere.ae/hls/duck/index.m3u8"
     },
     {
+      "cid": 7,
+      "name": "Dubai Racing",
+      "stream_url": "https://dmisvthvll.cdn.mangomolo.com/events/smil:events.smil/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Dubai Racing 2",
+      "stream_url": "https://dmithrvll.cdn.mangomolo.com/dubairacing/smil:dubairacing.smil/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Dubai Racing 3",
+      "stream_url": "https://dmithrvll.cdn.mangomolo.com/dubaimubasher/smil:dubaimubasher.smil/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Dubai Sport",
+      "stream_url": "https://dmitnthvll.cdn.mangomolo.com/dubaisports/smil:dubaisports.smil/index.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Dubai Sport 2",
+      "stream_url": "https://dmitwlvvll.cdn.mangomolo.com/dubaisportshd/smil:dubaisportshd.smil/index.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Dubai Sport 3",
+      "stream_url": "https://dmitwlvvll.cdn.mangomolo.com/dubaisportshd5/smil:dubaisportshd5.smil/index.m3u8"
+    },
+    {
       "cid": 6,
       "name": "Elshinta TV",
       "stream_url": "http://210.210.155.35/qwr9ew/s/s10/index.m3u8"
@@ -313,6 +348,16 @@
       "cid": 7,
       "name": "Fox Sports",
       "stream_url": "http://13.250.204.68/session/usee_tv/dakocan-premium/fs1.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Fox Sports Asia",
+      "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports_2000.stream/chunklist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Fox Sports Asia 2",
+      "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports2_2000.stream/chunklist.m3u8"
     },
     {
       "cid": 7,
@@ -778,6 +823,11 @@
       "cid": 7,
       "name": "TVRI Sport",
       "stream_url": "http://210.210.155.35/session/69e800f6-97c0-11e9-888f-b82a72d63267/qwr9ew/s/s107/index.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "TVRI Sport 2",
+      "stream_url": "http://wpc.d1627.nucdn.net:80/80D1627/o-tvri/Content/HLS/Live/Channel(TVRI4)/Stream(03)/index.m3u8"
     },
     {
       "cid": 1,
