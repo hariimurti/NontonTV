@@ -76,6 +76,11 @@
       "stream_url": "https://live-hls-web-aje.getaj.net/AJE/index.m3u8"
     },
     {
+      "cid": 6,
+      "name": "Al Quran Al Kareem",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/AlQuranAlKareem/sa_dash_vmx/AlQuranAlKareem.mpd"
+    },
+    {
       "cid": 5,
       "name": "Animal Planet",
       "stream_url": "http://203.153.218.28:9981/stream/channelid/1943600623?ticket=694FA36A0D756D8572C705243A10521FAF796351&profile=pass"
@@ -93,7 +98,7 @@
     {
       "cid": 0,
       "name": "ANTV",
-      "stream_url": "https://stream.suryaiptv.net/streams/5_.m3u8"
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/ANTV/sa_dash_vmx/ANTV.mpd"
     },
     {
       "cid": 1,
@@ -119,6 +124,11 @@
       "cid": 4,
       "name": "Baby First",
       "stream_url": "http://ms003.happytv.com.tw/live/F9YMztT5DcwWEr1f/index.m3u8"
+    },
+    {
+      "cid": 0,
+      "name": "Bali TV",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/BaliTV_Timeshift/sa_dash_timeshift/BaliTV_Timeshift.mpd"
     },
     {
       "cid": 1,
@@ -201,6 +211,11 @@
       "stream_url": "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil/playlist.m3u8"
     },
     {
+      "cid": 6,
+      "name": "DAAI TV",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/DAAITV/sa_dash_vmx/DAAITV.mpd"
+    },
+    {
       "cid": 7,
       "name": "DD Sports",
       "stream_url": "http://103.199.161.254/Content/ddsports/Live/Channel(DDSPORTS)/index.m3u8"
@@ -261,11 +276,6 @@
       "stream_url": "http://jiocgehub.jio.ril.com/Dsports_HD/Dsports_HD_800.m3u8"
     },
     {
-      "cid": 4,
-      "name": "Duck TV",
-      "stream_url": "http://livecdnh3.tvanywhere.ae/hls/duck/index.m3u8"
-    },
-    {
       "cid": 7,
       "name": "Dubai Racing",
       "stream_url": "https://dmisvthvll.cdn.mangomolo.com/events/smil:events.smil/playlist.m3u8"
@@ -296,6 +306,11 @@
       "stream_url": "https://dmitwlvvll.cdn.mangomolo.com/dubaisportshd5/smil:dubaisportshd5.smil/index.m3u8"
     },
     {
+      "cid": 4,
+      "name": "Duck TV",
+      "stream_url": "http://livecdnh3.tvanywhere.ae/hls/duck/index.m3u8"
+    },
+    {
       "cid": 6,
       "name": "Elshinta TV",
       "stream_url": "http://210.210.155.35/qwr9ew/s/s10/index.m3u8"
@@ -304,6 +319,11 @@
       "cid": 2,
       "name": "English Club",
       "stream_url": "http://livecdnh2.tvanywhere.ae/hls/english_club/index.m3u8"
+    },
+    {
+      "cid": 6,
+      "name": "EWTN",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/EWTN/sa_dash_vmx/EWTN.mpd"
     },
     {
       "cid": 2,
@@ -388,7 +408,7 @@
     {
       "cid": 0,
       "name": "GTV",
-      "stream_url": "https://linier3.rctiplus.id/live/eds/GTV_Logo/sa_hls/GTV_Logo.m3u8"
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/GTV-HD/sa_dash_vmx/GTV-HD.mpd"
     },
     {
       "cid": 2,
@@ -433,17 +453,22 @@
     {
       "cid": 0,
       "name": "Indosiar",
-      "stream_url": "http://45.126.83.51/qwr9ew/s/s04/01.m3u8"
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/Indosiar/sa_dash_vmx/Indosiar.mpd"
     },
     {
       "cid": 1,
-      "name": "iNews TV",
-      "stream_url": "https://linier3.rctiplus.id/live/eds/iNews_Logo/sa_hls/iNews_Logo-avc1_2000000=1.m3u8"
+      "name": "iNews",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/iNewsTV/sa_dash_vmx/iNewsTV.mpd"
     },
     {
       "cid": 6,
       "name": "Insan TV",
       "stream_url": "http://wz.insantv.net/group/ngrp:insantv_mobile/playlist.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Jak TV",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/JakTV/sa_dash_vmx/JakTV.mpd"
     },
     {
       "cid": 1,
@@ -458,7 +483,7 @@
     {
       "cid": 0,
       "name": "JTV",
-      "stream_url": "http://122.248.43.138:1935/ch2/myStream/playlist.m3u8"
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/JTV/sa_dash/JTV.mpd"
     },
     {
       "cid": 3,
@@ -478,12 +503,17 @@
     {
       "cid": 1,
       "name": "Kompas TV",
-      "stream_url": "http://210.210.155.35/qwr9ew/s/s104/01.m3u8"
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/KompasTV/sa_dash_vmx/KompasTV.mpd"
     },
     {
       "cid": 4,
       "name": "Larva TV",
       "stream_url": "http://ws.flv.nimo.tv/live/su1599512427560r1e0b7afba22fec0a5191643a588e9f06_high.flv"
+    },
+    {
+      "cid": 6,
+      "name": "Life",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/Life/sa_dash_vmx/Life.mpd"
     },
     {
       "cid": 2,
@@ -511,9 +541,14 @@
       "stream_url": "https://d3kw4vhbdpgtqk.cloudfront.net/hls/miaomipcweb/04.m3u8"
     },
     {
+      "cid": 1,
+      "name": "MNC News",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCNews/sa_dash_vmx/MNCNews.mpd"
+    },
+    {
       "cid": 0,
       "name": "MNC TV",
-      "stream_url": "https://linier3.rctiplus.id/live/eds/MNCTV_Logo/sa_hls/MNCTV_Logo.m3u8"
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCTV-HD/sa_dash_vmx/MNCTV-HD.mpd"
     },
     {
       "cid": 2,
@@ -544,6 +579,11 @@
       "cid": 3,
       "name": "Music Top",
       "stream_url": "http://live-edge01.telecentro.net.ar/live/smil:musictop.smil/playlist.m3u8"
+    },
+    {
+      "cid": 6,
+      "name": "Muslim TV",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCMuslim/sa_dash_vmx/MNCMuslim.mpd"
     },
     {
       "cid": 2,
@@ -628,7 +668,7 @@
     {
       "cid": 0,
       "name": "RCTI",
-      "stream_url": "https://linier3.rctiplus.id/live/eds/RCTI_Logo/sa_hls/RCTI_Logo.m3u8"
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/RCTI/sa_dash_vmx/RCTI.mpd"
     },
     {
       "cid": 7,
@@ -667,8 +707,13 @@
     },
     {
       "cid": 0,
+      "name": "RTV",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/RTV/sa_dash_vmx/RTV.mpd"
+    },
+    {
+      "cid": 0,
       "name": "SCTV",
-      "stream_url": "https://cdn-livetv5.metube.id/hls/sctv_480/index.m3u8"
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/SCTV/sa_dash_vmx/SCTV.mpd"
     },
     {
       "cid": 2,
@@ -732,6 +777,11 @@
     },
     {
       "cid": 6,
+      "name": "Tawaf TV",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/TawafTV/sa_dash_vmx/TawafTV.mpd"
+    },
+    {
+      "cid": 6,
       "name": "Tegar TV",
       "stream_url": "http://wms.klikhost.com/tegartv/live/playlist.m3u8"
     },
@@ -786,9 +836,14 @@
       "stream_url": "http://edge.vediostream.com/abr/tvikim/live/tvikim_480p/chunks.m3u8"
     },
     {
+      "cid": 6,
+      "name": "TV Muhammadiyah",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/TVMuhammadiyah/sa_dash_vmx/TVMuhammadiyah.mpd"
+    },
+    {
       "cid": 1,
       "name": "TV One",
-      "stream_url": "http://210.210.155.35/qwr9ew/s/s105/01.m3u8"
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/TVOne/sa_dash_vmx/TVOne.mpd"
     },
     {
       "cid": 1,
