@@ -1,6 +1,6 @@
 {
-    "versionCode": 411,
-    "versionName": "v1.3",
-    "changelog": ["perubahan notifikasi error", "perbaikan saat rotasi layar", "perbaikan download"],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.3/net.harimurti.tv_v1.3_b411.apk"
+    "versionCode": 419,
+    "versionName": "v1.4",
+    "changelog": ["bisa memutar tayangan dgn proteksi drm"],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.4/net.harimurti.tv_v1.4_b419.apk"
 }
