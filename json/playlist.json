@@ -107,6 +107,11 @@
     },
     {
       "cid": 2,
+      "name": "Asiancrush",
+      "stream_url": "https://ac-samsung.samsung.wurl.com/manifest/playlist.m3u8"
+    },
+    {
+      "cid": 2,
       "name": "AutoMoto TV",
       "stream_url": "http://100automoto.tv:1935/bgtv1/autotv/playlist.m3u8"
     },
@@ -138,7 +143,7 @@
     {
       "cid": 1,
       "name": "BeritaSatu",
-      "stream_url": "http://edge.linknetott.swiftserve.com/live/BsNew/amlst:beritasatunewsbs/playlist.m3u8"
+      "stream_url": "https://b1news.beritasatumedia.com/Beritasatu/B1News_1280x720.m3u8"
     },
     {
       "cid": 2,
@@ -311,6 +316,11 @@
       "stream_url": "http://livecdnh3.tvanywhere.ae/hls/duck/index.m3u8"
     },
     {
+      "cid": 7,
+      "name": "Edge Sport",
+      "stream_url": "https://edgesport-samsunguk.amagi.tv/playlist.m3u8"
+    },
+    {
       "cid": 6,
       "name": "Elshinta TV",
       "stream_url": "http://210.210.155.35/qwr9ew/s/s10/index.m3u8"
@@ -319,6 +329,11 @@
       "cid": 2,
       "name": "English Club",
       "stream_url": "http://livecdnh2.tvanywhere.ae/hls/english_club/index.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "ESPN",
+      "stream_url": "https://gma2.blab.email/fs2.m3u8"
     },
     {
       "cid": 6,
@@ -438,7 +453,12 @@
     {
       "cid": 2,
       "name": "Hits",
-      "stream_url": "http://210.210.155.35/session/a06e88b2-0598-11e9-a62b-b82a72d63267/uq2663/h/h37/01.m3u8"
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/HITS/sa_dash_vmx/HITS.mpd"
+    },
+    {
+      "cid": 2,
+      "name": "Hits Movies",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/HitsMovies/sa_dash_vmx/HitsMovies.mpd"
     },
     {
       "cid": 2,
@@ -541,6 +561,11 @@
       "stream_url": "https://d3kw4vhbdpgtqk.cloudfront.net/hls/miaomipcweb/04.m3u8"
     },
     {
+      "cid": 7,
+      "name": "MMA Junkie",
+      "stream_url": "https://a.jsrdn.com/broadcast/80f6ba72c8/+0000/c.m3u8"
+    },
+    {
       "cid": 1,
       "name": "MNC News",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCNews/sa_dash_vmx/MNCNews.mpd"
@@ -569,6 +594,16 @@
       "cid": 3,
       "name": "MTV",
       "stream_url": "http://unilivemtveu-lh.akamaihd.net/i/mtvno_1@346424/master.m3u8?fluxustv.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "MTV Biggest Pop",
+      "stream_url": "http://pluto-live.plutotv.net/egress/chandler/pluto01/live/VIACBS02/master.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "MTV Spankin' New",
+      "stream_url": "http://pluto-live.plutotv.net/egress/chandler/pluto01/live/VIACBS07/master.m3u8"
     },
     {
       "cid": 3,
@@ -621,9 +656,14 @@
       "stream_url": "http://livecdnh1.tvanywhere.ae/hls/nat_geo_wild/index.m3u8"
     },
     {
-      "cid": 2,
+      "cid": 5,
+      "name": "Nat Geo Wild [Asia]",
+      "stream_url": "http://50.7.161.82:8278/streams/d/Natgeowild/playlist.m3u8"
+    },
+    {
+      "cid": 5,
       "name": "National Geographic",
-      "stream_url": "http://livecdnh1.tvanywhere.ae/hls/nat_geo/05.m3u8"
+      "stream_url": "https://livecdn.fptplay.net/foxlive/natgeohd_hls.smil/chunklist_b2500000.m3u8"
     },
     {
       "cid": 0,
@@ -634,6 +674,16 @@
       "cid": 1,
       "name": "NHK World",
       "stream_url": "http://210.210.155.66/h/h23/02.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Nick (Pluto TV)",
+      "stream_url": "https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5ca673e0d0bd6c2689c94ce3/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel"
+    },
+    {
+      "cid": 4,
+      "name": "Nick Jr. (Pluto TV)",
+      "stream_url": "https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5ca6748a37b88b269472dad9/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel"
     },
     {
       "cid": 7,
@@ -794,6 +844,11 @@
       "cid": 7,
       "name": "Tennis Channel Plus",
       "stream_url": "https://playoutengine.sinclairstoryline.com/playout/f2f8b269-dd85-4434-bdd3-b3a64ca9cd60/g.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "The Indonesia Channel",
+      "stream_url": "http://wowzaprod236-i.akamaihd.net/hls/live/1019903/7dd4cf51/playlist.m3u8"
     },
     {
       "cid": 2,
