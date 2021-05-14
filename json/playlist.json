@@ -3,6 +3,10 @@
     {
       "domain": "liveanevia.mncnow.id",
       "drm_url": "https://mrpw.ptmnc01.verspective.net/?deviceId=YWY0OTBlZjEtODAyNC0zZTA0LWFhYzMtY2ZmMGE4NjVjZjU1"
+    },
+    {
+      "domain": "stream-cdn.mncnow.id",
+      "drm_url": "https://mrpw.ptmnc01.verspective.net/?deviceId=YWY0OTBlZjEtODAyNC0zZTA0LWFhYzMtY2ZmMGE4NjVjZjU1"
     }
   ],
   "categories": [
@@ -111,7 +115,7 @@
       "stream_url": "https://ac-samsung.samsung.wurl.com/manifest/playlist.m3u8"
     },
     {
-      "cid": 2,
+      "cid": 7,
       "name": "AutoMoto TV",
       "stream_url": "http://100automoto.tv:1935/bgtv1/autotv/playlist.m3u8"
     },
@@ -316,6 +320,11 @@
       "stream_url": "http://livecdnh3.tvanywhere.ae/hls/duck/index.m3u8"
     },
     {
+      "cid": 1,
+      "name": "DW",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/DW/sa_dash_vmx/DW.mpd"
+    },
+    {
       "cid": 7,
       "name": "Edge Sport",
       "stream_url": "https://edgesport-samsunguk.amagi.tv/playlist.m3u8"
@@ -471,6 +480,11 @@
       "stream_url": "http://iamchannel.org:1935/tes/1/chunklist.m3u8"
     },
     {
+      "cid": 1,
+      "name": "IDX Channel",
+      "stream_url": "https://stream-cdn.mncnow.id/live/eds/IDX/sa_dash_vmx/IDX.mpd"
+    },
+    {
       "cid": 0,
       "name": "Indosiar",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/Indosiar/sa_dash_vmx/Indosiar.mpd"
@@ -486,7 +500,7 @@
       "stream_url": "http://wz.insantv.net/group/ngrp:insantv_mobile/playlist.m3u8"
     },
     {
-      "cid": 2,
+      "cid": 0,
       "name": "Jak TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/JakTV/sa_dash_vmx/JakTV.mpd"
     },
@@ -882,8 +896,18 @@
     },
     {
       "cid": 0,
+      "name": "Trans 7 [Alt]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/Trans7/sa_dash_vmx/Trans7.mpd"
+    },
+    {
+      "cid": 0,
       "name": "Trans TV",
       "stream_url": "https://video.detik.com/transtv/smil:transtv.smil/playlist.m3u8"
+    },
+    {
+      "cid": 0,
+      "name": "Trans TV [Alt]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/TransTV/sa_dash_vmx/TransTV.mpd"
     },
     {
       "cid": 6,
