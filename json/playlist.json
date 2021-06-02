@@ -46,6 +46,11 @@
   "channels": [
     {
       "cid": 7,
+      "name": "ACCDN",
+      "stream_url": "https://120sports-accdn-1.samsung.wurl.com/manifest/playlist.m3u8"
+    },
+    {
+      "cid": 7,
       "name": "Adventure Sports Network",
       "stream_url": "https://dai2.xumo.com/amagi_hls_data_xumo1212A-adventuresportsnetwork/CDN/768x432_1200000/index.m3u8"
     },
@@ -68,6 +73,11 @@
       "cid": 6,
       "name": "Al Quran Al Kareem",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/AlQuranAlKareem/sa_dash_vmx/AlQuranAlKareem.mpd"
+    },
+    {
+      "cid": 5,
+      "name": "Animals Live",
+      "stream_url": "https://stitcheraws.unreel.me/wse-node02.powr.com/live/5c9537b8932c837b49397343/playlist.m3u8"
     },
     {
       "cid": 4,
@@ -108,6 +118,11 @@
       "cid": 1,
       "name": "BBC World News",
       "stream_url": "http://103.199.161.254/Content/bbcworld/Live/Channel(BBCworld)/index.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "BeIN Sports Xtra",
+      "stream_url": "https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5df975e2b27cf5000921c102/master.m3u8?deviceType=web&deviceMake=Opera&deviceModel=Opera&sid=855d6801-c912-428d-b620-ede4dd0c3b15&deviceId=b702181a-c1d6-4ee2-9481-753f471e2ce7&deviceVersion=66.0.3515.44&appVersion=2.9.3-b879e400d5df7a969d4bff8863fe5cb02c7120e6&deviceDNT=0&userId=&advertisingId=&deviceLat=40.8364&deviceLon=-74.1403&app_name=&appName=web&buildVersion=&appStoreUrl=&architecture=&includeExtendedEvents=false&serverSideAds=true"
     },
     {
       "cid": 1,
@@ -151,6 +166,11 @@
     },
     {
       "cid": 2,
+      "name": "Cine Life",
+      "stream_url": "https://dai.google.com/linear/hls/event/PFJ1Jhd6SsSMcu3qq86wzQ/master.m3u8"
+    },
+    {
+      "cid": 2,
       "name": "Cinema World",
       "stream_url": "http://210.210.155.35/uq2663/h/h04/index2.m3u8"
     },
@@ -163,6 +183,21 @@
       "cid": 1,
       "name": "CNN Indonesia",
       "stream_url": "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil/playlist.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Comedy Dynamics",
+      "stream_url": "https://comedydynamics-plex-ingest.cinedigm.com/playlist.m3u8"
+    },
+    {
+      "cid": 4,
+      "name": "CONtv Anime",
+      "stream_url": "https://contvanime.cinedigm.com/conapp-ssai/amagi_hls_data_xumo-host-contvanime-junction/CDN/playlist.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Crackle",
+      "stream_url": "https://crackle-plex.amagi.tv/playlist.m3u8"
     },
     {
       "cid": 6,
@@ -270,9 +305,24 @@
       "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports2_2000.stream/chunklist.m3u8"
     },
     {
+      "cid": 7,
+      "name": "Fox Sports News",
+      "stream_url": "https://austchannel-live.akamaized.net/hls/live/2002736/austchannel-sport/master.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "FTF - For The Fans",
+      "stream_url": "https://eleven-rebroadcast-samsung.roku.wurl.com/manifest/playlist.m3u8"
+    },
+    {
       "cid": 0,
       "name": "GTV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/GTV-HD/sa_dash_vmx/GTV-HD.mpd"
+    },
+    {
+      "cid": 4,
+      "name": "HappyKids",
+      "stream_url": "https://happykids-vizio.amagi.tv/playlist480p.m3u8"
     },
     {
       "cid": 2,
@@ -325,6 +375,16 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/JTV/sa_dash/JTV.mpd"
     },
     {
+      "cid": 4,
+      "name": "Kartoon Fun Time",
+      "stream_url": "https://simultv.s.llnwi.net/n4s4/KartoonCircus/interlink.m3u8"
+    },
+    {
+      "cid": 4,
+      "name": "Kidoodle TV",
+      "stream_url": "https://kidoodletv-kdtv-1.samsung.wurl.com/manifest/playlist.m3u8"
+    },
+    {
       "cid": 2,
       "name": "KIX",
       "stream_url": "http://210.210.155.35/session/e269237c-7e3d-11e8-a249-b82a72d63267/uq2663/h/h07/02.m3u8"
@@ -340,9 +400,24 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/Life/sa_dash_vmx/Life.mpd"
     },
     {
+      "cid": 2,
+      "name": "Lively Place",
+      "stream_url": "https://aenetworks-ae-1.roku.wurl.com/manifest/playlist.m3u8"
+    },
+    {
+      "cid": 5,
+      "name": "Love Nature",
+      "stream_url": "http://bamus-eng-roku.amagi.tv/playlist.m3u8"
+    },
+    {
       "cid": 6,
       "name": "Madinah TV",
       "stream_url": "http://45.126.83.51:80/qwr9ew/s/s27/01.m3u8"
+    },
+    {
+      "cid": 5,
+      "name": "Magellan TV",
+      "stream_url": "https://dai.google.com/linear/hls/event/5xreV3X4T9WxeIbrwOmdMA/master.m3u8"
     },
     {
       "cid": 6,
@@ -373,6 +448,16 @@
       "cid": 2,
       "name": "Movie Kingdom",
       "stream_url": "https://a.jsrdn.com/broadcast/e9b4093a41/+0000/high/c.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "MovieMix",
+      "stream_url": "https://dai.google.com/linear/hls/event/TSIJo6RCRZWuCD9WrKtRFg/master.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "MovieSphere",
+      "stream_url": "https://moviesphere-plex.amagi.tv/playlist.m3u8"
     },
     {
       "cid": 3,
@@ -430,6 +515,16 @@
       "stream_url": "http://210.210.155.35/qwr9ew/s/s08/01.m3u8"
     },
     {
+      "cid": 2,
+      "name": "New Kid TV",
+      "stream_url": "https://newidco-newkid-1.samsung.wurl.com/manifest/playlist.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "New K-Movies",
+      "stream_url": "https://newidco-newmovies-1.samsung.wurl.com/manifest/playlist.m3u8"
+    },
+    {
       "cid": 1,
       "name": "NHK World",
       "stream_url": "http://210.210.155.66/h/h23/02.m3u8"
@@ -443,6 +538,41 @@
       "cid": 4,
       "name": "Nick Jr. (Pluto TV)",
       "stream_url": "https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5ca6748a37b88b269472dad9/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel"
+    },
+    {
+      "cid": 7,
+      "name": "One Sports",
+      "stream_url": "http://103.11.112.28:1935/live2/smil:onesports.smil/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Outdoor Channel",
+      "stream_url": "https://outdoorchannel-samsungau.amagi.tv/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Outside TV+",
+      "stream_url": "https://outsidetvplus-stirr.amagi.tv/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Pac-12 Insider",
+      "stream_url": "https://pac12-roku-us.amagi.tv/playlist.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "People Are Awesome",
+      "stream_url": "https://jukin-peopleareawesome-2-gb.samsung.wurl.com/manifest/playlist.m3u8"
+    },
+    {
+      "cid": 4,
+      "name": "Pocket.Watch",
+      "stream_url": "https://pocketwatch.samsung.wurl.com/manifest/playlist.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Popstar! TV",
+      "stream_url": "https://linear-10.frequency.stream/10/hls/master/playlist.m3u8"
     },
     {
       "cid": 5,
@@ -461,8 +591,18 @@
     },
     {
       "cid": 7,
+      "name": "Red Bull TV",
+      "stream_url": "http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8"
+    },
+    {
+      "cid": 7,
       "name": "Redbull TV",
       "stream_url": "https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master_928.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Reelz",
+      "stream_url": "http://a.jsrdn.com/broadcast/d37066a396/+0000/mid/c.m3u8"
     },
     {
       "cid": 6,
@@ -496,6 +636,11 @@
     },
     {
       "cid": 2,
+      "name": "Skills + Thrills",
+      "stream_url": "https://aenetworks-skills-thrills-1.plex.wurl.com/manifest/playlist.m3u8"
+    },
+    {
+      "cid": 2,
       "name": "Sony One",
       "stream_url": "http://210.210.155.35/session/c30d8c14-f1bc-11e8-89c0-aa35b2893d02/uq2663/h/h143/01.m3u8"
     },
@@ -505,9 +650,29 @@
       "stream_url": "http://stream.spacetoon.com:1935/live/stchannel/smil:livesmil.smil/playlist.m3u8"
     },
     {
+      "cid": 7,
+      "name": "Sports Channel Network",
+      "stream_url": "https://vod365-sports-channel-network-1-gb.samsung.wurl.com/manifest/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Stadium",
+      "stream_url": "https://dai.google.com/linear/hls/event/0jRU1DBXSW6a_TFheLfAUQ/master.m3u8"
+    },
+    {
+      "cid": 3,
+      "name": "Stingray Karaoke",
+      "stream_url": "https://stingray-karaoke-1-gb.samsung.wurl.com/manifest/playlist.m3u8"
+    },
+    {
       "cid": 3,
       "name": "Street Music",
       "stream_url": "https://59d39900ebfb8.streamlock.net/streetmusic/streetmusic/playlist.m3u8"
+    },
+    {
+      "cid": 4,
+      "name": "Supertoons",
+      "stream_url": "https://kedoo-supertoonstv-1-gb.samsung.wurl.com/manifest/1200.m3u8"
     },
     {
       "cid": 0,
@@ -548,6 +713,16 @@
       "cid": 2,
       "name": "Thrill",
       "stream_url": "http://210.210.155.35/session/c8a974dc-7e3d-11e8-bf09-b82a72d63267/qwr9ew/s/s34/02.m3u8"
+    },
+    {
+      "cid": 4,
+      "name": "Toon Goggles",
+      "stream_url": "https://toongoggles-toongoggles-3-gb.samsung.wurl.com/manifest/playlist.m3u8"
+    },
+    {
+      "cid": 4,
+      "name": "Toon Goggles Junior",
+      "stream_url": "https://tg-junior.samsung.wurl.com/manifest/playlist.m3u8"
     },
     {
       "cid": 4,
@@ -635,14 +810,29 @@
       "stream_url": "http://118.97.50.107/Content/HLS/Live/Channel(TVRIYOGYAKARTA)/index.m3u8"
     },
     {
+      "cid": 3,
+      "name": "Vevo",
+      "stream_url": "https://5fa09a21270b74000140368e-samsung.ssai.zype.com/5fa09a21270b74000140368e_samsung/manifest.m3u8"
+    },
+    {
       "cid": 1,
       "name": "Voice of America",
       "stream_url": "http://voa-lh.akamaihd.net/i/voa_mpls_tvmc6@320298/master.m3u8?fluxustv.m3u8"
     },
     {
       "cid": 2,
+      "name": "Warner TV",
+      "stream_url": "http://203.154.243.89:11205/"
+    },
+    {
+      "cid": 2,
       "name": "Zee Bioskop",
       "stream_url": "http://210.210.155.35/qwr9ew/s/s32/01.m3u8?fluxustv.m3u8"
+    },
+    {
+      "cid": 4,
+      "name": "Zoo Moo",
+      "stream_url": "https://rockentertainment-zoomoo-1.samsung.wurl.com/manifest/playlist.m3u8"
     }
   ]
 }
