@@ -13,9 +13,9 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 
 
 ## Screenshots
-[<img src="https://github.com/hariimurti/NontonTV/blob/master/screenshot/20200412-115720.jpg" height=180>](https://github.com/hariimurti/NontonTV/blob/master/screenshot/20200412-115720.jpg)
-[<img src="https://github.com/hariimurti/NontonTV/blob/master/screenshot/20200412-115727.jpg" width=320>](https://github.com/hariimurti/NontonTV/blob/master/screenshot/20200412-115727.jpg)
-[<img src="https://github.com/hariimurti/NontonTV/blob/master/screenshot/20200412-115735.jpg" width=320>](https://github.com/hariimurti/NontonTV/blob/master/screenshot/20200412-115735.jpg)
+[<img src="./screenshot/20200412-115720.jpg" height=180>](./screenshot/20200412-115720.jpg)
+[<img src="./screenshot/20200412-115727.jpg" width=320>](./screenshot/20200412-115727.jpg)
+[<img src="./screenshot/20200412-115735.jpg" width=320>](./screenshot/20200412-115735.jpg)
 
 
 ## Thanks to
