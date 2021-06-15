@@ -1,36 +1,36 @@
 <resources>
-    <string name="app_name">Nonton TV</string>
-
-    <!-- some text -->
-    <string name="something_went_wrong">Ada sesuatu yang salah!</string>
-    <string name="source_offline">Siaran tidak dapat diakses!</string>
-    <string name="text_auto_retry">akan dicoba ulang otomatis dalam 5</string>
-    <string name="text_auto_retry_second">akan dicoba ulang otomatis dalam %d</string>
-    <string name="text_auto_retry_now">akan dicoba ulang otomatis sekarang</string>
-    <string name="no_network">Tidak ada koneksi internet!</string>
-    <string name="press_back_to_exit">Tekan BACK lagi untuk keluar!</string>
+    <string name="app_name" translatable="false">Nonton TV</string>
 
     <!-- json link -->
-    <string name="json_playlist">https://github.com/hariimurti/NontonTV/raw/master/json/playlist.json</string>
-    <string name="json_release">https://github.com/hariimurti/NontonTV/raw/master/json/release.json</string>
+    <string name="json_playlist" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/playlist.json</string>
+    <string name="json_release" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/release.json</string>
+
+    <!-- some text -->
+    <string name="something_went_wrong">Something went wrong!</string>
+    <string name="source_offline">Broadcast not accessible!</string>
+    <string name="text_auto_retry">Retry automatically in 5</string>
+    <string name="text_auto_retry_second">Retry automatically in %d</string>
+    <string name="text_auto_retry_now">Will retry automatically now</string>
+    <string name="no_network">No internet connection!</string>
+    <string name="press_back_to_exit">Press BACK again to exit!</string>
 
     <!-- alert playlist error -->
-    <string name="alert_title_playlist_error">Ada masalah</string>
-    <string name="error_4xx">File playlist tidak dapat diakses!\nKode respon : %d</string>
-    <string name="error_5xx">Server tidak dapat diakses!\nKode respon : %d</string>
-    <string name="dialog_retry">Coba lagi</string>
-    <string name="dialog_cached">Gunakan cache</string>
+    <string name="alert_title_playlist_error">Something wrong</string>
+    <string name="error_4xx">Playlist file cannot be accessed!\nResponse code : %d</string>
+    <string name="error_5xx">Server cannot be accessed!\nResponse code : %d</string>
+    <string name="dialog_retry">Try again</string>
+    <string name="dialog_cached">Use the previous cache</string>
 
     <!-- alert update -->
-    <string name="alert_new_update">Pembaharuan</string>
-    <string name="dialog_download">Unduh APK</string>
-    <string name="dialog_skip">Abaikan Sehari</string>
-    <string name="message_update">Versi\n• Terpasang : %s (%d)\n• Terkini : %s (%d)\n\nPerubahan :</string>
-    <string name="message_update_changelog">\n• %s</string>
-    <string name="message_update_no_changelog">\n• lain-lain</string>
+    <string name="alert_new_update">Update</string>
+    <string name="dialog_download">Download APK</string>
+    <string name="dialog_skip">Ignore 1 day</string>
+    <string name="message_update">Version\n• Installed : %s (%d)\n• Latest : %s (%d)\n\nChanges :</string>
+    <string name="message_update_changelog" translatable="false">\n• %s</string>
+    <string name="message_update_no_changelog">\n• others</string>
 
     <!-- settings -->
-    <string name="settings">Pengaturan</string>
-    <string name="launch_at_boot">Jalankan app saat boot</string>
-    <string name="open_last_watched">Putar terakhir dilihat</string>
+    <string name="settings">Settings</string>
+    <string name="launch_at_boot">Run app on boot</string>
+    <string name="open_last_watched">Play last seen</string>
 </resources>
