@@ -8,6 +8,7 @@
     <string name="text_auto_retry_second">akan dicoba ulang otomatis dalam %d</string>
     <string name="text_auto_retry_now">akan dicoba ulang otomatis sekarang</string>
     <string name="no_network">Tidak ada koneksi internet!</string>
+    <string name="press_back_to_exit">Tekan BACK lagi untuk keluar!</string>
 
     <!-- json link -->
     <string name="json_playlist">https://github.com/hariimurti/NontonTV/raw/master/json/playlist.json</string>

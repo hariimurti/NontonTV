@@ -4,9 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
@@ -37,6 +39,7 @@ import net.harimurti.tv.extra.Preferences;
 
 public class PlayerActivity extends AppCompatActivity {
     public static boolean isFirst = true;
+    private boolean doubleBackToExitPressedOnce;
     private SimpleExoPlayer player;
     private MediaSource mediaSource;
     private View layoutStatus, layoutSpin, layoutText;
@@ -205,8 +208,16 @@ public class PlayerActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
-        this.finish();
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            this.finish();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getString(R.string.press_back_to_exit), Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
     @Override
