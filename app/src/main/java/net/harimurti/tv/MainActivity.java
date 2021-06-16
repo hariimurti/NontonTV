@@ -2,6 +2,7 @@ package net.harimurti.tv;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
@@ -19,7 +20,6 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.Switch;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private StringRequest reqPlaylist;
     private RequestQueue request;
 
-    @SuppressLint({"DefaultLocale", "UseSwitchCompatOrMaterialCode"})
+    @SuppressLint("DefaultLocale")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,10 +70,10 @@ public class MainActivity extends AppCompatActivity {
         layoutLoading = findViewById(R.id.layout_loading);
         layoutSettings = findViewById(R.id.layout_settings);
         layoutSettings.setOnClickListener(view -> layoutSettings.setVisibility(View.GONE));
-        Switch swLaunch = findViewById(R.id.launch_at_boot);
+        SwitchCompat swLaunch = findViewById(R.id.launch_at_boot);
         swLaunch.setChecked(preferences.isLaunchAtBoot());
         swLaunch.setOnClickListener(view -> preferences.setLaunchAtBoot(swLaunch.isChecked()));
-        Switch swOpenLast = findViewById(R.id.open_last_watched);
+        SwitchCompat swOpenLast = findViewById(R.id.open_last_watched);
         swOpenLast.setChecked(preferences.isOpenLastWatched());
         swOpenLast.setOnClickListener(view -> preferences.setOpenLastWatched(swOpenLast.isChecked()));
 

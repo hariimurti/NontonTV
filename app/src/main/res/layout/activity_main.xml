@@ -77,7 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="20dp"/>
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/launch_at_boot"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -87,7 +87,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="5dp"/>
 
-                <Switch
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/open_last_watched"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
