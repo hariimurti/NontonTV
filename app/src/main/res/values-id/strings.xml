@@ -26,4 +26,5 @@
     <string name="settings">Pengaturan</string>
     <string name="launch_at_boot">Jalankan app saat boot</string>
     <string name="open_last_watched">Putar terakhir dilihat</string>
+    <string name="no_donnload_manager">Android ini tidak punya pengelola unduhan</string>
 </resources>

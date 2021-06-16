@@ -194,16 +194,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void downloadFile(String url) {
-        DownloadManager dm = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
-        if (dm == null) return;
-
-        Uri uri = Uri.parse(url);
-        DownloadManager.Request request = new DownloadManager.Request(uri)
-                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, uri.getLastPathSegment())
-                .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                .setVisibleInDownloadsUi(true);
-
         try {
+            Uri uri = Uri.parse(url);
+            DownloadManager dm = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+            if (dm == null) {
+                Toast.makeText(this, R.string.no_donnload_manager, Toast.LENGTH_SHORT).show();
+                startActivity(new Intent(Intent.ACTION_VIEW, uri));
+                return;
+            }
+
+            DownloadManager.Request request = new DownloadManager.Request(uri)
+                    .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, uri.getLastPathSegment())
+                    .setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                    .setVisibleInDownloadsUi(true);
             dm.enqueue(request);
         }
         catch (Exception e) {

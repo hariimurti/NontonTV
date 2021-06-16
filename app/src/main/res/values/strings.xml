@@ -28,6 +28,7 @@
     <string name="message_update">Version\n• Installed : %s (%d)\n• Latest : %s (%d)\n\nChanges :</string>
     <string name="message_update_changelog" translatable="false">\n• %s</string>
     <string name="message_update_no_changelog">\n• others</string>
+    <string name="no_donnload_manager">This android do not have a download manager</string>
 
     <!-- settings -->
     <string name="settings">Settings</string>
