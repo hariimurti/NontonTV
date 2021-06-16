@@ -14,7 +14,8 @@
     <string name="no_network">No internet connection!</string>
     <string name="press_back_to_exit">Press BACK again to exit!</string>
 
-    <!-- alert playlist error -->
+    <!-- alert playlist -->
+    <string name="playlist_updated">Playlist has been updated!</string>
     <string name="alert_title_playlist_error">Something wrong</string>
     <string name="error_4xx">Playlist file cannot be accessed!\nResponse code : %d</string>
     <string name="error_5xx">Server cannot be accessed!\nResponse code : %d</string>
@@ -34,4 +35,5 @@
     <string name="settings">Settings</string>
     <string name="launch_at_boot">Run app on boot</string>
     <string name="open_last_watched">Play last seen</string>
+    <string name="reload_playlist">Reload Playlist</string>
 </resources>

@@ -2,6 +2,7 @@ package net.harimurti.tv;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -76,6 +77,8 @@ public class MainActivity extends AppCompatActivity {
         SwitchCompat swOpenLast = findViewById(R.id.open_last_watched);
         swOpenLast.setChecked(preferences.isOpenLastWatched());
         swOpenLast.setOnClickListener(view -> preferences.setOpenLastWatched(swOpenLast.isChecked()));
+        AppCompatButton btnReload = findViewById(R.id.reload_playlist);
+        btnReload.setOnClickListener(view -> request.add(reqPlaylist));
 
         reqPlaylist = new StringRequest(Request.Method.GET,
                 getString(R.string.json_playlist),
@@ -84,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                         playlist = new Gson().fromJson(response, Playlist.class);
                         setPlaylistToViewPager();
                         new JsonPlaylist(this).write(response);
+                        Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show();
                     } catch (JsonSyntaxException error) {
                         showAlertError(error.getMessage());
                     }

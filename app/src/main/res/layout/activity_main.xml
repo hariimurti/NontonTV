@@ -93,6 +93,16 @@
                     android:layout_height="wrap_content"
                     android:text="@string/open_last_watched" />
 
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="15dp"/>
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:id="@+id/reload_playlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/reload_playlist" />
+
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
