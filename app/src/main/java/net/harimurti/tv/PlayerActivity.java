@@ -3,22 +3,21 @@ package net.harimurti.tv;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowInsetsController;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.exoplayer2.C;
 import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
-import com.google.android.exoplayer2.Player.EventListener;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.drm.DefaultDrmSessionManager;
-import com.google.android.exoplayer2.drm.DrmSessionManager;
-import com.google.android.exoplayer2.drm.FrameworkMediaDrm;
-import com.google.android.exoplayer2.drm.HttpMediaDrmCallback;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.source.dash.DashMediaSource;
@@ -27,7 +26,6 @@ import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
 
 import net.harimurti.tv.data.License;
@@ -36,6 +34,8 @@ import net.harimurti.tv.extra.AsyncSleep;
 import net.harimurti.tv.extra.JsonPlaylist;
 import net.harimurti.tv.extra.Network;
 import net.harimurti.tv.extra.Preferences;
+
+import java.util.Objects;
 
 public class PlayerActivity extends AppCompatActivity {
     public static boolean isFirst = true;
@@ -53,10 +53,6 @@ public class PlayerActivity extends AppCompatActivity {
         isFirst = false;
         Preferences preferences = new Preferences();
 
-        // hide navigation bar
-        getWindow().getDecorView().setSystemUiVisibility(
-                View.SYSTEM_UI_FLAG_HIDE_NAVIGATION | View.SYSTEM_UI_FLAG_FULLSCREEN);
-
         // define some view
         layoutStatus = findViewById(R.id.layout_status);
         layoutSpin = findViewById(R.id.layout_spin);
@@ -73,7 +69,7 @@ public class PlayerActivity extends AppCompatActivity {
         Playlist playlist = new JsonPlaylist(this).read();
         try {
             for (License license: playlist.licenses) {
-                if (license.domain.isEmpty() || url.contains(license.domain)) {
+                if (license.domain.isEmpty() || Objects.requireNonNull(url).contains(license.domain)) {
                     drmLicense = license.drm_url;
                     break;
                 }
@@ -86,49 +82,50 @@ public class PlayerActivity extends AppCompatActivity {
         // prepare player user-agent
         String playerAgent = Util.getUserAgent(this, "ExoPlayer2");
         DataSource.Factory factory = new DefaultDataSourceFactory(this, playerAgent);
+        MediaItem mediaItem = MediaItem.fromUri(uri);
 
         // define mediasource
         int contentType = Util.inferContentType(uri);
         if (contentType == C.TYPE_HLS) {
-            mediaSource = new HlsMediaSource.Factory(factory).createMediaSource(uri);
+            mediaSource = new HlsMediaSource.Factory(factory).createMediaSource(mediaItem);
         }
         else if (contentType == C.TYPE_DASH) {
-            if (drmLicense.isEmpty()) {
-                mediaSource = new DashMediaSource.Factory(factory).createMediaSource(uri);
+            if (!drmLicense.isEmpty()) {
+                mediaItem = new MediaItem.Builder()
+                        .setUri(uri)
+                        .setDrmUuid(C.WIDEVINE_UUID)
+                        .setDrmLicenseUri(drmLicense)
+                        .setDrmMultiSession(true)
+                        .build();
             }
-            else {
-                HttpMediaDrmCallback drmCallback = new HttpMediaDrmCallback(drmLicense,
-                        new DefaultHttpDataSourceFactory(playerAgent));
-                DrmSessionManager<?> drmSessionManager = new DefaultDrmSessionManager.Builder()
-                        .setUuidAndExoMediaDrmProvider(C.WIDEVINE_UUID, FrameworkMediaDrm.DEFAULT_PROVIDER)
-                        .build(drmCallback);
-                mediaSource = new DashMediaSource.Factory(factory).setDrmSessionManager(drmSessionManager).createMediaSource(uri);
-            }
+            mediaSource = new DashMediaSource.Factory(factory).createMediaSource(mediaItem);
         }
         else if (contentType == C.TYPE_SS) {
-            mediaSource = new SsMediaSource.Factory(factory).createMediaSource(uri);
+            mediaSource = new SsMediaSource.Factory(factory).createMediaSource(mediaItem);
         }
         else {
-            mediaSource = new ProgressiveMediaSource.Factory(factory).createMediaSource(uri);
+            mediaSource = new ProgressiveMediaSource.Factory(factory).createMediaSource(mediaItem);
         }
 
         // create player & set listener
         player = new SimpleExoPlayer.Builder(this).build();
-        player.addListener(new EventListener() {
+        player.addListener(new Player.Listener() {
             @Override
-            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
-                if (playbackState == Player.STATE_READY) {
+            public void onIsPlayingChanged(boolean isPlaying) {
+                int playbackState = player.getPlaybackState();
+                if (isPlaying || playbackState == Player.STATE_READY) {
                     ShowLayoutMessage(View.GONE, false);
                     preferences.setLastWatched(url);
                 }
-                if (playbackState == Player.STATE_BUFFERING) {
-                    ShowLayoutMessage(View.VISIBLE, false);
-                }
-                if (playbackState == Player.STATE_IDLE || playbackState == Player.STATE_ENDED) {
-                    ShowLayoutMessage(View.VISIBLE, true);
-                    tvStatus.setText(R.string.source_offline);
-                    tvRetry.setText(R.string.text_auto_retry);
-                    RetryPlaying();
+                else {
+                    if (playbackState == Player.STATE_BUFFERING) {
+                        ShowLayoutMessage(View.VISIBLE, false);
+                    } else {
+                        ShowLayoutMessage(View.VISIBLE, true);
+                        tvStatus.setText(R.string.source_offline);
+                        tvRetry.setText(R.string.text_auto_retry);
+                        RetryPlaying();
+                    }
                 }
             }
 
@@ -152,13 +149,22 @@ public class PlayerActivity extends AppCompatActivity {
         playerView.setPlayer(player);
 
         // play mediasouce
-        player.prepare(mediaSource);
+        player.setMediaSource(mediaSource);
+        player.prepare();
     }
 
+    @SuppressWarnings("deprecation")
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
         super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
+        if (!hasFocus) return;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            final WindowInsetsController controller = getWindow().getInsetsController();
+            if (controller == null) return;
+            controller.hide(android.view.WindowInsets.Type.statusBars() | android.view.WindowInsets.Type.navigationBars());
+            controller.setSystemBarsBehavior(WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE);
+        }
+        else {
             getWindow().getDecorView().setSystemUiVisibility(
                     View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
@@ -186,7 +192,8 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if (Network.IsConnected()) {
-                    player.prepare(mediaSource);
+                    player.setMediaSource(mediaSource);
+                    player.prepare();
                 }
                 else {
                     RetryPlaying();
@@ -217,7 +224,7 @@ public class PlayerActivity extends AppCompatActivity {
         this.doubleBackToExitPressedOnce = true;
         Toast.makeText(this, getString(R.string.press_back_to_exit), Toast.LENGTH_SHORT).show();
 
-        new Handler().postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
+        new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 
     @Override

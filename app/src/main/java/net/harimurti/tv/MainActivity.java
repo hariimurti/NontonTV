@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private StringRequest reqPlaylist;
     private RequestQueue request;
 
-    @SuppressLint("DefaultLocale")
+    @SuppressLint({"DefaultLocale", "UseSwitchCompatOrMaterialCode"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
