@@ -41,7 +41,6 @@ public class PlayerActivity extends AppCompatActivity {
     public static boolean isFirst = true;
     private boolean doubleBackToExitPressedOnce;
     private SimpleExoPlayer player;
-    private MediaSource mediaSource;
     private View layoutStatus, layoutSpin, layoutText;
     private TextView tvStatus, tvRetry;
 
@@ -82,9 +81,10 @@ public class PlayerActivity extends AppCompatActivity {
         // prepare player user-agent
         String playerAgent = Util.getUserAgent(this, "ExoPlayer2");
         DataSource.Factory factory = new DefaultDataSourceFactory(this, playerAgent);
-        MediaItem mediaItem = MediaItem.fromUri(uri);
 
         // define mediasource
+        MediaSource mediaSource;
+        MediaItem mediaItem = MediaItem.fromUri(uri);
         int contentType = Util.inferContentType(uri);
         if (contentType == C.TYPE_HLS) {
             mediaSource = new HlsMediaSource.Factory(factory).createMediaSource(mediaItem);
@@ -192,7 +192,6 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if (Network.IsConnected()) {
-                    player.setMediaSource(mediaSource);
                     player.prepare();
                 }
                 else {
