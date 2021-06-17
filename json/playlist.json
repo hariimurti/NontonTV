@@ -460,6 +460,11 @@
       "stream_url": "https://eleven-rebroadcast-samsung.roku.wurl.com/manifest/playlist.m3u8"
     },
     {
+      "cid": 2,
+      "name": "GEM [ID]",
+      "stream_url": "http://210.210.155.35/uq2663/h/h19/01.m3u8"
+    },
+    {
       "cid": 0,
       "name": "GTV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/GTV-HD/sa_dash_vmx/GTV-HD.mpd"
@@ -783,6 +788,16 @@
       "cid": 2,
       "name": "OKTV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/OKTV/sa_dash_vmx/OKTV.mpd"
+    },
+    {
+      "cid": 2,
+      "name": "ONE [ID]",
+      "stream_url": "http://45.126.83.51/uq2663/h/h143/index.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "ONE HD",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/ONE-HD/sa_dash_vmx/ONE-HD.mpd"
     },
     {
       "cid": 7,
