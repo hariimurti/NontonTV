@@ -97,12 +97,12 @@
     {
       "cid": 4,
       "name": "Animax Asia",
-      "stream_url": "http://210.210.155.35/session/b184e90e-89a3-11e9-8411-c81f66f89318/dr9445/h/h144/02.m3u8"
+      "stream_url": "http://210.210.155.35/dr9445/h/h144/02.m3u8"
     },
     {
       "cid": 4,
       "name": "Aniplus Asia",
-      "stream_url": "http://210.210.155.35/session/0d216142-f3f5-11e8-ab67-89df93dc8d44/dr9445/h/h02/index.m3u8"
+      "stream_url": "http://210.210.155.35/dr9445/h/h02/index.m3u8"
     },
     {
       "cid": 0,
@@ -122,7 +122,7 @@
     {
       "cid": 2,
       "name": "AXN",
-      "stream_url": "http://210.210.155.66/h/h141/02.m3u8"
+      "stream_url": "http://210.210.155.66/h/h141/01.m3u8"
     },
     {
       "cid": 2,
@@ -222,12 +222,12 @@
     {
       "cid": 7,
       "name": "Champion TV 1",
-      "stream_url": "https://znjjprwzgeyyp.vidio.com/live/6685/master.m3u8"
+      "stream_url": "http://us.5d63d49f772ce.cloudns.org/US33T4/MPD/master.m3u8?id=champion1"
     },
     {
       "cid": 7,
       "name": "Champion TV 2",
-      "stream_url": "https://znjjprwzgeyyp.vidio.com/live/6686/master.m3u8"
+      "stream_url": "http://us.5d63d49f772ce.cloudns.org/US33T4/MPD/master.m3u8?id=champion2"
     },
     {
       "cid": 7,
