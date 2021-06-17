@@ -51,11 +51,6 @@
     },
     {
       "cid": 7,
-      "name": "Action Sports 4U",
-      "stream_url": "https://nimble.dashmedia.tv/onestudio/actionsportstv/playlist.m3u8?fluxustv.m3u8"
-    },
-    {
-      "cid": 7,
       "name": "Adventure Sports Network",
       "stream_url": "https://dai2.xumo.com/amagi_hls_data_xumo1212A-adventuresportsnetwork/CDN/768x432_1200000/index.m3u8"
     },
@@ -135,11 +130,6 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/BaliTV_Timeshift/sa_dash_timeshift/BaliTV_Timeshift.mpd"
     },
     {
-      "cid": 7,
-      "name": "Bayern Munchen TV",
-      "stream_url": "http://fcblive-a.akamaized.net/dc-1/live/hls/p/2090621/e/1_ts6d5c4t/sd/6000/t/wPWuj7PJbQj6MbHjb-7PzA/index-s32.m3u8"
-    },
-    {
       "cid": 5,
       "name": "BBC Earth [HD]",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/BBCEarth-HD/sa_dash_vmx/BBCEarth-HD.mpd"
@@ -178,16 +168,6 @@
       "cid": 2,
       "name": "Blue Ant Extreme",
       "stream_url": "http://45.126.83.51/dr9445/h/h15/01.m3u8"
-    },
-    {
-      "cid": 4,
-      "name": "Boing TV",
-      "stream_url": "https://mdslivehlsb-i.akamaihd.net/hls/live/623616/boing/bitrate_2.m3u8"
-    },
-    {
-      "cid": 3,
-      "name": "Box Hits",
-      "stream_url": "http://csm-e.tm.yospace.com/csm/extlive/boxplus01,boxhits-desktop.m3u8?yo.up=http%3a%2f%2fboxtv-origin-elb.cds1.yospace.com%2fuploads%2fboxhits%2f"
     },
     {
       "cid": 4,
@@ -231,11 +211,6 @@
     },
     {
       "cid": 7,
-      "name": "Champion TV 3",
-      "stream_url": "https://znjjprwzgeyyp.vidio.com/live/6786/master.m3u8"
-    },
-    {
-      "cid": 7,
       "name": "Channel 3 [HD]",
       "stream_url": "https://cdnlive.goprimetime.info/feed/ch3hd/index.m3u8"
     },
@@ -270,11 +245,6 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/CinemaxHD2/sa_dash_vmx/CinemaxHD2.mpd"
     },
     {
-      "cid": 2,
-      "name": "Citra Entertainment",
-      "stream_url": "https://znjjprwzgeyyp.vidio.com/live/6402/master.m3u8"
-    },
-    {
       "cid": 1,
       "name": "CNBC Indonesia",
       "stream_url": "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil/playlist.m3u8"
@@ -283,11 +253,6 @@
       "cid": 1,
       "name": "CNN Indonesia",
       "stream_url": "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil/playlist.m3u8"
-    },
-    {
-      "cid": 2,
-      "name": "Comedy Dynamics",
-      "stream_url": "https://comedydynamics-plex-ingest.cinedigm.com/playlist.m3u8"
     },
     {
       "cid": 4,
@@ -350,11 +315,6 @@
       "stream_url": "https://www.djing.com/tv/live.m3u8"
     },
     {
-      "cid": 4,
-      "name": "Dreamwork",
-      "stream_url": "http://103.146.185.235:8888/294/294/224"
-    },
-    {
       "cid": 7,
       "name": "Dubai Racing",
       "stream_url": "https://dmisvthvll.cdn.mangomolo.com/events/smil:events.smil/playlist.m3u8"
@@ -385,11 +345,6 @@
       "stream_url": "https://dmitwlvvll.cdn.mangomolo.com/dubaisportshd5/smil:dubaisportshd5.smil/index.m3u8"
     },
     {
-      "cid": 4,
-      "name": "Duck TV",
-      "stream_url": "http://livecdnh3.tvanywhere.ae/hls/duck/index.m3u8"
-    },
-    {
       "cid": 7,
       "name": "Dunia Games",
       "stream_url": "https://cdn-telkomsel-01.akamaized.net/Content/HLS/Live/channel(ec41a5e2-09e4-431d-b92e-383fa7abe25c)/index.m3u8"
@@ -398,11 +353,6 @@
       "cid": 1,
       "name": "DW",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/DW/sa_dash_vmx/DW.mpd"
-    },
-    {
-      "cid": 4,
-      "name": "EBS Kids",
-      "stream_url": "http://103.146.185.235:8888/294/294/1134"
     },
     {
       "cid": 7,
@@ -510,24 +460,9 @@
       "stream_url": "https://eleven-rebroadcast-samsung.roku.wurl.com/manifest/playlist.m3u8"
     },
     {
-      "cid": 7,
-      "name": "Gone Fishing",
-      "stream_url": "https://edge1.dashmedia.tv/onestudio/gonefishing/playlist.m3u8?fluxustv.m3u8"
-    },
-    {
-      "cid": 7,
-      "name": "Gone Hunting",
-      "stream_url": "https://edge1.dashmedia.tv/onestudio/hunting/playlist.m3u8?fluxustv.m3u8"
-    },
-    {
       "cid": 0,
       "name": "GTV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/GTV-HD/sa_dash_vmx/GTV-HD.mpd"
-    },
-    {
-      "cid": 4,
-      "name": "Halow Kids",
-      "stream_url": "http://halowtv.online:8080/HalowTV/FSyzHfEhvb/139"
     },
     {
       "cid": 4,
@@ -851,11 +786,6 @@
     },
     {
       "cid": 7,
-      "name": "Olympic Channel",
-      "stream_url": "http://ott-live.olympicchannel.com/out/u/OC1_2.m3u8"
-    },
-    {
-      "cid": 7,
       "name": "One Sports",
       "stream_url": "http://103.11.112.28:1935/live2/smil:onesports.smil/playlist.m3u8"
     },
@@ -908,11 +838,6 @@
       "cid": 0,
       "name": "RCTI",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/RCTI/sa_dash_vmx/RCTI.mpd"
-    },
-    {
-      "cid": 7,
-      "name": "Real Madrid TV",
-      "stream_url": "http://rmtv24hweblive-lh.akamaihd.net/i/rmtv24hwebes_1@300661/index_3_av-p.m3u8"
     },
     {
       "cid": 7,
@@ -1095,11 +1020,6 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/TransTV/sa_dash_vmx/TransTV.mpd"
     },
     {
-      "cid": 5,
-      "name": "TV Edukasi",
-      "stream_url": "https://znjjprwzgeyyp.vidio.com/live/6838/master.m3u8"
-    },
-    {
       "cid": 6,
       "name": "TV Ikim",
       "stream_url": "http://edge.vediostream.com/abr/tvikim/live/tvikim_480p/chunks.m3u8"
@@ -1113,11 +1033,6 @@
       "cid": 1,
       "name": "TV One",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/TVOne/sa_dash_vmx/TVOne.mpd"
-    },
-    {
-      "cid": 2,
-      "name": "tvN",
-      "stream_url": "https://znjjprwzgeyyp.vidio.com/live/6362/master.m3u8"
     },
     {
       "cid": 2,
@@ -1203,11 +1118,6 @@
       "cid": 2,
       "name": "Warner TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/WarnerTV/sa_dash_vmx/WarnerTV.mpd"
-    },
-    {
-      "cid": 7,
-      "name": "Woman Sport",
-      "stream_url": "https://nrpus.bozztv.com/36bay2/gusa-tvswsn/index.m3u8"
     },
     {
       "cid": 2,
