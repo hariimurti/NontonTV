@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private View layoutSettings, layoutLoading;
 
     private static Playlist playlist, cachedPlaylist;
+    private static boolean isFirst = true;
     private Preferences preferences;
     private StringRequest reqPlaylist;
     private RequestQueue request;
@@ -78,8 +79,18 @@ public class MainActivity extends AppCompatActivity {
         swOpenLast.setChecked(preferences.isOpenLastWatched());
         swOpenLast.setOnClickListener(view -> preferences.setOpenLastWatched(swOpenLast.isChecked()));
         AppCompatButton btnReload = findViewById(R.id.reload_playlist);
-        btnReload.setOnClickListener(view -> request.add(reqPlaylist));
+        btnReload.setOnClickListener(view -> queueRequest(reqPlaylist));
 
+        // volley library
+        BaseHttpStack stack = new HurlStack();
+        if (Build.VERSION.SDK_INT == VERSION_CODES.KITKAT) {
+            try {
+                stack = new HurlStack(null, new TLSSocketFactory());
+            } catch (KeyManagementException | NoSuchAlgorithmException e) {
+                Log.e("Volley", "Could not create new stack for TLS v1.2!", e);
+            }
+        }
+        request = Volley.newRequestQueue(this, stack);
         reqPlaylist = new StringRequest(Request.Method.GET,
                 getString(R.string.json_playlist),
                 response -> {
@@ -87,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
                         playlist = new Gson().fromJson(response, Playlist.class);
                         setPlaylistToViewPager();
                         new JsonPlaylist(this).write(response);
-                        Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show();
                     } catch (JsonSyntaxException error) {
                         showAlertError(error.getMessage());
                     }
@@ -129,24 +139,14 @@ public class MainActivity extends AppCompatActivity {
                     } catch (Exception e) { Log.e("Volley", "Could not check new update!", e); }
                 }, null);
 
-        BaseHttpStack stack = new HurlStack();
-        if (Build.VERSION.SDK_INT == VERSION_CODES.KITKAT) {
-            try {
-                stack = new HurlStack(null, new TLSSocketFactory());
-            } catch (KeyManagementException | NoSuchAlgorithmException e) {
-                Log.e("Volley", "Could not create new stack for TLS v1.2!", e);
-            }
-        }
-
-        request = Volley.newRequestQueue(this, stack);
         if (playlist == null) {
-            request.add(reqPlaylist);
+            queueRequest(reqPlaylist);
         }
         else {
             setPlaylistToViewPager();
         }
         if (!preferences.isCheckedUpdate()) {
-            request.add(reqUpdate);
+            queueRequest(reqUpdate);
         }
 
         String streamUrl = preferences.getLastWatched();
@@ -157,12 +157,19 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void queueRequest(StringRequest strReq) {
+        request.getCache().clear();
+        request.add(strReq);
+    }
+
     private void setPlaylistToViewPager() {
         viewPager.setAdapter(new ViewPagerAdapter(this, playlist));
         new TabLayoutMediator(
                 tabLayout, viewPager, (tab, i) -> tab.setText(playlist.categories.get(i).name)
         ).attach();
         layoutLoading.setVisibility(View.GONE);
+        if (!isFirst) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show();
+        isFirst = false;
     }
 
     private void showAlertError(String error) {
@@ -171,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
         alert.setTitle(R.string.alert_title_playlist_error)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(R.string.dialog_retry, (dialog, id) -> request.add(reqPlaylist));
+                .setPositiveButton(R.string.dialog_retry, (dialog, id) -> queueRequest(reqPlaylist));
         if (cachedPlaylist != null) {
             alert.setNegativeButton(R.string.dialog_cached, (dialog, id) -> {
                 playlist = cachedPlaylist;
