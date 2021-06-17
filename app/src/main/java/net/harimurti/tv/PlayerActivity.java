@@ -18,15 +18,7 @@ import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.source.MediaSource;
-import com.google.android.exoplayer2.source.ProgressiveMediaSource;
-import com.google.android.exoplayer2.source.dash.DashMediaSource;
-import com.google.android.exoplayer2.source.hls.HlsMediaSource;
-import com.google.android.exoplayer2.source.smoothstreaming.SsMediaSource;
 import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.upstream.DataSource;
-import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
-import com.google.android.exoplayer2.util.Util;
 
 import net.harimurti.tv.data.License;
 import net.harimurti.tv.data.Playlist;
@@ -78,33 +70,18 @@ public class PlayerActivity extends AppCompatActivity {
             Log.e("PLAYER", "Can't find a license.", e);
         }
 
-        // prepare player user-agent
-        String playerAgent = Util.getUserAgent(this, "ExoPlayer2");
-        DataSource.Factory factory = new DefaultDataSourceFactory(this, playerAgent);
-
         // define mediasource
-        MediaSource mediaSource;
-        MediaItem mediaItem = MediaItem.fromUri(uri);
-        int contentType = Util.inferContentType(uri);
-        if (contentType == C.TYPE_HLS) {
-            mediaSource = new HlsMediaSource.Factory(factory).createMediaSource(mediaItem);
-        }
-        else if (contentType == C.TYPE_DASH) {
-            if (!drmLicense.isEmpty()) {
-                mediaItem = new MediaItem.Builder()
-                        .setUri(uri)
-                        .setDrmUuid(C.WIDEVINE_UUID)
-                        .setDrmLicenseUri(drmLicense)
-                        .setDrmMultiSession(true)
-                        .build();
-            }
-            mediaSource = new DashMediaSource.Factory(factory).createMediaSource(mediaItem);
-        }
-        else if (contentType == C.TYPE_SS) {
-            mediaSource = new SsMediaSource.Factory(factory).createMediaSource(mediaItem);
+        MediaItem mediaItem;
+        if (!drmLicense.isEmpty()) {
+            mediaItem = new MediaItem.Builder()
+                    .setUri(uri)
+                    .setDrmUuid(C.WIDEVINE_UUID)
+                    .setDrmLicenseUri(drmLicense)
+                    .setDrmMultiSession(true)
+                    .build();
         }
         else {
-            mediaSource = new ProgressiveMediaSource.Factory(factory).createMediaSource(mediaItem);
+            mediaItem = MediaItem.fromUri(uri);
         }
 
         // create player & set listener
@@ -149,7 +126,7 @@ public class PlayerActivity extends AppCompatActivity {
         playerView.setPlayer(player);
 
         // play mediasouce
-        player.setMediaSource(mediaSource);
+        player.setMediaItem(mediaItem);
         player.prepare();
     }
 
