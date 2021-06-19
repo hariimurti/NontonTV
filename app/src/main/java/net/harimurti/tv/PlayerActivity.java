@@ -88,21 +88,18 @@ public class PlayerActivity extends AppCompatActivity {
         player = new SimpleExoPlayer.Builder(this).build();
         player.addListener(new Player.Listener() {
             @Override
-            public void onIsPlayingChanged(boolean isPlaying) {
-                int playbackState = player.getPlaybackState();
-                if (isPlaying || playbackState == Player.STATE_READY) {
+            public void onPlaybackStateChanged(int state) {
+                if (state == Player.STATE_READY) {
                     ShowLayoutMessage(View.GONE, false);
                     preferences.setLastWatched(url);
                 }
-                else {
-                    if (playbackState == Player.STATE_BUFFERING) {
-                        ShowLayoutMessage(View.VISIBLE, false);
-                    } else {
-                        ShowLayoutMessage(View.VISIBLE, true);
-                        tvStatus.setText(R.string.source_offline);
-                        tvRetry.setText(R.string.text_auto_retry);
-                        RetryPlaying();
-                    }
+                else if (state == Player.STATE_BUFFERING) {
+                    ShowLayoutMessage(View.VISIBLE, false);
+                } else {
+                    ShowLayoutMessage(View.VISIBLE, true);
+                    tvStatus.setText(R.string.source_offline);
+                    tvRetry.setText(R.string.text_auto_retry);
+                    RetryPlaying();
                 }
             }
 
