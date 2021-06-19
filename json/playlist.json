@@ -367,12 +367,17 @@
     {
       "cid": 7,
       "name": "ESPN",
-      "stream_url": "https://gma2.blab.email/fs2.m3u8"
+      "stream_url": "http://164.68.124.111/fs2.m3u8"
     },
     {
       "cid": 7,
-      "name": "ESPN [BR]",
-      "stream_url": "http://iptvnow.me:8080/dindin-3505/RAp0L4nWBm/22105.ts"
+      "name": "ESPN 2",
+      "stream_url": "http://164.68.124.111/espn2.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "ESPN U",
+      "stream_url": "http://164.68.124.111/espnu.m3u8"
     },
     {
       "cid": 6,
