@@ -153,6 +153,7 @@ public class PlayerActivity extends AppCompatActivity {
         new AsyncSleep(this).task(new AsyncSleep.Task() {
             @Override
             public void onCountDown(int left) {
+                left--;
                 if (!Network.IsConnected()) {
                     tvStatus.setText(R.string.no_network);
                 }
@@ -172,7 +173,7 @@ public class PlayerActivity extends AppCompatActivity {
                     RetryPlaying();
                 }
             }
-        }).start(5);
+        }).start(6);
     }
 
     private void ShowLayoutMessage(int visibility, boolean isMessage) {
