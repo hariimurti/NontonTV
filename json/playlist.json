@@ -370,6 +370,11 @@
       "stream_url": "https://gma2.blab.email/fs2.m3u8"
     },
     {
+      "cid": 7,
+      "name": "ESPN [BR]",
+      "stream_url": "http://iptvnow.me:8080/dindin-3505/RAp0L4nWBm/22105.ts"
+    },
+    {
       "cid": 6,
       "name": "EWTN",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/EWTN/sa_dash_vmx/EWTN.mpd"
@@ -793,11 +798,6 @@
       "cid": 2,
       "name": "ONE [ID]",
       "stream_url": "http://45.126.83.51/uq2663/h/h143/index.m3u8"
-    },
-    {
-      "cid": 2,
-      "name": "ONE HD",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/ONE-HD/sa_dash_vmx/ONE-HD.mpd"
     },
     {
       "cid": 7,
