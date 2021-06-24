@@ -45,6 +45,11 @@
   ],
   "channels": [
     {
+      "cid": 1,
+      "name": "ABC Australia",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/AustraliaPlus/sa_dash_vmx/AustraliaPlus.mpd"
+    },
+    {
       "cid": 7,
       "name": "ACCDN",
       "stream_url": "https://120sports-accdn-1.samsung.wurl.com/manifest/playlist.m3u8"
@@ -66,8 +71,13 @@
     },
     {
       "cid": 1,
-      "name": "Al Jazeera English",
+      "name": "Al Jazeera",
       "stream_url": "https://live-hls-web-aje.getaj.net/AJE/index.m3u8"
+    },
+    {
+      "cid": 1,
+      "name": "Al Jazeera [ALT]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/AlJazeeraInternational/sa_dash_vmx/AlJazeeraInternational.mpd"
     },
     {
       "cid": 6,
@@ -110,6 +120,16 @@
       "stream_url": "http://amdlive-ch01.ctnd.com.edgesuite.net/arirang_1ch/smil:arirang_1ch.smil/playlist.m3u8"
     },
     {
+      "cid": 1,
+      "name": "Arirang [ALT]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/Arirang/sa_dash_vmx/Arirang.mpd"
+    },
+    {
+      "cid": 5,
+      "name": "Asian Food Network",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/AFC/sa_dash_vmx/AFC.mpd"
+    },
+    {
       "cid": 2,
       "name": "Asiancrush",
       "stream_url": "https://ac-samsung.samsung.wurl.com/manifest/playlist.m3u8"
@@ -125,6 +145,11 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/AXN/sa_dash_vmx/AXN.mpd"
     },
     {
+      "cid": 4,
+      "name": "BabyTV",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/BabyTV/sa_dash_vmx/BabyTV.mpd"
+    },
+    {
       "cid": 0,
       "name": "Bali TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/BaliTV_Timeshift/sa_dash_timeshift/BaliTV_Timeshift.mpd"
@@ -138,6 +163,21 @@
       "cid": 1,
       "name": "BBC World News",
       "stream_url": "http://103.199.161.254/Content/bbcworld/Live/Channel(BBCworld)/index.m3u8"
+    },
+    {
+      "cid": 1,
+      "name": "BBC World News [ALT]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/BBCWorldNews/sa_dash_vmx/BBCWorldNews.mpd"
+    },
+    {
+      "cid": 7,
+      "name": "beIN Sports 1",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/BeIN1/sa_dash_vmx/BeIN1.mpd"
+    },
+    {
+      "cid": 7,
+      "name": "beIN Sports 2",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/BeIN2/sa_dash_vmx/BeIN2.mpd"
     },
     {
       "cid": 7,
@@ -165,9 +205,19 @@
       "stream_url": "http://livestream.biznetvideo.net/biznet_lifestyle/smil:lifestyle.smil/playlist.m3u8?bizkeylivestarttime=0&bizkeyliveendtime=0&bizkeyliveCustomParameter=myParameter&bizkeylivehash=jgDKPclcGdZfvrIDxfMdpT7v_srMWCbubntGo9cCYWpcBBQalMlLQxHswm43PbVR"
     },
     {
+      "cid": 1,
+      "name": "Bloomberg",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/Bloomberg/sa_dash_vmx/Bloomberg.mpd"
+    },
+    {
       "cid": 2,
       "name": "Blue Ant Extreme",
       "stream_url": "http://45.126.83.51/dr9445/h/h15/01.m3u8"
+    },
+    {
+      "cid": 4,
+      "name": "Boomerang",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/Boomerang/sa_dash_vmx/Boomerang.mpd"
     },
     {
       "cid": 4,
@@ -181,7 +231,7 @@
     },
     {
       "cid": 4,
-      "name": "Cbeebies",
+      "name": "CBeebies",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/Cbeebies/sa_dash_vmx/Cbeebies.mpd"
     },
     {
@@ -216,13 +266,18 @@
     },
     {
       "cid": 1,
-      "name": "Channel NewsAsia",
+      "name": "Channel News Asia",
       "stream_url": "https://d2e1asnsl7br7b.cloudfront.net/7782e205e72f43aeb4a48ec97f66ebbe/index_4.m3u8"
     },
     {
       "cid": 3,
       "name": "Channel V",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/ChannelV/sa_dash_vmx/ChannelV.mpd"
+    },
+    {
+      "cid": 1,
+      "name": "Chnannel News Asia [ALT]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/ChannelNewsAsia/sa_dash_vmx/ChannelNewsAsia.mpd"
     },
     {
       "cid": 2,
@@ -236,7 +291,7 @@
     },
     {
       "cid": 2,
-      "name": "Cinema World",
+      "name": "Cinema World [ALT]",
       "stream_url": "http://210.210.155.35/uq2663/h/h04/index2.m3u8"
     },
     {
@@ -253,6 +308,11 @@
       "cid": 1,
       "name": "CNN Indonesia",
       "stream_url": "https://live.cnnindonesia.com/livecnn/smil:cnntv.smil/playlist.m3u8"
+    },
+    {
+      "cid": 1,
+      "name": "CNN International",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/CNNInternational/sa_dash_vmx/CNNInternational.mpd"
     },
     {
       "cid": 4,
@@ -291,6 +351,11 @@
     },
     {
       "cid": 4,
+      "name": "Disney Junior",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/DisneyJunior/sa_dash_vmx/DisneyJunior.mpd"
+    },
+    {
+      "cid": 4,
       "name": "Disney Junior [HD]",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/DisneyJunior-HD/sa_dash_vmx/DisneyJunior-HD.mpd"
     },
@@ -298,6 +363,11 @@
       "cid": 4,
       "name": "Disney XD",
       "stream_url": "http://185.180.221.194:8278/streams/d/Disneyxd/playlist.m3u8"
+    },
+    {
+      "cid": 4,
+      "name": "Disney XD [ALT]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/DisneyXD/sa_dash_vmx/DisneyXD.mpd"
     },
     {
       "cid": 3,
@@ -411,13 +481,13 @@
     },
     {
       "cid": 2,
-      "name": "FOX",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxChannel/sa_dash_vmx/FoxChannel.mpd"
+      "name": "Fox Action Movies",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxActionMovies/sa_dash_vmx/FoxActionMovies.mpd"
     },
     {
       "cid": 2,
-      "name": "Fox Action Movies",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxActionMovies/sa_dash_vmx/FoxActionMovies.mpd"
+      "name": "Fox Channel",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxChannel/sa_dash_vmx/FoxChannel.mpd"
     },
     {
       "cid": 2,
@@ -431,18 +501,38 @@
     },
     {
       "cid": 2,
-      "name": "FOX Movies Premium",
+      "name": "Fox Movies Premium",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/FOXMoviesPremium/sa_dash_vmx/FOXMoviesPremium.mpd"
     },
     {
+      "cid": 1,
+      "name": "FOX News",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxNews/sa_dash_vmx/FoxNews.mpd"
+    },
+    {
       "cid": 7,
-      "name": "Fox Sports 1 [HD]",
+      "name": "Fox Sports [ALT]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/FOXSports/sa_dash_vmx/FOXSports.mpd"
+    },
+    {
+      "cid": 7,
+      "name": "Fox Sports [HD]",
       "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports_2000.stream/chunklist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Fox Sports 2 [ALT]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxSports2/sa_dash_vmx/FoxSports2.mpd"
     },
     {
       "cid": 7,
       "name": "Fox Sports 2 [HD]",
       "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports2_2000.stream/chunklist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Fox Sports 3 [ALT]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxSports3/sa_dash_vmx/FoxSports3.mpd"
     },
     {
       "cid": 7,
@@ -581,7 +671,7 @@
     },
     {
       "cid": 4,
-      "name": "Kids Channel",
+      "name": "Kids TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/KidsChannel/sa_dash_vmx/KidsChannel.mpd"
     },
     {
@@ -608,6 +698,11 @@
       "cid": 6,
       "name": "Life",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/Life/sa_dash_vmx/Life.mpd"
+    },
+    {
+      "cid": 2,
+      "name": "Life&Style",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/LifeStyleFashion/sa_dash_vmx/LifeStyleFashion.mpd"
     },
     {
       "cid": 2,
@@ -660,6 +755,16 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCNews/sa_dash_vmx/MNCNews.mpd"
     },
     {
+      "cid": 7,
+      "name": "MNC Sports1",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCSports/sa_dash_vmx/MNCSports.mpd"
+    },
+    {
+      "cid": 7,
+      "name": "MNC Sports2",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/SoccerChannel/sa_dash_vmx/SoccerChannel.mpd"
+    },
+    {
       "cid": 0,
       "name": "MNC TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCTV-HD/sa_dash_vmx/MNCTV-HD.mpd"
@@ -697,6 +802,11 @@
     {
       "cid": 3,
       "name": "Music Channel",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/MusicChannel/sa_dash_vmx/MusicChannel.mpd"
+    },
+    {
+      "cid": 3,
+      "name": "Music TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/MusicChannel/sa_dash_vmx/MusicChannel.mpd"
     },
     {
@@ -765,9 +875,24 @@
       "stream_url": "http://210.210.155.66/h/h23/02.m3u8"
     },
     {
+      "cid": 1,
+      "name": "NHK World Japan",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/NHKWorldTV/sa_dash_vmx/NHKWorldTV.mpd"
+    },
+    {
+      "cid": 1,
+      "name": "NHK World Premium",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/NHKWorldPremium/sa_dash_vmx/NHKWorldPremium.mpd"
+    },
+    {
       "cid": 2,
       "name": "Nick (Pluto TV)",
       "stream_url": "https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5ca673e0d0bd6c2689c94ce3/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=1&advertisingId=channel&embedPartner=rokuChannel&appName=rokuchannel&is_lat=1&bmodel=bm1&content=channel&platform=web&tags=ROKU_CONTENT_TAGS&coppa=false&content_type=livefeed&rdid=channel&genre=ROKU_ADS_CONTENT_GENRE&content_rating=ROKU_ADS_CONTENT_RATING&studio_id=viacom&channel_id=channel"
+    },
+    {
+      "cid": 4,
+      "name": "Nick Jr.",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/NickJr/sa_dash_vmx/NickJr.mpd"
     },
     {
       "cid": 4,
@@ -781,17 +906,12 @@
     },
     {
       "cid": 4,
-      "name": "NickJr",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/NickJr/sa_dash_vmx/NickJr.mpd"
-    },
-    {
-      "cid": 4,
       "name": "Nicktoon",
       "stream_url": "http://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5ca673e0d0bd6c2689c94ce3/master.m3u8?terminate=false&deviceType=web&deviceMake=web&deviceModel=web&sid=977&deviceId=5ca673e0d0bd6c2689c94ce3&deviceVersion=DNT&appVersion=DNT&deviceDNT=0&userId=&advertisingId=&deviceLat=&deviceLon=&app_name=&appName=web&buildVersion=&appStoreUrl=&architecture=&includeExtendedEvents=false&marketingRegion=US&serverSideAds=false"
     },
     {
       "cid": 2,
-      "name": "OKTV",
+      "name": "OK TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/OKTV/sa_dash_vmx/OKTV.mpd"
     },
     {
@@ -885,16 +1005,6 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/RTV/sa_dash_vmx/RTV.mpd"
     },
     {
-      "cid": 2,
-      "name": "SCM",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/SCM/sa_dash_vmx/SCM.mpd"
-    },
-    {
-      "cid": 2,
-      "name": "SCM Legend",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/SCMlegend/sa_dash_vmx/SCMlegend.mpd"
-    },
-    {
       "cid": 0,
       "name": "SCTV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/SCTV/sa_dash_vmx/SCTV.mpd"
@@ -910,9 +1020,19 @@
       "stream_url": "https://aenetworks-skills-thrills-1.plex.wurl.com/manifest/playlist.m3u8"
     },
     {
+      "cid": 1,
+      "name": "Sky News",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/SkyNews/sa_dash_vmx/SkyNews.mpd"
+    },
+    {
       "cid": 2,
       "name": "Sony One",
       "stream_url": "http://210.210.155.35/session/c30d8c14-f1bc-11e8-89c0-aa35b2893d02/uq2663/h/h143/01.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Sony One [ALT]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/SetOne/sa_dash_vmx/SetOne.mpd"
     },
     {
       "cid": 4,
@@ -933,6 +1053,16 @@
       "cid": 7,
       "name": "Stadium",
       "stream_url": "https://dai.google.com/linear/hls/event/0jRU1DBXSW6a_TFheLfAUQ/master.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Star Chinese Legend",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/SCMlegend/sa_dash_vmx/SCMlegend.mpd"
+    },
+    {
+      "cid": 2,
+      "name": "Star Chinese Movie",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/SCM/sa_dash_vmx/SCM.mpd"
     },
     {
       "cid": 2,
@@ -1000,6 +1130,11 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/Thrill/sa_dash_vmx/Thrill.mpd"
     },
     {
+      "cid": 5,
+      "name": "TLC",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/TLC/sa_dash_vmx/TLC.mpd"
+    },
+    {
       "cid": 4,
       "name": "Toon Goggles",
       "stream_url": "https://toongoggles-toongoggles-3-gb.samsung.wurl.com/manifest/playlist.m3u8"
@@ -1048,6 +1183,11 @@
       "cid": 1,
       "name": "TV One",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/TVOne/sa_dash_vmx/TVOne.mpd"
+    },
+    {
+      "cid": 2,
+      "name": "tvN",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/tvN/sa_dash_vmx/tvN.mpd"
     },
     {
       "cid": 2,
@@ -1138,6 +1278,11 @@
       "cid": 2,
       "name": "Zee Bioskop",
       "stream_url": "http://210.210.155.35/qwr9ew/s/s32/01.m3u8?fluxustv.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Zee Bioskop [ALT]",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/ZeeBIOSKOP/sa_dash_vmx/ZeeBIOSKOP.mpd"
     },
     {
       "cid": 4,
