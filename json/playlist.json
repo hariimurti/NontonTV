@@ -145,11 +145,6 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/AXN/sa_dash_vmx/AXN.mpd"
     },
     {
-      "cid": 4,
-      "name": "BabyTV",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/BabyTV/sa_dash_vmx/BabyTV.mpd"
-    },
-    {
       "cid": 0,
       "name": "Bali TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/BaliTV_Timeshift/sa_dash_timeshift/BaliTV_Timeshift.mpd"
@@ -173,16 +168,6 @@
       "cid": 7,
       "name": "beIN Sports 1",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/BeIN1/sa_dash_vmx/BeIN1.mpd"
-    },
-    {
-      "cid": 7,
-      "name": "beIN Sports 2",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/BeIN2/sa_dash_vmx/BeIN2.mpd"
-    },
-    {
-      "cid": 7,
-      "name": "BeIN Sports Xtra",
-      "stream_url": "https://service-stitcher.clusters.pluto.tv/stitch/hls/channel/5df975e2b27cf5000921c102/master.m3u8?deviceType=web&deviceMake=Opera&deviceModel=Opera&sid=855d6801-c912-428d-b620-ede4dd0c3b15&deviceId=b702181a-c1d6-4ee2-9481-753f471e2ce7&deviceVersion=66.0.3515.44&appVersion=2.9.3-b879e400d5df7a969d4bff8863fe5cb02c7120e6&deviceDNT=0&userId=&advertisingId=&deviceLat=40.8364&deviceLon=-74.1403&app_name=&appName=web&buildVersion=&appStoreUrl=&architecture=&includeExtendedEvents=false&serverSideAds=true"
     },
     {
       "cid": 1,
@@ -351,11 +336,6 @@
     },
     {
       "cid": 4,
-      "name": "Disney Junior",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/DisneyJunior/sa_dash_vmx/DisneyJunior.mpd"
-    },
-    {
-      "cid": 4,
       "name": "Disney Junior [HD]",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/DisneyJunior-HD/sa_dash_vmx/DisneyJunior-HD.mpd"
     },
@@ -363,11 +343,6 @@
       "cid": 4,
       "name": "Disney XD",
       "stream_url": "http://185.180.221.194:8278/streams/d/Disneyxd/playlist.m3u8"
-    },
-    {
-      "cid": 4,
-      "name": "Disney XD [ALT]",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/DisneyXD/sa_dash_vmx/DisneyXD.mpd"
     },
     {
       "cid": 3,
@@ -433,11 +408,6 @@
       "cid": 6,
       "name": "Elshinta TV",
       "stream_url": "http://210.210.155.35/qwr9ew/s/s10/index.m3u8"
-    },
-    {
-      "cid": 7,
-      "name": "ESPN",
-      "stream_url": "http://164.68.124.111/fs2.m3u8"
     },
     {
       "cid": 7,
@@ -511,21 +481,6 @@
     },
     {
       "cid": 7,
-      "name": "Fox Sports [ALT]",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/FOXSports/sa_dash_vmx/FOXSports.mpd"
-    },
-    {
-      "cid": 7,
-      "name": "Fox Sports [HD]",
-      "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports_2000.stream/chunklist.m3u8"
-    },
-    {
-      "cid": 7,
-      "name": "Fox Sports 2 [ALT]",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxSports2/sa_dash_vmx/FoxSports2.mpd"
-    },
-    {
-      "cid": 7,
       "name": "Fox Sports 2 [HD]",
       "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports2_2000.stream/chunklist.m3u8"
     },
@@ -543,11 +498,6 @@
       "cid": 7,
       "name": "Fox Sports Asia",
       "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports_2000.stream/chunklist.m3u8"
-    },
-    {
-      "cid": 7,
-      "name": "Fox Sports Asia 2",
-      "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports2_2000.stream/chunklist.m3u8"
     },
     {
       "cid": 7,
@@ -758,11 +708,6 @@
       "cid": 7,
       "name": "MNC Sports1",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCSports/sa_dash_vmx/MNCSports.mpd"
-    },
-    {
-      "cid": 7,
-      "name": "MNC Sports2",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/SoccerChannel/sa_dash_vmx/SoccerChannel.mpd"
     },
     {
       "cid": 0,
@@ -1018,11 +963,6 @@
       "cid": 2,
       "name": "Skills + Thrills",
       "stream_url": "https://aenetworks-skills-thrills-1.plex.wurl.com/manifest/playlist.m3u8"
-    },
-    {
-      "cid": 1,
-      "name": "Sky News",
-      "stream_url": "https://liveanevia.mncnow.id/live/eds/SkyNews/sa_dash_vmx/SkyNews.mpd"
     },
     {
       "cid": 2,
