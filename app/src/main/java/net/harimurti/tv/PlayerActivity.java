@@ -33,6 +33,7 @@ public class PlayerActivity extends AppCompatActivity {
     public static boolean isFirst = true;
     private boolean doubleBackToExitPressedOnce;
     private SimpleExoPlayer player;
+    private MediaItem mediaItem;
     private View layoutStatus, layoutSpin, layoutText;
     private TextView tvStatus, tvRetry;
 
@@ -71,7 +72,6 @@ public class PlayerActivity extends AppCompatActivity {
         }
 
         // define mediasource
-        MediaItem mediaItem;
         if (!drmLicense.isEmpty()) {
             mediaItem = new MediaItem.Builder()
                     .setUri(uri)
@@ -167,6 +167,7 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 if (Network.IsConnected()) {
+                    player.setMediaItem(mediaItem);
                     player.prepare();
                 }
                 else {
