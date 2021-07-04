@@ -65,11 +65,6 @@
       "stream_url": "http://linear-12.frequency.stream/dist/roku/12/hls/master/playlist.m3u8"
     },
     {
-      "cid": 6,
-      "name": "Ahsan TV",
-      "stream_url": "http://119.82.224.75:1935/live/ahsantv/playlist.m3u8"
-    },
-    {
       "cid": 1,
       "name": "Al Jazeera",
       "stream_url": "https://live-hls-web-aje.getaj.net/AJE/index.m3u8"
@@ -233,16 +228,6 @@
       "cid": 2,
       "name": "Celestial Movie [ALT]",
       "stream_url": "http://210.210.155.35/qwr9ew/s/s33/index.m3u8"
-    },
-    {
-      "cid": 7,
-      "name": "Champion TV 1",
-      "stream_url": "http://us.5d63d49f772ce.cloudns.org/US33T4/MPD/master.m3u8?id=champion1"
-    },
-    {
-      "cid": 7,
-      "name": "Champion TV 2",
-      "stream_url": "http://us.5d63d49f772ce.cloudns.org/US33T4/MPD/master.m3u8?id=champion2"
     },
     {
       "cid": 7,
@@ -411,13 +396,18 @@
     },
     {
       "cid": 7,
-      "name": "ESPN 2",
-      "stream_url": "http://164.68.124.111/espn2.m3u8"
+      "name": "ESPN",
+      "stream_url": "http://stream2.grandma.fit/fs2.m3u8"
     },
     {
       "cid": 7,
-      "name": "ESPN U",
-      "stream_url": "http://164.68.124.111/espnu.m3u8"
+      "name": "ESPN [360p]",
+      "stream_url": "http://stream.tvtap.live:8081/live/espnusahd.stream/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "ESPN 2",
+      "stream_url": "http://164.68.124.111/espn2.m3u8"
     },
     {
       "cid": 6,
@@ -491,11 +481,6 @@
     },
     {
       "cid": 7,
-      "name": "Fox Sports 3 [HD]",
-      "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports3_2000.stream/chunklist.m3u8"
-    },
-    {
-      "cid": 7,
       "name": "Fox Sports Asia",
       "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports_2000.stream/chunklist.m3u8"
     },
@@ -563,11 +548,6 @@
       "cid": 2,
       "name": "Hits Movies",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/HitsMovies/sa_dash_vmx/HitsMovies.mpd"
-    },
-    {
-      "cid": 6,
-      "name": "I AM CHANNEL",
-      "stream_url": "http://iamchannel.org:1935/tes/1/chunklist.m3u8"
     },
     {
       "cid": 1,
@@ -1033,11 +1013,6 @@
       "cid": 6,
       "name": "Tawaf TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/TawafTV/sa_dash_vmx/TawafTV.mpd"
-    },
-    {
-      "cid": 6,
-      "name": "Tegar TV",
-      "stream_url": "http://wms.klikhost.com/tegartv/live/playlist.m3u8"
     },
     {
       "cid": 7,
