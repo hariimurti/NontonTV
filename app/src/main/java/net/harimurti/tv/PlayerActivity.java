@@ -19,6 +19,9 @@ import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
 
 import net.harimurti.tv.data.License;
 import net.harimurti.tv.data.Playlist;
@@ -27,7 +30,11 @@ import net.harimurti.tv.extra.JsonPlaylist;
 import net.harimurti.tv.extra.Network;
 import net.harimurti.tv.extra.Preferences;
 
+import java.security.KeyManagementException;
+import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
+
+import javax.net.ssl.SSLContext;
 
 public class PlayerActivity extends AppCompatActivity {
     public static boolean isFirst = true;
@@ -44,6 +51,18 @@ public class PlayerActivity extends AppCompatActivity {
 
         isFirst = false;
         Preferences preferences = new Preferences();
+
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
+            try {
+                ProviderInstaller.installIfNeeded(this);
+                SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
+                sslContext.init(null, null, null);
+                sslContext.createSSLEngine();
+            } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException
+                    | NoSuchAlgorithmException | KeyManagementException e) {
+                e.printStackTrace();
+            }
+        }
 
         // define some view
         layoutStatus = findViewById(R.id.layout_status);
