@@ -38,6 +38,7 @@ import javax.net.ssl.SSLContext;
 
 public class PlayerActivity extends AppCompatActivity {
     public static boolean isFirst = true;
+    private static boolean skipRetry = false;
     private boolean doubleBackToExitPressedOnce;
     private SimpleExoPlayer player;
     private MediaItem mediaItem;
@@ -109,31 +110,24 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onPlaybackStateChanged(int state) {
                 if (state == Player.STATE_READY) {
-                    ShowLayoutMessage(View.GONE, false);
+                    showLayoutMessage(View.GONE, false);
                     preferences.setLastWatched(url);
                 }
                 else if (state == Player.STATE_BUFFERING) {
-                    ShowLayoutMessage(View.VISIBLE, false);
-                } else {
-                    ShowLayoutMessage(View.VISIBLE, true);
-                    tvStatus.setText(R.string.source_offline);
-                    tvRetry.setText(R.string.text_auto_retry);
-                    RetryPlaying();
+                    showLayoutMessage(View.VISIBLE, false);
                 }
             }
 
             @Override
             public void onPlayerError(ExoPlaybackException error) {
-                ShowLayoutMessage(View.VISIBLE, true);
                 if (error.type == ExoPlaybackException.TYPE_SOURCE) {
                     tvStatus.setText(R.string.source_offline);
-                    tvRetry.setText(R.string.text_auto_retry);
-                    tvRetry.setVisibility(View.VISIBLE);
-                    RetryPlaying();
                 } else {
                     tvStatus.setText(R.string.something_went_wrong);
-                    tvRetry.setVisibility(View.GONE);
                 }
+                tvRetry.setText(R.string.text_auto_retry);
+                showLayoutMessage(View.VISIBLE, true);
+                retryPlayback();
             }
         });
 
@@ -168,7 +162,9 @@ public class PlayerActivity extends AppCompatActivity {
         }
     }
 
-    private void RetryPlaying() {
+    private void retryPlayback() {
+        if (skipRetry) return;
+        skipRetry = true;
         new AsyncSleep(this).task(new AsyncSleep.Task() {
             @Override
             public void onCountDown(int left) {
@@ -185,18 +181,19 @@ public class PlayerActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
+                skipRetry = false;
                 if (Network.IsConnected()) {
                     player.setMediaItem(mediaItem);
                     player.prepare();
                 }
                 else {
-                    RetryPlaying();
+                    retryPlayback();
                 }
             }
         }).start(6);
     }
 
-    private void ShowLayoutMessage(int visibility, boolean isMessage) {
+    private void showLayoutMessage(int visibility, boolean isMessage) {
         layoutStatus.setVisibility(visibility);
         if (!isMessage) {
             layoutSpin.setVisibility(View.VISIBLE);
