@@ -2,11 +2,11 @@
   "licenses": [
     {
       "domain": "liveanevia.mncnow.id",
-      "drm_url": "https://mrpw.ptmnc01.verspective.net/?deviceId=YWY0OTBlZjEtODAyNC0zZTA0LWFhYzMtY2ZmMGE4NjVjZjU1"
+      "drm_url": "https://mrpw.ptmnc01.verspective.net/?deviceId=NTM5NDVlNjktZDQxYS0zMTExLTliZDYtZmUyZDg5M2M2ODg3"
     },
     {
       "domain": "stream-cdn.mncnow.id",
-      "drm_url": "https://mrpw.ptmnc01.verspective.net/?deviceId=YWY0OTBlZjEtODAyNC0zZTA0LWFhYzMtY2ZmMGE4NjVjZjU1"
+      "drm_url": "https://mrpw.ptmnc01.verspective.net/?deviceId=NTM5NDVlNjktZDQxYS0zMTExLTliZDYtZmUyZDg5M2M2ODg3"
     }
   ],
   "categories": [
@@ -471,11 +471,6 @@
     },
     {
       "cid": 7,
-      "name": "Fox Sports 2 [HD]",
-      "stream_url": "https://livecdn.fptplay.net/qnetlive/foxsports2_2000.stream/chunklist.m3u8"
-    },
-    {
-      "cid": 7,
       "name": "Fox Sports 3 [ALT]",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxSports3/sa_dash_vmx/FoxSports3.mpd"
     },
@@ -568,11 +563,6 @@
       "cid": 0,
       "name": "Jak TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/JakTV/sa_dash_vmx/JakTV.mpd"
-    },
-    {
-      "cid": 1,
-      "name": "Jakarta Globe",
-      "stream_url": "http://edge.linknetott.swiftserve.com/live/BsNew/amlst:bsenglish/chunklist_b2288000.m3u8"
     },
     {
       "cid": 2,
