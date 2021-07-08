@@ -311,8 +311,18 @@
     },
     {
       "cid": 5,
+      "name": "Discovery Asia",
+      "stream_url": "https://livecdn.fptplay.net/qnetlive/discoveryasia_hls.smil/chunklist_b2500000.m3u8"
+    },
+    {
+      "cid": 5,
       "name": "Discovery Channel",
       "stream_url": "https://mkctvbro.my.id/horas/pakailah.m3u8?id=disco&bandwidth=default&sync=0"
+    },
+    {
+      "cid": 5,
+      "name": "Discovery Channel [ALT]",
+      "stream_url": "http://185.180.221.194:8278/streams/d/Discoveryhd/playlist.m3u8"
     },
     {
       "cid": 4,
@@ -762,11 +772,21 @@
     {
       "cid": 5,
       "name": "Nat Geo People",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/NatGeoPeople/sa_dash_vmx/NatGeoPeople.mpd"
+    },
+    {
+      "cid": 5,
+      "name": "Nat Geo People [ALT]",
       "stream_url": "https://mkctvbro.my.id/horas/pakailah.m3u8?id=natgeopeople&bandwidth=default&sync=0"
     },
     {
       "cid": 5,
       "name": "Nat Geo Wild",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/NatGeoWild/sa_dash_vmx/NatGeoWild.mpd"
+    },
+    {
+      "cid": 5,
+      "name": "Nat Geo Wild [ALT]",
       "stream_url": "https://mkctvbro.my.id/horas/pakailah.m3u8?id=natgeowild&bandwidth=default&sync=0"
     },
     {
@@ -777,6 +797,11 @@
     {
       "cid": 5,
       "name": "National Geographic",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/NatGeoChannel/sa_dash_vmx/NatGeoChannel.mpd"
+    },
+    {
+      "cid": 5,
+      "name": "National Geographic [ALT]",
       "stream_url": "https://livecdn.fptplay.net/foxlive/natgeohd_hls.smil/chunklist_b2500000.m3u8"
     },
     {
