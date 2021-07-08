@@ -92,13 +92,12 @@ public class MainActivity extends AppCompatActivity {
         btnReload.setOnClickListener(view -> queueRequest(reqPlaylist));
 
         // volley library
-        BaseHttpStack stack = new HurlStack();
-        if (Build.VERSION.SDK_INT == VERSION_CODES.KITKAT) {
-            try {
-                stack = new HurlStack(null, new TLSSocketFactory());
-            } catch (KeyManagementException | NoSuchAlgorithmException e) {
-                Log.e("Volley", "Could not create new stack for TLS v1.2!", e);
-            }
+        BaseHttpStack stack;
+        try {
+            stack = new HurlStack(null, new TLSSocketFactory());
+        } catch (KeyManagementException | NoSuchAlgorithmException e) {
+            stack = new HurlStack();
+            Log.e("Main", "Could not create new stack for TLS connection!", e);
         }
         request = Volley.newRequestQueue(this, stack);
         reqPlaylist = new StringRequest(Request.Method.GET,
