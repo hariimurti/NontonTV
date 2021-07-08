@@ -20,6 +20,8 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -48,6 +50,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean doubleBackToExitPressedOnce;
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private View layoutSettings, layoutLoading;
@@ -247,10 +250,18 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (layoutSettings.getVisibility() == View.VISIBLE) {
             layoutSettings.setVisibility(View.GONE);
+            return;
         }
-        else {
+
+        if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             this.finish();
+            return;
         }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getString(R.string.press_back_to_exit), Toast.LENGTH_SHORT).show();
+
+        new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 }
