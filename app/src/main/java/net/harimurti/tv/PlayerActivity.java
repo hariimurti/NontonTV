@@ -29,6 +29,7 @@ import net.harimurti.tv.extra.AsyncSleep;
 import net.harimurti.tv.extra.JsonPlaylist;
 import net.harimurti.tv.extra.Network;
 import net.harimurti.tv.extra.Preferences;
+import net.harimurti.tv.extra.TLSSocketFactory;
 
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
@@ -51,7 +52,14 @@ public class PlayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player);
 
         isFirst = false;
-        Preferences preferences = new Preferences();
+        Preferences preferences = new Preferences(this);
+
+        // trust all https connection
+        try {
+            new TLSSocketFactory().trustAllHttps();
+        } catch (KeyManagementException | NoSuchAlgorithmException e) {
+            Log.e("Player", "Could not trust all HTTPS connection!", e);
+        }
 
         if (Build.VERSION.SDK_INT == Build.VERSION_CODES.KITKAT) {
             try {
@@ -169,7 +177,7 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onCountDown(int left) {
                 left--;
-                if (!Network.IsConnected()) {
+                if (!Network.IsConnected(getApplicationContext())) {
                     tvStatus.setText(R.string.no_network);
                 }
                 if (left == 0) {
@@ -182,7 +190,7 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onFinish() {
                 skipRetry = false;
-                if (Network.IsConnected()) {
+                if (Network.IsConnected(getApplicationContext())) {
                     player.setMediaItem(mediaItem);
                     player.prepare();
                 }
@@ -213,7 +221,7 @@ public class PlayerActivity extends AppCompatActivity {
         }
 
         this.doubleBackToExitPressedOnce = true;
-        Toast.makeText(this, getString(R.string.press_back_to_exit), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getString(R.string.press_back_twice_exit_player), Toast.LENGTH_SHORT).show();
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }

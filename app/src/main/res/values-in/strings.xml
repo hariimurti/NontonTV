@@ -6,10 +6,10 @@
     <string name="text_auto_retry_second">akan dicoba ulang otomatis dalam %d</string>
     <string name="text_auto_retry_now">akan dicoba ulang otomatis sekarang</string>
     <string name="no_network">Tidak ada koneksi internet!</string>
-    <string name="press_back_to_exit">Tekan BACK lagi untuk keluar!</string>
+    <string name="press_back_twice_exit_app">Tekan lagi untuk keluar dari aplikasi!</string>
+    <string name="press_back_twice_exit_player">Tekan lagi untuk keluar dari pemutar!</string>
 
     <!-- alert playlist error -->
-    <string name="alert_title_playlist_error">Ada masalah</string>
     <string name="error_4xx">File playlist tidak dapat diakses!\nKode respon : %d</string>
     <string name="error_5xx">Server tidak dapat diakses!\nKode respon : %d</string>
     <string name="dialog_retry">Coba lagi</string>

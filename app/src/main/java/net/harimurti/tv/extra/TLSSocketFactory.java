@@ -3,62 +3,76 @@ package net.harimurti.tv.extra;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
 import javax.net.ssl.SSLSocket;
 import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
 
 public class TLSSocketFactory extends SSLSocketFactory {
 
-    private SSLSocketFactory internalSSLSocketFactory;
+    private static TrustManager[] trustManagers;
+    private final SSLSocketFactory factory;
 
     public TLSSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {
-        SSLContext context = SSLContext.getInstance("TLS");
-        context.init(null, null, null);
-        internalSSLSocketFactory = context.getSocketFactory();
+        if (trustManagers == null) {
+            trustManagers = new TrustManager[] {
+                    new HttpsTrustManager()
+            };
+        }
+
+        SSLContext sslContext = SSLContext.getInstance("TLS");
+        sslContext.init(null, trustManagers, new SecureRandom());
+        factory = sslContext.getSocketFactory();
+    }
+
+    public void trustAllHttps() {
+        HttpsURLConnection.setDefaultHostnameVerifier((arg0, arg1) -> true);
+        HttpsURLConnection.setDefaultSSLSocketFactory(factory);
     }
 
     @Override
     public String[] getDefaultCipherSuites() {
-        return internalSSLSocketFactory.getDefaultCipherSuites();
+        return factory.getDefaultCipherSuites();
     }
 
     @Override
     public String[] getSupportedCipherSuites() {
-        return internalSSLSocketFactory.getSupportedCipherSuites();
+        return factory.getSupportedCipherSuites();
     }
 
     @Override
     public Socket createSocket() throws IOException {
-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket());
+        return enableTLSOnSocket(factory.createSocket());
     }
 
     @Override
     public Socket createSocket(Socket s, String host, int port, boolean autoClose) throws IOException {
-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket(s, host, port, autoClose));
+        return enableTLSOnSocket(factory.createSocket(s, host, port, autoClose));
     }
 
     @Override
-    public Socket createSocket(String host, int port) throws IOException, UnknownHostException {
-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket(host, port));
+    public Socket createSocket(String host, int port) throws IOException {
+        return enableTLSOnSocket(factory.createSocket(host, port));
     }
 
     @Override
-    public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException, UnknownHostException {
-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket(host, port, localHost, localPort));
+    public Socket createSocket(String host, int port, InetAddress localHost, int localPort) throws IOException {
+        return enableTLSOnSocket(factory.createSocket(host, port, localHost, localPort));
     }
 
     @Override
     public Socket createSocket(InetAddress host, int port) throws IOException {
-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket(host, port));
+        return enableTLSOnSocket(factory.createSocket(host, port));
     }
 
     @Override
     public Socket createSocket(InetAddress address, int port, InetAddress localAddress, int localPort) throws IOException {
-        return enableTLSOnSocket(internalSSLSocketFactory.createSocket(address, port, localAddress, localPort));
+        return enableTLSOnSocket(factory.createSocket(address, port, localAddress, localPort));
     }
 
     private Socket enableTLSOnSocket(Socket socket) {

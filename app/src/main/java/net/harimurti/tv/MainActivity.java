@@ -20,6 +20,8 @@ import android.os.Build;
 import android.os.Build.VERSION_CODES;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
@@ -48,6 +50,7 @@ import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
 public class MainActivity extends AppCompatActivity {
+    private boolean doubleBackToExitPressedOnce;
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private View layoutSettings, layoutLoading;
@@ -70,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // get preferences
-        preferences = new Preferences();
+        preferences = new Preferences(this);
         cachedPlaylist = new JsonPlaylist(this).read();
 
         // define some view
@@ -89,13 +92,12 @@ public class MainActivity extends AppCompatActivity {
         btnReload.setOnClickListener(view -> queueRequest(reqPlaylist));
 
         // volley library
-        BaseHttpStack stack = new HurlStack();
-        if (Build.VERSION.SDK_INT == VERSION_CODES.KITKAT) {
-            try {
-                stack = new HurlStack(null, new TLSSocketFactory());
-            } catch (KeyManagementException | NoSuchAlgorithmException e) {
-                Log.e("Volley", "Could not create new stack for TLS v1.2!", e);
-            }
+        BaseHttpStack stack;
+        try {
+            stack = new HurlStack(null, new TLSSocketFactory());
+        } catch (KeyManagementException | NoSuchAlgorithmException e) {
+            stack = new HurlStack();
+            Log.e("Main", "Could not create new stack for TLS connection!", e);
         }
         request = Volley.newRequestQueue(this, stack);
         reqPlaylist = new StringRequest(Request.Method.GET,
@@ -118,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
                         if (500 <= errorcode && errorcode < 600)
                             message = String.format(getString(R.string.error_5xx), errorcode);
                     }
-                    else if (!Network.IsConnected()) {
+                    else if (!Network.IsConnected(this)) {
                         message = getString(R.string.no_network);
                     }
                     showAlertError(message);
@@ -247,10 +249,18 @@ public class MainActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (layoutSettings.getVisibility() == View.VISIBLE) {
             layoutSettings.setVisibility(View.GONE);
+            return;
         }
-        else {
+
+        if (doubleBackToExitPressedOnce) {
             super.onBackPressed();
             this.finish();
+            return;
         }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getString(R.string.press_back_twice_exit_app), Toast.LENGTH_SHORT).show();
+
+        new Handler(Looper.getMainLooper()).postDelayed(() -> doubleBackToExitPressedOnce = false, 2000);
     }
 }

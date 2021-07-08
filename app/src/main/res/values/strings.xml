@@ -12,11 +12,12 @@
     <string name="text_auto_retry_second">Retry automatically in %d</string>
     <string name="text_auto_retry_now">Will retry automatically now</string>
     <string name="no_network">No internet connection!</string>
-    <string name="press_back_to_exit">Press BACK again to exit!</string>
+    <string name="press_back_twice_exit_app">Press again to exit the app!</string>
+    <string name="press_back_twice_exit_player">Press again to exit the player!</string>
 
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>
-    <string name="alert_title_playlist_error">Something wrong</string>
+    <string name="alert_title_playlist_error" translatable="false">Playlist Error</string>
     <string name="error_4xx">Playlist file cannot be accessed!\nResponse code : %d</string>
     <string name="error_5xx">Server cannot be accessed!\nResponse code : %d</string>
     <string name="dialog_retry">Try again</string>
