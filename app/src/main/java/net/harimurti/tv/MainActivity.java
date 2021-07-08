@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // get preferences
-        preferences = new Preferences();
+        preferences = new Preferences(this);
         cachedPlaylist = new JsonPlaylist(this).read();
 
         // define some view
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
                         if (500 <= errorcode && errorcode < 600)
                             message = String.format(getString(R.string.error_5xx), errorcode);
                     }
-                    else if (!Network.IsConnected()) {
+                    else if (!Network.IsConnected(this)) {
                         message = getString(R.string.no_network);
                     }
                     showAlertError(message);

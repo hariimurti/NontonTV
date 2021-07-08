@@ -43,7 +43,7 @@ public class PlayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player);
 
         isFirst = false;
-        Preferences preferences = new Preferences();
+        Preferences preferences = new Preferences(this);
 
         // define some view
         layoutStatus = findViewById(R.id.layout_status);
@@ -154,7 +154,7 @@ public class PlayerActivity extends AppCompatActivity {
             @Override
             public void onCountDown(int left) {
                 left--;
-                if (!Network.IsConnected()) {
+                if (!Network.IsConnected(getApplicationContext())) {
                     tvStatus.setText(R.string.no_network);
                 }
                 if (left == 0) {
@@ -166,7 +166,7 @@ public class PlayerActivity extends AppCompatActivity {
             }
             @Override
             public void onFinish() {
-                if (Network.IsConnected()) {
+                if (Network.IsConnected(getApplicationContext())) {
                     player.setMediaItem(mediaItem);
                     player.prepare();
                 }

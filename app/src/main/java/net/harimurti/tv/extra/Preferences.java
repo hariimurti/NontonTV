@@ -1,9 +1,8 @@
 package net.harimurti.tv.extra;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
-
-import net.harimurti.tv.App;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -14,11 +13,11 @@ public class Preferences {
     private static final String OPEN_LAST_WATCHED = "OPEN_LAST_WATCHED";
     private static final String LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT";
 
-    private SharedPreferences preferences;
+    private final SharedPreferences preferences;
     private SharedPreferences.Editor editor;
 
-    public Preferences() {
-        preferences = PreferenceManager.getDefaultSharedPreferences(App.getContext());
+    public Preferences(Context context) {
+        preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public void setLastCheckUpdate() {
