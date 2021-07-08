@@ -1,15 +1,20 @@
 # NontonTV
 
-Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet kenceng. Cocok untuk dipasang ke android stb/box atau smarttv. Apk bisa download [disini](https://github.com/hariimurti/NontonTV/releases).
+Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet kenceng. Cocok untuk dipasang ke android stb/box. Aplikasi bisa download [disini](https://github.com/hariimurti/NontonTV/releases).
 
 
 ## Fitur
 - tidak perlu langganan
-- bebas iklan
+- bebas iklan, bebas dari tracking, apk kecil
 - tampilan simpel, tdk butuh banyak interaksi
 - otomatis mencoba putar kembali jika tayangan putus/error
 - [pengaturan] jalankan aplikasi saat booting
 - [pengaturan] otomatis putar terakhir dilihat saat menjalankan aplikasi
+- dan lain-lain
+
+
+## Bugs
+- untuk navigasi remote tv kadang agak susah, bisa gunakan [apk ini](https://play.google.com/store/apps/details?id=io.appground.blek&hl=en&gl=US)
 
 
 ## Screenshots
@@ -26,5 +31,9 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 
 
 ## Notes
-- *untuk akses pengaturan gunakan tombol menu dihp maupun remote.*
-- *bantu mengupdate siaran [disini](https://github.com/hariimurti/NontonTV/blob/master/json/playlist.json), menggunakan soft [iptv.manager](https://github.com/hariimurti/NontonTV/releases/download/v1.4/IPTV.Manager_v2021.5.14.2327.zip).*
+- *untuk akses **pengaturan** gunakan tombol recent (tekan lama) di hp maupun remote.*
+- *bantu mengupdate [siaran ini](https://github.com/hariimurti/NontonTV/blob/master/json/playlist.json), menggunakan soft [iptv.manager](https://github.com/hariimurti/NontonTV/releases/download/v1.4/IPTV.Manager_v2021.5.14.2327.zip).*
+
+
+## Spesial Notes
+**HARAP MENCANTUMKAN CREDIT, BILA MANA MAU MENGEDIT/MEMPUBLISH APLIKASI INI DENGAN NAMA LAIN!!!**
