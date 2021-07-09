@@ -30,9 +30,10 @@ public class TLSSocketFactory extends SSLSocketFactory {
         factory = sslContext.getSocketFactory();
     }
 
-    public void trustAllHttps() {
+    public SSLSocketFactory trustAllHttps() {
         HttpsURLConnection.setDefaultHostnameVerifier((arg0, arg1) -> true);
         HttpsURLConnection.setDefaultSSLSocketFactory(factory);
+        return factory;
     }
 
     @Override

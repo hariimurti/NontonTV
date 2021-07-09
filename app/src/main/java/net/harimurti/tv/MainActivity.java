@@ -49,6 +49,8 @@ import net.harimurti.tv.extra.TLSSocketFactory;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
+import javax.net.ssl.SSLSocketFactory;
+
 public class MainActivity extends AppCompatActivity {
     private boolean doubleBackToExitPressedOnce;
     private TabLayout tabLayout;
@@ -92,12 +94,12 @@ public class MainActivity extends AppCompatActivity {
         btnReload.setOnClickListener(view -> queueRequest(reqPlaylist));
 
         // volley library
-        BaseHttpStack stack;
+        BaseHttpStack stack = new HurlStack();
         try {
-            stack = new HurlStack(null, new TLSSocketFactory());
+            SSLSocketFactory factory = new TLSSocketFactory().trustAllHttps();
+            stack = new HurlStack(null, factory);
         } catch (KeyManagementException | NoSuchAlgorithmException e) {
-            stack = new HurlStack();
-            Log.e("Main", "Could not create new stack for TLS connection!", e);
+            Log.e("MainApp", "Could not trust all HTTPS connection!", e);
         }
         request = Volley.newRequestQueue(this, stack);
         reqPlaylist = new StringRequest(Request.Method.GET,

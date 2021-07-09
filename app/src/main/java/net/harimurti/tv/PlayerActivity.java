@@ -26,10 +26,7 @@ import net.harimurti.tv.extra.AsyncSleep;
 import net.harimurti.tv.extra.JsonPlaylist;
 import net.harimurti.tv.extra.Network;
 import net.harimurti.tv.extra.Preferences;
-import net.harimurti.tv.extra.TLSSocketFactory;
 
-import java.security.KeyManagementException;
-import java.security.NoSuchAlgorithmException;
 import java.util.Objects;
 
 public class PlayerActivity extends AppCompatActivity {
@@ -48,13 +45,6 @@ public class PlayerActivity extends AppCompatActivity {
 
         isFirst = false;
         Preferences preferences = new Preferences(this);
-
-        // trust all https connection
-        try {
-            new TLSSocketFactory().trustAllHttps();
-        } catch (KeyManagementException | NoSuchAlgorithmException e) {
-            Log.e("Player", "Could not trust all HTTPS connection!", e);
-        }
 
         // define some view
         layoutStatus = findViewById(R.id.layout_status);
