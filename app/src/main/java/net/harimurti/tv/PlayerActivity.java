@@ -7,7 +7,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowInsetsController;
 import android.widget.TextView;
@@ -27,8 +26,6 @@ import net.harimurti.tv.extra.AsyncSleep;
 import net.harimurti.tv.extra.JsonPlaylist;
 import net.harimurti.tv.extra.Network;
 import net.harimurti.tv.extra.Preferences;
-
-import java.util.Objects;
 
 public class PlayerActivity extends AppCompatActivity {
     public static boolean isFirst = true;
@@ -56,21 +53,22 @@ public class PlayerActivity extends AppCompatActivity {
 
         // get channel_url
         String url = getIntent().getStringExtra("channel_url");
+        if (url.isEmpty()) {
+            Toast.makeText(this, R.string.player_no_channel_url, Toast.LENGTH_SHORT).show();
+            this.finish();
+            return;
+        }
         Uri uri = Uri.parse(url);
 
         // get drm license
         String drmLicense = "";
         Playlist playlist = new JsonPlaylist(this).read();
-        try {
-            for (License license: playlist.licenses) {
-                if (license.domain.isEmpty() || Objects.requireNonNull(url).contains(license.domain)) {
-                    drmLicense = license.drm_url;
-                    break;
-                }
+        for (License license: playlist.licenses) {
+            if (license.drm_url.isEmpty()) continue;
+            if (license.domain.isEmpty() || url.contains(license.domain)) {
+                drmLicense = license.drm_url;
+                break;
             }
-        }
-        catch (Exception e) {
-            Log.e("PLAYER", "Can't find a license.", e);
         }
 
         // define mediasource

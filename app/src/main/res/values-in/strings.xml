@@ -29,4 +29,5 @@
     <string name="no_donnload_manager">Android ini tidak punya pengelola unduhan</string>
     <string name="reload_playlist">Muat ulang Playlist</string>
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>
+    <string name="player_no_channel_url">Tidak bisa mendapatkan link streaming</string>
 </resources>
