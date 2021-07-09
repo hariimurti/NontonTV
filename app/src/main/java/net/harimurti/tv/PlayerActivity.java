@@ -19,6 +19,7 @@ import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.util.NonNullApi;
 
 import net.harimurti.tv.data.License;
 import net.harimurti.tv.data.Playlist;
@@ -99,7 +100,7 @@ public class PlayerActivity extends AppCompatActivity {
                 }
             }
 
-            @Override
+            @Override @NonNullApi
             public void onPlayerError(ExoPlaybackException error) {
                 if (error.type == ExoPlaybackException.TYPE_SOURCE) {
                     tvStatus.setText(R.string.source_offline);
