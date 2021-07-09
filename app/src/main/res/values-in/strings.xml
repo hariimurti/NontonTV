@@ -10,10 +10,14 @@
     <string name="press_back_twice_exit_player">Tekan lagi untuk keluar dari pemutar!</string>
 
     <!-- alert playlist error -->
+    <string name="playlist_updated">Playlist sudah diperbaharui!</string>
     <string name="error_4xx">File playlist tidak dapat diakses!\nKode respon : %d</string>
     <string name="error_5xx">Server tidak dapat diakses!\nKode respon : %d</string>
     <string name="dialog_retry">Coba lagi</string>
     <string name="dialog_cached">Gunakan cache</string>
+    <string name="dialog_default">Gunakan default</string>
+    <string name="player_no_channel_url">Tidak bisa mendapatkan link streaming</string>
+    <string name="local_playlist_read_error">Tidak bisa memuat NontonTV.json dari penyimpanan internal!</string>
 
     <!-- alert update -->
     <string name="alert_new_update">Pembaharuan</string>
@@ -21,13 +25,13 @@
     <string name="dialog_skip">Abaikan Sehari</string>
     <string name="message_update">Versi\n• Terpasang : %s (%d)\n• Terkini : %s (%d)\n\nPerubahan :</string>
     <string name="message_update_no_changelog">\n• lain-lain</string>
+    <string name="no_donnload_manager">Android ini tidak punya pengelola unduhan</string>
 
     <!-- settings -->
     <string name="settings">Pengaturan</string>
     <string name="launch_at_boot">Jalankan app saat boot</string>
     <string name="open_last_watched">Putar terakhir dilihat</string>
-    <string name="no_donnload_manager">Android ini tidak punya pengelola unduhan</string>
     <string name="reload_playlist">Muat ulang Playlist</string>
-    <string name="playlist_updated">Playlist sudah diperbaharui!</string>
-    <string name="player_no_channel_url">Tidak bisa mendapatkan link streaming</string>
+    <string name="hint_custom_playlist">kosongkan utk memuat playlist lokal</string>
+    <string name="switch_custom_playlist">Playlist kustom</string>
 </resources>

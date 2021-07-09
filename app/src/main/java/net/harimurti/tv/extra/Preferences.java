@@ -12,6 +12,8 @@ public class Preferences {
     private static final String LAST_WATCHED = "LAST_WATCHED";
     private static final String OPEN_LAST_WATCHED = "OPEN_LAST_WATCHED";
     private static final String LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT";
+    private static final String USE_CUSTOM_PLAYLIST = "USE_CUSTOM_PLAYLIST";
+    private static final String PLAYLIST_EXTERNAL = "PLAYLIST_EXTERNAL";
 
     private final SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -30,7 +32,7 @@ public class Preferences {
         editor.apply();
     }
 
-    public boolean isCheckedUpdate() {
+    public boolean isCheckedReleaseUpdate() {
         try {
             Calendar last = Calendar.getInstance();
             last.setTimeInMillis(preferences.getLong(LAST_CHECK_UPDATE, 0));
@@ -75,5 +77,25 @@ public class Preferences {
 
     public String getLastWatched() {
         return  preferences.getString(LAST_WATCHED, "");
+    }
+
+    public void setUseCustomPlaylist(boolean value) {
+        editor = preferences.edit();
+        editor.putBoolean(USE_CUSTOM_PLAYLIST, value);
+        editor.apply();
+    }
+
+    public boolean useCustomPlaylist() {
+        return preferences.getBoolean(USE_CUSTOM_PLAYLIST, false);
+    }
+
+    public void setPlaylistExternal(String value) {
+        editor = preferences.edit();
+        editor.putString(PLAYLIST_EXTERNAL, value);
+        editor.apply();
+    }
+
+    public String getPlaylistExternal() {
+        return  preferences.getString(PLAYLIST_EXTERNAL, "");
     }
 }

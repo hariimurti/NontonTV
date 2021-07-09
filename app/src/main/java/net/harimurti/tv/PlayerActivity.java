@@ -21,9 +21,7 @@ import com.google.android.exoplayer2.ui.PlayerView;
 import com.google.android.exoplayer2.util.NonNullApi;
 
 import net.harimurti.tv.data.License;
-import net.harimurti.tv.data.Playlist;
 import net.harimurti.tv.extra.AsyncSleep;
-import net.harimurti.tv.extra.JsonPlaylist;
 import net.harimurti.tv.extra.Network;
 import net.harimurti.tv.extra.Preferences;
 
@@ -62,8 +60,7 @@ public class PlayerActivity extends AppCompatActivity {
 
         // get drm license
         String drmLicense = "";
-        Playlist playlist = new JsonPlaylist(this).read();
-        for (License license: playlist.licenses) {
+        for (License license: MainActivity.playlist.licenses) {
             if (license.drm_url.isEmpty()) continue;
             if (license.domain.isEmpty() || url.contains(license.domain)) {
                 drmLicense = license.drm_url;

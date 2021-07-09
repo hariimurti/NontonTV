@@ -2,14 +2,12 @@ package net.harimurti.tv;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AppCompatButton;
 import androidx.appcompat.widget.SwitchCompat;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.ViewPager2;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.DownloadManager;
 import android.app.UiModeManager;
 import android.content.Intent;
@@ -22,9 +20,12 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -41,7 +42,7 @@ import com.google.gson.JsonSyntaxException;
 import net.harimurti.tv.adapter.ViewPagerAdapter;
 import net.harimurti.tv.data.Playlist;
 import net.harimurti.tv.data.Release;
-import net.harimurti.tv.extra.JsonPlaylist;
+import net.harimurti.tv.extra.PlaylistHelper;
 import net.harimurti.tv.extra.Network;
 import net.harimurti.tv.extra.Preferences;
 import net.harimurti.tv.extra.TLSSocketFactory;
@@ -55,13 +56,13 @@ public class MainActivity extends AppCompatActivity {
     private boolean doubleBackToExitPressedOnce;
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
-    private View layoutSettings, layoutLoading;
+    private View layoutSettings, layoutLoading, layoutCustom;
+    private SwitchCompat swCustomPlaylist;
 
-    private static Playlist playlist, cachedPlaylist;
-    private static boolean isFirst = true;
+    public static Playlist playlist;
     private Preferences preferences;
-    private StringRequest reqPlaylist;
-    private RequestQueue request;
+    private PlaylistHelper playlistHelper;
+    private RequestQueue volley;
 
     @SuppressLint("DefaultLocale")
     @Override
@@ -73,25 +74,53 @@ public class MainActivity extends AppCompatActivity {
             setTheme(R.style.AppThemeTv);
         }
         setContentView(R.layout.activity_main);
+        askPermissions();
 
-        // get preferences
         preferences = new Preferences(this);
-        cachedPlaylist = new JsonPlaylist(this).read();
+        playlistHelper = new PlaylistHelper(this);
 
         // define some view
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
         layoutLoading = findViewById(R.id.layout_loading);
+        // layout settings
         layoutSettings = findViewById(R.id.layout_settings);
         layoutSettings.setOnClickListener(view -> layoutSettings.setVisibility(View.GONE));
+        // switch launch at boot
         SwitchCompat swLaunch = findViewById(R.id.launch_at_boot);
         swLaunch.setChecked(preferences.isLaunchAtBoot());
         swLaunch.setOnClickListener(view -> preferences.setLaunchAtBoot(swLaunch.isChecked()));
+        // switch play last watched
         SwitchCompat swOpenLast = findViewById(R.id.open_last_watched);
         swOpenLast.setChecked(preferences.isOpenLastWatched());
         swOpenLast.setOnClickListener(view -> preferences.setOpenLastWatched(swOpenLast.isChecked()));
-        AppCompatButton btnReload = findViewById(R.id.reload_playlist);
-        btnReload.setOnClickListener(view -> queueRequest(reqPlaylist));
+        // layout custom playlist
+        layoutCustom = findViewById(R.id.layout_custom_playlist);
+        layoutCustom.setVisibility(preferences.useCustomPlaylist() ? View.VISIBLE : View.GONE);
+        // switch custom playlist
+        swCustomPlaylist = findViewById(R.id.use_custom_playlist);
+        swCustomPlaylist.setChecked(preferences.useCustomPlaylist());
+        swCustomPlaylist.setOnClickListener(view -> {
+            layoutCustom.setVisibility(swCustomPlaylist.isChecked() ? View.VISIBLE : View.GONE);
+            preferences.setUseCustomPlaylist(swCustomPlaylist.isChecked());
+        });
+        // edittext custom playlist
+        EditText txtCustom = findViewById(R.id.custom_playlist);
+        txtCustom.setText(preferences.getPlaylistExternal());
+        txtCustom.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                preferences.setPlaylistExternal(s.toString());
+            }
+        });
+        // button reload playlist
+        findViewById(R.id.reload_playlist).setOnClickListener(view -> updatePlaylist());
 
         // volley library
         BaseHttpStack stack = new HurlStack();
@@ -100,35 +129,34 @@ public class MainActivity extends AppCompatActivity {
             stack = new HurlStack(null, factory);
         } catch (KeyManagementException | NoSuchAlgorithmException e) {
             Log.e("MainApp", "Could not trust all HTTPS connection!", e);
+        } finally {
+            volley = Volley.newRequestQueue(this, stack);
         }
-        request = Volley.newRequestQueue(this, stack);
-        reqPlaylist = new StringRequest(Request.Method.GET,
-                getString(R.string.json_playlist),
-                response -> {
-                    try {
-                        playlist = new Gson().fromJson(response, Playlist.class);
-                        setPlaylistToViewPager();
-                        new JsonPlaylist(this).write(response);
-                    } catch (JsonSyntaxException error) {
-                        showAlertError(error.getMessage());
-                    }
-                },
-                error -> {
-                    String message = getString(R.string.something_went_wrong);
-                    if (error.networkResponse != null) {
-                        int errorcode = error.networkResponse.statusCode;
-                        if (400 <= errorcode && errorcode < 500)
-                            message = String.format(getString(R.string.error_4xx), errorcode);
-                        if (500 <= errorcode && errorcode < 600)
-                            message = String.format(getString(R.string.error_5xx), errorcode);
-                    }
-                    else if (!Network.IsConnected(this)) {
-                        message = getString(R.string.no_network);
-                    }
-                    showAlertError(message);
-                });
 
-        StringRequest reqUpdate = new StringRequest(Request.Method.GET,
+        // playlist update
+        if (playlist == null) {
+            updatePlaylist();
+        }
+        else {
+            setPlaylistToViewPager(playlist);
+        }
+
+        // check new release
+        if (!preferences.isCheckedReleaseUpdate()) {
+            checkNewRelease();
+        }
+
+        // launch player if openlastwatched is true
+        String streamUrl = preferences.getLastWatched();
+        if (preferences.isOpenLastWatched() && !streamUrl.equals("") && PlayerActivity.isFirst) {
+            Intent intent = new Intent(this, PlayerActivity.class);
+            intent.putExtra("channel_url", streamUrl);
+            this.startActivity(intent);
+        }
+    }
+
+    private void checkNewRelease() {
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 getString(R.string.json_release),
                 response -> {
                     try {
@@ -149,64 +177,96 @@ public class MainActivity extends AppCompatActivity {
                         showAlertUpdate(message.toString(), release.downloadUrl);
                     } catch (Exception e) { Log.e("Volley", "Could not check new update!", e); }
                 }, null);
-
-        if (playlist == null) {
-            queueRequest(reqPlaylist);
-        }
-        else {
-            setPlaylistToViewPager();
-        }
-        if (!preferences.isCheckedUpdate()) {
-            queueRequest(reqUpdate);
-        }
-
-        String streamUrl = preferences.getLastWatched();
-        if (preferences.isOpenLastWatched() && !streamUrl.equals("") && PlayerActivity.isFirst) {
-            Intent intent = new Intent(this, PlayerActivity.class);
-            intent.putExtra("channel_url", streamUrl);
-            this.startActivity(intent);
-        }
+        volley.getCache().clear();
+        volley.add(stringRequest);
     }
 
-    private void queueRequest(StringRequest strReq) {
-        request.getCache().clear();
-        request.add(strReq);
+    private void updatePlaylist() {
+        // from local storage
+        if (playlistHelper.mode() == PlaylistHelper.MODE_LOCAL) {
+            Playlist local = playlistHelper.readLocal();
+            if (local == null) {
+                showAlertLocalError();
+                return;
+            }
+            setPlaylistToViewPager(local);
+            return;
+        }
+
+        // from internet
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                playlistHelper.getUrlPath(),
+                response -> {
+                    try {
+                        Playlist newPls = new Gson().fromJson(response, Playlist.class);
+                        playlistHelper.writeCache(response);
+                        setPlaylistToViewPager(newPls);
+                    } catch (JsonSyntaxException error) {
+                        showAlertPlaylistError(error.getMessage());
+                    }
+                },
+                error -> {
+                    String message = getString(R.string.something_went_wrong);
+                    if (error.networkResponse != null) {
+                        int errorcode = error.networkResponse.statusCode;
+                        if (400 <= errorcode && errorcode < 500)
+                            message = String.format(getString(R.string.error_4xx), errorcode);
+                        if (500 <= errorcode && errorcode < 600)
+                            message = String.format(getString(R.string.error_5xx), errorcode);
+                    }
+                    else if (!Network.IsConnected(this)) {
+                        message = getString(R.string.no_network);
+                    }
+                    showAlertPlaylistError(message);
+                });
+
+        volley.getCache().clear();
+        volley.add(stringRequest);
     }
 
-    private void setPlaylistToViewPager() {
-        viewPager.setAdapter(new ViewPagerAdapter(this, playlist));
+    private void setPlaylistToViewPager(Playlist newPls) {
+        viewPager.setAdapter(new ViewPagerAdapter(this, newPls));
         new TabLayoutMediator(
-                tabLayout, viewPager, (tab, i) -> tab.setText(playlist.categories.get(i).name)
+                tabLayout, viewPager, (tab, i) -> tab.setText(newPls.categories.get(i).name)
         ).attach();
         layoutLoading.setVisibility(View.GONE);
-        if (!isFirst) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show();
-        isFirst = false;
+        if (playlist != newPls) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show();
+        playlist = newPls;
     }
 
-    private void showAlertError(String error) {
+    private void showAlertLocalError() {
+        askPermissions();
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(R.string.alert_title_playlist_error)
+                .setMessage(R.string.local_playlist_read_error)
+                .setCancelable(false)
+                .setPositiveButton(R.string.dialog_retry, (dialog, id) -> updatePlaylist())
+                .setNegativeButton("Use Default", (dialog, id) -> {
+                    preferences.setUseCustomPlaylist(false);
+                    swCustomPlaylist.setChecked(false);
+                    layoutCustom.setVisibility(View.GONE);
+                    updatePlaylist();
+                });
+        alert.create().show();
+    }
+
+    private void showAlertPlaylistError(String error) {
         String message = error == null ? getString(R.string.something_went_wrong) : error;
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.alert_title_playlist_error)
                 .setMessage(message)
                 .setCancelable(false)
-                .setPositiveButton(R.string.dialog_retry, (dialog, id) -> queueRequest(reqPlaylist));
-        if (cachedPlaylist != null) {
-            alert.setNegativeButton(R.string.dialog_cached, (dialog, id) -> {
-                playlist = cachedPlaylist;
-                setPlaylistToViewPager();
-            });
+                .setPositiveButton(R.string.dialog_retry, (dialog, id) -> updatePlaylist());
+
+        Playlist cache = playlistHelper.readCache();
+        if (cache != null) {
+            alert.setNegativeButton(R.string.dialog_cached, (dialog, id) -> setPlaylistToViewPager(cache));
         }
         alert.create().show();
     }
 
     private void showAlertUpdate(String message, String fileUrl) {
-        if (Build.VERSION.SDK_INT >= VERSION_CODES.M
-                && ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[] { Manifest.permission.WRITE_EXTERNAL_STORAGE },1000);
-        }
-
+        askPermissions();
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.alert_new_update)
                 .setMessage(message)
@@ -233,6 +293,20 @@ public class MainActivity extends AppCompatActivity {
         }
         catch (Exception e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @TargetApi(23)
+    protected void askPermissions() {
+        if (Build.VERSION.SDK_INT < VERSION_CODES.M) return;
+        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
+                checkSelfPermission(Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[] {
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.MANAGE_EXTERNAL_STORAGE
+            },1000);
         }
     }
 

@@ -3,6 +3,10 @@
 Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet kenceng. Cocok untuk dipasang ke android stb/box. Aplikasi bisa download [disini](https://github.com/hariimurti/NontonTV/releases).
 
 
+## Peringatan Keras
+**HARAP MENCANTUMKAN CREDIT, BILA MANA ANDA MAU MENGEDIT/MEMPUBLISH APLIKASI INI DENGAN NAMA LAIN!!!**
+
+
 ## Fitur
 - tidak perlu langganan
 - bebas iklan, bebas dari tracking, apk kecil
@@ -10,6 +14,7 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 - otomatis mencoba putar kembali jika tayangan putus/error
 - [pengaturan] jalankan aplikasi saat booting
 - [pengaturan] otomatis putar terakhir dilihat saat menjalankan aplikasi
+- [pengaturan] support playlist kustom
 - dan lain-lain
 
 
@@ -20,6 +25,7 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 ## Screenshots
 [<img src="./screenshot/20200412-115720.jpg" height=180>](./screenshot/20200412-115720.jpg)
 [<img src="./screenshot/20200412-115727.jpg" width=320>](./screenshot/20200412-115727.jpg)
+[<img src="./screenshot/20210710-030000.jpg" height=180>](./screenshot/20210710-030000.jpg)
 [<img src="./screenshot/20200412-115735.jpg" width=320>](./screenshot/20200412-115735.jpg)
 
 
@@ -32,8 +38,5 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 
 ## Notes
 - *untuk akses **pengaturan** gunakan tombol recent (tekan lama) di hp maupun remote.*
-- *bantu mengupdate [siaran ini](https://github.com/hariimurti/NontonTV/blob/master/json/playlist.json), menggunakan soft [iptv.manager](https://github.com/hariimurti/NontonTV/releases/download/v1.4/IPTV.Manager_v2021.5.14.2327.zip).*
-
-
-## Spesial Notes
-**HARAP MENCANTUMKAN CREDIT, BILA MANA MAU MENGEDIT/MEMPUBLISH APLIKASI INI DENGAN NAMA LAIN!!!**
+- *playlist kustom: isikan tautan ke file json, atau biarkan kosong maka akan membaca file [NontonTV.json](./json/playlist.json) dari penyimpanan internal (pastikan anda telah mengcopykan file tersebut).*
+- *bantu mengupdate [siaran ini](./json/playlist.json), menggunakan soft [iptv.manager](https://github.com/hariimurti/NontonTV/releases/download/v1.4/IPTV.Manager_v2021.5.14.2327.zip).*
