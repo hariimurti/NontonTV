@@ -1,6 +1,6 @@
 {
-    "versionCode": 450,
-    "versionName": "v1.7",
-    "changelog": ["fix force close android 4.4 (blind test)", "fix Indonesian translation", "fix can't stream on some servers https", "press back twice to exit"],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.7/net.harimurti.tv_v1.7_b450.apk"
+    "versionCode": 475,
+    "versionName": "v1.8",
+    "changelog": ["support track selection", "can load from external playlist"],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.8/net.harimurti.tv_v1.8_b475.apk"
 }
