@@ -149,7 +149,7 @@ public class PlayerActivity extends AppCompatActivity {
                 if (!Network.IsConnected(getApplicationContext())) {
                     tvStatus.setText(R.string.no_network);
                 }
-                if (left == 0) {
+                if (left <= 0) {
                     tvRetry.setText(R.string.text_auto_retry_now);
                 }
                 else {
