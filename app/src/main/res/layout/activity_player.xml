@@ -6,11 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".PlayerActivity">
 
-    <com.google.android.exoplayer2.ui.PlayerView
+    <com.google.android.exoplayer2.ui.StyledPlayerView
         android:id="@+id/player_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:use_controller="false">
+        app:show_subtitle_button="true"
+        app:controller_layout_id="@layout/player_custom_control">
 
         <RelativeLayout
             android:id="@+id/layout_status"
@@ -61,6 +62,6 @@
 
         </RelativeLayout>
 
-    </com.google.android.exoplayer2.ui.PlayerView>
+    </com.google.android.exoplayer2.ui.StyledPlayerView>
 
 </LinearLayout>

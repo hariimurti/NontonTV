@@ -1,5 +1,6 @@
 package net.harimurti.tv;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.net.Uri;
@@ -9,6 +10,7 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.view.WindowInsetsController;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,8 +19,11 @@ import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
-import com.google.android.exoplayer2.ui.PlayerView;
-import com.google.android.exoplayer2.util.NonNullApi;
+import com.google.android.exoplayer2.source.TrackGroupArray;
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
+import com.google.android.exoplayer2.ui.StyledPlayerView;
 
 import net.harimurti.tv.data.License;
 import net.harimurti.tv.extra.AsyncSleep;
@@ -31,6 +36,8 @@ public class PlayerActivity extends AppCompatActivity {
     private boolean doubleBackToExitPressedOnce;
     private SimpleExoPlayer player;
     private MediaItem mediaItem;
+    private DefaultTrackSelector trackSelector;
+    private TrackGroupArray lastSeenTrackGroupArray;
     private View layoutStatus, layoutSpin, layoutText;
     private TextView tvStatus, tvRetry;
 
@@ -48,6 +55,9 @@ public class PlayerActivity extends AppCompatActivity {
         layoutText = findViewById(R.id.layout_text);
         tvStatus = findViewById(R.id.text_status);
         tvRetry = findViewById(R.id.text_retry);
+        ImageButton trackButton = findViewById(R.id.player_settings);
+        trackButton.setOnClickListener(view -> TrackSelectionDialog.createForTrackSelector(trackSelector, dismissedDialog -> {})
+                .show(getSupportFragmentManager(), null));
 
         // get channel_url
         String url = getIntent().getStringExtra("channel_url");
@@ -82,7 +92,9 @@ public class PlayerActivity extends AppCompatActivity {
         }
 
         // create player & set listener
-        player = new SimpleExoPlayer.Builder(this).build();
+        trackSelector = new DefaultTrackSelector(this);
+        trackSelector.setParameters(new DefaultTrackSelector.ParametersBuilder(this).build());
+        player = new SimpleExoPlayer.Builder(this).setTrackSelector(trackSelector).build();
         player.addListener(new Player.Listener() {
             @Override
             public void onPlaybackStateChanged(int state) {
@@ -93,10 +105,11 @@ public class PlayerActivity extends AppCompatActivity {
                 else if (state == Player.STATE_BUFFERING) {
                     showLayoutMessage(View.VISIBLE, false);
                 }
+                trackButton.setEnabled(TrackSelectionDialog.willHaveContent(trackSelector));
             }
 
-            @Override @NonNullApi
-            public void onPlayerError(ExoPlaybackException error) {
+            @Override
+            public void onPlayerError(@NonNull ExoPlaybackException error) {
                 if (error.type == ExoPlaybackException.TYPE_SOURCE) {
                     tvStatus.setText(R.string.source_offline);
                 } else {
@@ -106,11 +119,31 @@ public class PlayerActivity extends AppCompatActivity {
                 showLayoutMessage(View.VISIBLE, true);
                 retryPlayback();
             }
+
+            @Override
+            @SuppressWarnings("ReferenceEquality")
+            public void onTracksChanged(@NonNull TrackGroupArray trackGroups, @NonNull TrackSelectionArray trackSelections) {
+                if (trackGroups != lastSeenTrackGroupArray) {
+                    MappingTrackSelector.MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+                    if (mappedTrackInfo != null) {
+                        if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO)
+                                == MappingTrackSelector.MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_unsupported_video), Toast.LENGTH_LONG).show();
+                        }
+                        if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_AUDIO)
+                                == MappingTrackSelector.MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
+                            Toast.makeText(getApplicationContext(), getString(R.string.error_unsupported_audio), Toast.LENGTH_LONG).show();
+                        }
+                    }
+                    lastSeenTrackGroupArray = trackGroups;
+                }
+            }
         });
 
         // set player view
-        PlayerView playerView = findViewById(R.id.player_view);
+        StyledPlayerView playerView = findViewById(R.id.player_view);
         playerView.setPlayer(player);
+        playerView.requestFocus();
 
         // play mediasouce
         player.setMediaItem(mediaItem);
