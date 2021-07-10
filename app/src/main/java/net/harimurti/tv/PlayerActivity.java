@@ -10,7 +10,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
 import android.view.WindowInsetsController;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,11 +33,13 @@ public class PlayerActivity extends AppCompatActivity {
     public static boolean isFirst = true;
     private static boolean skipRetry = false;
     private boolean doubleBackToExitPressedOnce;
+    private Preferences preferences;
+    private String channelUrl;
     private SimpleExoPlayer player;
     private MediaItem mediaItem;
     private DefaultTrackSelector trackSelector;
     private TrackGroupArray lastSeenTrackGroupArray;
-    private View layoutStatus, layoutSpin, layoutText;
+    private View layoutStatus, layoutSpin, layoutText, trackButton;
     private TextView tvStatus, tvRetry;
 
     @Override
@@ -47,7 +48,7 @@ public class PlayerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_player);
 
         isFirst = false;
-        Preferences preferences = new Preferences(this);
+        preferences = new Preferences(this);
 
         // define some view
         layoutStatus = findViewById(R.id.layout_status);
@@ -55,24 +56,23 @@ public class PlayerActivity extends AppCompatActivity {
         layoutText = findViewById(R.id.layout_text);
         tvStatus = findViewById(R.id.text_status);
         tvRetry = findViewById(R.id.text_retry);
-        ImageButton trackButton = findViewById(R.id.player_settings);
+        trackButton = findViewById(R.id.player_settings);
         trackButton.setOnClickListener(view -> TrackSelectionDialog.createForTrackSelector(trackSelector, dismissedDialog -> {})
                 .show(getSupportFragmentManager(), null));
 
         // get channel_url
-        String url = getIntent().getStringExtra("channel_url");
-        if (url.isEmpty()) {
+        channelUrl = getIntent().getStringExtra("channel_url");
+        if (channelUrl.isEmpty()) {
             Toast.makeText(this, R.string.player_no_channel_url, Toast.LENGTH_SHORT).show();
             this.finish();
             return;
         }
-        Uri uri = Uri.parse(url);
 
         // get drm license
         String drmLicense = "";
         for (License license: MainActivity.playlist.licenses) {
             if (license.drm_url.isEmpty()) continue;
-            if (license.domain.isEmpty() || url.contains(license.domain)) {
+            if (license.domain.isEmpty() || channelUrl.contains(license.domain)) {
                 drmLicense = license.drm_url;
                 break;
             }
@@ -81,64 +81,21 @@ public class PlayerActivity extends AppCompatActivity {
         // define mediasource
         if (!drmLicense.isEmpty()) {
             mediaItem = new MediaItem.Builder()
-                    .setUri(uri)
+                    .setUri(Uri.parse(channelUrl))
                     .setDrmUuid(C.WIDEVINE_UUID)
                     .setDrmLicenseUri(drmLicense)
                     .setDrmMultiSession(true)
                     .build();
         }
         else {
-            mediaItem = MediaItem.fromUri(uri);
+            mediaItem = MediaItem.fromUri(Uri.parse(channelUrl));
         }
 
         // create player & set listener
         trackSelector = new DefaultTrackSelector(this);
         trackSelector.setParameters(new DefaultTrackSelector.ParametersBuilder(this).build());
         player = new SimpleExoPlayer.Builder(this).setTrackSelector(trackSelector).build();
-        player.addListener(new Player.Listener() {
-            @Override
-            public void onPlaybackStateChanged(int state) {
-                if (state == Player.STATE_READY) {
-                    showLayoutMessage(View.GONE, false);
-                    preferences.setLastWatched(url);
-                }
-                else if (state == Player.STATE_BUFFERING) {
-                    showLayoutMessage(View.VISIBLE, false);
-                }
-                trackButton.setEnabled(TrackSelectionDialog.willHaveContent(trackSelector));
-            }
-
-            @Override
-            public void onPlayerError(@NonNull ExoPlaybackException error) {
-                if (error.type == ExoPlaybackException.TYPE_SOURCE) {
-                    tvStatus.setText(R.string.source_offline);
-                } else {
-                    tvStatus.setText(R.string.something_went_wrong);
-                }
-                tvRetry.setText(R.string.text_auto_retry);
-                showLayoutMessage(View.VISIBLE, true);
-                retryPlayback();
-            }
-
-            @Override
-            @SuppressWarnings("ReferenceEquality")
-            public void onTracksChanged(@NonNull TrackGroupArray trackGroups, @NonNull TrackSelectionArray trackSelections) {
-                if (trackGroups != lastSeenTrackGroupArray) {
-                    MappingTrackSelector.MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
-                    if (mappedTrackInfo != null) {
-                        if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO)
-                                == MappingTrackSelector.MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.error_unsupported_video), Toast.LENGTH_LONG).show();
-                        }
-                        if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_AUDIO)
-                                == MappingTrackSelector.MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
-                            Toast.makeText(getApplicationContext(), getString(R.string.error_unsupported_audio), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                    lastSeenTrackGroupArray = trackGroups;
-                }
-            }
-        });
+        player.addListener(new playerListener());
 
         // set player view
         StyledPlayerView playerView = findViewById(R.id.player_view);
@@ -169,6 +126,51 @@ public class PlayerActivity extends AppCompatActivity {
                             | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                             | View.SYSTEM_UI_FLAG_FULLSCREEN
                             | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
+
+    private class playerListener implements Player.Listener {
+        @Override
+        public void onPlaybackStateChanged(int state) {
+            if (state == Player.STATE_READY) {
+                showLayoutMessage(View.GONE, false);
+                preferences.setLastWatched(channelUrl);
+            }
+            else if (state == Player.STATE_BUFFERING) {
+                showLayoutMessage(View.VISIBLE, false);
+            }
+            trackButton.setEnabled(TrackSelectionDialog.willHaveContent(trackSelector));
+        }
+
+        @Override
+        public void onPlayerError(@NonNull ExoPlaybackException error) {
+            if (error.type == ExoPlaybackException.TYPE_SOURCE) {
+                tvStatus.setText(R.string.source_offline);
+            } else {
+                tvStatus.setText(R.string.something_went_wrong);
+            }
+            tvRetry.setText(R.string.text_auto_retry);
+            showLayoutMessage(View.VISIBLE, true);
+            retryPlayback();
+        }
+
+        @Override
+        @SuppressWarnings("ReferenceEquality")
+        public void onTracksChanged(@NonNull TrackGroupArray trackGroups, @NonNull TrackSelectionArray trackSelections) {
+            if (trackGroups != lastSeenTrackGroupArray) {
+                MappingTrackSelector.MappedTrackInfo mappedTrackInfo = trackSelector.getCurrentMappedTrackInfo();
+                if (mappedTrackInfo != null) {
+                    if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO)
+                            == MappingTrackSelector.MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_unsupported_video), Toast.LENGTH_LONG).show();
+                    }
+                    if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_AUDIO)
+                            == MappingTrackSelector.MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
+                        Toast.makeText(getApplicationContext(), getString(R.string.error_unsupported_audio), Toast.LENGTH_LONG).show();
+                    }
+                }
+                lastSeenTrackGroupArray = trackGroups;
+            }
         }
     }
 
