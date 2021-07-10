@@ -12,6 +12,7 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 - bebas iklan, bebas dari tracking, apk kecil
 - tampilan simpel, tdk butuh banyak interaksi
 - otomatis mencoba putar kembali jika tayangan putus/error
+- bisa pilih kualitas video, audio, maupun subtitle (bila tayangan mendukung)
 - [pengaturan] jalankan aplikasi saat booting
 - [pengaturan] otomatis putar terakhir dilihat saat menjalankan aplikasi
 - [pengaturan] support playlist kustom
@@ -27,6 +28,7 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 [<img src="./screenshot/20200412-115727.jpg" width=320>](./screenshot/20200412-115727.jpg)
 [<img src="./screenshot/20210710-030000.jpg" height=180>](./screenshot/20210710-030000.jpg)
 [<img src="./screenshot/20200412-115735.jpg" width=320>](./screenshot/20200412-115735.jpg)
+[<img src="./screenshot/20210710-224755.jpg" width=320>](./screenshot/20210710-224755.jpg)
 
 
 ## Thanks to
