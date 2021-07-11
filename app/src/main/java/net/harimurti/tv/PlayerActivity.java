@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowInsetsController;
 import android.widget.TextView;
@@ -57,8 +58,7 @@ public class PlayerActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.text_status);
         tvRetry = findViewById(R.id.text_retry);
         trackButton = findViewById(R.id.player_settings);
-        trackButton.setOnClickListener(view -> TrackSelectionDialog.createForTrackSelector(trackSelector, dismissedDialog -> {})
-                .show(getSupportFragmentManager(), null));
+        trackButton.setOnClickListener(view -> showTrackSelector());
 
         // get channel_url
         channelUrl = getIntent().getStringExtra("channel_url");
@@ -205,6 +205,11 @@ public class PlayerActivity extends AppCompatActivity {
         }).start(6);
     }
 
+    private void showTrackSelector() {
+        TrackSelectionDialog.createForTrackSelector(trackSelector, dismissedDialog -> {})
+                .show(getSupportFragmentManager(), null);
+    }
+
     private void showLayoutMessage(int visibility, boolean isMessage) {
         layoutStatus.setVisibility(visibility);
         if (!isMessage) {
@@ -213,6 +218,17 @@ public class PlayerActivity extends AppCompatActivity {
         } else {
             layoutSpin.setVisibility(View.GONE);
             layoutText.setVisibility(View.VISIBLE);
+        }
+    }
+
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_MENU) {
+            showTrackSelector();
+            return true;
+        }
+        else {
+            return super.onKeyUp(keyCode, event);
         }
     }
 
