@@ -1,6 +1,6 @@
 {
-    "versionCode": 475,
-    "versionName": "v1.8",
-    "changelog": ["support track selection", "can load from external playlist"],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.8/net.harimurti.tv_v1.8_b475.apk"
+    "versionCode": 480,
+    "versionName": "v1.9",
+    "changelog": ["some bug fixes on android 4.4", "player: key menu to show track selection", "thanks to contributors"],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.9/net.harimurti.tv_v1.9_b480.apk"
 }
