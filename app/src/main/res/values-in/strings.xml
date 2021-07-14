@@ -30,6 +30,11 @@
     <string name="message_update_no_changelog">\n• lain-lain</string>
     <string name="no_donnload_manager">Android ini tidak punya pengelola unduhan</string>
 
+    <!-- alert contributors -->
+    <string name="alert_title_contributors">Penyumbang</string>
+    <string name="dialog_join_group">Gabung Grup</string>
+    <string name="message_thanks_to">Terimakasih kepada :</string>
+
     <!-- settings -->
     <string name="settings">Pengaturan</string>
     <string name="launch_at_boot">Jalankan app saat boot</string>

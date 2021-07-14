@@ -2,8 +2,11 @@
     <string name="app_name" translatable="false">Nonton TV</string>
 
     <!-- json link -->
+    <string name="website" translatable="false">https://github.com/hariimurti/NontonTV</string>
+    <string name="telegram_group" translatable="false">https://t.me/paijemdev</string>
     <string name="json_playlist" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/playlist.json</string>
     <string name="json_release" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/release.json</string>
+    <string name="gh_contributors" translatable="false">https://api.github.com/repos/hariimurti/NontonTV/contributors</string>
 
     <!-- some text -->
     <string name="something_went_wrong">Something went wrong!</string>
@@ -37,6 +40,13 @@
     <string name="message_update_changelog" translatable="false">\n• %s</string>
     <string name="message_update_no_changelog">\n• others</string>
     <string name="no_donnload_manager">This android do not have a download manager</string>
+
+    <!-- alert contributors -->
+    <string name="alert_title_contributors">Contributors</string>
+    <string name="dialog_website" translatable="false">Website</string>
+    <string name="dialog_join_group">Join Group</string>
+    <string name="message_thanks_to">Thanks to :</string>
+    <string name="message_user_icon" translatable="false">\n👤 </string>
 
     <!-- settings -->
     <string name="settings">Settings</string>

@@ -40,6 +40,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 
 import net.harimurti.tv.adapter.ViewPagerAdapter;
+import net.harimurti.tv.data.GithubUser;
 import net.harimurti.tv.data.Playlist;
 import net.harimurti.tv.data.Release;
 import net.harimurti.tv.extra.PlaylistHelper;
@@ -145,6 +146,11 @@ public class MainActivity extends AppCompatActivity {
             checkNewRelease();
         }
 
+        // get contributors
+        if (preferences.getLastVersionCode() != BuildConfig.VERSION_CODE) {
+            getContributors();
+        }
+
         // launch player if openlastwatched is true
         String streamUrl = preferences.getLastWatched();
         if (preferences.isOpenLastWatched() && !streamUrl.equals("") && PlayerActivity.isFirst) {
@@ -175,6 +181,25 @@ public class MainActivity extends AppCompatActivity {
                         }
                         showAlertUpdate(message.toString(), release.downloadUrl);
                     } catch (Exception e) { Log.e("Volley", "Could not check new update!", e); }
+                }, null);
+        volley.getCache().clear();
+        volley.add(stringRequest);
+    }
+
+    private void getContributors() {
+        if (preferences.getLastVersionCode() == BuildConfig.VERSION_CODE) return;
+        StringRequest stringRequest = new StringRequest(Request.Method.GET,
+                getString(R.string.gh_contributors),
+                response -> {
+                    try {
+                        GithubUser[] users = new Gson().fromJson(response, GithubUser[].class);
+                        StringBuilder message = new StringBuilder(getString(R.string.message_thanks_to));
+                        for (GithubUser user : users) {
+                            message.append(getString(R.string.message_user_icon)).append(user.login)
+                                    .append(" (").append(user.contributions).append(")");
+                        }
+                        showAlertContributors(message.toString());
+                    } catch (Exception e) { Log.e("Volley", "Could not get contributors!", e); }
                 }, null);
         volley.getCache().clear();
         volley.add(stringRequest);
@@ -272,6 +297,20 @@ public class MainActivity extends AppCompatActivity {
                 .setPositiveButton(R.string.dialog_download, (dialog, id) -> downloadFile(fileUrl))
                 .setNegativeButton(R.string.dialog_skip, (dialog, id) -> preferences.setLastCheckUpdate());
         alert.create().show();
+    }
+
+    private void showAlertContributors(String message) {
+        AlertDialog.Builder alert = new AlertDialog.Builder(this);
+        alert.setTitle(R.string.alert_title_contributors)
+                .setMessage(message)
+                .setPositiveButton(android.R.string.ok, (dialog, id) -> preferences.setLastVersionCode(BuildConfig.VERSION_CODE))
+                .setNegativeButton(R.string.dialog_website, (dialog, id) -> openWebsite(getString(R.string.website)))
+                .setNeutralButton(R.string.dialog_join_group, (dialog, id) -> openWebsite(getString(R.string.dialog_join_group)));
+        alert.create().show();
+    }
+
+    private void openWebsite(String link) {
+        startActivity(new Intent(Intent.ACTION_VIEW).setData(Uri.parse(link)));
     }
 
     private void downloadFile(String url) {

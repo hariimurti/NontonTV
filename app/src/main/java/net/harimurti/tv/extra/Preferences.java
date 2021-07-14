@@ -14,6 +14,7 @@ public class Preferences {
     private static final String LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT";
     private static final String USE_CUSTOM_PLAYLIST = "USE_CUSTOM_PLAYLIST";
     private static final String PLAYLIST_EXTERNAL = "PLAYLIST_EXTERNAL";
+    private static final String LAST_VERSIONCODE = "LAST_VERSIONCODE";
 
     private final SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -97,5 +98,15 @@ public class Preferences {
 
     public String getPlaylistExternal() {
         return  preferences.getString(PLAYLIST_EXTERNAL, "");
+    }
+
+    public void setLastVersionCode(int value) {
+        editor = preferences.edit();
+        editor.putInt(LAST_VERSIONCODE, value);
+        editor.apply();
+    }
+
+    public int getLastVersionCode() {
+        return preferences.getInt(LAST_VERSIONCODE, 0);
     }
 }
