@@ -23,7 +23,7 @@ import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
-import com.google.android.exoplayer2.ui.StyledPlayerView;
+import com.google.android.exoplayer2.ui.PlayerView;
 
 import net.harimurti.tv.data.License;
 import net.harimurti.tv.extra.AsyncSleep;
@@ -98,7 +98,7 @@ public class PlayerActivity extends AppCompatActivity {
         player.addListener(new playerListener());
 
         // set player view
-        StyledPlayerView playerView = findViewById(R.id.player_view);
+        PlayerView playerView = findViewById(R.id.player_view);
         playerView.setPlayer(player);
         playerView.requestFocus();
 
