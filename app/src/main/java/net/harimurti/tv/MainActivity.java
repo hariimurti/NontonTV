@@ -50,8 +50,6 @@ import net.harimurti.tv.extra.TLSSocketFactory;
 import java.security.KeyManagementException;
 import java.security.NoSuchAlgorithmException;
 
-import javax.net.ssl.SSLSocketFactory;
-
 public class MainActivity extends AppCompatActivity {
     private boolean doubleBackToExitPressedOnce;
     private TabLayout tabLayout;
@@ -125,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
         // volley library
         BaseHttpStack stack = new HurlStack();
         try {
-            SSLSocketFactory factory = new TLSSocketFactory().trustAllHttps();
+            TLSSocketFactory factory = new TLSSocketFactory();
+            factory.trustAllHttps();
             stack = new HurlStack(null, factory);
         } catch (KeyManagementException | NoSuchAlgorithmException e) {
             Log.e("MainApp", "Could not trust all HTTPS connection!", e);
