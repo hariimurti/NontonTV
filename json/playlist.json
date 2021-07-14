@@ -130,6 +130,26 @@
       "stream_url": "https://ac-samsung.samsung.wurl.com/manifest/playlist.m3u8"
     },
     {
+      "cid": 7,
+      "name": "ASSP1",
+      "stream_url": "http://3.0.20.58:8000/play/ASSP1/index.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "ASSP2",
+      "stream_url": "http://3.0.20.58:8000/play/ASSP2/index.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "ASSP3",
+      "stream_url": "http://3.0.20.58:8000/play/ASSP3/index.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "ASSP4",
+      "stream_url": "http://3.0.20.58:8000/play/ASSP4/index.m3u8"
+    },
+    {
       "cid": 2,
       "name": "AXN",
       "stream_url": "http://210.210.155.66/h/h141/01.m3u8"
