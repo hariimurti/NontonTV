@@ -1,6 +1,6 @@
 {
-    "versionCode": 480,
+    "versionCode": 481,
     "versionName": "v1.9",
-    "changelog": ["some bug fixes on android 4.4", "player: key menu to show track selection", "thanks to contributors"],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.9/net.harimurti.tv_v1.9_b480.apk"
+    "changelog": ["some bug fixes on android 4.4", "player: key menu to show track selection", "thanks to contributors (auto dismiss 10s)"],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.9/net.harimurti.tv_v1.9_b481.apk"
 }
