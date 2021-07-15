@@ -251,6 +251,21 @@
     },
     {
       "cid": 7,
+      "name": "Champions TV 1",
+      "stream_url": "http://gpc.my.id/vidio/champion-tv-1.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Champions TV 2",
+      "stream_url": "http://gpc.my.id/vidio/champion-tv-2.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Champions TV 3",
+      "stream_url": "http://gpc.my.id/vidio/champion-tv-3.m3u8"
+    },
+    {
+      "cid": 7,
       "name": "Channel 3 [HD]",
       "stream_url": "https://cdnlive.goprimetime.info/feed/ch3hd/index.m3u8"
     },
