@@ -466,6 +466,11 @@
     },
     {
       "cid": 2,
+      "name": "Flik",
+      "stream_url": "https://mkctvbro.my.id/horas/pakailah.m3u8?id=flik&bandwidth=default&sync=0"
+    },
+    {
+      "cid": 2,
       "name": "FMN",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/FMN/sa_dash_vmx/FMN.mpd"
     },
@@ -1058,16 +1063,6 @@
       "cid": 6,
       "name": "Tawaf TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/TawafTV/sa_dash_vmx/TawafTV.mpd"
-    },
-    {
-      "cid": 7,
-      "name": "Tennis Channel",
-      "stream_url": "https://playoutengine.sinclairstoryline.com/playout/9f87522c-5a0e-4ff4-b82c-d5564216132f/g.m3u8"
-    },
-    {
-      "cid": 7,
-      "name": "Tennis Channel Plus",
-      "stream_url": "https://playoutengine.sinclairstoryline.com/playout/f2f8b269-dd85-4434-bdd3-b3a64ca9cd60/g.m3u8"
     },
     {
       "cid": 2,
