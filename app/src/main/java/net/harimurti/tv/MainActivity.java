@@ -124,7 +124,7 @@ public class MainActivity extends AppCompatActivity {
         // volley library
         BaseHttpStack stack = new HurlStack();
         try {
-            TLSSocketFactory factory = new TLSSocketFactory();
+            TLSSocketFactory factory = new TLSSocketFactory(this);
             factory.trustAllHttps();
             stack = new HurlStack(null, factory);
         } catch (KeyManagementException | NoSuchAlgorithmException e) {

@@ -1,5 +1,12 @@
 package net.harimurti.tv.extra;
 
+import android.content.Context;
+import android.os.Build;
+
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.security.ProviderInstaller;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
@@ -18,16 +25,33 @@ public class TLSSocketFactory extends SSLSocketFactory {
     private static TrustManager[] trustManagers;
     private final SSLSocketFactory factory;
 
-    public TLSSocketFactory() throws KeyManagementException, NoSuchAlgorithmException {
+    public TLSSocketFactory(Context context) throws KeyManagementException, NoSuchAlgorithmException {
         if (trustManagers == null) {
             trustManagers = new TrustManager[] {
                     new HttpsTrustManager()
             };
         }
 
-        SSLContext sslContext = SSLContext.getInstance("TLS");
+        try {
+            ProviderInstaller.installIfNeeded(context);
+        } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
+            e.printStackTrace();
+        }
+
+        SSLContext sslContext = getSSLContext();
         sslContext.init(null, trustManagers, new SecureRandom());
         factory = sslContext.getSocketFactory();
+    }
+
+    private SSLContext getSSLContext() throws NoSuchAlgorithmException {
+        if (Build.VERSION.SDK_INT < 22) {
+            try {
+                return SSLContext.getInstance("TLSv1.2");
+            } catch (NoSuchAlgorithmException e) {
+                // fallback to TLS
+            }
+        }
+        return SSLContext.getInstance("TLS");
     }
 
     public void trustAllHttps() {
