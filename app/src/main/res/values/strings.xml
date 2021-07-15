@@ -44,9 +44,10 @@
     <!-- alert contributors -->
     <string name="alert_title_contributors">Contributors</string>
     <string name="dialog_website" translatable="false">Website</string>
-    <string name="dialog_join_group">Join Group</string>
-    <string name="message_thanks_to">Thanks to :</string>
-    <string name="message_user_icon" translatable="false">\n👤 </string>
+    <string name="dialog_telegram" translatable="false">Telegram</string>
+    <string name="dialog_show_less">Show Less</string>
+    <string name="dialog_close">Close</string>
+    <string name="message_thanks_to">Many thanks to everyone involved in this project!\n\nEspecially these guys on github :\n</string>
 
     <!-- settings -->
     <string name="settings">Settings</string>

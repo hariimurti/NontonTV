@@ -147,7 +147,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // get contributors
-        if (preferences.getLastVersionCode() != BuildConfig.VERSION_CODE) {
+        if (preferences.getLastVersionCode() != BuildConfig.VERSION_CODE || !preferences.isShowLessContributors()) {
+            preferences.setLastVersionCode(BuildConfig.VERSION_CODE);
             getContributors();
         }
 
@@ -187,7 +188,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void getContributors() {
-        if (preferences.getLastVersionCode() == BuildConfig.VERSION_CODE) return;
         StringRequest stringRequest = new StringRequest(Request.Method.GET,
                 getString(R.string.gh_contributors),
                 response -> {
@@ -195,10 +195,12 @@ public class MainActivity extends AppCompatActivity {
                         GithubUser[] users = new Gson().fromJson(response, GithubUser[].class);
                         StringBuilder message = new StringBuilder(getString(R.string.message_thanks_to));
                         for (GithubUser user : users) {
-                            message.append(getString(R.string.message_user_icon)).append(user.login)
-                                    .append(" (").append(user.contributions).append(")");
+                            message.append(user.login).append(", ");
                         }
-                        showAlertContributors(message.toString());
+                        if (preferences.getTotalContributors() < users.length && 0 < users.length) {
+                            preferences.setTotalContributors(users.length);
+                            showAlertContributors(message.substring(0, message.length() - 2));
+                        }
                     } catch (Exception e) { Log.e("Volley", "Could not get contributors!", e); }
                 }, null);
         volley.getCache().clear();
@@ -265,7 +267,7 @@ public class MainActivity extends AppCompatActivity {
                 .setMessage(R.string.local_playlist_read_error)
                 .setCancelable(false)
                 .setPositiveButton(R.string.dialog_retry, (dialog, id) -> updatePlaylist())
-                .setNegativeButton("Use Default", (dialog, id) -> {
+                .setNegativeButton(getString(R.string.dialog_default), (dialog, id) -> {
                     preferences.setUseCustomPlaylist(false);
                     swCustomPlaylist.setChecked(false);
                     layoutCustom.setVisibility(View.GONE);
@@ -303,10 +305,13 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog.Builder alert = new AlertDialog.Builder(this);
         alert.setTitle(R.string.alert_title_contributors)
                 .setMessage(message)
-                .setPositiveButton(android.R.string.ok, (dialog, id) -> preferences.setLastVersionCode(BuildConfig.VERSION_CODE))
+                .setNeutralButton(R.string.dialog_telegram, (dialog, id) -> openWebsite(getString(R.string.telegram_group)))
                 .setNegativeButton(R.string.dialog_website, (dialog, id) -> openWebsite(getString(R.string.website)))
-                .setNeutralButton(R.string.dialog_join_group, (dialog, id) -> openWebsite(getString(R.string.dialog_join_group)));
-        alert.create().show();
+                .setPositiveButton(preferences.isShowLessContributors() ? R.string.dialog_close : R.string.dialog_show_less,
+                        (dialog, id) -> preferences.setShowLessContributors());
+        AlertDialog dialog = alert.create();
+        dialog.show();
+        new Handler(Looper.getMainLooper()).postDelayed(dialog::dismiss, 10000);
     }
 
     private void openWebsite(String link) {

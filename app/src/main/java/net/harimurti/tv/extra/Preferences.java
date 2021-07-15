@@ -15,6 +15,8 @@ public class Preferences {
     private static final String USE_CUSTOM_PLAYLIST = "USE_CUSTOM_PLAYLIST";
     private static final String PLAYLIST_EXTERNAL = "PLAYLIST_EXTERNAL";
     private static final String LAST_VERSIONCODE = "LAST_VERSIONCODE";
+    private static final String TOTAL_CONTRIBUTORS = "TOTAL_CONTRIBUTORS";
+    private static final String SHOW_LESS_CONTRIBUTORS = "SHOW_LESS_CONTRIBUTORS";
 
     private final SharedPreferences preferences;
     private SharedPreferences.Editor editor;
@@ -103,10 +105,31 @@ public class Preferences {
     public void setLastVersionCode(int value) {
         editor = preferences.edit();
         editor.putInt(LAST_VERSIONCODE, value);
+        editor.putInt(TOTAL_CONTRIBUTORS, 0);
         editor.apply();
     }
 
     public int getLastVersionCode() {
         return preferences.getInt(LAST_VERSIONCODE, 0);
+    }
+
+    public void setShowLessContributors() {
+        editor = preferences.edit();
+        editor.putBoolean(SHOW_LESS_CONTRIBUTORS, true);
+        editor.apply();
+    }
+
+    public boolean isShowLessContributors() {
+        return preferences.getBoolean(SHOW_LESS_CONTRIBUTORS, false);
+    }
+
+    public void setTotalContributors(int value) {
+        editor = preferences.edit();
+        editor.putInt(TOTAL_CONTRIBUTORS, value);
+        editor.apply();
+    }
+
+    public int getTotalContributors() {
+        return preferences.getInt(TOTAL_CONTRIBUTORS, 0);
     }
 }

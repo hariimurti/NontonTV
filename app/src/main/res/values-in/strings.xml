@@ -32,8 +32,9 @@
 
     <!-- alert contributors -->
     <string name="alert_title_contributors">Penyumbang</string>
-    <string name="dialog_join_group">Gabung Grup</string>
-    <string name="message_thanks_to">Terimakasih kepada :</string>
+    <string name="dialog_show_less">Kurangi Penampilan</string>
+    <string name="dialog_close">Tutup</string>
+    <string name="message_thanks_to">Terima kasih banyak kepada semua orang yang terlibat dalam proyek ini!\n\nTerutama orang-orang ini di github :\n</string>
 
     <!-- settings -->
     <string name="settings">Pengaturan</string>
