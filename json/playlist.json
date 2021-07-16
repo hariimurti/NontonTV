@@ -160,6 +160,11 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/AXN/sa_dash_vmx/AXN.mpd"
     },
     {
+      "cid": 4,
+      "name": "BabyFirst",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=babyfirst&bandwidth=default&sync=0"
+    },
+    {
       "cid": 0,
       "name": "Bali TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/BaliTV_Timeshift/sa_dash_timeshift/BaliTV_Timeshift.mpd"
@@ -183,6 +188,16 @@
       "cid": 7,
       "name": "beIN Sports 1",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/BeIN1/sa_dash_vmx/BeIN1.mpd"
+    },
+    {
+      "cid": 7,
+      "name": "beIN Sports 2",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=bein2&bandwidth=default&sync=0"
+    },
+    {
+      "cid": 7,
+      "name": "beIN Sports Xtra",
+      "stream_url": "http://siloh-ns1.plutotv.net/lilo/production/bein/master_1.m3u8"
     },
     {
       "cid": 1,
@@ -305,6 +320,11 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/CinemaxHD2/sa_dash_vmx/CinemaxHD2.mpd"
     },
     {
+      "cid": 3,
+      "name": "Citra Dangdut",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=citradangdut&bandwidth=default&sync=0"
+    },
+    {
       "cid": 1,
       "name": "CNBC Indonesia",
       "stream_url": "https://live.cnbcindonesia.com/livecnbc/smil:cnbctv.smil/playlist.m3u8"
@@ -333,6 +353,11 @@
       "cid": 5,
       "name": "Crime Investigation",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/CrimeInvestigation/sa_dash_vmx/CrimeInvestigation.mpd"
+    },
+    {
+      "cid": 4,
+      "name": "Da Vinci Learning",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=davinci&bandwidth=default&sync=0"
     },
     {
       "cid": 6,
@@ -418,6 +443,11 @@
       "cid": 7,
       "name": "Dubai Sport 3",
       "stream_url": "https://dmitwlvvll.cdn.mangomolo.com/dubaisportshd5/smil:dubaisportshd5.smil/index.m3u8"
+    },
+    {
+      "cid": 4,
+      "name": "Dunia Anak",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=duniaanak&bandwidth=default&sync=0"
     },
     {
       "cid": 7,
@@ -603,6 +633,11 @@
       "cid": 2,
       "name": "Hits Movies",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/HitsMovies/sa_dash_vmx/HitsMovies.mpd"
+    },
+    {
+      "cid": 4,
+      "name": "Horee",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=horee&bandwidth=default&sync=0"
     },
     {
       "cid": 1,
