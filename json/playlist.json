@@ -230,6 +230,11 @@
       "stream_url": "http://45.126.83.51/dr9445/h/h15/01.m3u8"
     },
     {
+      "cid": 2,
+      "name": "Boo",
+      "stream_url": "http://50.7.161.82:8278/streams/d/Boo/playlist.m3u8"
+    },
+    {
       "cid": 4,
       "name": "Boomerang",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/Boomerang/sa_dash_vmx/Boomerang.mpd"
