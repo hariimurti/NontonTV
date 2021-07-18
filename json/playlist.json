@@ -240,6 +240,31 @@
       "stream_url": "https://liveanevia.mncnow.id/live/eds/Boomerang/sa_dash_vmx/Boomerang.mpd"
     },
     {
+      "cid": 7,
+      "name": "BT Sport 1",
+      "stream_url": "http://stream.tvtap.live:8081/live/bt1.stream/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "BT Sport 1 [HD]",
+      "stream_url": "http://77.83.117.60:8888/02_BTSPORTHD_1_720p/chunklist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "BT Sport 2",
+      "stream_url": "http://stream.tvtap.live:8081/live/bt220.stream/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "BT Sport 2 [HD]",
+      "stream_url": "http://77.83.117.60:8888/02_BTSPORTHD_2_720p/chunklist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "BT Sport 3",
+      "stream_url": "http://stream.tvtap.live:8081/live/bt33.stream/playlist.m3u8"
+    },
+    {
       "cid": 4,
       "name": "Cartoon Network",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/CartoonNetwork/sa_dash_vmx/CartoonNetwork.mpd"
@@ -378,6 +403,11 @@
       "cid": 6,
       "name": "DAAI TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/DAAITV/sa_dash_vmx/DAAITV.mpd"
+    },
+    {
+      "cid": 7,
+      "name": "Dazn Sport 1",
+      "stream_url": "http://stream.tvtap.live:8081/live/it-dazn1.stream/playlist.m3u8"
     },
     {
       "cid": 7,
@@ -1080,6 +1110,21 @@
       "stream_url": "https://aenetworks-skills-thrills-1.plex.wurl.com/manifest/playlist.m3u8"
     },
     {
+      "cid": 7,
+      "name": "SkySports FI",
+      "stream_url": "http://stream.tvtap.live:8081/live/skysportsf1.stream/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "SkySports Football",
+      "stream_url": "http://stream.tvtap.live:8081/live/skysports-football.stream/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "SkySports Primier League",
+      "stream_url": "http://stream.tvtap.live:8081/live/skysports-premier-league.stream/playlist.m3u8"
+    },
+    {
       "cid": 2,
       "name": "Sone",
       "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=sone&bandwidth=default&sync=0"
@@ -1328,6 +1373,11 @@
       "cid": 2,
       "name": "Warner TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/WarnerTV/sa_dash_vmx/WarnerTV.mpd"
+    },
+    {
+      "cid": 7,
+      "name": "WWE",
+      "stream_url": "http://portal.geniptv.com:8080/greenpoison8/GZprWONABH/18549"
     },
     {
       "cid": 2,
