@@ -271,8 +271,18 @@
     },
     {
       "cid": 7,
+      "name": "Champions TV 1 [ALT]",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=champion1&bandwidth=default&sync=0"
+    },
+    {
+      "cid": 7,
       "name": "Champions TV 2",
       "stream_url": "http://gpc.my.id/vidio/champion-tv-2.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Champions TV 2 [ALT]",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=champion2&bandwidth=default&sync=0"
     },
     {
       "cid": 7,
@@ -415,6 +425,11 @@
       "stream_url": "https://www.djing.com/tv/live.m3u8"
     },
     {
+      "cid": 4,
+      "name": "DreamWorks",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=dreamworks-1&bandwidth=default&sync=0"
+    },
+    {
       "cid": 7,
       "name": "Dubai Racing",
       "stream_url": "https://dmisvthvll.cdn.mangomolo.com/events/smil:events.smil/playlist.m3u8"
@@ -551,7 +566,17 @@
     },
     {
       "cid": 7,
-      "name": "Fox Sports 3 [ALT]",
+      "name": "Fox Sports 1",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=foxsport1&bandwidth=default&sync=0"
+    },
+    {
+      "cid": 7,
+      "name": "Fox Sports 2",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=foxsport2&bandwidth=default&sync=0"
+    },
+    {
+      "cid": 7,
+      "name": "Fox Sports 3",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxSports3/sa_dash_vmx/FoxSports3.mpd"
     },
     {
@@ -1036,6 +1061,11 @@
     },
     {
       "cid": 2,
+      "name": "Sgem",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=sgem&bandwidth=default&sync=0"
+    },
+    {
+      "cid": 2,
       "name": "Sinema Indonesia",
       "stream_url": "http://210.210.155.35/x6bnqe/s/s71/S4/mnf.m3u8"
     },
@@ -1043,6 +1073,11 @@
       "cid": 2,
       "name": "Skills + Thrills",
       "stream_url": "https://aenetworks-skills-thrills-1.plex.wurl.com/manifest/playlist.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "Sone",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=sone&bandwidth=default&sync=0"
     },
     {
       "cid": 2,
@@ -1253,6 +1288,16 @@
       "cid": 7,
       "name": "UFC stadium",
       "stream_url": "https://stadiumlivein-i.akamaihd.net/hls/live/522512/mux_4/master.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "UseeSports",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=useesport&bandwidth=b894100&sync=0"
+    },
+    {
+      "cid": 7,
+      "name": "UseeSports 2",
+      "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=useesports2&bandwidth=b894100&sync=0"
     },
     {
       "cid": 3,
