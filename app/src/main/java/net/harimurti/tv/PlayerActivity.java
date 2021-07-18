@@ -19,16 +19,24 @@ import com.google.android.exoplayer2.ExoPlaybackException;
 import com.google.android.exoplayer2.MediaItem;
 import com.google.android.exoplayer2.Player;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.source.DefaultMediaSourceFactory;
 import com.google.android.exoplayer2.source.TrackGroupArray;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector;
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray;
 import com.google.android.exoplayer2.ui.PlayerView;
+import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
+import com.google.android.exoplayer2.upstream.DefaultHttpDataSource;
+import com.google.android.exoplayer2.upstream.HttpDataSource;
 
 import net.harimurti.tv.data.License;
 import net.harimurti.tv.extra.AsyncSleep;
 import net.harimurti.tv.extra.Network;
 import net.harimurti.tv.extra.Preferences;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 public class PlayerActivity extends AppCompatActivity {
     public static boolean isFirst = true;
@@ -91,10 +99,25 @@ public class PlayerActivity extends AppCompatActivity {
             mediaItem = MediaItem.fromUri(Uri.parse(channelUrl));
         }
 
+        // define User-Agent
+        List<String> userAgents = Arrays.asList(getResources().getStringArray(R.array.user_agent));
+        String userAgent = userAgents.get(new Random().nextInt(userAgents.size()));
+        for (String ua: userAgents) {
+            if (channelUrl.contains(ua.substring(0, ua.indexOf("/")).toLowerCase()))
+                userAgent = ua;
+        }
         // create player & set listener
+        HttpDataSource.Factory httpDataSourceFactory = new DefaultHttpDataSource.Factory()
+                .setAllowCrossProtocolRedirects(true)
+                .setUserAgent(userAgent);
+        DefaultDataSourceFactory dataSourceFactory = new DefaultDataSourceFactory(this, httpDataSourceFactory);
+        DefaultMediaSourceFactory mediaSourceFactory = new DefaultMediaSourceFactory(dataSourceFactory);
         trackSelector = new DefaultTrackSelector(this);
         trackSelector.setParameters(new DefaultTrackSelector.ParametersBuilder(this).build());
-        player = new SimpleExoPlayer.Builder(this).setTrackSelector(trackSelector).build();
+        player = new SimpleExoPlayer.Builder(this)
+                .setMediaSourceFactory(mediaSourceFactory)
+                .setTrackSelector(trackSelector)
+                .build();
         player.addListener(new playerListener());
 
         // set player view

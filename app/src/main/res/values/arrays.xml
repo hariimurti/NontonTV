@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="user_agent">
+        <item>MNCNow/6.4.5 (Linux;Android 10) ExoPlayerLib/2.12.1</item>
+        <item>UseeTVGO/8.3.1 (Linux;Android 10) ExoPlayerLib/2.11.1</item>
+        <item>ExoPlayerDemo/2.14 (Linux;Android 10) ExoPlayerLib/2.14.1</item>
+        <item>VLC/3.0.16 (Windows NT 10.0; Win64; x64)</item>
+        <item>MPC-HC/1.7.13 (Windows NT 10.0; Win64; x64)</item>
+        <item>PotPlayer/1.7.20977 (Windows NT 10.0; Win64; x64)</item>
+        <item>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36</item>
+    </array>
+</resources>
