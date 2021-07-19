@@ -1151,6 +1151,31 @@
     },
     {
       "cid": 7,
+      "name": "Sport TV 1",
+      "stream_url": "http://77.83.117.60:8888/02_SPORTTV_1_720p/chunklist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Sport TV 2",
+      "stream_url": "http://77.83.117.60:8888/02_SPORTTV_2_720p/chunklist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Sport TV 3",
+      "stream_url": "http://77.83.117.60:8888/02_SPORTTV_3_720p/chunklist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Sport TV 4",
+      "stream_url": "http://77.83.117.60:8888/02_SPORTTV_4_720p/chunklist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Sport TV 5",
+      "stream_url": "http://77.83.117.60:8888/02_SPORTTV_5_720p/chunklist.m3u8"
+    },
+    {
+      "cid": 7,
       "name": "Sports Channel Network",
       "stream_url": "https://vod365-sports-channel-network-1-gb.samsung.wurl.com/manifest/playlist.m3u8"
     },
