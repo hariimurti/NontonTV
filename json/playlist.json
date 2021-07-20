@@ -45,6 +45,16 @@
   ],
   "channels": [
     {
+      "cid": 2,
+      "name": "&Flix",
+      "stream_url": "https://y5w8j4a9.ssl.hwcdn.net/andflixhd/tracks-v1a1/mono.m3u8"
+    },
+    {
+      "cid": 2,
+      "name": "&Prive",
+      "stream_url": "https://y5w8j4a9.ssl.hwcdn.net/andprivehd/tracks-v1a1/mono.m3u8"
+    },
+    {
       "cid": 1,
       "name": "ABC Australia",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/AustraliaPlus/sa_dash_vmx/AustraliaPlus.mpd"
@@ -1083,6 +1093,11 @@
       "cid": 1,
       "name": "RRI Net",
       "stream_url": "http://36.89.47.217:11935/rrinet/live/index.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "RTM Sport",
+      "stream_url": "http://185.180.221.194:8278/streams/d/Rtmsport/playlist.m3u8"
     },
     {
       "cid": 0,
