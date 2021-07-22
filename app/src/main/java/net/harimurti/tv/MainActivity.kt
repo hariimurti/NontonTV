@@ -4,11 +4,9 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.DownloadManager
-import android.app.UiModeManager
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.content.res.Configuration
 import android.net.Uri
 import android.os.*
 import android.os.Build.VERSION_CODES
@@ -36,17 +34,14 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import net.harimurti.tv.adapter.CategoryAdapter
-import net.harimurti.tv.extra.Network
-import net.harimurti.tv.extra.PlaylistHelper
-import net.harimurti.tv.extra.Preferences
-import net.harimurti.tv.extra.TLSSocketFactory
+import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.GithubUser
 import net.harimurti.tv.model.Playlist
 import net.harimurti.tv.model.Release
 
-
 open class MainActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
+    private var isTelevision = false
     private lateinit var layoutSettings: View
     private lateinit var layoutLoading: View
     private lateinit var layoutCustom: View
@@ -58,8 +53,8 @@ open class MainActivity : AppCompatActivity() {
     @SuppressLint("DefaultLocale")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        val uiModeManager = getSystemService(UI_MODE_SERVICE) as UiModeManager
-        if (uiModeManager.currentModeType == Configuration.UI_MODE_TYPE_TELEVISION) {
+        isTelevision = UiMode(this).isTelevision()
+        if (isTelevision) {
             setTheme(R.style.AppThemeTv)
         }
         setContentView(R.layout.activity_main)
@@ -353,7 +348,7 @@ open class MainActivity : AppCompatActivity() {
             layoutSettings.visibility = View.GONE
             return
         }
-        if (doubleBackToExitPressedOnce) {
+        if (isTelevision || doubleBackToExitPressedOnce) {
             super.onBackPressed()
             finish()
             return

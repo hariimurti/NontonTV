@@ -23,6 +23,8 @@ import java.util.*
 
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
+    private var isTelevision = false
+    private var skipRetry = false
     private lateinit var preferences: Preferences
     private lateinit var channelUrl: String
     private lateinit var player: SimpleExoPlayer
@@ -38,13 +40,13 @@ class PlayerActivity : AppCompatActivity() {
 
     companion object {
         var isFirst = true
-        private var skipRetry = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_player)
         isFirst = false
+        isTelevision = UiMode(this).isTelevision()
         preferences = Preferences(this)
 
         // define some view
@@ -224,7 +226,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (doubleBackToExitPressedOnce) {
+        if (isTelevision || doubleBackToExitPressedOnce) {
             super.onBackPressed()
             finish()
             return
