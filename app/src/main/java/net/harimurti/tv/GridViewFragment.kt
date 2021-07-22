@@ -8,10 +8,9 @@ import android.widget.GridView
 import androidx.fragment.app.Fragment
 import net.harimurti.tv.adapter.ContentAdapter
 import net.harimurti.tv.model.Channel
-import java.util.*
 
 class GridViewFragment : Fragment() {
-    private var channels: ArrayList<Channel> = ArrayList()
+    private lateinit var channels: ArrayList<Channel>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         if (arguments != null) {
@@ -31,7 +30,7 @@ class GridViewFragment : Fragment() {
 
     companion object {
         private const val CHANNELS = "channels"
-        fun newFragment(arrayList: ArrayList<Channel?>?): GridViewFragment {
+        fun newFragment(arrayList: ArrayList<Channel>?): GridViewFragment {
             val args = Bundle()
             args.putParcelableArrayList(CHANNELS, arrayList)
             val fragment = GridViewFragment()

@@ -251,7 +251,7 @@ open class MainActivity : AppCompatActivity() {
     private fun setPlaylistToViewPager(newPls: Playlist) {
         viewPager.adapter = ViewPagerAdapter(this, newPls)
         TabLayoutMediator(tabLayout, viewPager) {
-                tab: TabLayout.Tab, i: Int -> tab.text = newPls.categories[i].name
+                tab: TabLayout.Tab, i: Int -> tab.text = newPls.categories?.get(i)?.name
         }.attach()
         layoutLoading.visibility = View.GONE
 

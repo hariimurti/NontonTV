@@ -65,10 +65,10 @@ class PlayerActivity : AppCompatActivity() {
 
         // get drm license
         var drmLicense = ""
-        for (license in MainActivity.playlist!!.licenses) {
-            if (license.drm_url.isEmpty()) continue
-            if (license.domain.isEmpty() || channelUrl.contains(license.domain)) {
-                drmLicense = license.drm_url
+        for (license in MainActivity.playlist!!.drm_licenses!!) {
+            if (license.drm_name.isNullOrEmpty() || license.drm_url.isNullOrEmpty()) continue
+            if (license.drm_name?.let { channelUrl.contains(it) } == true) {
+                drmLicense = license.drm_url.toString()
                 break
             }
         }
