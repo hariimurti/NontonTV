@@ -118,11 +118,11 @@
                         android:id="@+id/custom_playlist"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:autofillHints=""
                         android:hint="@string/hint_custom_playlist"
                         android:inputType="textUri"
                         android:lines="1"
-                        android:ellipsize="end" />
+                        android:ellipsize="end"
+                        tools:ignore="Autofill" />
 
                 </LinearLayout>
 
