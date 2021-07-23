@@ -18,6 +18,7 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.upstream.HttpDataSource
 import net.harimurti.tv.extra.*
+import net.harimurti.tv.model.Channel
 import java.util.*
 
 class PlayerActivity : AppCompatActivity() {
@@ -55,26 +56,20 @@ class PlayerActivity : AppCompatActivity() {
         trackButton = findViewById(R.id.player_settings)
         trackButton.setOnClickListener { showTrackSelector() }
 
+        // set channel name
+        findViewById<TextView>(R.id.channel_name).text = intent.getStringExtra(Channel.NAME)
+
         // get channel_url
-        channelUrl = intent.getStringExtra("channel_url").toString()
+        channelUrl = intent.getStringExtra(Channel.STREAMURL).toString()
         if (channelUrl.isEmpty()) {
             Toast.makeText(this, R.string.player_no_channel_url, Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        // get drm license
-        var drmLicense = ""
-        for (license in MainActivity.playlist!!.drm_licenses!!) {
-            if (license.drm_name.isNullOrEmpty() || license.drm_url.isNullOrEmpty()) continue
-            if (license.drm_name?.let { channelUrl.contains(it) } == true) {
-                drmLicense = license.drm_url.toString()
-                break
-            }
-        }
-
         // define mediasource
-        mediaItem = if (drmLicense.isNotEmpty()) {
+        val drmLicense = intent.getStringExtra(Channel.DRMURL)
+        mediaItem = if (drmLicense?.isNotEmpty() == true) {
             MediaItem.Builder()
                 .setUri(Uri.parse(channelUrl))
                 .setDrmUuid(C.WIDEVINE_UUID)
@@ -87,11 +82,13 @@ class PlayerActivity : AppCompatActivity() {
 
         // define User-Agent
         val userAgents = listOf(*resources.getStringArray(R.array.user_agent))
-        var userAgent = userAgents[Random().nextInt(userAgents.size)]
-        for (ua in userAgents) {
-            if (channelUrl.contains(ua.substring(0, ua.indexOf("/")).lowercase(Locale.getDefault())))
-                userAgent = ua
+        var userAgent = userAgents.firstOrNull {
+            channelUrl.contains(it.substring(0, it.indexOf("/")).lowercase(Locale.getDefault()))
         }
+        if (userAgent.isNullOrEmpty()) {
+            userAgent = userAgents[Random().nextInt(userAgents.size)]
+        }
+
         // create player & set listener
         val httpDataSourceFactory: HttpDataSource.Factory = DefaultHttpDataSource.Factory()
             .setAllowCrossProtocolRedirects(true)

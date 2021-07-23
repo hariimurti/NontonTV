@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingTop="@dimen/cat_layout_padding"
+    android:paddingBottom="@dimen/cat_layout_padding">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="@dimen/cat_card_width"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/cat_card_margin_start"
+        app:cardBackgroundColor="@color/color_red_light"
+        app:cardCornerRadius="@dimen/cat_card_corner">
+
+        <TextView
+            android:id="@+id/text_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/cat_name_padding_top_bottom"
+            android:paddingBottom="@dimen/cat_name_padding_top_bottom"
+            android:paddingStart="@dimen/cat_name_padding_start"
+            android:paddingEnd="@dimen/cat_name_padding_end"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textSize="@dimen/cat_text_size"/>
+
+    </androidx.cardview.widget.CardView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_channels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" />
+
+</LinearLayout>

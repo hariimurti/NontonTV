@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:show_subtitle_button="true"
-        app:controller_layout_id="@layout/player_custom_control">
+        app:controller_layout_id="@layout/custom_control">
 
         <RelativeLayout
             android:id="@+id/layout_status"

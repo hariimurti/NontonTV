@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="ContentDescription">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/ch_name_card_margin"
+        app:cardCornerRadius="@dimen/ch_name_card_corner"
+        app:cardBackgroundColor="@color/ch_name_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/channel_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/ch_name_margin"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/exo_icon_padding_bottom"
+            android:paddingEnd="@dimen/exo_icon_padding_bottom"
+            android:textSize="@dimen/ch_name_text_size"
+            android:textAllCaps="true"
+            android:textColor="@color/color_dark" />
+
+    </androidx.cardview.widget.CardView>
+
+    <ImageButton
+        android:id="@+id/player_settings"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/ExoStyledControls.Button.Bottom.Settings" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

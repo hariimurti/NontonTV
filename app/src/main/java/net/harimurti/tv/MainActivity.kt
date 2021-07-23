@@ -22,7 +22,9 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SwitchCompat
-import androidx.viewpager2.widget.ViewPager2
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -31,23 +33,20 @@ import com.android.volley.toolbox.BaseHttpStack
 import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
-import com.google.android.material.tabs.TabLayout
-import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
-import net.harimurti.tv.adapter.ViewPagerAdapter
-import net.harimurti.tv.model.GithubUser
-import net.harimurti.tv.model.Playlist
-import net.harimurti.tv.model.Release
+import net.harimurti.tv.adapter.CategoryAdapter
 import net.harimurti.tv.extra.Network
 import net.harimurti.tv.extra.PlaylistHelper
 import net.harimurti.tv.extra.Preferences
 import net.harimurti.tv.extra.TLSSocketFactory
+import net.harimurti.tv.model.GithubUser
+import net.harimurti.tv.model.Playlist
+import net.harimurti.tv.model.Release
+
 
 open class MainActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
-    private lateinit var tabLayout: TabLayout
-    private lateinit var viewPager: ViewPager2
     private lateinit var layoutSettings: View
     private lateinit var layoutLoading: View
     private lateinit var layoutCustom: View
@@ -55,10 +54,6 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var preferences: Preferences
     private lateinit var playlistHelper: PlaylistHelper
     private lateinit var volley: RequestQueue
-
-    companion object {
-        var playlist: Playlist? = null
-    }
 
     @SuppressLint("DefaultLocale")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -74,8 +69,6 @@ open class MainActivity : AppCompatActivity() {
         playlistHelper = PlaylistHelper(this)
 
         // define some view
-        tabLayout = findViewById(R.id.tab_layout)
-        viewPager = findViewById(R.id.view_pager)
         layoutLoading = findViewById(R.id.layout_loading)
         // layout settings
         layoutSettings = findViewById(R.id.layout_settings)
@@ -130,10 +123,10 @@ open class MainActivity : AppCompatActivity() {
         }
 
         // playlist update
-        if (playlist == null) {
+        if (Playlist.loaded == null) {
             updatePlaylist()
         } else {
-            setPlaylistToViewPager(playlist!!)
+            setPlaylistToViewPager(Playlist.loaded!!)
         }
 
         // check new release
@@ -249,15 +242,14 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun setPlaylistToViewPager(newPls: Playlist) {
-        viewPager.adapter = ViewPagerAdapter(this, newPls)
-        TabLayoutMediator(tabLayout, viewPager) {
-                tab: TabLayout.Tab, i: Int -> tab.text = newPls.categories?.get(i)?.name
-        }.attach()
+        val recyclerView = findViewById<View>(R.id.rv_category) as RecyclerView
+        recyclerView.adapter = CategoryAdapter(newPls.categories)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+
         layoutLoading.visibility = View.GONE
-
-        if (playlist !== newPls) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
-
-        playlist = newPls
+        if (Playlist.loaded != newPls) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
+        Playlist.loaded = newPls
     }
 
     private fun showAlertLocalError() {
