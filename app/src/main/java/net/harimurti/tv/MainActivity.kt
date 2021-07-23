@@ -15,7 +15,9 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
+import android.widget.Button
 import android.widget.EditText
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -39,13 +41,11 @@ import net.harimurti.tv.model.GithubUser
 import net.harimurti.tv.model.Playlist
 import net.harimurti.tv.model.Release
 
+
 open class MainActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
     private var isTelevision = false
-    private lateinit var layoutSettings: View
     private lateinit var layoutLoading: View
-    private lateinit var layoutCustom: View
-    private lateinit var swCustomPlaylist: SwitchCompat
     private lateinit var preferences: Preferences
     private lateinit var playlistHelper: PlaylistHelper
     private lateinit var volley: RequestQueue
@@ -65,45 +65,6 @@ open class MainActivity : AppCompatActivity() {
 
         // define some view
         layoutLoading = findViewById(R.id.layout_loading)
-        // layout settings
-        layoutSettings = findViewById(R.id.layout_settings)
-        layoutSettings.setOnClickListener {
-            layoutSettings.visibility = View.GONE
-        }
-        // switch launch at boot
-        val swLaunch = findViewById<SwitchCompat>(R.id.launch_at_boot)
-        swLaunch.isChecked = preferences.isLaunchAtBoot
-        swLaunch.setOnClickListener {
-            preferences.isLaunchAtBoot = swLaunch.isChecked
-        }
-        // switch play last watched
-        val swOpenLast = findViewById<SwitchCompat>(R.id.open_last_watched)
-        swOpenLast.isChecked = preferences.isOpenLastWatched
-        swOpenLast.setOnClickListener {
-            preferences.isOpenLastWatched = swOpenLast.isChecked
-        }
-        // layout custom playlist
-        layoutCustom = findViewById(R.id.layout_custom_playlist)
-        layoutCustom.visibility = if (preferences.useCustomPlaylist()) View.VISIBLE else View.GONE
-        // switch custom playlist
-        swCustomPlaylist = findViewById(R.id.use_custom_playlist)
-        swCustomPlaylist.isChecked = preferences.useCustomPlaylist()
-        swCustomPlaylist.setOnClickListener {
-            layoutCustom.visibility = if (swCustomPlaylist.isChecked) View.VISIBLE else View.GONE
-            preferences.setUseCustomPlaylist(swCustomPlaylist.isChecked)
-        }
-        // edittext custom playlist
-        val txtCustom = findViewById<EditText>(R.id.custom_playlist)
-        txtCustom.setText(preferences.playlistExternal)
-        txtCustom.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable) {
-                preferences.playlistExternal = s.toString()
-            }
-        })
-        // button reload playlist
-        findViewById<View>(R.id.reload_playlist).setOnClickListener { updatePlaylist() }
 
         // volley library
         var stack: BaseHttpStack = HurlStack()
@@ -256,8 +217,6 @@ open class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
             .setNegativeButton(getString(R.string.dialog_default)) { _: DialogInterface?, _: Int ->
                 preferences.setUseCustomPlaylist(false)
-                swCustomPlaylist.isChecked = false
-                layoutCustom.visibility = View.GONE
                 updatePlaylist()
             }
         alert.create().show()
@@ -301,6 +260,55 @@ open class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({ dialog.dismiss() }, 10000)
     }
 
+    private fun showSettingsDialog() {
+        val dialog = AlertDialog.Builder(this).create()
+        val dialogView = this.layoutInflater.inflate(R.layout.main_settings_dialog, null) as View
+        // switch launch at boot
+        dialogView.findViewById<SwitchCompat>(R.id.launch_at_boot).apply {
+            isChecked = preferences.isLaunchAtBoot
+            setOnClickListener {
+                preferences.isLaunchAtBoot = isChecked
+            }
+        }
+        // switch play last watched
+        dialogView.findViewById<SwitchCompat>(R.id.open_last_watched).apply {
+            isChecked = preferences.isOpenLastWatched
+            setOnClickListener {
+                preferences.isOpenLastWatched = isChecked
+            }
+        }
+        // layout custom playlist
+        val layoutCustom = dialogView.findViewById<LinearLayout>(R.id.layout_custom_playlist).apply {
+            visibility = if (preferences.useCustomPlaylist()) View.VISIBLE else View.GONE
+        }
+        // switch custom playlist
+        dialogView.findViewById<SwitchCompat>(R.id.use_custom_playlist).apply {
+            isChecked = preferences.useCustomPlaylist()
+            setOnClickListener {
+                layoutCustom.visibility = if (isChecked) View.VISIBLE else View.GONE
+                preferences.setUseCustomPlaylist(isChecked)
+            }
+        }
+        // edittext custom playlist
+        dialogView.findViewById<EditText>(R.id.custom_playlist).apply {
+            setText(preferences.playlistExternal)
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    preferences.playlistExternal = s.toString()
+                }
+            })
+        }
+        // button reload playlist
+        dialogView.findViewById<Button>(R.id.reload_playlist).setOnClickListener {
+            updatePlaylist()
+            dialog.dismiss()
+        }
+        dialog.setView(dialogView)
+        dialog.show()
+    }
+
     private fun openWebsite(link: String) {
         startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(link)))
     }
@@ -336,7 +344,7 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         return if (keyCode == KeyEvent.KEYCODE_MENU) {
-            layoutSettings.visibility = View.VISIBLE
+            showSettingsDialog()
             true
         } else {
             super.onKeyUp(keyCode, event)
@@ -344,10 +352,6 @@ open class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (layoutSettings.visibility == View.VISIBLE) {
-            layoutSettings.visibility = View.GONE
-            return
-        }
         if (isTelevision || doubleBackToExitPressedOnce) {
             super.onBackPressed()
             finish()
