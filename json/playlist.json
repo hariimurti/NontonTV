@@ -75,6 +75,11 @@
       "stream_url": "http://linear-12.frequency.stream/dist/roku/12/hls/master/playlist.m3u8"
     },
     {
+      "cid": 6,
+      "name": "Ahsan TV",
+      "stream_url": "http://119.82.224.75:1935/live/ahsantv/chunk.m3u8"
+    },
+    {
       "cid": 1,
       "name": "Al Jazeera",
       "stream_url": "https://live-hls-web-aje.getaj.net/AJE/index.m3u8"
@@ -332,27 +337,12 @@
     {
       "cid": 7,
       "name": "Champions TV 1",
-      "stream_url": "http://gpc.my.id/vidio/champion-tv-1.m3u8"
-    },
-    {
-      "cid": 7,
-      "name": "Champions TV 1 [ALT]",
       "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=champion1&bandwidth=default&sync=0"
     },
     {
       "cid": 7,
       "name": "Champions TV 2",
-      "stream_url": "http://gpc.my.id/vidio/champion-tv-2.m3u8"
-    },
-    {
-      "cid": 7,
-      "name": "Champions TV 2 [ALT]",
       "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=champion2&bandwidth=default&sync=0"
-    },
-    {
-      "cid": 7,
-      "name": "Champions TV 3",
-      "stream_url": "http://gpc.my.id/vidio/champion-tv-3.m3u8"
     },
     {
       "cid": 7,
@@ -881,6 +871,11 @@
     },
     {
       "cid": 2,
+      "name": "MNCInfotainment",
+      "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCInfotainment/sa_dash_vmx/MNCInfotainment.mpd"
+    },
+    {
+      "cid": 2,
       "name": "Movie Kingdom",
       "stream_url": "https://a.jsrdn.com/broadcast/e9b4093a41/+0000/high/c.m3u8"
     },
@@ -1156,7 +1151,7 @@
     },
     {
       "cid": 7,
-      "name": "SkySports FI",
+      "name": "SkySports F1",
       "stream_url": "http://stream.tvtap.live:8081/live/skysportsf1.stream/playlist.m3u8"
     },
     {

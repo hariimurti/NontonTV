@@ -450,6 +450,11 @@
           "stream_url": "https://aenetworks-ae-1.roku.wurl.com/manifest/playlist.m3u8"
         },
         {
+          "name": "MNCInfotainment",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCInfotainment/sa_dash_vmx/MNCInfotainment.mpd",
+          "drm_name": "mncnow"
+        },
+        {
           "name": "Movie Kingdom",
           "stream_url": "https://a.jsrdn.com/broadcast/e9b4093a41/+0000/high/c.m3u8"
         },
@@ -925,6 +930,10 @@
       "name": "Religi",
       "channels": [
         {
+          "name": "Ahsan TV",
+          "stream_url": "http://119.82.224.75:1935/live/ahsantv/chunk.m3u8"
+        },
+        {
           "name": "Al Quran Al Kareem",
           "stream_url": "https://liveanevia.mncnow.id/live/eds/AlQuranAlKareem/sa_dash_vmx/AlQuranAlKareem.mpd",
           "drm_name": "mncnow"
@@ -1051,27 +1060,11 @@
         },
         {
           "name": "Champions TV 1",
-          "stream_url": "http://gpc.my.id/vidio/champion-tv-1.m3u8"
-        },
-        {
-          "name": "Champions TV 1 [ALT]",
           "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=champion1&bandwidth=default&sync=0"
         },
         {
           "name": "Champions TV 2",
-          "stream_url": "http://gpc.my.id/vidio/champion-tv-2.m3u8"
-        },
-        {
-          "name": "Champions TV 2 [ALT]",
           "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=champion2&bandwidth=default&sync=0"
-        },
-        {
-          "name": "Champions TV 3",
-          "stream_url": "http://gpc.my.id/vidio/champion-tv-3.m3u8"
-        },
-        {
-          "name": "Channel 3 [HD]",
-          "stream_url": "https://cdnlive.goprimetime.info/feed/ch3hd/index.m3u8"
         },
         {
           "name": "Dazn Sport 1",
@@ -1197,7 +1190,7 @@
           "stream_url": "http://185.180.221.194:8278/streams/d/Rtmsport/playlist.m3u8"
         },
         {
-          "name": "SkySports FI",
+          "name": "SkySports F1",
           "stream_url": "http://stream.tvtap.live:8081/live/skysportsf1.stream/playlist.m3u8"
         },
         {
