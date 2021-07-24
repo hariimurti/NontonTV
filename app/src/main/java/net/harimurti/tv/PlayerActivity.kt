@@ -42,6 +42,10 @@ class PlayerActivity : AppCompatActivity() {
 
     companion object {
         var isFirst = true
+        private const val CHANNEL_NEXT = 0
+        private const val CHANNEL_PREVIOUS = 1
+        private const val CATEGORY_UP = 2
+        private const val CATEGORY_DOWN = 3
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -66,7 +70,6 @@ class PlayerActivity : AppCompatActivity() {
         // define some view
         controlBinding = CustomControlBinding.bind(binding.root.findViewById(R.id.custom_control))
         controlBinding.playerSettings.setOnClickListener { showTrackSelector() }
-        controlBinding.channelName.text = current?.name
 
         // verify stream_url
         if (current == null) {
@@ -74,11 +77,14 @@ class PlayerActivity : AppCompatActivity() {
             finish()
         }
         else {
-            initializePlayer()
+            playChannel()
         }
     }
 
-    private fun initializePlayer() {
+    private fun playChannel() {
+        // set channel name
+        controlBinding.channelName.text = current?.name
+
         // define mediaitem
         val drmLicense = playlist?.drm_licenses?.firstOrNull {
             current?.drm_name?.equals(it.drm_name) == true
@@ -122,8 +128,55 @@ class PlayerActivity : AppCompatActivity() {
         binding.playerView.requestFocus()
 
         // play mediasouce
+        player.playWhenReady = true
         player.setMediaItem(mediaItem)
         player.prepare()
+    }
+
+    private fun switchChannel(mode: Int) {
+        val chId = channels?.indexOf(current) as Int
+        when(mode) {
+            CATEGORY_UP -> {
+                val back = categoryId - 1
+                if (back > -1) {
+                    categoryId = back
+                    channels = playlist?.categories?.get(back)?.channels
+                    current = channels!![0]
+                }
+            }
+            CATEGORY_DOWN -> {
+                val next = categoryId + 1
+                if (next < playlist?.categories?.size ?: 0) {
+                    categoryId = next
+                    channels = playlist?.categories?.get(next)?.channels
+                    current = channels!![0]
+                }
+            }
+            CHANNEL_PREVIOUS -> {
+                val back = chId - 1
+                if (back > -1) {
+                    current = channels!![back]
+                }
+                else {
+                    switchChannel(CATEGORY_UP)
+                    return
+                }
+            }
+            CHANNEL_NEXT -> {
+                val next = chId + 1
+                if (next < channels?.size ?: 0) {
+                    current = channels!![next]
+                }
+                else {
+                    switchChannel(CATEGORY_DOWN)
+                    return
+                }
+            }
+        }
+
+        player.playWhenReady = false
+        player.release()
+        playChannel()
     }
 
     private inner class PlayerListener : Player.Listener {
@@ -242,12 +295,19 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
-        return if (keyCode == KeyEvent.KEYCODE_MENU) {
-            showTrackSelector()
-            true
-        } else {
-            super.onKeyUp(keyCode, event)
+        when(keyCode) {
+            KeyEvent.KEYCODE_MENU -> showTrackSelector()
+            KeyEvent.KEYCODE_DPAD_UP -> switchChannel(CATEGORY_UP)
+            KeyEvent.KEYCODE_DPAD_DOWN -> switchChannel(CATEGORY_DOWN)
+            KeyEvent.KEYCODE_DPAD_LEFT -> switchChannel(CHANNEL_PREVIOUS)
+            KeyEvent.KEYCODE_DPAD_RIGHT -> switchChannel(CHANNEL_NEXT)
+            KeyEvent.KEYCODE_PAGE_UP -> switchChannel(CATEGORY_UP)
+            KeyEvent.KEYCODE_PAGE_DOWN -> switchChannel(CATEGORY_DOWN)
+            KeyEvent.KEYCODE_MEDIA_PREVIOUS -> switchChannel(CHANNEL_PREVIOUS)
+            KeyEvent.KEYCODE_MEDIA_NEXT -> switchChannel(CHANNEL_NEXT)
+            else -> return super.onKeyUp(keyCode, event)
         }
+        return true
     }
 
     override fun onBackPressed() {
