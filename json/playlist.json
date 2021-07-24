@@ -620,6 +620,11 @@
     },
     {
       "cid": 2,
+      "name": "Fox Life",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/92"
+    },
+    {
+      "cid": 2,
       "name": "Fox Movies Premium",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/FOXMoviesPremium/sa_dash_vmx/FOXMoviesPremium.mpd"
     },
@@ -1174,11 +1179,6 @@
       "stream_url": "http://36.89.47.217:11935/rrinet/live/index.m3u8"
     },
     {
-      "cid": 7,
-      "name": "RTM Sport",
-      "stream_url": "http://185.180.221.194:8278/streams/d/Rtmsport/playlist.m3u8"
-    },
-    {
       "cid": 0,
       "name": "RTV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/RTV/sa_dash_vmx/RTV.mpd"
@@ -1302,6 +1302,11 @@
       "cid": 3,
       "name": "Street Music",
       "stream_url": "https://59d39900ebfb8.streamlock.net/streetmusic/streetmusic/playlist.m3u8"
+    },
+    {
+      "cid": 7,
+      "name": "Sukan RTM",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/153"
     },
     {
       "cid": 4,

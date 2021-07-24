@@ -375,6 +375,10 @@
           "drm_name": "mncnow"
         },
         {
+          "name": "Fox Life",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/92"
+        },
+        {
           "name": "Fox Movies Premium",
           "stream_url": "https://liveanevia.mncnow.id/live/eds/FOXMoviesPremium/sa_dash_vmx/FOXMoviesPremium.mpd",
           "drm_name": "mncnow"
@@ -1186,10 +1190,6 @@
           "stream_url": "http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8"
         },
         {
-          "name": "RTM Sport",
-          "stream_url": "http://185.180.221.194:8278/streams/d/Rtmsport/playlist.m3u8"
-        },
-        {
           "name": "SkySports F1",
           "stream_url": "http://stream.tvtap.live:8081/live/skysportsf1.stream/playlist.m3u8"
         },
@@ -1228,6 +1228,10 @@
         {
           "name": "Stadium",
           "stream_url": "https://dai.google.com/linear/hls/event/0jRU1DBXSW6a_TFheLfAUQ/master.m3u8"
+        },
+        {
+          "name": "Sukan RTM",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/153"
         },
         {
           "name": "TVRI Sport",
