@@ -14,8 +14,9 @@
     <dimen name="cat_name_padding_end">20dp</dimen>
     <dimen name="cat_text_size">16sp</dimen>
     <dimen name="cat_setting_margin_end">10dp</dimen>
-    <dimen name="ch_name_card_margin">20dp</dimen>
     <dimen name="ch_name_card_corner">20dp</dimen>
-    <dimen name="ch_name_margin">10dp</dimen>
+    <dimen name="ch_name_margin">5dp</dimen>
     <dimen name="ch_name_text_size">14sp</dimen>
+    <dimen name="player_card_margin_start">20dp</dimen>
+    <dimen name="player_card_channel_margin_top">5dp</dimen>
 </resources>
