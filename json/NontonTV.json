@@ -1258,6 +1258,51 @@
           "stream_url": "http://portal.geniptv.com:8080/greenpoison8/GZprWONABH/18549"
         }
       ]
+    },
+    {
+      "name": "Olympic",
+      "channels": [
+        {
+          "name": "Olympic 1",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/318"
+        },
+        {
+          "name": "Olympic 2",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/319"
+        },
+        {
+          "name": "Olympic 3",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/320"
+        },
+        {
+          "name": "Olympic 4",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/321"
+        },
+        {
+          "name": "Olympic 5",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/322"
+        },
+        {
+          "name": "Olympic 6",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/323"
+        },
+        {
+          "name": "Olympic 7",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/324"
+        },
+        {
+          "name": "Olympic 8",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/325"
+        },
+        {
+          "name": "Olympic 9",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/326"
+        },
+        {
+          "name": "Olympic 10",
+          "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/327"
+        }
+      ]
     }
   ],
   "drm_licenses": [

@@ -41,6 +41,10 @@
     {
       "id": 7,
       "name": "Olahraga"
+    },
+    {
+      "id": 8,
+      "name": "Olympic"
     }
   ],
   "channels": [
@@ -1033,6 +1037,56 @@
       "cid": 2,
       "name": "OK TV",
       "stream_url": "https://liveanevia.mncnow.id/live/eds/OKTV/sa_dash_vmx/OKTV.mpd"
+    },
+    {
+      "cid": 8,
+      "name": "Olympic 1",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/318"
+    },
+    {
+      "cid": 8,
+      "name": "Olympic 2",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/319"
+    },
+    {
+      "cid": 8,
+      "name": "Olympic 3",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/320"
+    },
+    {
+      "cid": 8,
+      "name": "Olympic 4",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/321"
+    },
+    {
+      "cid": 8,
+      "name": "Olympic 5",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/322"
+    },
+    {
+      "cid": 8,
+      "name": "Olympic 6",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/323"
+    },
+    {
+      "cid": 8,
+      "name": "Olympic 7",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/324"
+    },
+    {
+      "cid": 8,
+      "name": "Olympic 8",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/325"
+    },
+    {
+      "cid": 8,
+      "name": "Olympic 9",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/326"
+    },
+    {
+      "cid": 8,
+      "name": "Olympic 10",
+      "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/327"
     },
     {
       "cid": 2,
