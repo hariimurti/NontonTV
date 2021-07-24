@@ -19,14 +19,19 @@ import net.harimurti.tv.databinding.ActivityPlayerBinding
 import net.harimurti.tv.databinding.CustomControlBinding
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.Channel
+import net.harimurti.tv.model.PlayData
+import net.harimurti.tv.model.Playlist
 import java.util.*
+import kotlin.collections.ArrayList
 
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
     private var isTelevision = false
     private var skipRetry = false
     private lateinit var preferences: Preferences
-    private lateinit var channelUrl: String
+    private var categoryId: Int = 0
+    private var channels: ArrayList<Channel>? = null
+    private var current: Channel? = null
     private lateinit var player: SimpleExoPlayer
     private lateinit var mediaItem: MediaItem
     private lateinit var trackSelector: DefaultTrackSelector
@@ -47,36 +52,47 @@ class PlayerActivity : AppCompatActivity() {
         isTelevision = UiMode(this).isTelevision()
         preferences = Preferences(this)
 
+        // get playlist
+        val playlist = if (!preferences.playLastWatched) Playlist.loaded
+            else PlaylistHelper(this).readCache()
+        // set channels
+        val parcel: PlayData? = intent.getParcelableExtra(PlayData.VALUE)
+        val category = parcel.let { playlist?.categories?.get(it?.catId as Int) }
+        categoryId = parcel?.catId as Int
+        channels = category?.channels
+        current = parcel.let { category?.channels?.get(it.chId) }
+
         // define some view
         controlBinding = CustomControlBinding.bind(binding.root.findViewById(R.id.custom_control))
         controlBinding.playerSettings.setOnClickListener { showTrackSelector() }
-        controlBinding.channelName.text = intent.getStringExtra(Channel.NAME)
+        controlBinding.channelName.text = current?.name
 
-        // get channel_url
-        channelUrl = intent.getStringExtra(Channel.STREAMURL).toString()
-        if (channelUrl.isEmpty()) {
+        // verify stream_url
+        if (current?.stream_url?.isEmpty() == true) {
             Toast.makeText(this, R.string.player_no_channel_url, Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
-        // define mediasource
-        val drmLicense = intent.getStringExtra(Channel.DRMURL)
+        // define mediaitem
+        val drmLicense = playlist?.drm_licenses?.firstOrNull {
+            current?.drm_name?.equals(it.drm_name) == true
+        }?.drm_url
         mediaItem = if (drmLicense?.isNotEmpty() == true) {
             MediaItem.Builder()
-                .setUri(Uri.parse(channelUrl))
+                .setUri(Uri.parse(current?.stream_url))
                 .setDrmUuid(C.WIDEVINE_UUID)
                 .setDrmLicenseUri(drmLicense)
                 .setDrmMultiSession(true)
                 .build()
         } else {
-            MediaItem.fromUri(Uri.parse(channelUrl))
+            MediaItem.fromUri(Uri.parse(current?.stream_url))
         }
 
         // define User-Agent
         val userAgents = listOf(*resources.getStringArray(R.array.user_agent))
         var userAgent = userAgents.firstOrNull {
-            channelUrl.contains(it.substring(0, it.indexOf("/")).lowercase(Locale.getDefault()))
+            current?.stream_url?.contains(it.substring(0, it.indexOf("/")).lowercase(Locale.getDefault())) == true
         }
         if (userAgent.isNullOrEmpty()) {
             userAgent = userAgents[Random().nextInt(userAgents.size)]
@@ -109,7 +125,7 @@ class PlayerActivity : AppCompatActivity() {
         override fun onPlaybackStateChanged(state: Int) {
             if (state == Player.STATE_READY) {
                 showLayoutMessage(View.GONE, false)
-                preferences.lastWatched = channelUrl
+                preferences.watched = channels?.indexOf(current)?.let { PlayData(categoryId, it) } as PlayData
             } else if (state == Player.STATE_BUFFERING) {
                 showLayoutMessage(View.VISIBLE, false)
             }
@@ -128,18 +144,17 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         override fun onTracksChanged(trackGroups: TrackGroupArray, trackSelections: TrackSelectionArray) {
-            if (trackGroups !== lastSeenTrackGroupArray) {
-                val mappedTrackInfo = trackSelector.currentMappedTrackInfo
-                if (mappedTrackInfo != null) {
-                    if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO) == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
-                        Toast.makeText(applicationContext, getString(R.string.error_unsupported_video), Toast.LENGTH_LONG).show()
-                    }
-                    if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_AUDIO) == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
-                        Toast.makeText(applicationContext, getString(R.string.error_unsupported_audio), Toast.LENGTH_LONG).show()
-                    }
+            if (trackGroups == lastSeenTrackGroupArray) return
+            val mappedTrackInfo = trackSelector.currentMappedTrackInfo
+            if (mappedTrackInfo != null) {
+                if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO) == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
+                    Toast.makeText(applicationContext, getString(R.string.error_unsupported_video), Toast.LENGTH_LONG).show()
                 }
-                lastSeenTrackGroupArray = trackGroups
+                if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_AUDIO) == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
+                    Toast.makeText(applicationContext, getString(R.string.error_unsupported_audio), Toast.LENGTH_LONG).show()
+                }
             }
+            lastSeenTrackGroupArray = trackGroups
         }
     }
 

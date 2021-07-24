@@ -35,6 +35,7 @@ import net.harimurti.tv.databinding.ActivityMainBinding
 import net.harimurti.tv.databinding.MainSettingsDialogBinding
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.GithubUser
+import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
 import net.harimurti.tv.model.Release
 
@@ -59,6 +60,13 @@ open class MainActivity : AppCompatActivity() {
         askPermissions()
         preferences = Preferences(this)
         playlistHelper = PlaylistHelper(this)
+
+        // launch player if playlastwatched is true
+        if (preferences.playLastWatched && PlayerActivity.isFirst) {
+            val intent = Intent(this, PlayerActivity::class.java)
+            intent.putExtra(PlayData.VALUE, preferences.watched)
+            this.startActivity(intent)
+        }
 
         // volley library
         var stack: BaseHttpStack = HurlStack()
@@ -85,17 +93,9 @@ open class MainActivity : AppCompatActivity() {
         }
 
         // get contributors
-        if (preferences.lastVersionCode != BuildConfig.VERSION_CODE || !preferences.isShowLessContributors) {
+        if (preferences.lastVersionCode != BuildConfig.VERSION_CODE || !preferences.showLessContributors) {
             preferences.lastVersionCode = BuildConfig.VERSION_CODE
             getContributors()
-        }
-
-        // launch player if openlastwatched is true
-        val streamUrl = preferences.lastWatched
-        if (preferences.isOpenLastWatched && streamUrl != "" && PlayerActivity.isFirst) {
-            val intent = Intent(this, PlayerActivity::class.java)
-            intent.putExtra("channel_url", streamUrl)
-            this.startActivity(intent)
         }
     }
 
@@ -208,7 +208,7 @@ open class MainActivity : AppCompatActivity() {
             .setCancelable(false)
             .setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
             .setNegativeButton(getString(R.string.dialog_default)) { _: DialogInterface?, _: Int ->
-                preferences.setUseCustomPlaylist(false)
+                preferences.useCustomPlaylist = false
                 updatePlaylist()
             }
         alert.create().show()
@@ -244,8 +244,8 @@ open class MainActivity : AppCompatActivity() {
             .setMessage(message)
             .setNeutralButton(R.string.dialog_telegram) { _: DialogInterface?, _: Int -> openWebsite(getString(R.string.telegram_group)) }
             .setNegativeButton(R.string.dialog_website) { _: DialogInterface?, _: Int -> openWebsite(getString(R.string.website)) }
-            .setPositiveButton(if (preferences.isShowLessContributors) R.string.dialog_close else R.string.dialog_show_less) {
-                    _: DialogInterface?, _: Int -> preferences.setShowLessContributors()
+            .setPositiveButton(if (preferences.showLessContributors) R.string.dialog_close else R.string.dialog_show_less) {
+                    _: DialogInterface?, _: Int -> preferences.showLessContributors()
             }
         val dialog = alert.create()
         dialog.show()
@@ -257,28 +257,28 @@ open class MainActivity : AppCompatActivity() {
         val dialogBinding = MainSettingsDialogBinding.inflate(layoutInflater)
         // switch launch at boot
         dialogBinding.launchAtBoot.apply {
-            isChecked = preferences.isLaunchAtBoot
+            isChecked = preferences.launchAtBoot
             setOnClickListener {
-                preferences.isLaunchAtBoot = isChecked
+                preferences.launchAtBoot = isChecked
             }
         }
         // switch play last watched
         dialogBinding.openLastWatched.apply {
-            isChecked = preferences.isOpenLastWatched
+            isChecked = preferences.playLastWatched
             setOnClickListener {
-                preferences.isOpenLastWatched = isChecked
+                preferences.playLastWatched = isChecked
             }
         }
         // layout custom playlist
         dialogBinding.layoutCustomPlaylist.apply {
-            visibility = if (preferences.useCustomPlaylist()) View.VISIBLE else View.GONE
+            visibility = if (preferences.useCustomPlaylist) View.VISIBLE else View.GONE
         }
         // switch custom playlist
         dialogBinding.useCustomPlaylist.apply {
-            isChecked = preferences.useCustomPlaylist()
+            isChecked = preferences.useCustomPlaylist
             setOnClickListener {
                 dialogBinding.layoutCustomPlaylist.visibility = if (isChecked) View.VISIBLE else View.GONE
-                preferences.setUseCustomPlaylist(isChecked)
+                preferences.useCustomPlaylist = isChecked
             }
         }
         // edittext custom playlist

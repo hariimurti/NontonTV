@@ -52,7 +52,7 @@
     <!-- settings -->
     <string name="settings">Settings</string>
     <string name="launch_at_boot">Run app on boot</string>
-    <string name="open_last_watched">Play last seen</string>
+    <string name="play_last_watched">Play last watched</string>
     <string name="reload_playlist">Reload Playlist</string>
     <string name="hint_custom_playlist">leave blank to load local json</string>
     <string name="switch_custom_playlist">Custom playlist</string>

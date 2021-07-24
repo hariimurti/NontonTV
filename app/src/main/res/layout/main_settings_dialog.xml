@@ -38,7 +38,7 @@
             android:id="@+id/open_last_watched"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/open_last_watched" />
+            android:text="@string/play_last_watched" />
 
         <Space
             android:layout_width="match_parent"

@@ -3,6 +3,8 @@ package net.harimurti.tv.extra
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.google.gson.Gson
+import net.harimurti.tv.model.PlayData
 import java.util.*
 
 class Preferences(context: Context) {
@@ -43,7 +45,7 @@ class Preferences(context: Context) {
             false
         }
 
-    var isLaunchAtBoot: Boolean
+    var launchAtBoot: Boolean
         get() = preferences.getBoolean(LAUNCH_AT_BOOT, false)
         set(value) {
             editor = preferences.edit()
@@ -51,7 +53,7 @@ class Preferences(context: Context) {
             editor.apply()
         }
 
-    var isOpenLastWatched: Boolean
+    var playLastWatched: Boolean
         get() = preferences.getBoolean(OPEN_LAST_WATCHED, false)
         set(value) {
             editor = preferences.edit()
@@ -59,23 +61,22 @@ class Preferences(context: Context) {
             editor.apply()
         }
 
-    var lastWatched: String
-        get() = preferences.getString(LAST_WATCHED, "").toString()
+    var watched: PlayData
+        get() = Gson().fromJson(preferences.getString(LAST_WATCHED, "{}").toString(), PlayData::class.java)
         set(value) {
+            val json = Gson().toJson(value)
             editor = preferences.edit()
-            editor.putString(LAST_WATCHED, value)
+            editor.putString(LAST_WATCHED, json)
             editor.apply()
         }
 
-    fun setUseCustomPlaylist(value: Boolean) {
-        editor = preferences.edit()
-        editor.putBoolean(USE_CUSTOM_PLAYLIST, value)
-        editor.apply()
-    }
-
-    fun useCustomPlaylist(): Boolean {
-        return preferences.getBoolean(USE_CUSTOM_PLAYLIST, false)
-    }
+    var useCustomPlaylist: Boolean
+        get() = preferences.getBoolean(USE_CUSTOM_PLAYLIST, false)
+        set(value) {
+            editor = preferences.edit()
+            editor.putBoolean(USE_CUSTOM_PLAYLIST, value)
+            editor.apply()
+        }
 
     var playlistExternal: String
         get() = preferences.getString(PLAYLIST_EXTERNAL, "").toString()
@@ -94,13 +95,13 @@ class Preferences(context: Context) {
             editor.apply()
         }
 
-    fun setShowLessContributors() {
+    fun showLessContributors() {
         editor = preferences.edit()
         editor.putBoolean(SHOW_LESS_CONTRIBUTORS, true)
         editor.apply()
     }
 
-    val isShowLessContributors: Boolean
+    val showLessContributors: Boolean
         get() = preferences.getBoolean(SHOW_LESS_CONTRIBUTORS, false)
 
     var totalContributors: Int

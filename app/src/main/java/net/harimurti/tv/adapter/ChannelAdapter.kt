@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.RecyclerView
 import net.harimurti.tv.PlayerActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.model.Channel
-import net.harimurti.tv.model.Playlist
+import net.harimurti.tv.model.PlayData
 
 
-class ChannelAdapter (private val channels: ArrayList<Channel>?) : RecyclerView.Adapter<ChannelAdapter.ViewHolder>() {
+class ChannelAdapter (private val channels: ArrayList<Channel>?, private val catId: Int) :
+    RecyclerView.Adapter<ChannelAdapter.ViewHolder>() {
     lateinit var context: Context
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -29,17 +30,10 @@ class ChannelAdapter (private val channels: ArrayList<Channel>?) : RecyclerView.
 
     override fun onBindViewHolder(viewHolder: ChannelAdapter.ViewHolder, position: Int) {
         val channel: Channel? = channels?.get(position)
-        val drmUrl: String? = Playlist.loaded?.drm_licenses?.firstOrNull {
-            channel?.drm_name?.equals(it.drm_name) == true
-        }?.drm_url
-
-        val button = viewHolder.button
-        button.text = channel?.name
-        button.setOnClickListener {
+        viewHolder.button.text = channel?.name
+        viewHolder.button.setOnClickListener {
             val intent = Intent(context, PlayerActivity::class.java)
-            intent.putExtra(Channel.NAME, channel?.name)
-            intent.putExtra(Channel.STREAMURL, channel?.stream_url)
-            intent.putExtra(Channel.DRMURL, drmUrl)
+            intent.putExtra(PlayData.VALUE, PlayData(catId, position))
             context.startActivity(intent)
         }
     }

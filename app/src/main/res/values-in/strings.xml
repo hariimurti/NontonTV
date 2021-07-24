@@ -39,7 +39,7 @@
     <!-- settings -->
     <string name="settings">Pengaturan</string>
     <string name="launch_at_boot">Jalankan app saat boot</string>
-    <string name="open_last_watched">Putar terakhir dilihat</string>
+    <string name="play_last_watched">Putar terakhir dilihat</string>
     <string name="reload_playlist">Muat ulang Playlist</string>
     <string name="hint_custom_playlist">kosongkan utk memuat playlist lokal</string>
     <string name="switch_custom_playlist">Playlist kustom</string>

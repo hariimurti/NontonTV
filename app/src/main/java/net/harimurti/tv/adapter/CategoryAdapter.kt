@@ -28,7 +28,7 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerV
     override fun onBindViewHolder(viewHolder: CategoryAdapter.ViewHolder, position: Int) {
         val category: Category? = categories?.get(position)
         viewHolder.textView.text = category?.name
-        viewHolder.recyclerView.adapter = ChannelAdapter(category?.channels)
+        viewHolder.recyclerView.adapter = ChannelAdapter(category?.channels, position)
         viewHolder.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
     }
 

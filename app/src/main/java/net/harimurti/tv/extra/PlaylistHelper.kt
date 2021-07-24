@@ -21,7 +21,7 @@ class PlaylistHelper(val context: Context) {
     }
 
     fun mode(): Int {
-        if (!preferences.useCustomPlaylist()) return MODE_DEFAULT
+        if (!preferences.useCustomPlaylist) return MODE_DEFAULT
         return if (preferences.playlistExternal.isNotEmpty()) MODE_CUSTOM else MODE_LOCAL
     }
 
