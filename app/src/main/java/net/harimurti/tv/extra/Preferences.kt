@@ -21,7 +21,6 @@ class Preferences(context: Context) {
         private const val SHOW_LESS_CONTRIBUTORS = "SHOW_LESS_CONTRIBUTORS"
     }
 
-
     fun setLastCheckUpdate() {
         val nextday = Calendar.getInstance()
         nextday.add(Calendar.DATE, 1)
