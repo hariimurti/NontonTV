@@ -11,5 +11,6 @@
     <color name="btn_default">#5A595B</color>
     <color name="btn_focused">@color/color_primary</color>
     <color name="btn_pressed">@color/color_red_light</color>
+    <color name="btn_settings_bg">#00FFFFFF</color>
     <color name="ch_name_bg">#CCFFFFFF</color>
 </resources>
