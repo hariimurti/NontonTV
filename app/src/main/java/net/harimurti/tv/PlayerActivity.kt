@@ -3,7 +3,6 @@ package net.harimurti.tv
 import android.net.Uri
 import android.os.*
 import android.view.*
-import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.exoplayer2.*
@@ -17,6 +16,8 @@ import com.google.android.exoplayer2.ui.PlayerView
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.upstream.HttpDataSource
+import net.harimurti.tv.databinding.ActivityPlayerBinding
+import net.harimurti.tv.databinding.CustomControlBinding
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.Channel
 import java.util.*
@@ -31,12 +32,8 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var mediaItem: MediaItem
     private lateinit var trackSelector: DefaultTrackSelector
     private var lastSeenTrackGroupArray: TrackGroupArray? = null
-    private lateinit var layoutStatus: View
-    private lateinit var layoutSpin: View
-    private lateinit var layoutText: View
-    private lateinit var trackButton: View
-    private lateinit var tvStatus: TextView
-    private lateinit var tvRetry: TextView
+    private lateinit var binding: ActivityPlayerBinding
+    private lateinit var controlBinding: CustomControlBinding
 
     companion object {
         var isFirst = true
@@ -44,22 +41,17 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_player)
+        binding = ActivityPlayerBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         isFirst = false
         isTelevision = UiMode(this).isTelevision()
         preferences = Preferences(this)
 
         // define some view
-        layoutStatus = findViewById(R.id.layout_status)
-        layoutSpin = findViewById(R.id.layout_spin)
-        layoutText = findViewById(R.id.layout_text)
-        tvStatus = findViewById(R.id.text_status)
-        tvRetry = findViewById(R.id.text_retry)
-        trackButton = findViewById(R.id.player_settings)
-        trackButton.setOnClickListener { showTrackSelector() }
-
-        // set channel name
-        findViewById<TextView>(R.id.channel_name).text = intent.getStringExtra(Channel.NAME)
+        controlBinding = CustomControlBinding.bind(binding.root.findViewById(R.id.custom_control))
+        controlBinding.playerSettings.setOnClickListener { showTrackSelector() }
+        controlBinding.channelName.text = intent.getStringExtra(Channel.NAME)
 
         // get channel_url
         channelUrl = intent.getStringExtra(Channel.STREAMURL).toString()
@@ -106,9 +98,8 @@ class PlayerActivity : AppCompatActivity() {
         player.addListener(PlayerListener())
 
         // set player view
-        val playerView = findViewById<PlayerView>(R.id.player_view)
-        playerView.player = player
-        playerView.requestFocus()
+        binding.playerView.player = player
+        binding.playerView.requestFocus()
 
         // play mediasouce
         player.setMediaItem(mediaItem)
@@ -141,16 +132,16 @@ class PlayerActivity : AppCompatActivity() {
             } else if (state == Player.STATE_BUFFERING) {
                 showLayoutMessage(View.VISIBLE, false)
             }
-            trackButton.isEnabled = TrackSelectionDialog.willHaveContent(trackSelector)
+            controlBinding.playerSettings.isEnabled = TrackSelectionDialog.willHaveContent(trackSelector)
         }
 
         override fun onPlayerError(error: ExoPlaybackException) {
             if (error.type == ExoPlaybackException.TYPE_SOURCE) {
-                tvStatus.setText(R.string.source_offline)
+                binding.textStatus.setText(R.string.source_offline)
             } else {
-                tvStatus.setText(R.string.something_went_wrong)
+                binding.textStatus.setText(R.string.something_went_wrong)
             }
-            tvRetry.setText(R.string.text_auto_retry)
+            binding.textRetry.setText(R.string.text_auto_retry)
             showLayoutMessage(View.VISIBLE, true)
             retryPlayback()
         }
@@ -179,12 +170,12 @@ class PlayerActivity : AppCompatActivity() {
             override fun onCountDown(count: Int) {
                 val left = count - 1
                 if (!network.isConnected()) {
-                    tvStatus.setText(R.string.no_network)
+                    binding.textStatus.setText(R.string.no_network)
                 }
                 if (left <= 0) {
-                    tvRetry.setText(R.string.text_auto_retry_now)
+                    binding.textRetry.setText(R.string.text_auto_retry_now)
                 } else {
-                    tvRetry.text = String.format(getString(R.string.text_auto_retry_second), left)
+                    binding.textRetry.text = String.format(getString(R.string.text_auto_retry_second), left)
                 }
             }
 
@@ -206,13 +197,13 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun showLayoutMessage(visibility: Int, isMessage: Boolean) {
-        layoutStatus.visibility = visibility
+        binding.layoutStatus.visibility = visibility
         if (!isMessage) {
-            layoutSpin.visibility = View.VISIBLE
-            layoutText.visibility = View.GONE
+            binding.layoutSpin.visibility = View.VISIBLE
+            binding.layoutText.visibility = View.GONE
         } else {
-            layoutSpin.visibility = View.GONE
-            layoutText.visibility = View.VISIBLE
+            binding.layoutSpin.visibility = View.GONE
+            binding.layoutText.visibility = View.VISIBLE
         }
     }
 

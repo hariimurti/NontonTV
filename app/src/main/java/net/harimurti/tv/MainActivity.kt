@@ -15,16 +15,11 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -36,16 +31,17 @@ import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import net.harimurti.tv.adapter.CategoryAdapter
+import net.harimurti.tv.databinding.ActivityMainBinding
+import net.harimurti.tv.databinding.MainSettingsDialogBinding
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.GithubUser
 import net.harimurti.tv.model.Playlist
 import net.harimurti.tv.model.Release
 
-
 open class MainActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
     private var isTelevision = false
-    private lateinit var layoutLoading: View
+    private lateinit var binding: ActivityMainBinding
     private lateinit var preferences: Preferences
     private lateinit var playlistHelper: PlaylistHelper
     private lateinit var volley: RequestQueue
@@ -53,18 +49,16 @@ open class MainActivity : AppCompatActivity() {
     @SuppressLint("DefaultLocale")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         isTelevision = UiMode(this).isTelevision()
         if (isTelevision) {
             setTheme(R.style.AppThemeTv)
         }
-        setContentView(R.layout.activity_main)
+        setContentView(binding.root)
 
         askPermissions()
         preferences = Preferences(this)
         playlistHelper = PlaylistHelper(this)
-
-        // define some view
-        layoutLoading = findViewById(R.id.layout_loading)
 
         // volley library
         var stack: BaseHttpStack = HurlStack()
@@ -198,12 +192,10 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun setPlaylistToViewPager(newPls: Playlist) {
-        val recyclerView = findViewById<View>(R.id.rv_category) as RecyclerView
-        recyclerView.adapter = CategoryAdapter(newPls.categories)
-        recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-
-        layoutLoading.visibility = View.GONE
+        binding.rvCategory.adapter = CategoryAdapter(newPls.categories)
+        binding.rvCategory.layoutManager = LinearLayoutManager(this)
+        binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        binding.layoutLoading.visibility = View.GONE
         if (Playlist.loaded != newPls) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
         Playlist.loaded = newPls
     }
@@ -262,35 +254,35 @@ open class MainActivity : AppCompatActivity() {
 
     private fun showSettingsDialog() {
         val dialog = AlertDialog.Builder(this).create()
-        val dialogView = this.layoutInflater.inflate(R.layout.main_settings_dialog, null) as View
+        val dialogBinding = MainSettingsDialogBinding.inflate(layoutInflater)
         // switch launch at boot
-        dialogView.findViewById<SwitchCompat>(R.id.launch_at_boot).apply {
+        dialogBinding.launchAtBoot.apply {
             isChecked = preferences.isLaunchAtBoot
             setOnClickListener {
                 preferences.isLaunchAtBoot = isChecked
             }
         }
         // switch play last watched
-        dialogView.findViewById<SwitchCompat>(R.id.open_last_watched).apply {
+        dialogBinding.openLastWatched.apply {
             isChecked = preferences.isOpenLastWatched
             setOnClickListener {
                 preferences.isOpenLastWatched = isChecked
             }
         }
         // layout custom playlist
-        val layoutCustom = dialogView.findViewById<LinearLayout>(R.id.layout_custom_playlist).apply {
+        dialogBinding.layoutCustomPlaylist.apply {
             visibility = if (preferences.useCustomPlaylist()) View.VISIBLE else View.GONE
         }
         // switch custom playlist
-        dialogView.findViewById<SwitchCompat>(R.id.use_custom_playlist).apply {
+        dialogBinding.useCustomPlaylist.apply {
             isChecked = preferences.useCustomPlaylist()
             setOnClickListener {
-                layoutCustom.visibility = if (isChecked) View.VISIBLE else View.GONE
+                dialogBinding.layoutCustomPlaylist.visibility = if (isChecked) View.VISIBLE else View.GONE
                 preferences.setUseCustomPlaylist(isChecked)
             }
         }
         // edittext custom playlist
-        dialogView.findViewById<EditText>(R.id.custom_playlist).apply {
+        dialogBinding.customPlaylist.apply {
             setText(preferences.playlistExternal)
             addTextChangedListener(object : TextWatcher {
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
@@ -301,11 +293,11 @@ open class MainActivity : AppCompatActivity() {
             })
         }
         // button reload playlist
-        dialogView.findViewById<Button>(R.id.reload_playlist).setOnClickListener {
+        dialogBinding.reloadPlaylist.setOnClickListener {
             updatePlaylist()
             dialog.dismiss()
         }
-        dialog.setView(dialogView)
+        dialog.setView(dialogBinding.root)
         dialog.show()
     }
 
