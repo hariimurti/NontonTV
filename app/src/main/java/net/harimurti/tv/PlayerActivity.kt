@@ -29,6 +29,7 @@ class PlayerActivity : AppCompatActivity() {
     private var isTelevision = false
     private var skipRetry = false
     private lateinit var preferences: Preferences
+    private var playlist: Playlist? = null
     private var categoryId: Int = 0
     private var channels: ArrayList<Channel>? = null
     private var current: Channel? = null
@@ -53,7 +54,7 @@ class PlayerActivity : AppCompatActivity() {
         preferences = Preferences(this)
 
         // get playlist
-        val playlist = if (!preferences.playLastWatched) Playlist.loaded
+        playlist = if (!preferences.playLastWatched) Playlist.loaded
             else PlaylistHelper(this).readCache()
         // set channels
         val parcel: PlayData? = intent.getParcelableExtra(PlayData.VALUE)
@@ -68,12 +69,16 @@ class PlayerActivity : AppCompatActivity() {
         controlBinding.channelName.text = current?.name
 
         // verify stream_url
-        if (current?.stream_url?.isEmpty() == true) {
-            Toast.makeText(this, R.string.player_no_channel_url, Toast.LENGTH_SHORT).show()
+        if (current == null) {
+            Toast.makeText(this, R.string.player_no_channel, Toast.LENGTH_SHORT).show()
             finish()
-            return
         }
+        else {
+            initializePlayer()
+        }
+    }
 
+    private fun initializePlayer() {
         // define mediaitem
         val drmLicense = playlist?.drm_licenses?.firstOrNull {
             current?.drm_name?.equals(it.drm_name) == true

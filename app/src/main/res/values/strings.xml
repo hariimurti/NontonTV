@@ -29,7 +29,7 @@
     <string name="dialog_retry">Try again</string>
     <string name="dialog_cached">Use cache</string>
     <string name="dialog_default">Use default</string>
-    <string name="player_no_channel_url">Can\'t get streaming link</string>
+    <string name="player_no_channel">No channels to play</string>
     <string name="local_playlist_read_error">Can\'t load NontonTV.json from internal storage!</string>
 
     <!-- alert update -->
