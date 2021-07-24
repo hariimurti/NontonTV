@@ -249,7 +249,7 @@ open class MainActivity : AppCompatActivity() {
             }
         val dialog = alert.create()
         dialog.show()
-        Handler(Looper.getMainLooper()).postDelayed({ dialog.dismiss() }, 10000)
+        Handler(Looper.getMainLooper()).postDelayed({ try { dialog.dismiss() } catch (e: Exception) { }}, 10000)
     }
 
     private fun showSettingsDialog() {
