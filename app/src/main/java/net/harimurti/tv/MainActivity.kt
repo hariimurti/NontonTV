@@ -335,12 +335,11 @@ open class MainActivity : AppCompatActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
-        return if (keyCode == KeyEvent.KEYCODE_MENU) {
-            showSettingsDialog()
-            true
-        } else {
-            super.onKeyUp(keyCode, event)
+        when(keyCode) {
+            KeyEvent.KEYCODE_MENU -> showSettingsDialog()
+            else -> return super.onKeyUp(keyCode, event)
         }
+        return true
     }
 
     override fun onBackPressed() {
