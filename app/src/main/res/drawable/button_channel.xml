@@ -7,9 +7,10 @@
         android:top="@dimen/btn_background_padding">
         <selector>
             <item
+                android:state_pressed="true"
                 android:state_enabled="true">
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/btn_default" />
+                    <solid android:color="@color/btn_pressed" />
                     <corners android:radius="@dimen/btn_corner_radius" />
                 </shape>
             </item>
@@ -22,10 +23,9 @@
                 </shape>
             </item>
             <item
-                android:state_pressed="true"
                 android:state_enabled="true">
                 <shape android:shape="rectangle">
-                    <solid android:color="@color/btn_pressed" />
+                    <solid android:color="@color/btn_default" />
                     <corners android:radius="@dimen/btn_corner_radius" />
                 </shape>
             </item>
