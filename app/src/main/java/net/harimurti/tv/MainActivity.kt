@@ -76,7 +76,7 @@ open class MainActivity : AppCompatActivity() {
         if (Playlist.loaded == null) {
             updatePlaylist()
         } else {
-            setPlaylistToViewPager(Playlist.loaded!!)
+            setPlaylistToAdapter(Playlist.loaded!!)
         }
 
         // check new release
@@ -97,6 +97,56 @@ open class MainActivity : AppCompatActivity() {
             intent.putExtra("channel_url", streamUrl)
             this.startActivity(intent)
         }
+    }
+
+    private fun setPlaylistToAdapter(newPls: Playlist) {
+        binding.rvCategory.adapter = CategoryAdapter(newPls.categories)
+        binding.rvCategory.layoutManager = LinearLayoutManager(this)
+        binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        binding.layoutLoading.visibility = View.GONE
+        if (Playlist.loaded != newPls) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
+        Playlist.loaded = newPls
+    }
+
+    private fun updatePlaylist() {
+        // from local storage
+        if (playlistHelper.mode() == PlaylistHelper.MODE_LOCAL) {
+            val local = playlistHelper.readLocal()
+            if (local == null) {
+                showAlertLocalError()
+                return
+            }
+            setPlaylistToAdapter(local)
+            return
+        }
+
+        // from internet
+        val stringRequest = StringRequest(Request.Method.GET,
+            playlistHelper.urlPath,
+            { response: String? ->
+                try {
+                    val newPls = Gson().fromJson(response, Playlist::class.java)
+                    playlistHelper.writeCache(response)
+                    setPlaylistToAdapter(newPls)
+                } catch (error: JsonSyntaxException) {
+                    showAlertPlaylistError(error.message)
+                }
+            }
+        ) { error: VolleyError ->
+            var message = getString(R.string.something_went_wrong)
+            if (error.networkResponse != null) {
+                val errorcode = error.networkResponse.statusCode
+                if (errorcode in 400..499) message =
+                    String.format(getString(R.string.error_4xx), errorcode)
+                if (errorcode in 500..599) message =
+                    String.format(getString(R.string.error_5xx), errorcode)
+            } else if (!Network(this).isConnected()) {
+                message = getString(R.string.no_network)
+            }
+            showAlertPlaylistError(message)
+        }
+        volley.cache.clear()
+        volley.add(stringRequest)
     }
 
     private fun checkNewRelease() {
@@ -150,56 +200,6 @@ open class MainActivity : AppCompatActivity() {
             volley.add(stringRequest)
         }
 
-    private fun updatePlaylist() {
-        // from local storage
-        if (playlistHelper.mode() == PlaylistHelper.MODE_LOCAL) {
-            val local = playlistHelper.readLocal()
-            if (local == null) {
-                showAlertLocalError()
-                return
-            }
-            setPlaylistToViewPager(local)
-            return
-        }
-
-        // from internet
-        val stringRequest = StringRequest(Request.Method.GET,
-            playlistHelper.urlPath,
-            { response: String? ->
-                try {
-                    val newPls = Gson().fromJson(response, Playlist::class.java)
-                    playlistHelper.writeCache(response)
-                    setPlaylistToViewPager(newPls)
-                } catch (error: JsonSyntaxException) {
-                    showAlertPlaylistError(error.message)
-                }
-            }
-        ) { error: VolleyError ->
-            var message = getString(R.string.something_went_wrong)
-            if (error.networkResponse != null) {
-                val errorcode = error.networkResponse.statusCode
-                if (errorcode in 400..499) message =
-                    String.format(getString(R.string.error_4xx), errorcode)
-                if (errorcode in 500..599) message =
-                    String.format(getString(R.string.error_5xx), errorcode)
-            } else if (!Network(this).isConnected()) {
-                message = getString(R.string.no_network)
-            }
-            showAlertPlaylistError(message)
-        }
-        volley.cache.clear()
-        volley.add(stringRequest)
-    }
-
-    private fun setPlaylistToViewPager(newPls: Playlist) {
-        binding.rvCategory.adapter = CategoryAdapter(newPls.categories)
-        binding.rvCategory.layoutManager = LinearLayoutManager(this)
-        binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        binding.layoutLoading.visibility = View.GONE
-        if (Playlist.loaded != newPls) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
-        Playlist.loaded = newPls
-    }
-
     private fun showAlertLocalError() {
         askPermissions()
         val alert = AlertDialog.Builder(this)
@@ -223,7 +223,7 @@ open class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
         val cache = playlistHelper.readCache()
         if (cache != null) {
-            alert.setNegativeButton(R.string.dialog_cached) { _: DialogInterface?, _: Int -> setPlaylistToViewPager(cache) }
+            alert.setNegativeButton(R.string.dialog_cached) { _: DialogInterface?, _: Int -> setPlaylistToAdapter(cache) }
         }
         alert.create().show()
     }
