@@ -4,7 +4,7 @@
     <!-- json link -->
     <string name="website" translatable="false">https://github.com/hariimurti/NontonTV</string>
     <string name="telegram_group" translatable="false">https://t.me/paijemdev</string>
-    <string name="json_playlist" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/playlist.json</string>
+    <string name="json_playlist" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/NontonTV.json</string>
     <string name="json_release" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/release.json</string>
     <string name="gh_contributors" translatable="false">https://api.github.com/repos/hariimurti/NontonTV/contributors</string>
 

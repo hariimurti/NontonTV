@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <Button
+        android:id="@+id/btn_play"
+        android:layout_width="@dimen/btn_channel_width"
+        android:layout_height="@dimen/btn_channel_height"
+        android:ellipsize="end"
+        android:padding="@dimen/btn_channel_padding"
+        android:background="@drawable/button_channel" />
+
+</FrameLayout>

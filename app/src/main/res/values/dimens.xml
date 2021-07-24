@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="btn_background_padding">3dp</dimen>
+    <dimen name="btn_corner_radius">5dp</dimen>
+    <dimen name="btn_channel_width">120dp</dimen>
+    <dimen name="btn_channel_height">80dp</dimen>
+    <dimen name="btn_channel_padding">5dp</dimen>
+    <dimen name="cat_layout_padding">10dp</dimen>
+    <dimen name="cat_card_width">260dp</dimen>
+    <dimen name="cat_card_corner">20dp</dimen>
+    <dimen name="cat_card_margin_start">-20dp</dimen>
+    <dimen name="cat_name_padding_top_bottom">5dp</dimen>
+    <dimen name="cat_name_padding_start">30dp</dimen>
+    <dimen name="cat_name_padding_end">20dp</dimen>
+    <dimen name="cat_text_size">16sp</dimen>
+    <dimen name="ch_name_card_margin">20dp</dimen>
+    <dimen name="ch_name_card_corner">20dp</dimen>
+    <dimen name="ch_name_margin">10dp</dimen>
+    <dimen name="ch_name_text_size">14sp</dimen>
+</resources>
