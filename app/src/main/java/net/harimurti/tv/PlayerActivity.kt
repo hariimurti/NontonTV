@@ -297,6 +297,7 @@ class PlayerActivity : AppCompatActivity() {
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         when(keyCode) {
             KeyEvent.KEYCODE_MENU -> showTrackSelector()
+            KeyEvent.KEYCODE_DPAD_CENTER -> showTrackSelector()
             KeyEvent.KEYCODE_DPAD_UP -> switchChannel(CATEGORY_UP)
             KeyEvent.KEYCODE_DPAD_DOWN -> switchChannel(CATEGORY_DOWN)
             KeyEvent.KEYCODE_DPAD_LEFT -> switchChannel(CHANNEL_PREVIOUS)
