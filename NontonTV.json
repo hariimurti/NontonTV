@@ -1153,12 +1153,12 @@
           "stream_url": "https://eleven-rebroadcast-samsung.roku.wurl.com/manifest/playlist.m3u8"
         },
         {
-          "name": "MMA Junkie",
-          "stream_url": "https://a.jsrdn.com/broadcast/80f6ba72c8/+0000/c.m3u8"
-        },
-        {
           "name": "Match 1",
           "stream_url": "https://77-247-178-24.livesports24.online/ooomatch.m3u8"
+        },
+        {
+          "name": "MMA Junkie",
+          "stream_url": "https://a.jsrdn.com/broadcast/80f6ba72c8/+0000/c.m3u8"
         },
         {
           "name": "MNC Sports1",
@@ -1271,7 +1271,7 @@
         },
         {
           "name": "WWE",
-          "stream_url": "http://portal.geniptv.com:8080/greenpoison8/GZprWONABH/18549"
+          "stream_url": "http://185.180.221.194:8278/streams/d/Wwe/playlist.m3u8"
         }
       ]
     },
