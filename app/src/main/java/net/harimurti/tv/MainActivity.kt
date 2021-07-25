@@ -47,6 +47,12 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var playlistHelper: PlaylistHelper
     private lateinit var volley: RequestQueue
 
+    private val showSettingsReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            showSettingsDialog()
+        }
+    }
+
     @SuppressLint("DefaultLocale")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,14 +67,9 @@ open class MainActivity : AppCompatActivity() {
         preferences = Preferences(this)
         playlistHelper = PlaylistHelper(this)
 
-        // broadcast receiver to show main settings
-        class MainSettingBroadcastReceiver : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                showSettingsDialog()
-            }
-        }
+        // local broadcast receiver to show main settings
         LocalBroadcastManager.getInstance(this)
-            .registerReceiver(MainSettingBroadcastReceiver(), IntentFilter("SHOW_MAIN_SETTINGS"))
+            .registerReceiver(showSettingsReceiver, IntentFilter("SHOW_MAIN_SETTINGS"))
 
         // launch player if playlastwatched is true
         if (preferences.playLastWatched && PlayerActivity.isFirst) {
@@ -360,5 +361,11 @@ open class MainActivity : AppCompatActivity() {
         doubleBackToExitPressedOnce = true
         Toast.makeText(this, getString(R.string.press_back_twice_exit_app), Toast.LENGTH_SHORT).show()
         Handler(Looper.getMainLooper()).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+    override fun onDestroy() {
+        LocalBroadcastManager.getInstance(this)
+            .unregisterReceiver(showSettingsReceiver)
+        super.onDestroy()
     }
 }
