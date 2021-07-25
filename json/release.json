@@ -1,6 +1,6 @@
 {
-    "versionCode": 481,
-    "versionName": "v1.9",
-    "changelog": ["some bug fixes on android 4.4", "player: key menu to show track selection", "thanks to contributors (auto dismiss 10s)"],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v1.9/net.harimurti.tv_v1.9_b481.apk"
+    "versionCode": 500,
+    "versionName": "v2.0",
+    "changelog": ["New UI v2.0", "player: support remote navigation", "player: random user-agent", "and more.."],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v2.0/net.harimurti.tv_v2.0_b500.apk"
 }
