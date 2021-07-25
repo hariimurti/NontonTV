@@ -11,7 +11,8 @@
             android:id="@+id/rv_category"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/color_dark" />
+            android:background="@color/color_dark"
+            tools:listitem="@layout/item_category"/>
 
     </FrameLayout>
 
