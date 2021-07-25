@@ -294,6 +294,10 @@
           "stream_url": "http://livestream.biznetvideo.net/biznet_lifestyle/smil:lifestyle.smil/playlist.m3u8?bizkeylivestarttime=0&bizkeyliveendtime=0&bizkeyliveCustomParameter=myParameter&bizkeylivehash=jgDKPclcGdZfvrIDxfMdpT7v_srMWCbubntGo9cCYWpcBBQalMlLQxHswm43PbVR"
         },
         {
+          "name": "Blue Ant Entertainment",
+          "stream_url": "http://210.210.155.35/session/2892c0cc-30c4-11e9-af8c-c81f66f89318/dr9445/h/h16/02.m3u8"
+        },
+        {
           "name": "Blue Ant Extreme",
           "stream_url": "http://45.126.83.51/dr9445/h/h15/01.m3u8"
         },
