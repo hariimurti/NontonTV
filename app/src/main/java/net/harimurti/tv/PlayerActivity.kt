@@ -18,11 +18,11 @@ import com.google.android.exoplayer2.upstream.HttpDataSource
 import net.harimurti.tv.databinding.ActivityPlayerBinding
 import net.harimurti.tv.databinding.CustomControlBinding
 import net.harimurti.tv.extra.*
+import net.harimurti.tv.model.Category
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
 import java.util.*
-import kotlin.collections.ArrayList
 
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
@@ -30,8 +30,7 @@ class PlayerActivity : AppCompatActivity() {
     private var skipRetry = false
     private lateinit var preferences: Preferences
     private var playlist: Playlist? = null
-    private var categoryId: Int = 0
-    private var channels: ArrayList<Channel>? = null
+    private var category: Category? = null
     private var current: Channel? = null
     private lateinit var player: SimpleExoPlayer
     private lateinit var mediaItem: MediaItem
@@ -62,10 +61,8 @@ class PlayerActivity : AppCompatActivity() {
             else PlaylistHelper(this).readCache()
         // set channels
         val parcel: PlayData? = intent.getParcelableExtra(PlayData.VALUE)
-        val category = parcel.let { playlist?.categories?.get(it?.catId as Int) }
-        categoryId = parcel?.catId as Int
-        channels = category?.channels
-        current = parcel.let { category?.channels?.get(it.chId) }
+        category = parcel.let { playlist?.categories?.get(it?.catId as Int) }
+        current = parcel.let { category?.channels?.get(it?.chId as Int) }
 
         // define some view
         controlBinding = CustomControlBinding.bind(binding.root.findViewById(R.id.custom_control))
@@ -82,7 +79,8 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun playChannel() {
-        // set channel name
+        // set category & channel name
+        controlBinding.categoryName.text = category?.name
         controlBinding.channelName.text = current?.name
 
         // define mediaitem
@@ -134,28 +132,27 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun switchChannel(mode: Int) {
-        val chId = channels?.indexOf(current) as Int
+        val catId = playlist?.categories?.indexOf(category) as Int
+        val chId = category?.channels?.indexOf(current) as Int
         when(mode) {
             CATEGORY_UP -> {
-                val back = categoryId - 1
-                if (back > -1) {
-                    categoryId = back
-                    channels = playlist?.categories?.get(back)?.channels
-                    current = channels!![0]
+                val previous = catId - 1
+                if (previous > -1) {
+                    category = playlist?.categories?.get(previous)
+                    current = category?.channels!![0]
                 }
             }
             CATEGORY_DOWN -> {
-                val next = categoryId + 1
+                val next = catId + 1
                 if (next < playlist?.categories?.size ?: 0) {
-                    categoryId = next
-                    channels = playlist?.categories?.get(next)?.channels
-                    current = channels!![0]
+                    category = playlist?.categories?.get(next)
+                    current = category?.channels!![0]
                 }
             }
             CHANNEL_PREVIOUS -> {
-                val back = chId - 1
-                if (back > -1) {
-                    current = channels!![back]
+                val previous = chId - 1
+                if (previous > -1) {
+                    current = category?.channels!![previous]
                 }
                 else {
                     switchChannel(CATEGORY_UP)
@@ -164,8 +161,8 @@ class PlayerActivity : AppCompatActivity() {
             }
             CHANNEL_NEXT -> {
                 val next = chId + 1
-                if (next < channels?.size ?: 0) {
-                    current = channels!![next]
+                if (next < category?.channels?.size ?: 0) {
+                    current = category?.channels!![next]
                 }
                 else {
                     switchChannel(CATEGORY_DOWN)
@@ -183,7 +180,9 @@ class PlayerActivity : AppCompatActivity() {
         override fun onPlaybackStateChanged(state: Int) {
             if (state == Player.STATE_READY) {
                 showLayoutMessage(View.GONE, false)
-                preferences.watched = channels?.indexOf(current)?.let { PlayData(categoryId, it) } as PlayData
+                val catId = playlist?.categories?.indexOf(category) as Int
+                val chId = category?.channels?.indexOf(current) as Int
+                preferences.watched = PlayData(catId, chId)
             } else if (state == Player.STATE_BUFFERING) {
                 showLayoutMessage(View.VISIBLE, false)
             }
@@ -297,6 +296,7 @@ class PlayerActivity : AppCompatActivity() {
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         when(keyCode) {
             KeyEvent.KEYCODE_MENU -> showTrackSelector()
+            KeyEvent.KEYCODE_DPAD_CENTER -> showTrackSelector()
             KeyEvent.KEYCODE_DPAD_UP -> switchChannel(CATEGORY_UP)
             KeyEvent.KEYCODE_DPAD_DOWN -> switchChannel(CATEGORY_DOWN)
             KeyEvent.KEYCODE_DPAD_LEFT -> switchChannel(CHANNEL_PREVIOUS)

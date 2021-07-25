@@ -4,8 +4,7 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.app.DownloadManager
-import android.content.DialogInterface
-import android.content.Intent
+import android.content.*
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.*
@@ -18,6 +17,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
@@ -60,6 +60,15 @@ open class MainActivity : AppCompatActivity() {
         askPermissions()
         preferences = Preferences(this)
         playlistHelper = PlaylistHelper(this)
+
+        // broadcast receiver to show main settings
+        class MainSettingBroadcastReceiver : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                showSettingsDialog()
+            }
+        }
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(MainSettingBroadcastReceiver(), IntentFilter("SHOW_MAIN_SETTINGS"))
 
         // launch player if playlastwatched is true
         if (preferences.playLastWatched && PlayerActivity.isFirst) {
@@ -335,12 +344,11 @@ open class MainActivity : AppCompatActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
-        return if (keyCode == KeyEvent.KEYCODE_MENU) {
-            showSettingsDialog()
-            true
-        } else {
-            super.onKeyUp(keyCode, event)
+        when(keyCode) {
+            KeyEvent.KEYCODE_MENU -> showSettingsDialog()
+            else -> return super.onKeyUp(keyCode, event)
         }
+        return true
     }
 
     override fun onBackPressed() {
