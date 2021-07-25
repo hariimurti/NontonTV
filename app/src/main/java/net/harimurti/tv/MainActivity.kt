@@ -9,11 +9,8 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.*
 import android.os.Build.VERSION_CODES
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -32,7 +29,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import net.harimurti.tv.adapter.CategoryAdapter
 import net.harimurti.tv.databinding.ActivityMainBinding
-import net.harimurti.tv.databinding.MainSettingsDialogBinding
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.GithubUser
 import net.harimurti.tv.model.PlayData
@@ -48,9 +44,9 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var volley: RequestQueue
     private lateinit var loading: ProgressDialog
 
-    private val showSettingsReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    private val updatePlaylistReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
-            showSettingsDialog()
+            updatePlaylist()
         }
     }
 
@@ -69,12 +65,13 @@ open class MainActivity : AppCompatActivity() {
             .show(getString(R.string.loading))
 
         askPermissions()
+
         preferences = Preferences(this)
         playlistHelper = PlaylistHelper(this)
 
-        // local broadcast receiver to show main settings
+        // local broadcast receiver to update playlist
         LocalBroadcastManager.getInstance(this)
-            .registerReceiver(showSettingsReceiver, IntentFilter("SHOW_MAIN_SETTINGS"))
+            .registerReceiver(updatePlaylistReceiver, IntentFilter("RELOAD_MAIN_PLAYLIST"))
 
         // launch player if playlastwatched is true
         if (preferences.playLastWatched && PlayerActivity.isFirst) {
@@ -270,55 +267,6 @@ open class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({ try { dialog.dismiss() } catch (e: Exception) { }}, 10000)
     }
 
-    private fun showSettingsDialog() {
-        val dialog = AlertDialog.Builder(this).create()
-        val dialogBinding = MainSettingsDialogBinding.inflate(layoutInflater)
-        // switch launch at boot
-        dialogBinding.launchAtBoot.apply {
-            isChecked = preferences.launchAtBoot
-            setOnClickListener {
-                preferences.launchAtBoot = isChecked
-            }
-        }
-        // switch play last watched
-        dialogBinding.openLastWatched.apply {
-            isChecked = preferences.playLastWatched
-            setOnClickListener {
-                preferences.playLastWatched = isChecked
-            }
-        }
-        // layout custom playlist
-        dialogBinding.layoutCustomPlaylist.apply {
-            visibility = if (preferences.useCustomPlaylist) View.VISIBLE else View.GONE
-        }
-        // switch custom playlist
-        dialogBinding.useCustomPlaylist.apply {
-            isChecked = preferences.useCustomPlaylist
-            setOnClickListener {
-                dialogBinding.layoutCustomPlaylist.visibility = if (isChecked) View.VISIBLE else View.GONE
-                preferences.useCustomPlaylist = isChecked
-            }
-        }
-        // edittext custom playlist
-        dialogBinding.customPlaylist.apply {
-            setText(preferences.playlistExternal)
-            addTextChangedListener(object : TextWatcher {
-                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-                override fun afterTextChanged(s: Editable) {
-                    preferences.playlistExternal = s.toString()
-                }
-            })
-        }
-        // button reload playlist
-        dialogBinding.reloadPlaylist.setOnClickListener {
-            updatePlaylist()
-            dialog.dismiss()
-        }
-        dialog.setView(dialogBinding.root)
-        dialog.show()
-    }
-
     private fun openWebsite(link: String) {
         startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(link)))
     }
@@ -354,7 +302,7 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         when(keyCode) {
-            KeyEvent.KEYCODE_MENU -> showSettingsDialog()
+            KeyEvent.KEYCODE_MENU -> SettingsDialog(this).show()
             else -> return super.onKeyUp(keyCode, event)
         }
         return true
@@ -373,7 +321,7 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         LocalBroadcastManager.getInstance(this)
-            .unregisterReceiver(showSettingsReceiver)
+            .unregisterReceiver(updatePlaylistReceiver)
         super.onDestroy()
     }
 }
