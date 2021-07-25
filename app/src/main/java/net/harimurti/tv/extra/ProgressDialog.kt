@@ -29,7 +29,8 @@ class ProgressDialog(val context: Context) {
     fun dismiss() {
         if (dialog == null) return
         if (dialog?.isShowing == true) {
-            dialog?.dismiss()
+            try { dialog?.dismiss() }
+            catch (e: Exception) { }
         }
     }
 }
