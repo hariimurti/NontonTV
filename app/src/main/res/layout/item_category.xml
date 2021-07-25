@@ -12,28 +12,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cat_card_title"
+        <TextView
+            android:id="@+id/text_category"
             android:layout_width="@dimen/cat_card_width"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/cat_card_margin_start"
-            app:cardBackgroundColor="@color/color_red_light"
-            app:cardCornerRadius="@dimen/cat_card_corner">
-
-            <TextView
-                android:id="@+id/text_category"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="@dimen/cat_name_padding_top_bottom"
-                android:paddingBottom="@dimen/cat_name_padding_top_bottom"
-                android:paddingStart="@dimen/cat_name_padding_start"
-                android:paddingEnd="@dimen/cat_name_padding_end"
-                android:ellipsize="end"
-                android:textStyle="bold"
-                android:textAllCaps="true"
-                android:textSize="@dimen/cat_text_size"/>
-
-        </androidx.cardview.widget.CardView>
+            android:paddingTop="@dimen/cat_name_padding_top_bottom"
+            android:paddingBottom="@dimen/cat_name_padding_top_bottom"
+            android:paddingStart="@dimen/cat_name_padding_top_bottom"
+            android:paddingEnd="@dimen/cat_name_padding_end"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textSize="@dimen/cat_text_size"
+            android:background="@drawable/corner_right"/>
 
         <ImageButton
             android:id="@+id/main_settings"
@@ -41,8 +32,8 @@
             android:layout_height="match_parent"
             android:layout_marginEnd="@dimen/cat_setting_margin_end"
             android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/cat_card_title"
-            android:layout_alignBottom="@id/cat_card_title"
+            android:layout_alignTop="@id/text_category"
+            android:layout_alignBottom="@id/text_category"
             android:background="@color/btn_settings_bg"
             android:src="@drawable/exo_ic_settings"
             android:visibility="invisible"
@@ -55,6 +46,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/cat_layout_padding_bottom"
-        android:orientation="horizontal" />
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+        app:spanCount="2"
+        tools:listitem="@layout/item_channel"/>
 
 </LinearLayout>
