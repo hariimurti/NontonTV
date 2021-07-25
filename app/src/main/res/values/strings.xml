@@ -21,6 +21,7 @@
     <string name="track_selection_title">Select tracks</string>
     <string name="error_unsupported_video">Media includes video tracks, but none are playable by this device</string>
     <string name="error_unsupported_audio">Media includes audio tracks, but none are playable by this device</string>
+    <string name="loading" translatable="false">Loading...</string>
 
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>

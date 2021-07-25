@@ -46,6 +46,7 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var preferences: Preferences
     private lateinit var playlistHelper: PlaylistHelper
     private lateinit var volley: RequestQueue
+    private lateinit var loading: ProgressDialog
 
     private val showSettingsReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
@@ -62,6 +63,10 @@ open class MainActivity : AppCompatActivity() {
             setTheme(R.style.AppThemeTv)
         }
         setContentView(binding.root)
+
+        // show loading message
+        loading = ProgressDialog(this)
+            .show(getString(R.string.loading))
 
         askPermissions()
         preferences = Preferences(this)
@@ -113,7 +118,10 @@ open class MainActivity : AppCompatActivity() {
         binding.rvCategory.adapter = CategoryAdapter(newPls.categories)
         binding.rvCategory.layoutManager = LinearLayoutManager(this)
         binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        binding.layoutLoading.visibility = View.GONE
+
+        // end the loading
+        loading.dismiss()
+
         if (Playlist.loaded != newPls) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
         Playlist.loaded = newPls
     }

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".MainActivity">
@@ -14,22 +13,6 @@
             android:layout_height="match_parent"
             android:background="@color/color_dark" />
 
-        <RelativeLayout
-            android:id="@+id/layout_loading"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/color_dark_transparent">
-
-            <com.github.ybq.android.spinkit.SpinKitView
-                style="@style/SpinKitView.Large.FadingCircle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_gravity="center"
-                app:SpinKit_Color="@color/color_red_light" />
-
-        </RelativeLayout>
-
-    </RelativeLayout>
+    </FrameLayout>
 
 </layout>

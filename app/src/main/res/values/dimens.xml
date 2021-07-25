@@ -19,4 +19,8 @@
     <dimen name="ch_name_text_size">14sp</dimen>
     <dimen name="player_card_margin_start">20dp</dimen>
     <dimen name="player_card_channel_margin_top">5dp</dimen>
+    <dimen name="progress_bar_margin_top">10dp</dimen>
+    <dimen name="progress_text_margin_left_right">20dp</dimen>
+    <dimen name="progress_text_margin_top_bottom">10dp</dimen>
+    <dimen name="dialog_corner_radius">8dp</dimen>
 </resources>
