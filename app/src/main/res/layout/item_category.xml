@@ -5,8 +5,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/cat_layout_padding"
-    android:paddingBottom="@dimen/cat_layout_padding">
+    android:paddingTop="@dimen/cat_layout_padding_top"
+    android:paddingBottom="@dimen/cat_layout_padding_bottom">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -54,6 +54,7 @@
         android:id="@+id/rv_channels"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="@dimen/cat_layout_padding_bottom"
         android:orientation="horizontal" />
 
 </LinearLayout>
