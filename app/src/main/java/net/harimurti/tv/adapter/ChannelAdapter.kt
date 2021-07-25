@@ -5,6 +5,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.Button
 import androidx.recyclerview.widget.RecyclerView
 import net.harimurti.tv.PlayerActivity
@@ -35,6 +37,17 @@ class ChannelAdapter (private val channels: ArrayList<Channel>?, private val cat
             val intent = Intent(context, PlayerActivity::class.java)
             intent.putExtra(PlayData.VALUE, PlayData(catId, position))
             context.startActivity(intent)
+        }
+        viewHolder.button.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.zoom_120)
+                viewHolder.button.startAnimation(anim)
+                anim.fillAfter = true
+            } else {
+                val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.zoom_100)
+                viewHolder.button.startAnimation(anim)
+                anim.fillAfter = true
+            }
         }
     }
 
