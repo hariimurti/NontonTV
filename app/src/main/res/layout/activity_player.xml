@@ -13,58 +13,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:show_subtitle_button="true"
-            app:controller_layout_id="@layout/custom_control">
-
-            <RelativeLayout
-                android:id="@+id/layout_status"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/color_dark_transparent"
-                android:padding="20dp">
-
-                <LinearLayout
-                    android:id="@+id/layout_text"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:orientation="vertical"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/text_status"
-                        style="@style/TextAppearance.AppCompat.Large"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/something_went_wrong"
-                        android:textAlignment="center"
-                        android:textColor="@color/color_text"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:id="@+id/text_retry"
-                        style="@style/TextAppearance.AppCompat.Medium"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="@string/text_auto_retry"
-                        android:textAlignment="center"
-                        android:textColor="@color/color_text"
-                        android:textStyle="italic" />
-
-                </LinearLayout>
-
-                <com.github.ybq.android.spinkit.SpinKitView
-                    android:id="@+id/layout_spin"
-                    style="@style/SpinKitView.Large.Wave"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
-                    android:layout_gravity="center"
-                    app:SpinKit_Color="@color/color_red_light" />
-
-            </RelativeLayout>
-
-        </com.google.android.exoplayer2.ui.PlayerView>
+            app:show_buffering="always"
+            app:buffered_color="@color/color_red_light"
+            app:controller_layout_id="@layout/custom_control" />
 
     </LinearLayout>
 

@@ -1,7 +1,8 @@
 <resources>
     <!-- some text -->
     <string name="something_went_wrong">Ada sesuatu yang salah!</string>
-    <string name="source_offline">Siaran tidak dapat diakses!</string>
+    <string name="stream_has_ended">Siaran telah berakhir</string>
+    <string name="stream_source_offline">Siaran tidak dapat diakses</string>
     <string name="text_auto_retry">akan dicoba ulang otomatis dalam 5</string>
     <string name="text_auto_retry_second">akan dicoba ulang otomatis dalam %d</string>
     <string name="text_auto_retry_now">akan dicoba ulang otomatis sekarang</string>

@@ -4,13 +4,14 @@
     <!-- json link -->
     <string name="website" translatable="false">https://github.com/hariimurti/NontonTV</string>
     <string name="telegram_group" translatable="false">https://t.me/paijemdev</string>
-    <string name="json_playlist" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/NontonTV.json</string>
+    <string name="json_playlist" translatable="false">https://github.com/hariimurti/NontonTV/raw/playlist/NontonTV.json</string>
     <string name="json_release" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/release.json</string>
     <string name="gh_contributors" translatable="false">https://api.github.com/repos/hariimurti/NontonTV/contributors</string>
 
     <!-- some text -->
     <string name="something_went_wrong">Something went wrong!</string>
-    <string name="source_offline">Broadcast not accessible!</string>
+    <string name="stream_has_ended">Broadcast has been ended</string>
+    <string name="stream_source_offline">Broadcast not accessible</string>
     <string name="text_auto_retry">retry automatically in 5</string>
     <string name="text_auto_retry_second">retry automatically in %d</string>
     <string name="text_auto_retry_now">will retry automatically now</string>
@@ -20,6 +21,7 @@
     <string name="track_selection_title">Select tracks</string>
     <string name="error_unsupported_video">Media includes video tracks, but none are playable by this device</string>
     <string name="error_unsupported_audio">Media includes audio tracks, but none are playable by this device</string>
+    <string name="loading" translatable="false">Loading...</string>
 
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>

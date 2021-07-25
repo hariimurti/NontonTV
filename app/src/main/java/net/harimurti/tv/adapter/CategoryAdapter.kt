@@ -1,16 +1,15 @@
 package net.harimurti.tv.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import net.harimurti.tv.R
+import net.harimurti.tv.extra.SettingsDialog
 import net.harimurti.tv.model.Category
 
 class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
@@ -34,7 +33,7 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerV
         viewHolder.textView.text = category?.name
         viewHolder.buttonSetting.visibility = if (position == 0) View.VISIBLE else View.INVISIBLE
         viewHolder.buttonSetting.setOnClickListener {
-            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent("SHOW_MAIN_SETTINGS"))
+            SettingsDialog(context).show()
         }
         viewHolder.recyclerView.adapter = ChannelAdapter(category?.channels, position)
         viewHolder.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)

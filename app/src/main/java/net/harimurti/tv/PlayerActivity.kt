@@ -36,8 +36,8 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var mediaItem: MediaItem
     private lateinit var trackSelector: DefaultTrackSelector
     private var lastSeenTrackGroupArray: TrackGroupArray? = null
-    private lateinit var binding: ActivityPlayerBinding
-    private lateinit var controlBinding: CustomControlBinding
+    private lateinit var bindingRoot: ActivityPlayerBinding
+    private lateinit var bindingControl: CustomControlBinding
 
     companion object {
         var isFirst = true
@@ -49,8 +49,8 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPlayerBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        bindingRoot = ActivityPlayerBinding.inflate(layoutInflater)
+        setContentView(bindingRoot.root)
 
         isFirst = false
         isTelevision = UiMode(this).isTelevision()
@@ -65,8 +65,8 @@ class PlayerActivity : AppCompatActivity() {
         current = parcel.let { category?.channels?.get(it?.chId as Int) }
 
         // define some view
-        controlBinding = CustomControlBinding.bind(binding.root.findViewById(R.id.custom_control))
-        controlBinding.playerSettings.setOnClickListener { showTrackSelector() }
+        bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
+        bindingControl.playerSettings.setOnClickListener { showTrackSelector() }
 
         // verify stream_url
         if (current == null) {
@@ -80,8 +80,8 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun playChannel() {
         // set category & channel name
-        controlBinding.categoryName.text = category?.name
-        controlBinding.channelName.text = current?.name
+        bindingControl.categoryName.text = category?.name
+        bindingControl.channelName.text = current?.name
 
         // define mediaitem
         val drmLicense = playlist?.drm_licenses?.firstOrNull {
@@ -122,8 +122,8 @@ class PlayerActivity : AppCompatActivity() {
         player.addListener(PlayerListener())
 
         // set player view
-        binding.playerView.player = player
-        binding.playerView.requestFocus()
+        bindingRoot.playerView.player = player
+        bindingRoot.playerView.requestFocus()
 
         // play mediasouce
         player.playWhenReady = true
@@ -178,25 +178,32 @@ class PlayerActivity : AppCompatActivity() {
 
     private inner class PlayerListener : Player.Listener {
         override fun onPlaybackStateChanged(state: Int) {
-            if (state == Player.STATE_READY) {
-                showLayoutMessage(View.GONE, false)
-                val catId = playlist?.categories?.indexOf(category) as Int
-                val chId = category?.channels?.indexOf(current) as Int
-                preferences.watched = PlayData(catId, chId)
-            } else if (state == Player.STATE_BUFFERING) {
-                showLayoutMessage(View.VISIBLE, false)
+            bindingControl.playerSettings.isEnabled = TrackSelectionDialog.willHaveContent(trackSelector)
+            when (state) {
+                Player.STATE_IDLE -> { }
+                Player.STATE_BUFFERING -> hideCardMessage()
+                Player.STATE_READY -> {
+                    hideCardMessage()
+                    val catId = playlist?.categories?.indexOf(category) as Int
+                    val chId = category?.channels?.indexOf(current) as Int
+                    preferences.watched = PlayData(catId, chId)
+                }
+                Player.STATE_ENDED -> {
+                    showCardMessage(getString(R.string.stream_has_ended),
+                        getString(R.string.text_auto_retry))
+                    retryPlayback()
+                }
             }
-            controlBinding.playerSettings.isEnabled = TrackSelectionDialog.willHaveContent(trackSelector)
         }
 
         override fun onPlayerError(error: ExoPlaybackException) {
             if (error.type == ExoPlaybackException.TYPE_SOURCE) {
-                binding.textStatus.setText(R.string.source_offline)
+                showCardMessage(getString(R.string.stream_source_offline),
+                    getString(R.string.text_auto_retry))
             } else {
-                binding.textStatus.setText(R.string.something_went_wrong)
+                showCardMessage(getString(R.string.something_went_wrong),
+                    getString(R.string.text_auto_retry))
             }
-            binding.textRetry.setText(R.string.text_auto_retry)
-            showLayoutMessage(View.VISIBLE, true)
             retryPlayback()
         }
 
@@ -223,12 +230,15 @@ class PlayerActivity : AppCompatActivity() {
             override fun onCountDown(count: Int) {
                 val left = count - 1
                 if (!network.isConnected()) {
-                    binding.textStatus.setText(R.string.no_network)
+                    showCardMessage(getString(R.string.no_network),
+                        bindingControl.textMessage.text.toString())
                 }
                 if (left <= 0) {
-                    binding.textRetry.setText(R.string.text_auto_retry_now)
+                    showCardMessage(bindingControl.textTitle.text.toString(),
+                        getString(R.string.text_auto_retry_now))
                 } else {
-                    binding.textRetry.text = String.format(getString(R.string.text_auto_retry_second), left)
+                    showCardMessage(bindingControl.textTitle.text.toString(),
+                        String.format(getString(R.string.text_auto_retry_second), left))
                 }
             }
 
@@ -249,15 +259,14 @@ class PlayerActivity : AppCompatActivity() {
             .show(supportFragmentManager, null)
     }
 
-    private fun showLayoutMessage(visibility: Int, isMessage: Boolean) {
-        binding.layoutStatus.visibility = visibility
-        if (!isMessage) {
-            binding.layoutSpin.visibility = View.VISIBLE
-            binding.layoutText.visibility = View.GONE
-        } else {
-            binding.layoutSpin.visibility = View.GONE
-            binding.layoutText.visibility = View.VISIBLE
-        }
+    private fun hideCardMessage() {
+        bindingControl.layoutMessage.visibility = View.INVISIBLE
+    }
+
+    private fun showCardMessage(title: String, message: String) {
+        bindingControl.textTitle.text = title
+        bindingControl.textMessage.text = message
+        bindingControl.layoutMessage.visibility = View.VISIBLE
     }
 
     override fun onResume() {
