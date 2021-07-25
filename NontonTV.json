@@ -273,6 +273,10 @@
           "stream_url": "http://185.180.221.194:8278/streams/d/Prima/playlist.m3u8"
         },
         {
+          "name": "Aura",
+          "stream_url": "http://iptv.tvmalaysia.cc:80/penang172/penang172/6713"
+        },
+        {
           "name": "AXN",
           "stream_url": "http://210.210.155.66/h/h141/01.m3u8"
         },
@@ -473,6 +477,10 @@
         {
           "name": "My Cinema",
           "stream_url": "http://210.210.155.35/x6bnqe/s/s31/S4/mnf.m3u8"
+        },
+        {
+          "name": "Naura",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Naura/playlist.m3u8"
         },
         {
           "name": "New Kid TV",
