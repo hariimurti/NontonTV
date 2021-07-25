@@ -1157,6 +1157,10 @@
           "stream_url": "https://a.jsrdn.com/broadcast/80f6ba72c8/+0000/c.m3u8"
         },
         {
+          "name": "Match 1",
+          "stream_url": "https://77-247-178-24.livesports24.online/ooomatch.m3u8"
+        },
+        {
           "name": "MNC Sports1",
           "stream_url": "https://liveanevia.mncnow.id/live/eds/MNCSports/sa_dash_vmx/MNCSports.mpd",
           "drm_name": "mncnow"
@@ -1188,6 +1192,14 @@
         {
           "name": "RedBull TV",
           "stream_url": "http://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8"
+        },
+        {
+          "name": "Seatanta Sport 1",
+          "stream_url": "http://ott-cdn.ucom.am/s81/03.m3u8?per"
+        },
+        {
+          "name": "Seatanta Sport 2",
+          "stream_url": "https://46-21-250-207.livesports24.online/setantaplusru.m3u8"
         },
         {
           "name": "SkySports F1",
