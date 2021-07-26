@@ -8,7 +8,7 @@ import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import net.harimurti.tv.R
-import net.harimurti.tv.extra.SettingsDialog
+import net.harimurti.tv.dialog.SettingsDialog
 import net.harimurti.tv.model.Category
 
 class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {

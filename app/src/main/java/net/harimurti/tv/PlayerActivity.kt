@@ -23,6 +23,8 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.upstream.HttpDataSource
 import net.harimurti.tv.databinding.ActivityPlayerBinding
 import net.harimurti.tv.databinding.CustomControlBinding
+import net.harimurti.tv.dialog.PlayerMessageDialog
+import net.harimurti.tv.dialog.TrackSelectionDialog
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.Category
 import net.harimurti.tv.model.Channel
@@ -44,7 +46,7 @@ class PlayerActivity : AppCompatActivity() {
     private var lastSeenTrackGroupArray: TrackGroupArray? = null
     private lateinit var bindingRoot: ActivityPlayerBinding
     private lateinit var bindingControl: CustomControlBinding
-    private lateinit var dialogMessage: PlayerDialogMessage
+    private lateinit var messageDialog: PlayerMessageDialog
     private var errorCounter = 0
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -93,7 +95,7 @@ class PlayerActivity : AppCompatActivity() {
         current = parcel.let { category?.channels?.get(it?.chId as Int) }
 
         // define some view
-        dialogMessage = PlayerDialogMessage(this)
+        messageDialog = PlayerMessageDialog(this)
         bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
         bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
         bindingControl.screenMode.setOnClickListener {
@@ -247,10 +249,10 @@ class PlayerActivity : AppCompatActivity() {
                 TrackSelectionDialog.willHaveContent(trackSelector)
             when (state) {
                 Player.STATE_IDLE -> { }
-                Player.STATE_BUFFERING -> dialogMessage.dismiss()
+                Player.STATE_BUFFERING -> messageDialog.dismiss()
                 Player.STATE_READY -> {
                     errorCounter = 0
-                    dialogMessage.dismiss()
+                    messageDialog.dismiss()
                     val catId = playlist?.categories?.indexOf(category) as Int
                     val chId = category?.channels?.indexOf(current) as Int
                     preferences.watched = PlayData(catId, chId)
@@ -270,7 +272,7 @@ class PlayerActivity : AppCompatActivity() {
                 retryPlayback(false)
             }
             else {
-                dialogMessage.show(message)
+                messageDialog.show(message)
             }
         }
 

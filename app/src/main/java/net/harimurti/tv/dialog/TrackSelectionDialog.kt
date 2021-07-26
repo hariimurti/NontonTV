@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package net.harimurti.tv
+package net.harimurti.tv.dialog
 
 import android.app.Dialog
 import android.content.DialogInterface
@@ -38,6 +38,7 @@ import com.google.android.exoplayer2.ui.TrackSelectionView
 import com.google.android.exoplayer2.ui.TrackSelectionView.TrackSelectionListener
 import com.google.android.exoplayer2.util.Assertions
 import com.google.android.material.tabs.TabLayout
+import net.harimurti.tv.R
 import java.util.*
 
 /** Dialog to select tracks.  */

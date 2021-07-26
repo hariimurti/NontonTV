@@ -1,4 +1,4 @@
-package net.harimurti.tv.extra
+package net.harimurti.tv.dialog
 
 import android.app.AlertDialog
 import android.content.Context
@@ -9,7 +9,7 @@ import net.harimurti.tv.PlayerActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.PlayerDialogMessageBinding
 
-class PlayerDialogMessage(val context: Context) {
+class PlayerMessageDialog(val context: Context) {
     private val broadcast = LocalBroadcastManager.getInstance(context)
     private var dialog: AlertDialog? = null
     private var binding: PlayerDialogMessageBinding? = null

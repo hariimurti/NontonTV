@@ -28,6 +28,8 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import net.harimurti.tv.adapter.CategoryAdapter
 import net.harimurti.tv.databinding.ActivityMainBinding
+import net.harimurti.tv.dialog.ProgressDialog
+import net.harimurti.tv.dialog.SettingsDialog
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.GithubUser
 import net.harimurti.tv.model.PlayData

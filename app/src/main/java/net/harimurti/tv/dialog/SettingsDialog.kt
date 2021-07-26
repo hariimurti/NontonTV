@@ -1,4 +1,4 @@
-package net.harimurti.tv.extra
+package net.harimurti.tv.dialog
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
@@ -12,6 +12,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import net.harimurti.tv.MainActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.SettingsDialogBinding
+import net.harimurti.tv.extra.Preferences
 
 @SuppressLint("InflateParams")
 class SettingsDialog(val context: Context) {

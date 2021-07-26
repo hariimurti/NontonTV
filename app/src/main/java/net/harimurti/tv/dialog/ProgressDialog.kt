@@ -1,4 +1,4 @@
-package net.harimurti.tv.extra
+package net.harimurti.tv.dialog
 
 import android.annotation.SuppressLint
 import android.app.AlertDialog
