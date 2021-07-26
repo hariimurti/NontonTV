@@ -21,6 +21,7 @@ class Preferences(context: Context) {
         private const val LAST_VERSIONCODE = "LAST_VERSIONCODE"
         private const val TOTAL_CONTRIBUTORS = "TOTAL_CONTRIBUTORS"
         private const val SHOW_LESS_CONTRIBUTORS = "SHOW_LESS_CONTRIBUTORS"
+        private const val RESIZE_MODE = "RESIZE_MODE"
     }
 
     fun setLastCheckUpdate() {
@@ -109,6 +110,14 @@ class Preferences(context: Context) {
         set(value) {
             editor = preferences.edit()
             editor.putInt(TOTAL_CONTRIBUTORS, value)
+            editor.apply()
+        }
+
+    var resizeMode: Int
+        get() = preferences.getInt(RESIZE_MODE, 0)
+        set(value) {
+            editor = preferences.edit()
+            editor.putInt(RESIZE_MODE, value)
             editor.apply()
         }
 }

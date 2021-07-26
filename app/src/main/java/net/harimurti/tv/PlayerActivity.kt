@@ -17,6 +17,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector.ParametersBuilder
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector.MappedTrackInfo
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
+import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.upstream.HttpDataSource
@@ -95,6 +96,22 @@ class PlayerActivity : AppCompatActivity() {
         dialogMessage = PlayerDialogMessage(this)
         bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
         bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
+        bindingControl.screenMode.setOnClickListener {
+            var ratio = bindingRoot.playerView.resizeMode + 1
+            if (ratio > 4) ratio = 0
+
+            bindingRoot.playerView.resizeMode = ratio
+            preferences.resizeMode = ratio
+
+            val mode = when (ratio) {
+                AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH -> getString(R.string.mode_fixed_width)
+                AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT -> getString(R.string.mode_fixed_height)
+                AspectRatioFrameLayout.RESIZE_MODE_FILL -> getString(R.string.mode_fill)
+                AspectRatioFrameLayout.RESIZE_MODE_ZOOM -> getString(R.string.mode_zoom)
+                else -> getString(R.string.mode_fit)
+            }
+            Toast.makeText(applicationContext, String.format(getString(R.string.toast_screen_mode), mode), Toast.LENGTH_SHORT).show()
+        }
 
         // verify stream_url
         if (current == null) {
@@ -156,6 +173,7 @@ class PlayerActivity : AppCompatActivity() {
 
         // set player view
         bindingRoot.playerView.player = player
+        bindingRoot.playerView.resizeMode = preferences.resizeMode
         bindingRoot.playerView.requestFocus()
 
         // play mediasouce

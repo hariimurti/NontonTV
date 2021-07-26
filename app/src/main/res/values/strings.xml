@@ -21,6 +21,11 @@
     <string name="error_unsupported_video">Media includes video tracks, but none are playable by this device</string>
     <string name="error_unsupported_audio">Media includes audio tracks, but none are playable by this device</string>
     <string name="loading" translatable="false">Loading...</string>
+    <string name="mode_fit">Fit</string>
+    <string name="mode_fixed_width">Fixed Width</string>
+    <string name="mode_fixed_height">Fixed Height</string>
+    <string name="mode_fill">Fill</string>
+    <string name="mode_zoom">Zoom</string>
 
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>
@@ -59,4 +64,5 @@
     <string name="reload_playlist">Reload Playlist</string>
     <string name="hint_custom_playlist">leave blank to load local json</string>
     <string name="switch_custom_playlist">Custom playlist</string>
+    <string name="toast_screen_mode">Screen Mode : %s</string>
 </resources>

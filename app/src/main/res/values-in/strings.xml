@@ -11,6 +11,11 @@
     <string name="track_selection_title">Pilih trek</string>
     <string name="error_unsupported_video">Media menyertakan trek video, tetapi tidak ada yang dapat diputar oleh perangkat ini</string>
     <string name="error_unsupported_audio">Media menyertakan trek audio, tetapi tidak ada yang dapat diputar oleh perangkat ini</string>
+    <string name="mode_fit">Pas</string>
+    <string name="mode_fixed_width">Lebar tetap</string>
+    <string name="mode_fixed_height">Tinggi tetap</string>
+    <string name="mode_fill">Isi</string>
+    <string name="mode_zoom">Perbesar</string>
 
     <!-- alert playlist error -->
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>
@@ -45,4 +50,5 @@
     <string name="reload_playlist">Muat ulang Playlist</string>
     <string name="hint_custom_playlist">kosongkan utk memuat playlist lokal</string>
     <string name="switch_custom_playlist">Playlist kustom</string>
+    <string name="toast_screen_mode">Mode Layar : %s</string>
 </resources>
