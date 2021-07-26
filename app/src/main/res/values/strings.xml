@@ -12,9 +12,8 @@
     <string name="something_went_wrong">Something went wrong!</string>
     <string name="stream_has_ended">Broadcast has been ended</string>
     <string name="stream_source_offline">Broadcast not accessible</string>
-    <string name="text_auto_retry">retry automatically in 5</string>
-    <string name="text_auto_retry_second">retry automatically in %d</string>
-    <string name="text_auto_retry_now">will retry automatically now</string>
+    <string name="btn_retry">Retry</string>
+    <string name="btn_close">Close</string>
     <string name="no_network">No internet connection!</string>
     <string name="press_back_twice_exit_app">Press again to exit the app!</string>
     <string name="press_back_twice_exit_player">Press again to exit the player!</string>
@@ -31,6 +30,7 @@
     <string name="dialog_retry">Try again</string>
     <string name="dialog_cached">Use cache</string>
     <string name="dialog_default">Use default</string>
+    <string name="player_playback_error">Playback Error</string>
     <string name="player_no_playlist">We have problem with the playlist</string>
     <string name="player_no_channel">No channels to play</string>
     <string name="local_playlist_read_error">Can\'t load NontonTV.json from internal storage!</string>

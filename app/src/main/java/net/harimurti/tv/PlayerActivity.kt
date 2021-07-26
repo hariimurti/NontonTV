@@ -1,10 +1,15 @@
 package net.harimurti.tv
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.net.Uri
 import android.os.*
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
 import com.google.android.exoplayer2.source.TrackGroupArray
@@ -27,8 +32,8 @@ import java.util.*
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
     private var isTelevision = false
-    private var skipRetry = false
     private lateinit var preferences: Preferences
+    private lateinit var network: Network
     private var playlist: Playlist? = null
     private var category: Category? = null
     private var current: Channel? = null
@@ -38,9 +43,23 @@ class PlayerActivity : AppCompatActivity() {
     private var lastSeenTrackGroupArray: TrackGroupArray? = null
     private lateinit var bindingRoot: ActivityPlayerBinding
     private lateinit var bindingControl: CustomControlBinding
+    private lateinit var dialogMessage: PlayerDialogMessage
+    private var errorCounter = 0
+
+    private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent) {
+            when(intent.getStringExtra(PLAYER_CALLBACK)) {
+                RETRY_PLAYBACK -> retryPlayback()
+                CLOSE_PLAYER -> finish()
+            }
+        }
+    }
 
     companion object {
         var isFirst = true
+        const val PLAYER_CALLBACK = "PLAYER_CALLBACK"
+        const val RETRY_PLAYBACK = "RETRY_PLAYBACK"
+        const val CLOSE_PLAYER = "CLOSE_PLAYER"
         private const val CHANNEL_NEXT = 0
         private const val CHANNEL_PREVIOUS = 1
         private const val CATEGORY_UP = 2
@@ -54,6 +73,7 @@ class PlayerActivity : AppCompatActivity() {
 
         isTelevision = UiMode(this).isTelevision()
         preferences = Preferences(this)
+        network = Network(this)
 
         // get playlist
         playlist = if (preferences.playLastWatched && isFirst) PlaylistHelper(this).readCache() else Playlist.loaded
@@ -72,6 +92,7 @@ class PlayerActivity : AppCompatActivity() {
         current = parcel.let { category?.channels?.get(it?.chId as Int) }
 
         // define some view
+        dialogMessage = PlayerDialogMessage(this)
         bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
         bindingControl.playerSettings.setOnClickListener { showTrackSelector() }
 
@@ -84,6 +105,10 @@ class PlayerActivity : AppCompatActivity() {
         else {
             playChannel()
         }
+
+        // local broadcast receiver to update playlist
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(broadcastReceiver, IntentFilter(PLAYER_CALLBACK))
     }
 
     private fun playChannel() {
@@ -184,35 +209,41 @@ class PlayerActivity : AppCompatActivity() {
         playChannel()
     }
 
+    fun retryPlayback() {
+        player.setMediaItem(mediaItem)
+        player.prepare()
+    }
+
     private inner class PlayerListener : Player.Listener {
         override fun onPlaybackStateChanged(state: Int) {
             bindingControl.playerSettings.isEnabled = TrackSelectionDialog.willHaveContent(trackSelector)
             when (state) {
                 Player.STATE_IDLE -> { }
-                Player.STATE_BUFFERING -> hideCardMessage()
+                Player.STATE_BUFFERING -> dialogMessage.dismiss()
                 Player.STATE_READY -> {
-                    hideCardMessage()
+                    errorCounter = 0
+                    dialogMessage.dismiss()
                     val catId = playlist?.categories?.indexOf(category) as Int
                     val chId = category?.channels?.indexOf(current) as Int
                     preferences.watched = PlayData(catId, chId)
                 }
-                Player.STATE_ENDED -> {
-                    showCardMessage(getString(R.string.stream_has_ended),
-                        getString(R.string.text_auto_retry))
-                    retryPlayback()
-                }
+                Player.STATE_ENDED -> retryPlayback()
             }
         }
 
         override fun onPlayerError(error: ExoPlaybackException) {
-            if (error.type == ExoPlaybackException.TYPE_SOURCE) {
-                showCardMessage(getString(R.string.stream_source_offline),
-                    getString(R.string.text_auto_retry))
-            } else {
-                showCardMessage(getString(R.string.something_went_wrong),
-                    getString(R.string.text_auto_retry))
+            val message = if (error.type == ExoPlaybackException.TYPE_SOURCE) getString(R.string.stream_source_offline)
+            else if (!network.isConnected()) getString(R.string.no_network) else getString(R.string.something_went_wrong)
+
+            // if error more than 5 times, then show message dialog
+            if (errorCounter < 5 && network.isConnected()) {
+                errorCounter++
+                Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+                retryPlayback()
             }
-            retryPlayback()
+            else {
+                dialogMessage.show(message)
+            }
         }
 
         override fun onTracksChanged(trackGroups: TrackGroupArray, trackSelections: TrackSelectionArray) {
@@ -230,51 +261,9 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun retryPlayback() {
-        if (skipRetry) return
-        skipRetry = true
-        val network = Network(applicationContext)
-        AsyncSleep(this).task(object : AsyncSleep.Task {
-            override fun onCountDown(count: Int) {
-                val left = count - 1
-                if (!network.isConnected()) {
-                    showCardMessage(getString(R.string.no_network),
-                        bindingControl.textMessage.text.toString())
-                }
-                if (left <= 0) {
-                    showCardMessage(bindingControl.textTitle.text.toString(),
-                        getString(R.string.text_auto_retry_now))
-                } else {
-                    showCardMessage(bindingControl.textTitle.text.toString(),
-                        String.format(getString(R.string.text_auto_retry_second), left))
-                }
-            }
-
-            override fun onFinish() {
-                skipRetry = false
-                if (network.isConnected()) {
-                    player.setMediaItem(mediaItem)
-                    player.prepare()
-                } else {
-                    retryPlayback()
-                }
-            }
-        }).start(6)
-    }
-
     private fun showTrackSelector() {
         TrackSelectionDialog.createForTrackSelector(trackSelector) { }
             .show(supportFragmentManager, null)
-    }
-
-    private fun hideCardMessage() {
-        bindingControl.layoutMessage.visibility = View.INVISIBLE
-    }
-
-    private fun showCardMessage(title: String, message: String) {
-        bindingControl.textTitle.text = title
-        bindingControl.textMessage.text = message
-        bindingControl.layoutMessage.visibility = View.VISIBLE
     }
 
     override fun onResume() {
@@ -336,5 +325,11 @@ class PlayerActivity : AppCompatActivity() {
         doubleBackToExitPressedOnce = true
         Toast.makeText(this, getString(R.string.press_back_twice_exit_player), Toast.LENGTH_SHORT).show()
         Handler(Looper.getMainLooper()).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
+    }
+
+    override fun onDestroy() {
+        LocalBroadcastManager.getInstance(this)
+            .unregisterReceiver(broadcastReceiver)
+        super.onDestroy()
     }
 }

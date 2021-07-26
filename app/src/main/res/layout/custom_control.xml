@@ -45,46 +45,6 @@
             app:layout_constraintTop_toBottomOf="@id/category_name"
             tools:text="CHANNEL_NAME" />
 
-        <LinearLayout
-            android:id="@+id/layout_message"
-            android:background="@drawable/osd_text_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_margin="@dimen/layout_msg_padding"
-            android:padding="@dimen/layout_msg_padding"
-            android:orientation="vertical"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:visibility="visible">
-
-            <TextView
-                android:id="@+id/text_title"
-                style="@style/TextAppearance.AppCompat.Medium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:textAllCaps="true"
-                android:textColor="@color/color_dark"
-                android:textStyle="bold"
-                tools:text="@string/something_went_wrong" />
-
-            <TextView
-                android:id="@+id/text_message"
-                style="@style/TextAppearance.AppCompat.Small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:textAlignment="center"
-                android:textColor="@color/color_dark"
-                android:textStyle="italic"
-                tools:text="@string/text_auto_retry" />
-
-        </LinearLayout>
-
         <ImageButton
             android:id="@+id/player_settings"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:background="@drawable/osd_text_background"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/layout_msg_padding"
+        android:padding="@dimen/layout_msg_padding"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/text_title"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/player_playback_error"
+            android:textAlignment="center"
+            android:textAllCaps="true"
+            android:textColor="@color/color_dark"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <View
+            android:id="@+id/line"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:background="@color/color_red_light"
+            app:layout_constraintTop_toBottomOf="@id/text_title"
+            app:layout_constraintEnd_toEndOf="@id/text_message"
+            app:layout_constraintStart_toStartOf="@id/text_message"/>
+
+        <TextView
+            android:id="@+id/text_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="10dp"
+            android:textAlignment="center"
+            android:textColor="@color/color_dark"
+            tools:text="sample_player_error_message"
+            app:layout_constraintTop_toBottomOf="@id/line"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <Button
+            android:id="@+id/btn_retry"
+            style="@style/Widget.AppCompat.ActionButton.CloseMode"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:textAllCaps="false"
+            android:text="@string/btn_retry"
+            android:textColor="@color/color_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_close"
+            app:layout_constraintStart_toStartOf="@+id/text_message"
+            app:layout_constraintTop_toBottomOf="@id/text_message"/>
+
+        <Button
+            android:id="@+id/btn_close"
+            style="@style/Widget.AppCompat.ActionButton.CloseMode"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginTop="10dp"
+            android:textAllCaps="false"
+            android:text="@string/btn_close"
+            android:textColor="@color/color_primary"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/text_message"
+            app:layout_constraintStart_toEndOf="@id/btn_retry"
+            app:layout_constraintTop_toBottomOf="@id/text_message"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
