@@ -9,100 +9,81 @@
         android:layout_height="match_parent"
         tools:ignore="ContentDescription">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_category"
+        <TextView
+            android:id="@+id/category_name"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:background="@drawable/osd_text_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/player_card_margin_start"
             android:layout_marginTop="@dimen/player_card_margin_start"
-            app:cardCornerRadius="@dimen/ch_name_card_corner"
-            app:cardBackgroundColor="@color/ch_name_bg"
+            android:padding="@dimen/ch_name_padding"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/exo_icon_padding_bottom"
+            android:paddingEnd="@dimen/exo_icon_padding_bottom"
+            android:textAllCaps="true"
+            android:textColor="@color/color_dark"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="CATEGORY_NAME" />
 
-            <TextView
-                android:id="@+id/category_name"
-                style="@style/TextAppearance.AppCompat.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/ch_name_margin"
-                android:gravity="start|center_vertical"
-                android:paddingStart="@dimen/exo_icon_padding_bottom"
-                android:paddingEnd="@dimen/exo_icon_padding_bottom"
-                android:textAllCaps="true"
-                android:textColor="@color/color_dark" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/card_channel"
+        <TextView
+            android:id="@+id/channel_name"
+            style="@style/TextAppearance.AppCompat.Small"
+            android:background="@drawable/osd_text_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/player_card_margin_start"
             android:layout_marginTop="@dimen/player_card_channel_margin_top"
-            app:cardBackgroundColor="@color/ch_name_bg"
-            app:cardCornerRadius="@dimen/ch_name_card_corner"
+            android:padding="@dimen/ch_name_padding"
+            android:gravity="start|center_vertical"
+            android:paddingStart="@dimen/exo_icon_padding_bottom"
+            android:paddingEnd="@dimen/exo_icon_padding_bottom"
+            android:textAllCaps="true"
+            android:textColor="@color/color_dark"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/card_category">
+            app:layout_constraintTop_toBottomOf="@id/category_name"
+            tools:text="CHANNEL_NAME" />
 
-            <TextView
-                android:id="@+id/channel_name"
-                style="@style/TextAppearance.AppCompat.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="@dimen/ch_name_margin"
-                android:gravity="start|center_vertical"
-                android:paddingStart="@dimen/exo_icon_padding_bottom"
-                android:paddingEnd="@dimen/exo_icon_padding_bottom"
-                android:textAllCaps="true"
-                android:textColor="@color/color_dark" />
-
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
+        <LinearLayout
             android:id="@+id/layout_message"
+            android:background="@drawable/osd_text_background"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:cardBackgroundColor="@color/ch_name_bg"
-            app:cardCornerRadius="@dimen/ch_name_card_corner"
+            android:layout_centerInParent="true"
+            android:layout_margin="@dimen/layout_msg_padding"
+            android:padding="@dimen/layout_msg_padding"
+            android:orientation="vertical"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:visibility="invisible">
+            tools:visibility="visible">
 
-            <LinearLayout
+            <TextView
+                android:id="@+id/text_title"
+                style="@style/TextAppearance.AppCompat.Medium"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
-                android:layout_margin="20dp"
-                android:orientation="vertical">
+                android:textAlignment="center"
+                android:textAllCaps="true"
+                android:textColor="@color/color_dark"
+                android:textStyle="bold"
+                tools:text="@string/something_went_wrong" />
 
-                <TextView
-                    android:id="@+id/text_title"
-                    style="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/something_went_wrong"
-                    android:textAlignment="center"
-                    android:textAllCaps="true"
-                    android:textColor="@color/color_dark"
-                    android:textStyle="bold" />
+            <TextView
+                android:id="@+id/text_message"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textAlignment="center"
+                android:textColor="@color/color_dark"
+                android:textStyle="italic"
+                tools:text="@string/text_auto_retry" />
 
-                <TextView
-                    android:id="@+id/text_message"
-                    style="@style/TextAppearance.AppCompat.Small"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="@string/text_auto_retry"
-                    android:textAlignment="center"
-                    android:textColor="@color/color_dark"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-        </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
         <ImageButton
             android:id="@+id/player_settings"
