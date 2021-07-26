@@ -14,7 +14,6 @@
             android:layout_height="match_parent"
             app:show_subtitle_button="true"
             app:show_buffering="always"
-            app:buffered_color="@color/color_red_light"
             app:controller_layout_id="@layout/custom_control" />
 
     </LinearLayout>
