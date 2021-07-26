@@ -94,7 +94,7 @@ class PlayerActivity : AppCompatActivity() {
         // define some view
         dialogMessage = PlayerDialogMessage(this)
         bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
-        bindingControl.playerSettings.setOnClickListener { showTrackSelector() }
+        bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
 
         // verify stream_url
         if (current == null) {
@@ -225,7 +225,8 @@ class PlayerActivity : AppCompatActivity() {
 
     private inner class PlayerListener : Player.Listener {
         override fun onPlaybackStateChanged(state: Int) {
-            bindingControl.playerSettings.isEnabled = TrackSelectionDialog.willHaveContent(trackSelector)
+            bindingControl.trackSelection.isEnabled =
+                TrackSelectionDialog.willHaveContent(trackSelector)
             when (state) {
                 Player.STATE_IDLE -> { }
                 Player.STATE_BUFFERING -> dialogMessage.dismiss()

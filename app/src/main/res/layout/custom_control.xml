@@ -46,10 +46,11 @@
             tools:text="CHANNEL_NAME" />
 
         <ImageButton
-            android:id="@+id/player_settings"
+            android:id="@+id/track_selection"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            style="@style/ExoStyledControls.Button.Bottom.Settings" />
+            app:srcCompat="@drawable/player_ic_track_selector"
+            style="@style/ExoStyledControls.Button.Bottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
