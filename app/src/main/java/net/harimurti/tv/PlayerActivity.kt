@@ -52,13 +52,20 @@ class PlayerActivity : AppCompatActivity() {
         bindingRoot = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(bindingRoot.root)
 
-        isFirst = false
         isTelevision = UiMode(this).isTelevision()
         preferences = Preferences(this)
 
         // get playlist
-        playlist = if (!preferences.playLastWatched) Playlist.loaded
-            else PlaylistHelper(this).readCache()
+        playlist = if (preferences.playLastWatched && isFirst) PlaylistHelper(this).readCache() else Playlist.loaded
+        isFirst = false
+
+        // verify playlist
+        if (playlist == null) {
+            Toast.makeText(this, R.string.player_no_playlist, Toast.LENGTH_SHORT).show()
+            this.finish()
+            return
+        }
+
         // set channels
         val parcel: PlayData? = intent.getParcelableExtra(PlayData.VALUE)
         category = parcel.let { playlist?.categories?.get(it?.catId as Int) }
@@ -71,7 +78,8 @@ class PlayerActivity : AppCompatActivity() {
         // verify stream_url
         if (current == null) {
             Toast.makeText(this, R.string.player_no_channel, Toast.LENGTH_SHORT).show()
-            finish()
+            this.finish()
+            return
         }
         else {
             playChannel()

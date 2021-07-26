@@ -20,6 +20,7 @@
     <string name="dialog_retry">Coba lagi</string>
     <string name="dialog_cached">Gunakan cache</string>
     <string name="dialog_default">Gunakan default</string>
+    <string name="player_no_playlist">Kita punya masalah dgn playlist</string>
     <string name="player_no_channel">Tidak ada saluran utk diputar</string>
     <string name="local_playlist_read_error">Tidak bisa memuat NontonTV.json dari penyimpanan internal!</string>
 
