@@ -49,7 +49,7 @@ class PlayerActivity : AppCompatActivity() {
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
             when(intent.getStringExtra(PLAYER_CALLBACK)) {
-                RETRY_PLAYBACK -> retryPlayback()
+                RETRY_PLAYBACK -> retryPlayback(true)
                 CLOSE_PLAYER -> finish()
             }
         }
@@ -209,9 +209,18 @@ class PlayerActivity : AppCompatActivity() {
         playChannel()
     }
 
-    fun retryPlayback() {
-        player.setMediaItem(mediaItem)
-        player.prepare()
+    fun retryPlayback(force: Boolean) {
+        if (force) {
+            player.setMediaItem(mediaItem)
+            player.prepare()
+            return
+        }
+
+        AsyncSleep(this).task(object : AsyncSleep.Task {
+            override fun onFinish() {
+                retryPlayback(true)
+            }
+        }).start(1)
     }
 
     private inner class PlayerListener : Player.Listener {
@@ -227,7 +236,7 @@ class PlayerActivity : AppCompatActivity() {
                     val chId = category?.channels?.indexOf(current) as Int
                     preferences.watched = PlayData(catId, chId)
                 }
-                Player.STATE_ENDED -> retryPlayback()
+                Player.STATE_ENDED -> retryPlayback(true)
             }
         }
 
@@ -239,7 +248,7 @@ class PlayerActivity : AppCompatActivity() {
             if (errorCounter < 5 && network.isConnected()) {
                 errorCounter++
                 Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
-                retryPlayback()
+                retryPlayback(false)
             }
             else {
                 dialogMessage.show(message)
