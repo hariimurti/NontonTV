@@ -261,22 +261,6 @@
           "stream_url": "https://ac-samsung.samsung.wurl.com/manifest/playlist.m3u8"
         },
         {
-          "name": "Astro Citra",
-          "stream_url": "http://50.7.161.82:8278/streams/d/Citra/playlist.m3u8"
-        },
-        {
-          "name": "Astro Oasis",
-          "stream_url": "http://50.7.161.82:8278/streams/d/Oasis/playlist.m3u8"
-        },
-        {
-          "name": "Astro Prima",
-          "stream_url": "http://185.180.221.194:8278/streams/d/Prima/playlist.m3u8"
-        },
-        {
-          "name": "Aura",
-          "stream_url": "http://iptv.tvmalaysia.cc:80/penang172/penang172/6713"
-        },
-        {
           "name": "AXN",
           "stream_url": "http://210.210.155.66/h/h141/01.m3u8"
         },
@@ -481,10 +465,6 @@
         {
           "name": "My Cinema",
           "stream_url": "http://210.210.155.35/x6bnqe/s/s31/S4/mnf.m3u8"
-        },
-        {
-          "name": "Naura",
-          "stream_url": "http://50.7.161.82:8278/streams/d/Naura/playlist.m3u8"
         },
         {
           "name": "New Kid TV",
@@ -1329,6 +1309,87 @@
         {
           "name": "Olympic 10",
           "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/327"
+        }
+      ]
+    },
+    {
+      "name": "Malaysia",
+      "channels": [
+        {
+          "name": "8TV",
+          "stream_url": "http://185.180.221.194:8278/streams/d/TV8/playlist.m3u8"
+        },
+        {
+          "name": "ASTRO AWANI",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Awani/playlist.m3u8"
+        },
+        {
+          "name": "ASTRO CERIA",
+          "stream_url": "https://dl.dropboxusercontent.com/s/sbqajs5q2jh5cys/daaitv.m3u8?dl=0"
+        },
+        {
+          "name": "ASTRO CITRA",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Citra/playlist.m3u8"
+        },
+        {
+          "name": "ASTRO OASIS",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Oasis/playlist.m3u8"
+        },
+        {
+          "name": "ASTRO PRIMA",
+          "stream_url": "http://185.180.221.194:8278/streams/d/Prima/playlist.m3u8"
+        },
+        {
+          "name": "ASTRO RIA",
+          "stream_url": "http://185.180.221.194:8278/streams/d/Ria/playlist.m3u8"
+        },
+        {
+          "name": "ASTRO WARNA",
+          "stream_url": "http://185.180.221.194:8278/streams/d/Warna/playlist.m3u8"
+        },
+        {
+          "name": "Aura",
+          "stream_url": "http://iptv.tvmalaysia.cc:80/penang172/penang172/6713"
+        },
+        {
+          "name": "Drama Sangat",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Dsangat/playlist.m3u8"
+        },
+        {
+          "name": "Naura",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Naura/playlist.m3u8"
+        },
+        {
+          "name": "NTV7",
+          "stream_url": "http://185.180.221.194:8278/streams/d/NTV7/playlist.m3u8"
+        },
+        {
+          "name": "RTM1",
+          "stream_url": "http://185.180.221.194:8278/streams/d/TV1/playlist.m3u8"
+        },
+        {
+          "name": "RTM2",
+          "stream_url": "http://185.180.221.194:8278/streams/d/TV2/playlist.m3u8"
+        },
+        {
+          "name": "TV Alhijrah",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Alhijrah/playlist.m3u8"
+        },
+        {
+          "name": "TV3",
+          "stream_url": "http://185.180.221.194:8278/streams/d/TV3/playlist.m3u8"
+        },
+        {
+          "name": "TV6",
+          "stream_url": "https://rtm6.secureswiftcontent.com/Origin03/ngrp:RTM3/manifest.mpd"
+        },
+        {
+          "name": "TV9",
+          "stream_url": "http://185.180.221.194:8278/streams/d/TV9/playlist.m3u8"
+        },
+        {
+          "name": "TVS",
+          "stream_url": "https://agsplayback01.astro.com.my:443/CH1/master_AGS_TVS_03.m3u8"
         }
       ]
     }
