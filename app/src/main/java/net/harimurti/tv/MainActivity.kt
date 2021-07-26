@@ -130,12 +130,12 @@ open class MainActivity : AppCompatActivity() {
             adapter.change(playlist.categories)
         }
 
-        if (Playlist.loaded != null && !binding.swipeContainer.isRefreshing)
-            Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
-
         // end the loading
         loading.dismiss()
         binding.swipeContainer.isRefreshing = false
+
+        if (Playlist.loaded != null)
+            Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
 
         Playlist.loaded = playlist
     }
