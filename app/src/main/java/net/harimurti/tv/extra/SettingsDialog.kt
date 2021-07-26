@@ -64,7 +64,7 @@ class SettingsDialog(val context: Context) {
         }
 
         dialog?.setView(binding.root, 0, 0, 0, 0)
-        dialog?.setCanceledOnTouchOutside(true)
+        dialog?.setCanceledOnTouchOutside(false)
         dialog?.show()
     }
 }
