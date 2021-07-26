@@ -617,6 +617,10 @@
           "stream_url": "https://www.djing.com/tv/live.m3u8"
         },
         {
+          "name": "Maleo",
+          "stream_url": "http://stream1.ninmedia.tv:1935/maleo/udp.stream_360p/playlist.m3u8"
+        },
+        {
           "name": "MTV",
           "stream_url": "http://unilivemtveu-lh.akamaihd.net/i/mtvno_1@346424/master.m3u8?fluxustv.m3u8"
         },
@@ -1232,6 +1236,14 @@
         {
           "name": "Stadium",
           "stream_url": "https://dai.google.com/linear/hls/event/0jRU1DBXSW6a_TFheLfAUQ/master.m3u8"
+        },
+        {
+          "name": "Sukan",
+          "stream_url": "http://185.180.221.194:8278/streams/d/Rtmsport/playlist.m3u8"
+        },
+        {
+          "name": "Sukan 2",
+          "stream_url": "http://50.7.161.82:8278/streams/d/rtm_pye/playlist.m3u8"
         },
         {
           "name": "Sukan RTM",
