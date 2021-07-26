@@ -14,7 +14,7 @@
 
         <TextView
             android:id="@+id/text_category"
-            android:layout_width="@dimen/cat_card_width"
+            android:layout_width="@dimen/cat_name_width"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/cat_name_padding_top_bottom"
             android:paddingBottom="@dimen/cat_name_padding_top_bottom"
@@ -24,7 +24,8 @@
             android:textStyle="bold"
             android:textAllCaps="true"
             android:textSize="@dimen/cat_text_size"
-            android:background="@drawable/corner_right"/>
+            android:background="@drawable/corner_right"
+            tools:text="CATEGORY_NAME" />
 
         <ImageButton
             android:id="@+id/main_settings"
@@ -49,6 +50,6 @@
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
         app:spanCount="2"
-        tools:listitem="@layout/item_channel"/>
+        tools:listitem="@layout/item_channel" />
 
 </LinearLayout>

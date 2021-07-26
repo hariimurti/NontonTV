@@ -6,9 +6,9 @@
     <dimen name="btn_channel_height">80dp</dimen>
     <dimen name="btn_channel_padding">8dp</dimen>
     <dimen name="cat_layout_padding_top">10dp</dimen>
-    <dimen name="cat_card_width">260dp</dimen>
-    <dimen name="cat_card_corner">20dp</dimen>
-    <dimen name="cat_card_margin_start">-20dp</dimen>
+    <dimen name="cat_name_width">240dp</dimen>
+    <dimen name="cat_name_corner">20dp</dimen>
+    <dimen name="cat_name_margin_start">-20dp</dimen>
     <dimen name="cat_name_padding_top_bottom">5dp</dimen>
     <dimen name="cat_name_padding_start">30dp</dimen>
     <dimen name="cat_name_padding_end">20dp</dimen>
