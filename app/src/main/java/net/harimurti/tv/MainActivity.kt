@@ -53,6 +53,14 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.swipeContainer.setOnRefreshListener {
+            updatePlaylist()
+        }
+
+        preferences = Preferences(this)
+        playlistHelper = PlaylistHelper(this)
+        loading = ProgressDialog(this)
+
         isTelevision = UiMode(this).isTelevision()
         if (isTelevision) {
             setTheme(R.style.AppThemeTv)
@@ -60,13 +68,10 @@ open class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         // show loading message
-        loading = ProgressDialog(this)
-            .show(getString(R.string.loading))
+        loading.show(getString(R.string.loading))
 
+        // ask all premissions need
         askPermissions()
-
-        preferences = Preferences(this)
-        playlistHelper = PlaylistHelper(this)
 
         // local broadcast receiver to update playlist
         LocalBroadcastManager.getInstance(this)
@@ -121,9 +126,12 @@ open class MainActivity : AppCompatActivity() {
             adapter.change(playlist.categories)
         }
 
+        if (Playlist.loaded != null && !binding.swipeContainer.isRefreshing)
+            Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
+
         // end the loading
         loading.dismiss()
-        if (Playlist.loaded != null) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
+        binding.swipeContainer.isRefreshing = false
 
         Playlist.loaded = playlist
     }

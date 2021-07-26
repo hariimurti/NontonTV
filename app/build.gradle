@@ -64,6 +64,7 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
     implementation 'androidx.preference:preference-ktx:1.1.1'
     implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.0.0'
     implementation 'com.android.volley:volley:1.2.0'
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
     implementation 'com.google.android.exoplayer:exoplayer:2.14.2'
