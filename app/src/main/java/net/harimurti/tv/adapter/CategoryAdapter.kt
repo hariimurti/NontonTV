@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import net.harimurti.tv.R
 import net.harimurti.tv.extra.SettingsDialog
 import net.harimurti.tv.model.Category
@@ -36,10 +35,15 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerV
             SettingsDialog(context).show()
         }
         viewHolder.recyclerView.adapter = ChannelAdapter(category?.channels, position)
-        viewHolder.recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.HORIZONTAL)
     }
 
     override fun getItemCount(): Int {
         return categories!!.size
+    }
+
+    fun change(list: ArrayList<Category>?) {
+        categories?.clear()
+        list?.let { categories?.addAll(it) }
+        notifyDataSetChanged()
     }
 }

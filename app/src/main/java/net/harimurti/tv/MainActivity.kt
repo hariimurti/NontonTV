@@ -16,7 +16,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
@@ -111,16 +110,22 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setPlaylistToAdapter(newPls: Playlist) {
-        binding.rvCategory.adapter = CategoryAdapter(newPls.categories)
-        binding.rvCategory.layoutManager = LinearLayoutManager(this)
-        binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+    private fun setPlaylistToAdapter(playlist: Playlist) {
+        // set new playlist
+        if (binding.rvCategory.adapter == null) {
+            binding.rvCategory.adapter = CategoryAdapter(playlist.categories)
+            binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
+        }
+        else {
+            val adapter = binding.rvCategory.adapter as CategoryAdapter
+            adapter.change(playlist.categories)
+        }
 
         // end the loading
         loading.dismiss()
+        if (Playlist.loaded != null) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
 
-        if (Playlist.loaded != newPls) Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
-        Playlist.loaded = newPls
+        Playlist.loaded = playlist
     }
 
     private fun updatePlaylist() {
