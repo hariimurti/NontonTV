@@ -9,6 +9,7 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import net.harimurti.tv.MainActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.SettingsDialogBinding
 
@@ -59,7 +60,7 @@ class SettingsDialog(val context: Context) {
         }
         // button reload playlist
         binding.reloadPlaylist.setOnClickListener {
-            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent("RELOAD_MAIN_PLAYLIST"))
+            LocalBroadcastManager.getInstance(context).sendBroadcast(Intent(MainActivity.UPDATE_PLAYLIST))
             dialog.dismiss()
         }
 

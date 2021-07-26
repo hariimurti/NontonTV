@@ -43,10 +43,14 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var volley: RequestQueue
     private lateinit var loading: ProgressDialog
 
-    private val updatePlaylistReceiver: BroadcastReceiver = object : BroadcastReceiver() {
+    private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
             updatePlaylist()
         }
+    }
+
+    companion object {
+        const val UPDATE_PLAYLIST = "UPDATE_PLAYLIST"
     }
 
     @SuppressLint("DefaultLocale")
@@ -75,7 +79,7 @@ open class MainActivity : AppCompatActivity() {
 
         // local broadcast receiver to update playlist
         LocalBroadcastManager.getInstance(this)
-            .registerReceiver(updatePlaylistReceiver, IntentFilter("RELOAD_MAIN_PLAYLIST"))
+            .registerReceiver(broadcastReceiver, IntentFilter(UPDATE_PLAYLIST))
 
         // launch player if playlastwatched is true
         if (preferences.playLastWatched && PlayerActivity.isFirst) {
@@ -334,7 +338,7 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         LocalBroadcastManager.getInstance(this)
-            .unregisterReceiver(updatePlaylistReceiver)
+            .unregisterReceiver(broadcastReceiver)
         super.onDestroy()
     }
 }
