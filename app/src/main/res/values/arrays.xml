@@ -9,4 +9,11 @@
         <item>PotPlayer/1.7.20977 (Windows NT 10.0; Win64; x64)</item>
         <item>Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.164 Safari/537.36</item>
     </array>
+    <array name="resize_mode">
+        <item>@string/mode_fit</item>
+        <item>@string/mode_fixed_width</item>
+        <item>@string/mode_fixed_height</item>
+        <item>@string/mode_fill</item>
+        <item>@string/mode_zoom</item>
+    </array>
 </resources>

@@ -54,6 +54,7 @@ class PlayerActivity : AppCompatActivity() {
             when(intent.getStringExtra(PLAYER_CALLBACK)) {
                 RETRY_PLAYBACK -> retryPlayback(true)
                 CLOSE_PLAYER -> finish()
+                CHANGE_SCREEN_MODE -> changeScreenMode(intent.getIntExtra(SCREEN_MODE, 0))
             }
         }
     }
@@ -63,6 +64,8 @@ class PlayerActivity : AppCompatActivity() {
         const val PLAYER_CALLBACK = "PLAYER_CALLBACK"
         const val RETRY_PLAYBACK = "RETRY_PLAYBACK"
         const val CLOSE_PLAYER = "CLOSE_PLAYER"
+        const val CHANGE_SCREEN_MODE = "CHANGE_SCREEN_MODE"
+        const val SCREEN_MODE = "SCREEN_MODE"
         private const val CHANNEL_NEXT = 0
         private const val CHANNEL_PREVIOUS = 1
         private const val CATEGORY_UP = 2
@@ -123,20 +126,9 @@ class PlayerActivity : AppCompatActivity() {
         })
         bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
         bindingControl.screenMode.setOnClickListener {
-            var ratio = bindingRoot.playerView.resizeMode + 1
-            if (ratio > 4) ratio = 0
-
-            bindingRoot.playerView.resizeMode = ratio
-            preferences.resizeMode = ratio
-
-            val mode = when (ratio) {
-                AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH -> getString(R.string.mode_fixed_width)
-                AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT -> getString(R.string.mode_fixed_height)
-                AspectRatioFrameLayout.RESIZE_MODE_FILL -> getString(R.string.mode_fill)
-                AspectRatioFrameLayout.RESIZE_MODE_ZOOM -> getString(R.string.mode_zoom)
-                else -> getString(R.string.mode_fit)
-            }
-            Toast.makeText(applicationContext, String.format(getString(R.string.toast_screen_mode), mode), Toast.LENGTH_SHORT).show()
+            var mode = bindingRoot.playerView.resizeMode + 1
+            if (mode > 4) mode = 0
+            changeScreenMode(mode)
         }
     }
 
@@ -242,7 +234,7 @@ class PlayerActivity : AppCompatActivity() {
         playChannel()
     }
 
-    fun retryPlayback(force: Boolean) {
+    private fun retryPlayback(force: Boolean) {
         if (force) {
             player.setMediaItem(mediaItem)
             player.prepare()
@@ -307,6 +299,22 @@ class PlayerActivity : AppCompatActivity() {
     private fun showTrackSelector() {
         TrackSelectionDialog.createForTrackSelector(trackSelector) { }
             .show(supportFragmentManager, null)
+    }
+
+    private fun changeScreenMode(mode: Int) {
+        if (bindingRoot.playerView.resizeMode == mode) return
+
+        bindingRoot.playerView.resizeMode = mode
+        preferences.resizeMode = mode
+
+        val text = when (mode) {
+            AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH -> getString(R.string.mode_fixed_width)
+            AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT -> getString(R.string.mode_fixed_height)
+            AspectRatioFrameLayout.RESIZE_MODE_FILL -> getString(R.string.mode_fill)
+            AspectRatioFrameLayout.RESIZE_MODE_ZOOM -> getString(R.string.mode_zoom)
+            else -> getString(R.string.mode_fit)
+        }
+        Toast.makeText(applicationContext, String.format(getString(R.string.toast_screen_mode), text), Toast.LENGTH_SHORT).show()
     }
 
     override fun onResume() {

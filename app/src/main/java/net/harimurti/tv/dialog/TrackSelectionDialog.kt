@@ -16,7 +16,9 @@
 package net.harimurti.tv.dialog
 
 import android.app.Dialog
+import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.util.SparseArray
@@ -30,6 +32,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.viewpager.widget.ViewPager
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
@@ -39,7 +42,9 @@ import com.google.android.exoplayer2.ui.TrackSelectionView
 import com.google.android.exoplayer2.ui.TrackSelectionView.TrackSelectionListener
 import com.google.android.exoplayer2.util.Assertions
 import com.google.android.material.tabs.TabLayout
+import net.harimurti.tv.PlayerActivity
 import net.harimurti.tv.R
+import net.harimurti.tv.extra.Preferences
 import java.util.*
 
 /** Dialog to select tracks.  */
@@ -113,6 +118,13 @@ class TrackSelectionDialog : DialogFragment() {
             setupWithViewPager(viewPager)
             visibility = if (tabFragments.size() > 1) View.VISIBLE else View.GONE
         }
+        // dropdown screen mode
+        val screenMode = dialogView.findViewById<AppCompatSpinner>(R.id.dropdown_screen_mode).apply {
+            val arrayAdapter = ArrayAdapter.createFromResource(context as Context, R.array.resize_mode, android.R.layout.simple_spinner_item)
+            arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            adapter = arrayAdapter
+            setSelection(Preferences(context).resizeMode)
+        }
         // button cancel
         dialogView.findViewById<Button>(R.id.track_selection_dialog_cancel_button).apply {
             setOnClickListener { dismiss() }
@@ -120,6 +132,11 @@ class TrackSelectionDialog : DialogFragment() {
         // button ok
         dialogView.findViewById<Button>(R.id.track_selection_dialog_ok_button).apply {
             setOnClickListener {
+                LocalBroadcastManager.getInstance(context).sendBroadcast(
+                    Intent(PlayerActivity.PLAYER_CALLBACK).apply {
+                        putExtra(PlayerActivity.PLAYER_CALLBACK, PlayerActivity.CHANGE_SCREEN_MODE)
+                        putExtra(PlayerActivity.SCREEN_MODE, screenMode.selectedItemPosition)
+                })
                 onClickListener.onClick(dialog, DialogInterface.BUTTON_POSITIVE)
                 dismiss()
             }
