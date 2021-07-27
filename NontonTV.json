@@ -9,6 +9,11 @@
           "drm_name": "mncnow"
         },
         {
+          "name": "Bali TV",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/BaliTV_Timeshift/sa_dash_timeshift/BaliTV_Timeshift.mpd",
+          "drm_name": "mncnow"
+        },
+        {
           "name": "GTV",
           "stream_url": "https://liveanevia.mncnow.id/live/eds/GTV-HD/sa_dash_vmx/GTV-HD.mpd",
           "drm_name": "mncnow"
