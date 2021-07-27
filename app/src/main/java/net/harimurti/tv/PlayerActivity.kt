@@ -1,5 +1,6 @@
 package net.harimurti.tv
 
+import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.os.*
 import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GestureDetectorCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
@@ -31,8 +33,9 @@ import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
 import java.util.*
+import kotlin.math.abs
 
-class PlayerActivity : AppCompatActivity() {
+class PlayerActivity : AppCompatActivity(), GestureDetector.OnGestureListener {
     private var doubleBackToExitPressedOnce = false
     private var isTelevision = false
     private lateinit var preferences: Preferences
@@ -47,6 +50,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var bindingRoot: ActivityPlayerBinding
     private lateinit var bindingControl: CustomControlBinding
     private lateinit var messageDialog: PlayerMessageDialog
+    private var gestureDetector: GestureDetectorCompat? = null
     private var errorCounter = 0
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -67,16 +71,21 @@ class PlayerActivity : AppCompatActivity() {
         private const val CHANNEL_PREVIOUS = 1
         private const val CATEGORY_UP = 2
         private const val CATEGORY_DOWN = 3
+        private const val SWIPE_THRESHOLD = 100
+        private const val SWIPE_VELOCITY_THRESHOLD = 100
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindingRoot = ActivityPlayerBinding.inflate(layoutInflater)
+        bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
         setContentView(bindingRoot.root)
 
         isTelevision = UiMode(this).isTelevision()
         preferences = Preferences(this)
         network = Network(this)
+        gestureDetector = GestureDetectorCompat(this, this)
+        messageDialog = PlayerMessageDialog(this)
 
         // get playlist
         playlist = if (preferences.playLastWatched && isFirst) PlaylistHelper(this).readCache() else Playlist.loaded
@@ -94,9 +103,30 @@ class PlayerActivity : AppCompatActivity() {
         category = parcel.let { playlist?.categories?.get(it?.catId as Int) }
         current = parcel.let { category?.channels?.get(it?.chId as Int) }
 
-        // define some view
-        messageDialog = PlayerMessageDialog(this)
-        bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
+        // set listener
+        bindingListener()
+
+        // verify stream_url
+        if (current == null) {
+            Toast.makeText(this, R.string.player_no_channel, Toast.LENGTH_SHORT).show()
+            this.finish()
+            return
+        }
+        else {
+            playChannel()
+        }
+
+        // local broadcast receiver to update playlist
+        LocalBroadcastManager.getInstance(this)
+            .registerReceiver(broadcastReceiver, IntentFilter(PLAYER_CALLBACK))
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun bindingListener() {
+        bindingRoot.playerView.setOnTouchListener { _, event ->
+            gestureDetector?.onTouchEvent(event)
+            false
+        }
         bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
         bindingControl.screenMode.setOnClickListener {
             var ratio = bindingRoot.playerView.resizeMode + 1
@@ -114,20 +144,6 @@ class PlayerActivity : AppCompatActivity() {
             }
             Toast.makeText(applicationContext, String.format(getString(R.string.toast_screen_mode), mode), Toast.LENGTH_SHORT).show()
         }
-
-        // verify stream_url
-        if (current == null) {
-            Toast.makeText(this, R.string.player_no_channel, Toast.LENGTH_SHORT).show()
-            this.finish()
-            return
-        }
-        else {
-            playChannel()
-        }
-
-        // local broadcast receiver to update playlist
-        LocalBroadcastManager.getInstance(this)
-            .registerReceiver(broadcastReceiver, IntentFilter(PLAYER_CALLBACK))
     }
 
     private fun playChannel() {
@@ -363,5 +379,53 @@ class PlayerActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this)
             .unregisterReceiver(broadcastReceiver)
         super.onDestroy()
+    }
+
+    override fun onDown(e: MotionEvent?): Boolean {
+        return true
+    }
+
+    override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+        var result = false
+        try {
+            val diffY = e2.y - e1.y
+            val diffX = e2.x - e1.x
+            if (abs(diffX) > abs(diffY)) {
+                if (abs(diffX) > SWIPE_THRESHOLD && abs(velocityX) > SWIPE_VELOCITY_THRESHOLD) {
+                    if (diffX > 0) {
+                        //onSwipeRight
+                        switchChannel(CHANNEL_PREVIOUS)
+                    } else {
+                        //onSwipeLeft
+                        switchChannel(CHANNEL_NEXT)
+                    }
+                    result = true
+                }
+            } else if (abs(diffY) > SWIPE_THRESHOLD && abs(velocityY) > SWIPE_VELOCITY_THRESHOLD) {
+                if (diffY > 0) {
+                    //onSwipeBottom
+                    switchChannel(CATEGORY_UP)
+                } else {
+                    //onSwipeTop
+                    switchChannel(CATEGORY_DOWN)
+                }
+                result = true
+            }
+        } catch (exception: Exception) {
+            exception.printStackTrace()
+        }
+        return result
+    }
+
+    override fun onLongPress(e: MotionEvent?) { }
+
+    override fun onScroll( e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean {
+        return true
+    }
+
+    override fun onShowPress(e: MotionEvent?) { }
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {
+        return true
     }
 }
