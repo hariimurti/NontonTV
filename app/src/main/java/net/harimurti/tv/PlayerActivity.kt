@@ -194,6 +194,7 @@ class PlayerActivity : AppCompatActivity() {
                     category = playlist?.categories?.get(previous)
                     current = category?.channels!![0]
                 }
+                else return
             }
             CATEGORY_DOWN -> {
                 val next = catId + 1
@@ -201,6 +202,7 @@ class PlayerActivity : AppCompatActivity() {
                     category = playlist?.categories?.get(next)
                     current = category?.channels!![0]
                 }
+                else return
             }
             CHANNEL_PREVIOUS -> {
                 val previous = chId - 1
