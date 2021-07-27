@@ -1,12 +1,20 @@
 package net.harimurti.tv
 
+import android.app.PictureInPictureParams
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.res.Configuration
 import android.net.Uri
-import android.os.*
-import android.view.*
+import android.os.Build
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.view.KeyEvent
+import android.view.View
+import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -31,6 +39,7 @@ import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
 import java.util.*
+
 
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
@@ -326,6 +335,26 @@ class PlayerActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         player.playWhenReady = false
+    }
+
+    @Suppress("DEPRECATION")
+    override fun onUserLeaveHint() {
+        super.onUserLeaveHint()
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                val params = PictureInPictureParams.Builder().build()
+                enterPictureInPictureMode(params)
+            }
+            else {
+                enterPictureInPictureMode()
+            }
+        }
+    }
+
+    override fun onPictureInPictureModeChanged(pip: Boolean, config: Configuration) {
+        super.onPictureInPictureModeChanged(pip, config)
+        bindingRoot.playerView.useController = !pip
+        player.playWhenReady = true
     }
 
     @Suppress("DEPRECATION")

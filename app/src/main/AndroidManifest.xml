@@ -44,6 +44,9 @@
         <activity
             android:name=".PlayerActivity"
             android:screenOrientation="landscape"
+            android:supportsPictureInPicture="true"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:launchMode="singleTask"
             android:theme="@style/AppThemePlayer"
             tools:ignore="LockedOrientationActivity" />
 
