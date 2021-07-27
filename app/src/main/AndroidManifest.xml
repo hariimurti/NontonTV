@@ -43,7 +43,6 @@
 
         <activity
             android:name=".PlayerActivity"
-            android:noHistory="true"
             android:screenOrientation="landscape"
             android:theme="@style/AppThemePlayer"
             tools:ignore="LockedOrientationActivity" />

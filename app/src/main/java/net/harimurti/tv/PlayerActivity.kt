@@ -236,6 +236,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun retryPlayback(force: Boolean) {
         if (force) {
+            player.playWhenReady = true
             player.setMediaItem(mediaItem)
             player.prepare()
             return
@@ -327,11 +328,6 @@ class PlayerActivity : AppCompatActivity() {
         player.playWhenReady = false
     }
 
-    override fun onStop() {
-        super.onStop()
-        player.release()
-    }
-
     @Suppress("DEPRECATION")
     override fun onWindowFocusChanged(hasFocus: Boolean) {
         super.onWindowFocusChanged(hasFocus)
@@ -379,6 +375,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
+        player.release()
         LocalBroadcastManager.getInstance(this)
             .unregisterReceiver(broadcastReceiver)
         super.onDestroy()
