@@ -9,6 +9,11 @@
           "drm_name": "mncnow"
         },
         {
+          "name": "Bali TV",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/BaliTV_Timeshift/sa_dash_timeshift/BaliTV_Timeshift.mpd",
+          "drm_name": "mncnow"
+        },
+        {
           "name": "GTV",
           "stream_url": "https://liveanevia.mncnow.id/live/eds/GTV-HD/sa_dash_vmx/GTV-HD.mpd",
           "drm_name": "mncnow"
@@ -451,6 +456,10 @@
           "drm_name": "mncnow"
         },
         {
+          "name": "Mola TV",
+          "stream_url": "http://gpc.my.id/vidio/mola-tv-free.m3u8",
+        },
+        {
           "name": "Movie Kingdom",
           "stream_url": "https://a.jsrdn.com/broadcast/e9b4093a41/+0000/high/c.m3u8"
         },
@@ -641,6 +650,10 @@
           "name": "Music TV",
           "stream_url": "https://liveanevia.mncnow.id/live/eds/MusicChannel/sa_dash_vmx/MusicChannel.mpd",
           "drm_name": "mncnow"
+        },
+        {
+          "name": "OneMusic",
+          "stream_url": "http://hz1.teleport.cc/HLS/HD.m3u8",
         },
         {
           "name": "Stingray Karaoke",
