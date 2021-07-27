@@ -26,6 +26,7 @@
     <string name="mode_fixed_height">Fixed Height</string>
     <string name="mode_fill">Fill</string>
     <string name="mode_zoom">Zoom</string>
+    <string name="must_allow_permissions">You must allow all permission requests for this app to work properly!</string>
 
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>

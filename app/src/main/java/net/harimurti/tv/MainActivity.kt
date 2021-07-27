@@ -306,17 +306,22 @@ open class MainActivity : AppCompatActivity() {
     @TargetApi(23)
     protected fun askPermissions() {
         if (Build.VERSION.SDK_INT < VERSION_CODES.M) return
-        if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-            checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED ||
-            checkSelfPermission(Manifest.permission.MANAGE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-            requestPermissions(
-                arrayOf(
-                    Manifest.permission.READ_EXTERNAL_STORAGE,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                    Manifest.permission.MANAGE_EXTERNAL_STORAGE
-                ), 1000
-            )
+        val permissions = arrayOf(
+            Manifest.permission.READ_EXTERNAL_STORAGE
+        )
+        for (perm in permissions) {
+            if (checkSelfPermission(perm) != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(permissions, 260621)
+                break
+            }
         }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode != 260621) return
+        if (!grantResults.contains(PackageManager.PERMISSION_DENIED)) return
+        Toast.makeText(this, getString(R.string.must_allow_permissions), Toast.LENGTH_LONG).show()
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {

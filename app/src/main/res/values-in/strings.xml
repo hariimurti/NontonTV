@@ -16,6 +16,7 @@
     <string name="mode_fixed_height">Tinggi tetap</string>
     <string name="mode_fill">Mengisi</string>
     <string name="mode_zoom">Perbesar</string>
+    <string name="must_allow_permissions">Kamu harus mengizinkan semua permintaan izin agar aplikasi ini berfungsi dengan baik!</string>
 
     <!-- alert playlist error -->
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>
