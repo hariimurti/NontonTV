@@ -9,6 +9,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import net.harimurti.tv.PlayerActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.PlayerDialogMessageBinding
+import net.harimurti.tv.extra.AsyncSleep
 
 class PlayerMessageDialog(val context: Context) {
     private val broadcast = LocalBroadcastManager.getInstance(context)
@@ -45,6 +46,23 @@ class PlayerMessageDialog(val context: Context) {
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
         dialog?.show()
+
+        retryCoundown()
+    }
+
+    private fun retryCoundown() {
+        val waitInSecond = 30
+        binding?.btnRetry?.text = String.format(context.getString(R.string.btn_retry_count), waitInSecond)
+        AsyncSleep(context).task(object : AsyncSleep.Task{
+            override fun onCountDown(count: Int) {
+                binding?.btnRetry?.text = if (count <= 0) context.getString(R.string.btn_retry)
+                else String.format(context.getString(R.string.btn_retry_count), count)
+            }
+
+            override fun onFinish() {
+                sendRetryPlayback()
+            }
+        }).start(waitInSecond)
     }
 
     private fun sendRetryPlayback() {

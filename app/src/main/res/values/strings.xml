@@ -13,6 +13,7 @@
     <string name="stream_has_ended">Broadcast has been ended</string>
     <string name="stream_source_offline">Broadcast not accessible</string>
     <string name="btn_retry">Retry</string>
+    <string name="btn_retry_count">Retry (%d)</string>
     <string name="btn_close">Close</string>
     <string name="no_network">No internet connection!</string>
     <string name="press_back_twice_exit_app">Press again to exit the app!</string>
