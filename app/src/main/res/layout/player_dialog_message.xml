@@ -13,7 +13,7 @@
 
         <TextView
             android:id="@+id/text_title"
-            style="@style/TextAppearance.AppCompat.Medium"
+            style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="@string/player_playback_error"
@@ -36,11 +36,12 @@
 
         <TextView
             android:id="@+id/text_message"
-            android:layout_width="match_parent"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginStart="@dimen/pdm_text_margin_start_end"
+            android:layout_marginTop="@dimen/pdm_text_margin_top"
+            android:layout_marginEnd="@dimen/pdm_text_margin_start_end"
             android:textAlignment="center"
             android:textColor="@color/color_dark"
             tools:text="sample_player_error_message"
@@ -50,10 +51,10 @@
 
         <Button
             android:id="@+id/btn_retry"
-            style="@style/Widget.AppCompat.ActionButton.CloseMode"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pdm_btn_margin_top"
             android:textAllCaps="false"
             android:text="@string/btn_retry"
             android:textColor="@color/color_primary"
@@ -64,10 +65,10 @@
 
         <Button
             android:id="@+id/btn_close"
-            style="@style/Widget.AppCompat.ActionButton.CloseMode"
+            style="?android:attr/borderlessButtonStyle"
             android:layout_width="wrap_content"
-            android:layout_height="20dp"
-            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/pdm_btn_margin_top"
             android:textAllCaps="false"
             android:text="@string/btn_close"
             android:textColor="@color/color_primary"

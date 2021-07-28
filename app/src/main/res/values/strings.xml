@@ -59,7 +59,7 @@
     <string name="message_thanks_to">Many thanks to everyone involved in this project!\n\nEspecially these guys on github :\n</string>
 
     <!-- settings -->
-    <string name="settings">Settings</string>
+    <string name="settings">Preferences</string>
     <string name="launch_at_boot">Run app on boot</string>
     <string name="play_last_watched">Play last watched</string>
     <string name="reload_playlist">Reload Playlist</string>

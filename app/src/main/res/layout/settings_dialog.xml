@@ -5,11 +5,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="10dp"
+        android:padding="@dimen/setting_padding"
         android:background="@drawable/dialog_background">
 
         <TextView
-            style="@style/TextAppearance.AppCompat.Medium"
+            style="@style/TextAppearance.AppCompat.Headline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_horizontal"
@@ -22,34 +22,25 @@
             android:layout_height="1dp"
             android:background="@color/color_text" />
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="20dp"/>
-
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/launch_at_boot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/setting_content_margin_top"
             android:text="@string/launch_at_boot" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp"/>
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/open_last_watched"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/setting_content_margin_top"
             android:text="@string/play_last_watched" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="5dp"/>
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/use_custom_playlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/setting_content_margin_top"
             android:text="@string/switch_custom_playlist" />
 
         <LinearLayout
@@ -58,14 +49,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="5dp"/>
-
             <EditText
                 android:id="@+id/custom_playlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/setting_content_margin_top"
                 android:autofillHints=""
                 android:hint="@string/hint_custom_playlist"
                 android:inputType="textUri"
@@ -74,14 +62,11 @@
 
         </LinearLayout>
 
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="15dp"/>
-
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/reload_playlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/setting_content_margin_top"
             android:text="@string/reload_playlist" />
 
     </LinearLayout>

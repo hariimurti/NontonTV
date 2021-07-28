@@ -25,4 +25,9 @@
     <dimen name="dialog_corner_radius">8dp</dimen>
     <dimen name="cat_layout_padding_bottom">5dp</dimen>
     <dimen name="layout_msg_padding">20dp</dimen>
+    <dimen name="pdm_btn_margin_top">30dp</dimen>
+    <dimen name="pdm_text_margin_top">30dp</dimen>
+    <dimen name="pdm_text_margin_start_end">10dp</dimen>
+    <dimen name="setting_content_margin_top">15dp</dimen>
+    <dimen name="setting_padding">20dp</dimen>
 </resources>
