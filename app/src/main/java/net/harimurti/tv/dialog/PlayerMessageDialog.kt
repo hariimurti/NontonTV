@@ -3,6 +3,7 @@ package net.harimurti.tv.dialog
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import net.harimurti.tv.PlayerActivity
@@ -19,19 +20,21 @@ class PlayerMessageDialog(val context: Context) {
         this.message = message
 
         if (dialog == null || binding == null) {
-            dialog = AlertDialog.Builder(context, R.style.PlayerMessage).create()
+            dialog = AlertDialog.Builder(context, R.style.PlayerMessage)
+                .setOnKeyListener { _, _, keyEvent ->
+                    if (keyEvent.keyCode == KeyEvent.KEYCODE_BACK) {
+                        sendClosePlayer()
+                    }
+                    return@setOnKeyListener true
+                }
+                .create()
+
             binding = PlayerDialogMessageBinding.inflate(LayoutInflater.from(context))
             binding?.btnRetry?.setOnClickListener {
-                broadcast.sendBroadcast(
-                    Intent(PlayerActivity.PLAYER_CALLBACK)
-                        .putExtra(PlayerActivity.PLAYER_CALLBACK, PlayerActivity.RETRY_PLAYBACK)
-                )
+                sendRetryPlayback()
             }
             binding?.btnClose?.setOnClickListener {
-                broadcast.sendBroadcast(
-                    Intent(PlayerActivity.PLAYER_CALLBACK)
-                        .putExtra(PlayerActivity.PLAYER_CALLBACK, PlayerActivity.CLOSE_PLAYER)
-                )
+                sendClosePlayer()
             }
         }
 
@@ -42,6 +45,20 @@ class PlayerMessageDialog(val context: Context) {
         dialog?.setCanceledOnTouchOutside(false)
         dialog?.setCancelable(false)
         dialog?.show()
+    }
+
+    private fun sendRetryPlayback() {
+        broadcast.sendBroadcast(
+            Intent(PlayerActivity.PLAYER_CALLBACK)
+                .putExtra(PlayerActivity.PLAYER_CALLBACK, PlayerActivity.RETRY_PLAYBACK)
+        )
+    }
+
+    private fun sendClosePlayer() {
+        broadcast.sendBroadcast(
+            Intent(PlayerActivity.PLAYER_CALLBACK)
+                .putExtra(PlayerActivity.PLAYER_CALLBACK, PlayerActivity.CLOSE_PLAYER)
+        )
     }
 
     fun dismiss() {
