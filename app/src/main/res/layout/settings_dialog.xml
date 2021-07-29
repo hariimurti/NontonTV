@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -22,52 +23,46 @@
             android:layout_height="1dp"
             android:background="@color/color_text" />
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/launch_at_boot"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/setting_view_pager"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/setting_content_margin_top"
-            android:text="@string/launch_at_boot" />
+            android:layout_height="0dp"
+            android:layout_weight="1">
 
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/open_last_watched"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/setting_content_margin_top"
-            android:text="@string/play_last_watched" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/use_custom_playlist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/setting_content_margin_top"
-            android:text="@string/switch_custom_playlist" />
-
-        <LinearLayout
-            android:id="@+id/layout_custom_playlist"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <EditText
-                android:id="@+id/custom_playlist"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/setting_tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/setting_content_margin_top"
-                android:autofillHints=""
-                android:hint="@string/hint_custom_playlist"
-                android:inputType="textUri"
-                android:lines="1"
-                android:ellipsize="end" />
+                app:tabMaxWidth="0dp"
+                app:tabGravity="fill"
+                app:tabMode="fixed"/>
 
-        </LinearLayout>
+        </androidx.viewpager.widget.ViewPager>
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/reload_playlist"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/setting_content_margin_top"
-            android:text="@string/reload_playlist" />
+            android:layout_height="wrap_content">
+
+            <Button
+                android:id="@+id/setting_cancel_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@android:string/cancel"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/setting_ok_button"
+                style="?android:attr/borderlessButtonStyle"/>
+
+            <Button
+                android:id="@+id/setting_ok_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@android:string/ok"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                style="?android:attr/borderlessButtonStyle"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 

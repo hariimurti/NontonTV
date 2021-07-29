@@ -17,6 +17,7 @@ class Preferences(context: Context) {
         private const val OPEN_LAST_WATCHED = "OPEN_LAST_WATCHED"
         private const val LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT"
         private const val USE_CUSTOM_PLAYLIST = "USE_CUSTOM_PLAYLIST"
+        private const val MERGE_PLAYLIST = "MERGE_PLAYLIST"
         private const val PLAYLIST_EXTERNAL = "PLAYLIST_EXTERNAL"
         private const val LAST_VERSIONCODE = "LAST_VERSIONCODE"
         private const val TOTAL_CONTRIBUTORS = "TOTAL_CONTRIBUTORS"
@@ -76,6 +77,14 @@ class Preferences(context: Context) {
         set(value) {
             editor = preferences.edit()
             editor.putBoolean(USE_CUSTOM_PLAYLIST, value)
+            editor.apply()
+        }
+
+    var mergePlaylist: Boolean
+        get() = preferences.getBoolean(MERGE_PLAYLIST, false)
+        set(value) {
+            editor = preferences.edit()
+            editor.putBoolean(MERGE_PLAYLIST, value)
             editor.apply()
         }
 

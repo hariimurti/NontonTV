@@ -31,10 +31,8 @@ import net.harimurti.tv.databinding.ActivityMainBinding
 import net.harimurti.tv.dialog.ProgressDialog
 import net.harimurti.tv.dialog.SettingsDialog
 import net.harimurti.tv.extra.*
-import net.harimurti.tv.model.GithubUser
-import net.harimurti.tv.model.PlayData
-import net.harimurti.tv.model.Playlist
-import net.harimurti.tv.model.Release
+import net.harimurti.tv.model.*
+import java.util.*
 
 open class MainActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
@@ -47,12 +45,17 @@ open class MainActivity : AppCompatActivity() {
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
-            updatePlaylist()
+            when(intent.getStringExtra(MAIN_CALLBACK)){
+                UPDATE_PLAYLIST -> updatePlaylist()
+                OPEN_SETTINGS -> openSettings()
+            }
         }
     }
 
     companion object {
+        const val MAIN_CALLBACK = "MAIN_CALLBACK"
         const val UPDATE_PLAYLIST = "UPDATE_PLAYLIST"
+        const val OPEN_SETTINGS = "OPEN_SETTINGS"
     }
 
     @SuppressLint("DefaultLocale")
@@ -81,7 +84,7 @@ open class MainActivity : AppCompatActivity() {
 
         // local broadcast receiver to update playlist
         LocalBroadcastManager.getInstance(this)
-            .registerReceiver(broadcastReceiver, IntentFilter(UPDATE_PLAYLIST))
+            .registerReceiver(broadcastReceiver, IntentFilter(MAIN_CALLBACK))
 
         // launch player if playlastwatched is true
         if (preferences.playLastWatched && PlayerActivity.isFirst) {
@@ -106,7 +109,7 @@ open class MainActivity : AppCompatActivity() {
         if (Playlist.loaded == null) {
             updatePlaylist()
         } else {
-            setPlaylistToAdapter(Playlist.loaded!!)
+            setPlaylistToAdapter(Playlist.loaded!!,false)
         }
 
         // check new release
@@ -121,15 +124,21 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setPlaylistToAdapter(playlist: Playlist) {
+    private fun setPlaylistToAdapter(playlist: Playlist, isMerge: Boolean) {
+        val playlistSet: Playlist = playlist
+        if(isMerge && Playlist.loaded != null){
+            Playlist.loaded!!.categories?.let { playlistSet.categories?.addAll(it) }
+            Playlist.loaded!!.drm_licenses?.let { playlistSet.drm_licenses?.addAll(it) }
+        }
+
         // set new playlist
         if (binding.rvCategory.adapter == null) {
-            binding.rvCategory.adapter = CategoryAdapter(playlist.categories)
+            binding.rvCategory.adapter = CategoryAdapter(playlistSet.categories)
             binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         }
         else {
             val adapter = binding.rvCategory.adapter as CategoryAdapter
-            adapter.change(playlist.categories)
+            adapter.change(playlistSet.categories)
         }
 
         // end the loading
@@ -139,7 +148,7 @@ open class MainActivity : AppCompatActivity() {
         if (Playlist.loaded != null)
             Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
 
-        Playlist.loaded = playlist
+        Playlist.loaded = playlistSet
     }
 
     private fun updatePlaylist() {
@@ -150,8 +159,9 @@ open class MainActivity : AppCompatActivity() {
                 showAlertLocalError()
                 return
             }
-            setPlaylistToAdapter(local)
-            return
+            setPlaylistToAdapter(local,false)
+            if(!preferences.mergePlaylist)
+                return
         }
 
         // from internet
@@ -161,7 +171,7 @@ open class MainActivity : AppCompatActivity() {
                 try {
                     val newPls = Gson().fromJson(response, Playlist::class.java)
                     playlistHelper.writeCache(response)
-                    setPlaylistToAdapter(newPls)
+                    setPlaylistToAdapter(newPls,preferences.mergePlaylist)
                 } catch (error: JsonSyntaxException) {
                     showAlertPlaylistError(error.message)
                 }
@@ -243,6 +253,7 @@ open class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
             .setNegativeButton(getString(R.string.dialog_default)) { _: DialogInterface?, _: Int ->
                 preferences.useCustomPlaylist = false
+                preferences.mergePlaylist = false
                 updatePlaylist()
             }
         alert.create().show()
@@ -257,7 +268,7 @@ open class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
         val cache = playlistHelper.readCache()
         if (cache != null) {
-            alert.setNegativeButton(R.string.dialog_cached) { _: DialogInterface?, _: Int -> setPlaylistToAdapter(cache) }
+            alert.setNegativeButton(R.string.dialog_cached) { _: DialogInterface?, _: Int -> setPlaylistToAdapter(cache,false) }
         }
         alert.create().show()
     }
@@ -326,7 +337,7 @@ open class MainActivity : AppCompatActivity() {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         when(keyCode) {
-            KeyEvent.KEYCODE_MENU -> SettingsDialog(this).show()
+            KeyEvent.KEYCODE_MENU -> openSettings()
             else -> return super.onKeyUp(keyCode, event)
         }
         return true
@@ -347,5 +358,10 @@ open class MainActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this)
             .unregisterReceiver(broadcastReceiver)
         super.onDestroy()
+    }
+
+    private fun openSettings(){
+        SettingsDialog(this)
+            .show(supportFragmentManager.beginTransaction(),null)
     }
 }
