@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/launch_at_boot"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/setting_content_margin_top"
+            android:text="@string/launch_at_boot" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/open_last_watched"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/setting_content_margin_top"
+            android:text="@string/play_last_watched" />
+
+    </LinearLayout>
+
+</layout>
