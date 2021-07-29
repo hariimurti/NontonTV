@@ -10,11 +10,11 @@ import java.io.*
 class PlaylistHelper(val context: Context) {
     private val preferences: Preferences = Preferences(context)
     private val cache: File = File(context.cacheDir, PLAYLIST_JSON)
-    private var local: File = File(context.getExternalFilesDir(null)?.absolutePath?.substringBefore("/Android"), PLAYLIST_JSON)
+    private var local: File = File(context.getExternalFilesDir(null)?.absolutePath?.substringBefore("/Android"), preferences.playlistExternal)
 
     companion object {
         private const val TAG = "PlaylistHelper"
-        private const val PLAYLIST_JSON = "NontonTV.json"
+        const val PLAYLIST_JSON = "NontonTV.json"
         const val MODE_DEFAULT = 0
         const val MODE_CUSTOM = 1
         const val MODE_LOCAL = 2
@@ -22,7 +22,7 @@ class PlaylistHelper(val context: Context) {
 
     fun mode(): Int {
         if (!preferences.useCustomPlaylist) return MODE_DEFAULT
-        return if (preferences.playlistExternal.isNotEmpty()) MODE_CUSTOM else MODE_LOCAL
+        return if (preferences.playlistExternal.startsWith("http")) MODE_CUSTOM else MODE_LOCAL
     }
 
     val urlPath: String
@@ -43,6 +43,8 @@ class PlaylistHelper(val context: Context) {
 
     private fun read(file: File): Playlist? {
         return try {
+            Log.e(TAG, file.exists().toString())
+            Log.e(TAG, file.name)
             if (!file.exists()) throw FileNotFoundException()
             val fr = FileReader(file.absoluteFile)
             val br = BufferedReader(fr)
@@ -52,6 +54,7 @@ class PlaylistHelper(val context: Context) {
                 sb.append(line).append('\n')
             }
             br.close()
+            Log.e(TAG, file.name)
             Gson().fromJson(sb.toString(), Playlist::class.java)
         } catch (e: Exception) {
             if (file == cache) e.printStackTrace()

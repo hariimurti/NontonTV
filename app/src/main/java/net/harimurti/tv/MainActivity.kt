@@ -152,6 +152,9 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun updatePlaylist() {
+        //reinit helper for new name
+        playlistHelper = PlaylistHelper(this)
+
         // from local storage
         if (playlistHelper.mode() == PlaylistHelper.MODE_LOCAL) {
             val local = playlistHelper.readLocal()

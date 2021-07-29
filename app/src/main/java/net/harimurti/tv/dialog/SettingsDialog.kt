@@ -25,6 +25,7 @@ import androidx.viewpager.widget.ViewPager
 import com.google.android.material.tabs.TabLayout
 import net.harimurti.tv.MainActivity
 import net.harimurti.tv.R
+import net.harimurti.tv.extra.PlaylistHelper
 import net.harimurti.tv.extra.Preferences
 import java.util.*
 
@@ -174,7 +175,7 @@ class SettingsDialog(myContext: Context) : DialogFragment() {
                             rootView.findViewById<SwitchCompat>(R.id.merge_playlist).apply {
                                 isChecked = false
                             }
-                        }
+                        }else preferences.playlistExternal = PlaylistHelper.PLAYLIST_JSON
 
                     }
                 })
