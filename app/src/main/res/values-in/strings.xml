@@ -54,4 +54,5 @@
     <string name="switch_custom_playlist">Playlist kustom</string>
     <string name="toast_screen_mode">Mode Layar : %s</string>
     <string name="text_screen_mode">Layar :</string>
+    <string name="merge_playlist">Gabungkan</string>
 </resources>

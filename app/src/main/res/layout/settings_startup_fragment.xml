@@ -10,14 +10,14 @@
             android:id="@+id/launch_at_boot"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/setting_content_margin_top"
+            android:minHeight="@dimen/setting_switch_min_height"
             android:text="@string/launch_at_boot" />
 
         <androidx.appcompat.widget.SwitchCompat
             android:id="@+id/open_last_watched"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/setting_content_margin_top"
+            android:minHeight="@dimen/setting_switch_min_height"
             android:text="@string/play_last_watched" />
 
     </LinearLayout>

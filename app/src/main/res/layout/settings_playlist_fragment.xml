@@ -10,9 +10,9 @@
             android:id="@+id/use_custom_playlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/setting_content_margin_top"
-            android:textColor="@color/color_text"
-            android:text="@string/switch_custom_playlist" />
+            android:minHeight="@dimen/setting_switch_min_height"
+            android:text="@string/switch_custom_playlist"
+            android:textColor="@color/color_text" />
 
         <LinearLayout
             android:id="@+id/layout_custom_playlist"
@@ -24,20 +24,20 @@
                 android:id="@+id/merge_playlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/setting_content_margin_top"
-                android:textColor="@color/color_text"
-                android:text="Merge playlist" />
+                android:minHeight="@dimen/setting_switch_min_height"
+                android:text="@string/merge_playlist"
+                android:textColor="@color/color_text" />
 
             <androidx.appcompat.widget.AppCompatEditText
                 android:id="@+id/custom_playlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/setting_content_margin_top"
-                android:textColorHint="@color/color_text"
+                android:ellipsize="end"
                 android:hint="@string/hint_custom_playlist"
                 android:inputType="textUri"
                 android:lines="1"
-                android:ellipsize="end" />
+                android:minHeight="@dimen/setting_switch_min_height"
+                android:textColorHint="@color/color_text" />
 
         </LinearLayout>
 

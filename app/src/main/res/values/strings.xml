@@ -68,4 +68,5 @@
     <string name="switch_custom_playlist">Custom playlist</string>
     <string name="toast_screen_mode">Screen Mode : %s</string>
     <string name="text_screen_mode">Screen :</string>
+    <string name="merge_playlist">Merge</string>
 </resources>

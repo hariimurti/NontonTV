@@ -30,4 +30,5 @@
     <dimen name="pdm_text_margin_start_end">10dp</dimen>
     <dimen name="setting_content_margin_top">15dp</dimen>
     <dimen name="setting_padding">20dp</dimen>
+    <dimen name="setting_switch_min_height">48dp</dimen>
 </resources>

@@ -41,10 +41,10 @@ class SettingsDialog(myContext: Context) : DialogFragment() {
         var useCustomPlaylist = false
         var mergePlaylist = false
     }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = AppCompatDialog(activity, R.style.SettingsDialogThemeOverlay)
-        //dialog.setTitle(R.string.settings)
-
+        dialog.setTitle(R.string.settings)
         dialog.setCanceledOnTouchOutside(false)
 
         mFragmentList.add(StartupFragment())
@@ -101,12 +101,7 @@ class SettingsDialog(myContext: Context) : DialogFragment() {
     }
 
     class StartupFragment : Fragment() {
-
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View {
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
             val rootView = inflater.inflate(R.layout.settings_startup_fragment, container,false)
             val preferences = Preferences(rootView.context)
 
@@ -130,12 +125,7 @@ class SettingsDialog(myContext: Context) : DialogFragment() {
     }
 
     class PlaylistFragment : Fragment() {
-
-        override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
-        ): View {
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
             val rootView = inflater.inflate(R.layout.settings_playlist_fragment, container,false)
             val preferences = Preferences(rootView.context)
 
