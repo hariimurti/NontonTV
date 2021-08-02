@@ -881,6 +881,10 @@
           "stream_url": "https://liveanevia.mncnow.id/live/eds/History/sa_dash_vmx/History.mpd",
           "drm_name": "mncnow"
         },
+          {
+          "name": "History [ALT]",
+          "stream_url": "https://mkctvbro.my.id/horas/pakailah.m3u8?id=history&bandwidth=default&sync=0",
+        },
         {
           "name": "Love Nature",
           "stream_url": "http://bamus-eng-roku.amagi.tv/playlist.m3u8"
@@ -1024,19 +1028,19 @@
         },
         {
           "name": "Astro SuperSports 1",
-          "stream_url": "http://portal.geniptv.com:8080/greenpoison8/GZprWONABH/18623"
+          "stream_url": "http://50.7.161.82:8278/streams/d/assp1_pye/playlist.m3u8"
         },
         {
           "name": "Astro SuperSports 2",
-          "stream_url": "http://portal.geniptv.com:8080/greenpoison8/GZprWONABH/18622"
+          "stream_url": "http://50.7.161.82:8278/streams/d/assp2_pye/playlist.m3u8"
         },
         {
           "name": "Astro SuperSports 3",
-          "stream_url": "http://portal.geniptv.com:8080/greenpoison8/GZprWONABH/18621"
+          "stream_url": "http://50.7.161.82:8278/streams/d/assp3_pye/playlist.m3u8"
         },
         {
           "name": "Astro SuperSports 4",
-          "stream_url": "http://portal.geniptv.com:8080/greenpoison8/GZprWONABH/18620"
+          "stream_url": "http://50.7.161.82:8278/streams/d/assp4_pye/playlist.m3u8"
         },
         {
           "name": "beIN Sports 1",
