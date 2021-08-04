@@ -246,9 +246,9 @@
         }
       ]
     },
-    {
-      "name": "Hiburan",
-      "channels": [
+	{
+	 "name": "Film",
+	 "channels": [
         {
           "name": "&Flix",
           "stream_url": "https://y5w8j4a9.ssl.hwcdn.net/andflixhd/tracks-v1a1/mono.m3u8"
@@ -257,6 +257,160 @@
           "name": "&Prive",
           "stream_url": "https://y5w8j4a9.ssl.hwcdn.net/andprivehd/tracks-v1a1/mono.m3u8"
         },
+		{
+          "name": "Boo",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Boo/playlist.m3u8"
+        },
+		{
+          "name": "Bioskop Indonesia",
+          "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=bioskopindonesia&bandwidth=default&sync=0"
+        },
+        {
+          "name": "Celestial Classic",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/CelestialClassic/sa_dash_vmx/CelestialClassic.mpd",
+          "drm_name": "mncnow"
+        },
+        {
+          "name": "Celestial Movie",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/CelestialMovie/sa_dash_vmx/CelestialMovie.mpd",
+          "drm_name": "mncnow"
+        },
+        {
+          "name": "Celestial Movie [ALT]",
+          "stream_url": "http://210.210.155.35/qwr9ew/s/s33/index.m3u8"
+        },
+        {
+          "name": "Cine Life",
+          "stream_url": "https://dai.google.com/linear/hls/event/PFJ1Jhd6SsSMcu3qq86wzQ/master.m3u8"
+        },
+        {
+          "name": "Cinema World",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/CinemaWorld/sa_dash_vmx/CinemaWorld.mpd",
+          "drm_name": "mncnow"
+        },
+        {
+          "name": "Cinema World [ALT]",
+          "stream_url": "http://210.210.155.35/uq2663/h/h04/index2.m3u8"
+        },
+        {
+          "name": "Cinemax",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/CinemaxHD2/sa_dash_vmx/CinemaxHD2.mpd",
+          "drm_name": "mncnow"
+        },
+		{
+          "name": "Flik",
+          "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=flik&bandwidth=default&sync=0"
+        },
+		{
+          "name": "Fox Action Movies",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxActionMovies/sa_dash_vmx/FoxActionMovies.mpd",
+          "drm_name": "mncnow"
+        },
+		{
+          "name": "Fox Family Movies",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxFamilyMovies/sa_dash_vmx/FoxFamilyMovies.mpd",
+          "drm_name": "mncnow"
+        },
+		{
+          "name": "Fox Movies Premium",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/FOXMoviesPremium/sa_dash_vmx/FOXMoviesPremium.mpd",
+          "drm_name": "mncnow"
+        },
+        {
+          "name": "Galaxy",
+          "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=galaxy&bandwidth=default&sync=0"
+        },
+        {
+          "name": "Galaxy Premium",
+          "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=galaxypremium&bandwidth=default&sync=0"
+        },
+		{
+          "name": "HBO",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/HBO2/sa_dash_vmx/HBO2.mpd",
+          "drm_name": "mncnow"
+        },
+        {
+          "name": "HBO Family",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/HBOFamily2/sa_dash_vmx/HBOFamily2.mpd",
+          "drm_name": "mncnow"
+        },
+        {
+          "name": "HBO Hits",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/HBOHits/sa_dash_vmx/HBOHits.mpd",
+          "drm_name": "mncnow"
+        },
+        {
+          "name": "HBO Signature",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/HBOSignature2/sa_dash_vmx/HBOSignature2.mpd",
+          "drm_name": "mncnow"
+        },
+        {
+          "name": "Hits",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/HITS/sa_dash_vmx/HITS.mpd",
+          "drm_name": "mncnow"
+        },
+        {
+          "name": "Hits Movies",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/HitsMovies/sa_dash_vmx/HitsMovies.mpd",
+          "drm_name": "mncnow"
+        },
+		{
+          "name": "IMC",
+          "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=imc&bandwidth=default&sync=0"
+        },
+		{
+          "name": "Movie Kingdom",
+          "stream_url": "https://a.jsrdn.com/broadcast/e9b4093a41/+0000/high/c.m3u8"
+        },
+        {
+          "name": "MovieMix",
+          "stream_url": "https://dai.google.com/linear/hls/event/TSIJo6RCRZWuCD9WrKtRFg/master.m3u8"
+        },
+        {
+          "name": "MovieSphere",
+          "stream_url": "https://moviesphere-plex.amagi.tv/playlist.m3u8"
+        },
+        {
+          "name": "My Cinema",
+          "stream_url": "http://210.210.155.35/x6bnqe/s/s31/S4/mnf.m3u8"
+        },
+		{
+          "name": "New K-Movies",
+          "stream_url": "https://newidco-newmovies-1.samsung.wurl.com/manifest/playlist.m3u8"
+        },
+		{
+          "name": "Sinema Indonesia",
+          "stream_url": "http://210.210.155.35/x6bnqe/s/s71/S4/mnf.m3u8"
+        },
+		{
+          "name": "Zee Bioskop",
+          "stream_url": "http://210.210.155.35/qwr9ew/s/s32/01.m3u8?fluxustv.m3u8"
+        },
+        {
+          "name": "Zee Bioskop [ALT]",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/ZeeBIOSKOP/sa_dash_vmx/ZeeBIOSKOP.mpd",
+          "drm_name": "mncnow"
+        },
+		{
+          "name": "Thrill",
+          "stream_url": "http://210.210.155.35/session/c8a974dc-7e3d-11e8-bf09-b82a72d63267/qwr9ew/s/s34/02.m3u8"
+        },
+        {
+          "name": "Thrill [ALT]",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/Thrill/sa_dash_vmx/Thrill.mpd",
+          "drm_name": "mncnow"
+        },
+		{
+          "name": "tvN Movies",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/tvNMovies/sa_dash_vmx/tvNMovies.mpd",
+          "drm_name": "mncnow"
+        }
+	  ]
+	},
+    {
+      "name": "Hiburan",
+      "channels": [
+
         {
           "name": "AFV Family",
           "stream_url": "http://linear-12.frequency.stream/dist/roku/12/hls/master/playlist.m3u8"
@@ -291,42 +445,6 @@
           "stream_url": "http://45.126.83.51/dr9445/h/h15/01.m3u8"
         },
         {
-          "name": "Boo",
-          "stream_url": "http://50.7.161.82:8278/streams/d/Boo/playlist.m3u8"
-        },
-        {
-          "name": "Celestial Classic",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/CelestialClassic/sa_dash_vmx/CelestialClassic.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "Celestial Movie",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/CelestialMovie/sa_dash_vmx/CelestialMovie.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "Celestial Movie [ALT]",
-          "stream_url": "http://210.210.155.35/qwr9ew/s/s33/index.m3u8"
-        },
-        {
-          "name": "Cine Life",
-          "stream_url": "https://dai.google.com/linear/hls/event/PFJ1Jhd6SsSMcu3qq86wzQ/master.m3u8"
-        },
-        {
-          "name": "Cinema World",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/CinemaWorld/sa_dash_vmx/CinemaWorld.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "Cinema World [ALT]",
-          "stream_url": "http://210.210.155.35/uq2663/h/h04/index2.m3u8"
-        },
-        {
-          "name": "Cinemax",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/CinemaxHD2/sa_dash_vmx/CinemaxHD2.mpd",
-          "drm_name": "mncnow"
-        },
-        {
           "name": "Crackle",
           "stream_url": "https://crackle-plex.amagi.tv/playlist.m3u8"
         },
@@ -343,17 +461,8 @@
           "stream_url": "https://fash1043.cloudycdn.services/slive/_definst_/ftv_midnite_secrets_adaptive.smil/chunklist==.m3u8"
         },
         {
-          "name": "Flik",
-          "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=flik&bandwidth=default&sync=0"
-        },
-        {
           "name": "FMN",
           "stream_url": "https://liveanevia.mncnow.id/live/eds/FMN/sa_dash_vmx/FMN.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "Fox Action Movies",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxActionMovies/sa_dash_vmx/FoxActionMovies.mpd",
           "drm_name": "mncnow"
         },
         {
@@ -367,60 +476,12 @@
           "drm_name": "mncnow"
         },
         {
-          "name": "Fox Family Movies",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/FoxFamilyMovies/sa_dash_vmx/FoxFamilyMovies.mpd",
-          "drm_name": "mncnow"
-        },
-        {
           "name": "Fox Life",
           "stream_url": "https://link.zozotv.xyz:443/Freemium1/unlimited99/92"
         },
         {
-          "name": "Fox Movies Premium",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/FOXMoviesPremium/sa_dash_vmx/FOXMoviesPremium.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "Galaxy",
-          "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=galaxy&bandwidth=default&sync=0"
-        },
-        {
-          "name": "Galaxy Premium",
-          "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=galaxypremium&bandwidth=default&sync=0"
-        },
-        {
           "name": "GEM [ID]",
           "stream_url": "http://210.210.155.35/uq2663/h/h19/01.m3u8"
-        },
-        {
-          "name": "HBO",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/HBO2/sa_dash_vmx/HBO2.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "HBO Family",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/HBOFamily2/sa_dash_vmx/HBOFamily2.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "HBO Hits",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/HBOHits/sa_dash_vmx/HBOHits.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "HBO Signature",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/HBOSignature2/sa_dash_vmx/HBOSignature2.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "Hits",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/HITS/sa_dash_vmx/HITS.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "Hits Movies",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/HitsMovies/sa_dash_vmx/HitsMovies.mpd",
-          "drm_name": "mncnow"
         },
         {
           "name": "Jiangsu TV",
@@ -460,28 +521,8 @@
           "stream_url": "http://gpc.my.id/vidio/mola-tv-free.m3u8"
         },
         {
-          "name": "Movie Kingdom",
-          "stream_url": "https://a.jsrdn.com/broadcast/e9b4093a41/+0000/high/c.m3u8"
-        },
-        {
-          "name": "MovieMix",
-          "stream_url": "https://dai.google.com/linear/hls/event/TSIJo6RCRZWuCD9WrKtRFg/master.m3u8"
-        },
-        {
-          "name": "MovieSphere",
-          "stream_url": "https://moviesphere-plex.amagi.tv/playlist.m3u8"
-        },
-        {
-          "name": "My Cinema",
-          "stream_url": "http://210.210.155.35/x6bnqe/s/s31/S4/mnf.m3u8"
-        },
-        {
           "name": "New Kid TV",
           "stream_url": "https://newidco-newkid-1.samsung.wurl.com/manifest/playlist.m3u8"
-        },
-        {
-          "name": "New K-Movies",
-          "stream_url": "https://newidco-newmovies-1.samsung.wurl.com/manifest/playlist.m3u8"
         },
         {
           "name": "Nick (Pluto TV)",
@@ -511,10 +552,6 @@
         {
           "name": "Sgem",
           "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=sgem&bandwidth=default&sync=0"
-        },
-        {
-          "name": "Sinema Indonesia",
-          "stream_url": "http://210.210.155.35/x6bnqe/s/s71/S4/mnf.m3u8"
         },
         {
           "name": "Skills + Thrills",
@@ -557,22 +594,8 @@
           "stream_url": "https://dai2.xumo.com/amagi_hls_data_xumo1212A-petcollective/CDN/1280x720_5000000/index.m3u8"
         },
         {
-          "name": "Thrill",
-          "stream_url": "http://210.210.155.35/session/c8a974dc-7e3d-11e8-bf09-b82a72d63267/qwr9ew/s/s34/02.m3u8"
-        },
-        {
-          "name": "Thrill [ALT]",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/Thrill/sa_dash_vmx/Thrill.mpd",
-          "drm_name": "mncnow"
-        },
-        {
           "name": "tvN",
           "stream_url": "https://liveanevia.mncnow.id/live/eds/tvN/sa_dash_vmx/tvN.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "tvN Movies",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/tvNMovies/sa_dash_vmx/tvNMovies.mpd",
           "drm_name": "mncnow"
         },
         {
@@ -582,20 +605,11 @@
         },
         {
           "name": "WakuWaku Japan",
-          "stream_url": "https://mkctvbro.my.id/horas/pakailah.m3u8?id=wakuwaku&bandwidth=default&sync=0"
+          "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=wakuwaku&bandwidth=default&sync=0"
         },
         {
           "name": "Warner TV",
           "stream_url": "https://liveanevia.mncnow.id/live/eds/WarnerTV/sa_dash_vmx/WarnerTV.mpd",
-          "drm_name": "mncnow"
-        },
-        {
-          "name": "Zee Bioskop",
-          "stream_url": "http://210.210.155.35/qwr9ew/s/s32/01.m3u8?fluxustv.m3u8"
-        },
-        {
-          "name": "Zee Bioskop [ALT]",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/ZeeBIOSKOP/sa_dash_vmx/ZeeBIOSKOP.mpd",
           "drm_name": "mncnow"
         }
       ]
