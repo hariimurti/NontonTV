@@ -2,6 +2,7 @@ package net.harimurti.tv.dialog
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
@@ -44,16 +45,6 @@ class SettingsDialog : DialogFragment() {
         R.string.tab_2
     )
 
-    companion object {
-        var launchAtBoot = false
-        var playLastWatched = false
-        var useCustomPlaylist = false
-        var mergePlaylist = false
-        var radioPlaylist = 0
-        var playlistSelect = ""
-        var playlistExternal = ""
-    }
-
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = AppCompatDialog(activity, R.style.SettingsDialogThemeOverlay)
         dialog.setTitle(R.string.settings)
@@ -66,14 +57,20 @@ class SettingsDialog : DialogFragment() {
         val dialogView = binding.root
         val preferences = Preferences(dialogView.context)
 
-        //init
-        launchAtBoot = preferences.launchAtBoot
-        playLastWatched = preferences.playLastWatched
-        useCustomPlaylist = preferences.useCustomPlaylist
-        mergePlaylist = preferences.mergePlaylist
-        radioPlaylist = preferences.radioPlaylist
-        playlistSelect = preferences.playlistSelect
-        playlistExternal = preferences.playlistExternal
+        // init
+        StartupFragment.launchAtBoot = preferences.launchAtBoot
+        StartupFragment.playLastWatched = preferences.playLastWatched
+        val useCustomPlaylist = preferences.useCustomPlaylist
+        PlaylistFragment.useCustomPlaylist = useCustomPlaylist
+        val mergePlaylist = preferences.mergePlaylist
+        PlaylistFragment.mergePlaylist = mergePlaylist
+        val radioPlaylist = preferences.radioPlaylist
+        PlaylistFragment.radioPlaylist = radioPlaylist
+        val playlistSelect = preferences.playlistSelect
+        PlaylistFragment.playlistSelect = playlistSelect
+        val playlistExternal = preferences.playlistExternal
+        PlaylistFragment.playlistExternal = playlistExternal
+
         // view pager
         binding.settingViewPager.apply {
             adapter = FragmentAdapter(childFragmentManager)
@@ -84,24 +81,32 @@ class SettingsDialog : DialogFragment() {
         }
         // button cancel
         binding.settingCancelButton.apply {
-            setOnClickListener { dismiss() }
-        }
-        // button ok
-        binding.settingOkButton.apply {
             setOnClickListener {
-                //save tab 1
-                preferences.launchAtBoot = launchAtBoot
-                preferences.playLastWatched = playLastWatched
-                //save tab 2
+                //revert tab 2 only
                 preferences.useCustomPlaylist = useCustomPlaylist
                 preferences.mergePlaylist = mergePlaylist
                 preferences.radioPlaylist = radioPlaylist
                 preferences.playlistSelect = playlistSelect
                 preferences.playlistExternal = playlistExternal
                 //update playlist
-                LocalBroadcastManager.getInstance(rootView.context).sendBroadcast(
-                    Intent(MainActivity.MAIN_CALLBACK)
-                        .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.UPDATE_PLAYLIST))
+                sendUpdatePlaylist(rootView.context)
+                dismiss()
+            }
+        }
+        // button ok
+        binding.settingOkButton.apply {
+            setOnClickListener {
+                //save tab 1
+                preferences.launchAtBoot = StartupFragment.launchAtBoot
+                preferences.playLastWatched = StartupFragment.playLastWatched
+                //save tab 2
+                preferences.useCustomPlaylist = PlaylistFragment.useCustomPlaylist
+                preferences.mergePlaylist = PlaylistFragment.mergePlaylist
+                preferences.radioPlaylist = PlaylistFragment.radioPlaylist
+                preferences.playlistSelect = PlaylistFragment.playlistSelect
+                preferences.playlistExternal = PlaylistFragment.playlistExternal
+                //update playlist
+                sendUpdatePlaylist(rootView.context)
                 dismiss()
             }
         }
@@ -111,6 +116,12 @@ class SettingsDialog : DialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun sendUpdatePlaylist(context: Context) {
+        LocalBroadcastManager.getInstance(context).sendBroadcast(
+            Intent(MainActivity.MAIN_CALLBACK)
+                .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.UPDATE_PLAYLIST))
     }
 
     private inner class FragmentAdapter(fragmentManager: FragmentManager?) :
@@ -133,20 +144,24 @@ class SettingsDialog : DialogFragment() {
         private var _binding: SettingsStartupFragmentBinding? = null
         private val binding get() = _binding!!
 
+        companion object {
+            var launchAtBoot = false
+            var playLastWatched = false
+        }
+
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
             _binding = SettingsStartupFragmentBinding.inflate(inflater, container, false)
             val rootView = binding.root
-            val preferences = Preferences(rootView.context)
 
             binding.launchAtBoot.apply {
-                isChecked = preferences.launchAtBoot
+                isChecked = launchAtBoot
                 setOnClickListener {
                     launchAtBoot = isChecked
                 }
             }
 
             binding.openLastWatched.apply {
-                isChecked = preferences.playLastWatched
+                isChecked = playLastWatched
                 setOnClickListener {
                     playLastWatched = isChecked
                 }
@@ -159,7 +174,6 @@ class SettingsDialog : DialogFragment() {
             super.onDestroyView()
             _binding = null
         }
-
     }
 
     class PlaylistFragment : Fragment() {
@@ -167,25 +181,32 @@ class SettingsDialog : DialogFragment() {
         private val binding get() = _binding!!
         private lateinit var dialog : FilePickerDialog
 
+        companion object {
+            var useCustomPlaylist = false
+            var mergePlaylist = false
+            var radioPlaylist = 0
+            var playlistSelect = ""
+            var playlistExternal = ""
+        }
+
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
             _binding = SettingsPlaylistFragmentBinding.inflate(inflater, container, false)
             val rootView = binding.root
             val preferences = Preferences(rootView.context)
 
             //init
-            radioPlaylist = preferences.radioPlaylist
             updateLayout(radioPlaylist)
             binding.customSelected.apply {
                 check(binding.customSelected.getChildAt(radioPlaylist).id)
             }
-            if(!preferences.useCustomPlaylist) binding.pickButton.visibility = View.GONE
+            if(!useCustomPlaylist) binding.pickButton.visibility = View.GONE
             // layout custom playlist
             binding.layoutCustomPlaylist.apply {
-                visibility = if (preferences.useCustomPlaylist) View.VISIBLE else View.GONE
+                visibility = if (useCustomPlaylist) View.VISIBLE else View.GONE
             }
             // switch custom playlist
             binding.useCustomPlaylist.apply {
-                isChecked = preferences.useCustomPlaylist
+                isChecked = useCustomPlaylist
                 setOnClickListener {
                     binding.layoutCustomPlaylist.visibility = if (isChecked) View.VISIBLE else View.GONE
                     useCustomPlaylist = isChecked
@@ -248,7 +269,7 @@ class SettingsDialog : DialogFragment() {
             }
             // switch merge playlist
             binding.mergePlaylist.apply {
-                isChecked = preferences.mergePlaylist
+                isChecked = mergePlaylist
                 setOnClickListener {
                     mergePlaylist = isChecked
                 }
@@ -256,7 +277,7 @@ class SettingsDialog : DialogFragment() {
             // button reload playlist
             binding.reloadPlaylist.apply {
                 setOnClickListener {
-                    //save data before load
+                    //update preferences before load
                     preferences.useCustomPlaylist = useCustomPlaylist
                     preferences.mergePlaylist = mergePlaylist
                     preferences.radioPlaylist = radioPlaylist
