@@ -32,26 +32,28 @@ class ChannelAdapter (private val channels: ArrayList<Channel>?, private val cat
 
     override fun onBindViewHolder(viewHolder: ChannelAdapter.ViewHolder, position: Int) {
         val channel: Channel? = channels?.get(position)
-        viewHolder.button.text = channel?.name
-        viewHolder.button.setOnClickListener {
-            val intent = Intent(context, PlayerActivity::class.java)
-            intent.putExtra(PlayData.VALUE, PlayData(catId, position))
-            context.startActivity(intent)
-        }
-        viewHolder.button.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus) {
-                val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.zoom_120)
-                viewHolder.button.startAnimation(anim)
-                anim.fillAfter = true
-            } else {
-                val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.zoom_100)
-                viewHolder.button.startAnimation(anim)
-                anim.fillAfter = true
+        viewHolder.button.apply {
+            text = channel?.name
+            setOnClickListener {
+                val intent = Intent(context, PlayerActivity::class.java)
+                intent.putExtra(PlayData.VALUE, PlayData(catId, position))
+                context.startActivity(intent)
+            }
+            setOnFocusChangeListener { _, hasFocus ->
+                if (hasFocus) {
+                    val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.zoom_120)
+                    viewHolder.button.startAnimation(anim)
+                    anim.fillAfter = true
+                } else {
+                    val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.zoom_100)
+                    viewHolder.button.startAnimation(anim)
+                    anim.fillAfter = true
+                }
             }
         }
     }
 
     override fun getItemCount(): Int {
-        return channels!!.size
+        return channels?.size ?: 0
     }
 }

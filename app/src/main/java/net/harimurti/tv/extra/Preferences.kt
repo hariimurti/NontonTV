@@ -18,7 +18,9 @@ class Preferences(context: Context) {
         private const val LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT"
         private const val USE_CUSTOM_PLAYLIST = "USE_CUSTOM_PLAYLIST"
         private const val MERGE_PLAYLIST = "MERGE_PLAYLIST"
+        private const val RADIO_PLAYLIST = "RADIO_PLAYLIST"
         private const val PLAYLIST_EXTERNAL = "PLAYLIST_EXTERNAL"
+        private const val PLAYLIST_SELECT = "PLAYLIST_SELECT"
         private const val LAST_VERSIONCODE = "LAST_VERSIONCODE"
         private const val TOTAL_CONTRIBUTORS = "TOTAL_CONTRIBUTORS"
         private const val SHOW_LESS_CONTRIBUTORS = "SHOW_LESS_CONTRIBUTORS"
@@ -93,6 +95,22 @@ class Preferences(context: Context) {
         set(value) {
             editor = preferences.edit()
             editor.putString(PLAYLIST_EXTERNAL, value)
+            editor.apply()
+        }
+
+    var radioPlaylist: Int
+        get() = preferences.getInt(RADIO_PLAYLIST, 0)
+        set(value) {
+            editor = preferences.edit()
+            editor.putInt(RADIO_PLAYLIST, value)
+            editor.apply()
+        }
+
+    var playlistSelect: String
+        get() = preferences.getString(PLAYLIST_SELECT, "").toString()
+        set(value) {
+            editor = preferences.edit()
+            editor.putString(PLAYLIST_SELECT, value)
             editor.apply()
         }
 

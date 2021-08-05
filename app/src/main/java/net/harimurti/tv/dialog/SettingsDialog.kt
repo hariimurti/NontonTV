@@ -1,118 +1,150 @@
 package net.harimurti.tv.dialog
 
-import android.annotation.SuppressLint
 import android.app.Dialog
-import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
-import androidx.appcompat.widget.AppCompatButton
-import androidx.appcompat.widget.AppCompatEditText
-import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.viewpager.widget.ViewPager
-import com.google.android.material.tabs.TabLayout
+import com.developer.filepicker.model.DialogProperties
+import com.google.android.material.textfield.TextInputLayout
 import net.harimurti.tv.MainActivity
 import net.harimurti.tv.R
+import net.harimurti.tv.databinding.SettingsDialogBinding
+import net.harimurti.tv.databinding.SettingsPlaylistFragmentBinding
+import net.harimurti.tv.databinding.SettingsStartupFragmentBinding
 import net.harimurti.tv.extra.PlaylistHelper
 import net.harimurti.tv.extra.Preferences
-import java.util.*
+import java.io.File
 
-@SuppressLint("InflateParams")
-class SettingsDialog(myContext: Context) : DialogFragment() {
-    private val mFragmentList = ArrayList<Fragment>()
-    private val mFragmentTitleList = ArrayList<String>()
-    private val preferences = Preferences(myContext)
+
+@Suppress("DEPRECATION")
+class SettingsDialog : DialogFragment() {
+    private var _binding : SettingsDialogBinding? = null
+    private val binding get() = _binding!!
+    private val tabFragment = arrayOf(
+        StartupFragment(),
+        PlaylistFragment()
+    )
+    private val tabTitle = arrayOf(
+        R.string.tab_1,
+        R.string.tab_2
+    )
 
     companion object {
         var launchAtBoot = false
         var playLastWatched = false
         var useCustomPlaylist = false
         var mergePlaylist = false
+        var radioPlaylist = 0
+        var playlistSelect = ""
+        var playlistExternal = ""
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = AppCompatDialog(activity, R.style.SettingsDialogThemeOverlay)
         dialog.setTitle(R.string.settings)
         dialog.setCanceledOnTouchOutside(false)
-
-        mFragmentList.add(StartupFragment())
-        mFragmentList.add(PlaylistFragment())
-        mFragmentTitleList.add("Startup")
-        mFragmentTitleList.add("Playlist")
         return dialog
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val dialogView = inflater.inflate(R.layout.settings_dialog, container, false)
-        val viewPager = dialogView.findViewById<ViewPager>(R.id.setting_view_pager).apply {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        _binding = SettingsDialogBinding.inflate(inflater,container, false)
+        val dialogView = binding.root
+        val preferences = Preferences(dialogView.context)
+
+        //init
+        launchAtBoot = preferences.launchAtBoot
+        playLastWatched = preferences.playLastWatched
+        useCustomPlaylist = preferences.useCustomPlaylist
+        mergePlaylist = preferences.mergePlaylist
+        radioPlaylist = preferences.radioPlaylist
+        playlistSelect = preferences.playlistSelect
+        playlistExternal = preferences.playlistExternal
+        // view pager
+        binding.settingViewPager.apply {
             adapter = FragmentAdapter(childFragmentManager)
         }
-        dialogView.findViewById<TabLayout>(R.id.setting_tab_layout).apply {
-            setupWithViewPager(viewPager)
+        // tab layout
+        binding.settingTabLayout.apply {
+            setupWithViewPager(binding.settingViewPager)
         }
         // button cancel
-        dialogView.findViewById<Button>(R.id.setting_cancel_button).apply {
+        binding.settingCancelButton.apply {
             setOnClickListener { dismiss() }
         }
         // button ok
-        dialogView.findViewById<Button>(R.id.setting_ok_button).apply {
-            launchAtBoot = preferences.launchAtBoot
-            playLastWatched = preferences.playLastWatched
-            useCustomPlaylist = preferences.useCustomPlaylist
-            mergePlaylist = if (preferences.playlistExternal.isNotEmpty()) false else preferences.mergePlaylist
-
+        binding.settingOkButton.apply {
             setOnClickListener {
+                //save tab 1
                 preferences.launchAtBoot = launchAtBoot
                 preferences.playLastWatched = playLastWatched
+                //save tab 2
                 preferences.useCustomPlaylist = useCustomPlaylist
                 preferences.mergePlaylist = mergePlaylist
+                preferences.radioPlaylist = radioPlaylist
+                preferences.playlistSelect = playlistSelect
+                preferences.playlistExternal = playlistExternal
+                //update playlist
+                LocalBroadcastManager.getInstance(rootView.context).sendBroadcast(
+                    Intent(MainActivity.MAIN_CALLBACK)
+                        .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.UPDATE_PLAYLIST))
                 dismiss()
             }
         }
         return dialogView
     }
 
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+    }
+
     private inner class FragmentAdapter(fragmentManager: FragmentManager?) :
         FragmentPagerAdapter(fragmentManager!!, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
         override fun getItem(position: Int): Fragment {
-            return mFragmentList[position]
+            return tabFragment[position]
         }
 
         override fun getCount(): Int {
-            return mFragmentList.size
+            return tabFragment.size
         }
 
         override fun getPageTitle(position: Int): CharSequence {
-            return mFragmentTitleList[position]
+            return getString(tabTitle[position])
         }
     }
 
     class StartupFragment : Fragment() {
+        private var _binding: SettingsStartupFragmentBinding? = null
+        private val binding get() = _binding!!
+
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
-            val rootView = inflater.inflate(R.layout.settings_startup_fragment, container,false)
+            _binding = SettingsStartupFragmentBinding.inflate(inflater, container, false)
+            val rootView = binding.root
             val preferences = Preferences(rootView.context)
 
-            rootView.findViewById<SwitchCompat>(R.id.launch_at_boot).apply {
+            binding.launchAtBoot.apply {
                 isChecked = preferences.launchAtBoot
                 setOnClickListener {
                     launchAtBoot = isChecked
                 }
             }
 
-            rootView.findViewById<SwitchCompat>(R.id.open_last_watched).apply {
+            binding.openLastWatched.apply {
                 isChecked = preferences.playLastWatched
                 setOnClickListener {
                     playLastWatched = isChecked
@@ -122,64 +154,194 @@ class SettingsDialog(myContext: Context) : DialogFragment() {
             return rootView
         }
 
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
+
     }
 
     class PlaylistFragment : Fragment() {
-        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-            val rootView = inflater.inflate(R.layout.settings_playlist_fragment, container,false)
+        private var _binding: SettingsPlaylistFragmentBinding? = null
+        private val binding get() = _binding!!
+        private lateinit var dialog : FilePickerDialog
+
+        override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
+            _binding = SettingsPlaylistFragmentBinding.inflate(inflater, container, false)
+            val rootView = binding.root
             val preferences = Preferences(rootView.context)
 
+            //init
+            radioPlaylist = preferences.radioPlaylist
+            updateLayout(radioPlaylist)
+            binding.customSelected.apply {
+                check(binding.customSelected.getChildAt(radioPlaylist).id)
+            }
+            if(!preferences.useCustomPlaylist) binding.pickButton.visibility = View.GONE
             // layout custom playlist
-            rootView.findViewById<LinearLayout>(R.id.layout_custom_playlist).apply {
+            binding.layoutCustomPlaylist.apply {
                 visibility = if (preferences.useCustomPlaylist) View.VISIBLE else View.GONE
             }
             // switch custom playlist
-            rootView.findViewById<SwitchCompat>(R.id.use_custom_playlist).apply {
+            binding.useCustomPlaylist.apply {
                 isChecked = preferences.useCustomPlaylist
                 setOnClickListener {
-                    rootView.findViewById<LinearLayout>(R.id.layout_custom_playlist).visibility = if (isChecked) View.VISIBLE else View.GONE
+                    binding.layoutCustomPlaylist.visibility = if (isChecked) View.VISIBLE else View.GONE
                     useCustomPlaylist = isChecked
-                    if (!isChecked)
-                        rootView.findViewById<SwitchCompat>(R.id.merge_playlist).apply {
-                            isChecked = false
-                        }
+                    updateLayout(radioPlaylist)
+                    if (!isChecked) {
+                        binding.pickButton.visibility = View.GONE
+                        mergePlaylist = false
+                    }
                 }
             }
+
+            // RadioButton localPlaylist
+            binding.localPlaylist.apply {
+                setOnClickListener{
+                    radioPlaylist = 0
+                    updateLayout(radioPlaylist)
+                    binding.reloadPlaylist.requestFocus()
+                }
+            }
+            // RadioButton pickPlaylist
+            binding.pickPlaylist.apply {
+                setOnClickListener{
+                    radioPlaylist = 1
+                    updateLayout(radioPlaylist)
+                    binding.pickButton.requestFocus()
+                }
+            }
+            // RadioButton urlPlaylist
+            binding.urlPlaylist.apply {
+                setOnClickListener{
+                    radioPlaylist = 2
+                    updateLayout(radioPlaylist)
+                    binding.customPlaylist.requestFocus()
+                }
+            }
+            // button pick playlist
+            binding.pickButton.apply {
+                setOnClickListener {
+                    openFilePicker()
+                }
+            }
+            // edittext custom playlist
+            binding.customPlaylist.apply {
+                //setText(preferences.playlistExternal)
+                addTextChangedListener(object : TextWatcher {
+                    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                    override fun afterTextChanged(s: Editable) {
+                        val text = s.toString()
+                        when (radioPlaylist) {
+                            1 -> {
+                                playlistSelect = text
+                            }
+                            2 -> {
+                                playlistExternal = text
+                            }
+                        }
+                    }
+                })
+            }
             // switch merge playlist
-            rootView.findViewById<SwitchCompat>(R.id.merge_playlist).apply {
+            binding.mergePlaylist.apply {
                 isChecked = preferences.mergePlaylist
                 setOnClickListener {
                     mergePlaylist = isChecked
                 }
             }
-            // edittext custom playlist
-            rootView.findViewById<AppCompatEditText>(R.id.custom_playlist).apply {
-                setText(preferences.playlistExternal)
-                addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-                    override fun afterTextChanged(s: Editable) {
-                        preferences.playlistExternal = s.toString()
-                        if(s.toString().isNotEmpty()) {
-                            mergePlaylist = false
-                            rootView.findViewById<SwitchCompat>(R.id.merge_playlist).apply {
-                                isChecked = false
-                            }
-                        }else preferences.playlistExternal = PlaylistHelper.PLAYLIST_JSON
-
-                    }
-                })
-            }
             // button reload playlist
-            rootView.findViewById<AppCompatButton>(R.id.reload_playlist).setOnClickListener {
-                preferences.useCustomPlaylist = useCustomPlaylist
-                preferences.mergePlaylist = mergePlaylist
-                LocalBroadcastManager.getInstance(rootView.context).sendBroadcast(
-                    Intent(MainActivity.MAIN_CALLBACK)
-                        .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.UPDATE_PLAYLIST))
+            binding.reloadPlaylist.apply {
+                setOnClickListener {
+                    //save data before load
+                    preferences.useCustomPlaylist = useCustomPlaylist
+                    preferences.mergePlaylist = mergePlaylist
+                    preferences.radioPlaylist = radioPlaylist
+                    preferences.playlistSelect = playlistSelect
+                    preferences.playlistExternal = playlistExternal
+                    //load playlist
+                    LocalBroadcastManager.getInstance(rootView.context).sendBroadcast(
+                        Intent(MainActivity.MAIN_CALLBACK)
+                            .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.UPDATE_PLAYLIST))
+                }
             }
 
+            val properties = DialogProperties().apply {
+                extensions = arrayOf("json")
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                    root = File(Environment.getExternalStorageDirectory().path)
+                    error_dir = File(Environment.getExternalStorageDirectory().path)
+                    offset  = File(Environment.getExternalStorageDirectory().path)
+                }else {
+                    root = File("/")
+                    offset  = File("/mnt/sdcard:/storage")
+                }
+            }
+            dialog = FilePickerDialog(rootView.context).apply {
+                setTitle("Select File Json")
+                setProperties(properties)
+                setDialogSelectionListener {
+                    for (path in it) {
+                        playlistSelect = File(path).path
+                        binding.customPlaylist.setText(playlistSelect)
+                    }
+                }
+            }
             return rootView
+        }
+
+        private fun updateLayout(radioPlaylist: Int) {
+            when (radioPlaylist) {
+                0 -> {
+                    binding.pickButton.visibility = View.GONE
+                    binding.customPlaylist.isEnabled = false
+                    binding.mergePlaylist.visibility = View.VISIBLE
+                    binding.customPlaylist.setText(PlaylistHelper.PLAYLIST_JSON)
+                    binding.textLay.endIconMode = TextInputLayout.END_ICON_NONE
+                }
+                1 -> {
+                    binding.pickButton.visibility = View.VISIBLE
+                    binding.customPlaylist.isEnabled = false
+                    binding.mergePlaylist.visibility = View.VISIBLE
+                    binding.customPlaylist.setText(playlistSelect)
+                    binding.textLay.endIconMode = TextInputLayout.END_ICON_NONE
+                }
+                else -> {
+                    binding.pickButton.visibility = View.GONE
+                    binding.customPlaylist.isEnabled = true
+                    binding.mergePlaylist.visibility = View.GONE
+                    binding.customPlaylist.setText(playlistExternal)
+                    binding.textLay.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
+                    mergePlaylist = false
+                }
+            }
+        }
+
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
+        }
+
+        private fun openFilePicker() {
+            //set focus to reload button
+            binding.reloadPlaylist.requestFocus()
+            //show dialog
+            dialog.show()
+        }
+
+        override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray ) {
+            when (requestCode) {
+                FilePickerDialog.EXTERNAL_READ_PERMISSION_GRANT -> {
+                    if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                        openFilePicker()
+                    } else {
+                        //Permission has not been granted. Notify the user.
+                        Toast.makeText(context, getString(R.string.must_allow_permissions), Toast.LENGTH_LONG).show()
+                    }
+                }
+            }
         }
     }
 }

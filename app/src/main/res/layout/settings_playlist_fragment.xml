@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--need to scrool for edittext keyboard-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,43 +17,108 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="@dimen/setting_switch_min_height"
-            android:text="@string/switch_custom_playlist"
-            android:textColor="@color/color_text" />
+            android:text="@string/switch_custom_playlist"/>
 
         <LinearLayout
             android:id="@+id/layout_custom_playlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <RadioGroup
+                android:id="@+id/custom_selected"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:inputType="text"
+                android:orientation="vertical" >
+
+                <RadioButton
+                    android:id="@+id/local_playlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="5dp"
+                    android:layoutDirection="rtl"
+                    android:layout_gravity="start"
+                    android:text="Local"
+                    android:textColor="@color/color_text" />
+
+                <RadioButton
+                    android:id="@+id/pick_playlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="5dp"
+                    android:layoutDirection="rtl"
+                    android:layout_gravity="start"
+                    android:text="Selected File"
+                    android:textColor="@color/color_text"  />
+
+                <RadioButton
+                    android:id="@+id/url_playlist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginVertical="5dp"
+                    android:layoutDirection="rtl"
+                    android:layout_gravity="start"
+                    android:text="Input URL"
+                    android:textColor="@color/color_text"  />
+            </RadioGroup>
 
             <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/merge_playlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:minHeight="@dimen/setting_switch_min_height"
-                android:text="@string/merge_playlist"
-                android:textColor="@color/color_text" />
+                android:text="@string/merge_playlist" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_lay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_custom_playlist"
+                app:hintTextColor="@color/color_text">
 
-            <androidx.appcompat.widget.AppCompatEditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/custom_playlist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/setting_content_margin_top"
+                android:inputType="textUri|textMultiLine"
+                android:maxLines="2"
                 android:ellipsize="end"
-                android:hint="@string/hint_custom_playlist"
-                android:inputType="textUri"
-                android:lines="1"
-                android:minHeight="@dimen/setting_switch_min_height"
-                android:textColorHint="@color/color_text" />
+                android:focusable="true"/>
+            </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/pick_button"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginTop="@dimen/setting_content_margin_top"
+                android:text="pick file"
+                android:visibility="gone"
+                android:focusable="true"
+                android:background="@drawable/button_channel"/>
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/reload_playlist"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:layout_marginTop="@dimen/setting_content_margin_top"
-            android:text="@string/reload_playlist" />
+            android:text="@string/reload_playlist"
+            android:focusable="true"
+            android:background="@drawable/button_channel"/>
 
+        </LinearLayout>
     </LinearLayout>
 
+    </ScrollView>
 </layout>

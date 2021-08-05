@@ -69,4 +69,6 @@
     <string name="toast_screen_mode">Screen Mode : %s</string>
     <string name="text_screen_mode">Screen :</string>
     <string name="merge_playlist">Merge</string>
+    <string name="tab_1">Startup</string>
+    <string name="tab_2">Playlist</string>
 </resources>
