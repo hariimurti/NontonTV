@@ -13,32 +13,43 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 - tampilan simpel, tdk butuh banyak interaksi
 - otomatis mencoba putar kembali jika tayangan putus/error
 - bisa pilih kualitas video, audio, maupun subtitle (bila tayangan mendukung)
-- [pengaturan] jalankan aplikasi saat booting
-- [pengaturan] otomatis putar terakhir dilihat saat menjalankan aplikasi
-- [pengaturan] support playlist kustom
+- support screen mode : fit, fill, zoom, fixed witdh, fixed height
+- support picture-to-picture
+- support dpad
+- jalankan aplikasi saat booting
+- otomatis putar terakhir dilihat saat menjalankan aplikasi
+- support playlist kustom (lokal, maupun tautan)
 - dan lain-lain
 
 
-## Bugs
-- untuk navigasi remote tv kadang agak susah, bisa gunakan [apk ini](https://play.google.com/store/apps/details?id=io.appground.blek&hl=en&gl=US)
+## Navigasi Player
+- DPAD LEFF, MEDIA PREVIOUS, SWIPE RIGHT = channel sebelumnya
+- DPAD RIGHT, MEDIA NEXT, SWIPE LEFT = channel selanjutnya
+- DPAD UP, PAGE UP, SWIPE DOWN = kategori sebelumnya
+- DPAD DOWN, PAGE DOWN, SWIPE UP = kategori selanjutnya
+- DPAD CENTER, MENU = buka pengaturan
 
 
 ## Screenshots
-[<img src="./screenshot/20200412-115720.jpg" height=180>](./screenshot/20200412-115720.jpg)
-[<img src="./screenshot/20200412-115727.jpg" width=320>](./screenshot/20200412-115727.jpg)
-[<img src="./screenshot/20210710-030000.jpg" height=180>](./screenshot/20210710-030000.jpg)
-[<img src="./screenshot/20200412-115735.jpg" width=320>](./screenshot/20200412-115735.jpg)
-[<img src="./screenshot/20210710-224755.jpg" width=320>](./screenshot/20210710-224755.jpg)
+[<img src="./screenshot/SS_Landscape_01.png" width=320>](./screenshot/SS_Landscape_01.png)
+[<img src="./screenshot/SS_Landscape_02.png" width=320>](./screenshot/SS_Landscape_02.png)
+[<img src="./screenshot/SS_Landscape_03.png" width=320>](./screenshot/SS_Landscape_03.png)
+[<img src="./screenshot/SS_Landscape_04.png" width=320>](./screenshot/SS_Landscape_04.png)
+[<img src="./screenshot/SS_Landscape_05.png" width=320>](./screenshot/SS_Landscape_05.png)
+[<img src="./screenshot/SS_Landscape_06.png" width=320>](./screenshot/SS_Landscape_06.png)
+
+[<img src="./screenshot/SS_Portrait_01.jpg" height=180>](./screenshot/SS_Portrait_01.jpg)
+[<img src="./screenshot/SS_Portrait_02.jpg" height=180>](./screenshot/SS_Portrait_02.jpg)
+[<img src="./screenshot/SS_Portrait_03.jpg" height=180>](./screenshot/SS_Portrait_03.jpg)
 
 
 ## Thanks to
 - [iptv.org](https://github.com/iptv-org/iptv)
-- [exodiver](https://github.com/exodiver/IPTV)
 - [fluxustv](https://fluxustv.blogspot.com/)
+- [contributors](../../graphs/contributors)
+- [user grup](https://t.me/paijemdev)
 - dan lain-lain
 
 
 ## Notes
-- *untuk akses **pengaturan** gunakan tombol recent (tekan lama) di hp maupun remote.*
-- *playlist kustom: isikan tautan ke file json, atau biarkan kosong maka akan membaca file [NontonTV.json](./json/playlist.json) dari penyimpanan internal (pastikan anda telah mengcopykan file tersebut).*
-- *bantu mengupdate [siaran ini](./json/playlist.json), menggunakan soft [iptv.manager](https://github.com/hariimurti/NontonTV/releases/download/v1.4/IPTV.Manager_v2021.5.14.2327.zip).*
+- *bantu mengupdate siaran [NontonTV.json](../../blob/playlist/NontonTV.json)*
