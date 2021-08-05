@@ -32,7 +32,7 @@
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>
     <string name="alert_title_playlist_error" translatable="false">Playlist Error</string>
-    <string name="error_4xx">Playlist file cannot be accessed!\nResponse code : %d</string>
+    <string name="error_4xx">Playlist url cannot be accessed!\nResponse code : %d</string>
     <string name="error_5xx">Server cannot be accessed!\nResponse code : %d</string>
     <string name="dialog_retry">Try again</string>
     <string name="dialog_cached">Use cache</string>
@@ -40,7 +40,8 @@
     <string name="player_playback_error">Playback Error</string>
     <string name="player_no_playlist">We have problem with the playlist</string>
     <string name="player_no_channel">No channels to play</string>
-    <string name="local_playlist_read_error">Can\'t load NontonTV.json from internal storage!</string>
+    <string name="playlist_local_read_error">Can\'t load NontonTV.json from internal storage!</string>
+    <string name="playlist_selected_read_error">Can\'t load json :\n%s\n\nMake sure to use the NontonTV format!</string>
 
     <!-- alert update -->
     <string name="alert_new_update">Update</string>

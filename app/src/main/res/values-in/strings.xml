@@ -21,7 +21,7 @@
 
     <!-- alert playlist error -->
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>
-    <string name="error_4xx">File playlist tidak dapat diakses!\nKode respon : %d</string>
+    <string name="error_4xx">Tautan playlist tidak dapat diakses!\nKode respon : %d</string>
     <string name="error_5xx">Server tidak dapat diakses!\nKode respon : %d</string>
     <string name="dialog_retry">Coba lagi</string>
     <string name="dialog_cached">Gunakan cache</string>
@@ -29,7 +29,8 @@
     <string name="player_playback_error">Kesalahan Pemutaran</string>
     <string name="player_no_playlist">Kita punya masalah dgn playlist</string>
     <string name="player_no_channel">Tidak ada saluran utk diputar</string>
-    <string name="local_playlist_read_error">Tidak bisa memuat NontonTV.json dari penyimpanan internal!</string>
+    <string name="playlist_local_read_error">Tidak bisa memuat NontonTV.json dari penyimpanan internal!</string>
+    <string name="playlist_selected_read_error">Tidak bisa memuat json:\n%s\n\nPastikan menggunakan format NontonTV!</string>
 
     <!-- alert update -->
     <string name="alert_new_update">Pembaharuan</string>

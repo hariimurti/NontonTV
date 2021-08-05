@@ -159,7 +159,7 @@ open class MainActivity : AppCompatActivity() {
         if (playlistHelper.mode() == PlaylistHelper.MODE_LOCAL) {
             val local = playlistHelper.readLocal()
             if (local == null || local.categories.isNullOrEmpty()) {
-                showAlertLocalError()
+                showAlertLocalError(null)
                 return
             }
             setPlaylistToAdapter(local,false)
@@ -171,7 +171,7 @@ open class MainActivity : AppCompatActivity() {
         if (playlistHelper.mode() == PlaylistHelper.MODE_SELECT) {
             val pick = playlistHelper.readSelect()
             if (pick == null || pick.categories.isNullOrEmpty()) {
-                showAlertLocalError()
+                showAlertLocalError(preferences.playlistSelect)
                 return
             }
             setPlaylistToAdapter(pick,false)
@@ -259,11 +259,13 @@ open class MainActivity : AppCompatActivity() {
             volley.add(stringRequest)
         }
 
-    private fun showAlertLocalError() {
+    private fun showAlertLocalError(filepath: String?) {
         askPermissions()
+        val message = if (filepath == null) getString(R.string.playlist_local_read_error)
+        else String.format(getString(R.string.playlist_selected_read_error), filepath)
         AlertDialog.Builder(this).apply {
             setTitle(R.string.alert_title_playlist_error)
-            setMessage(R.string.local_playlist_read_error)
+            setMessage(message)
             setCancelable(false)
             setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
             setNegativeButton(getString(R.string.dialog_default)) { _: DialogInterface?, _: Int ->
