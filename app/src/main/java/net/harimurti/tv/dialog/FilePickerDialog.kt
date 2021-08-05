@@ -7,6 +7,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.view.Window
+import android.view.WindowManager
 import android.widget.*
 import android.widget.AdapterView.OnItemClickListener
 import androidx.appcompat.widget.AppCompatCheckBox
@@ -56,6 +57,7 @@ class FilePickerDialog(context: Context) : Dialog(context), OnItemClickListener 
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.picker_dialog)
+        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
         listView = findViewById(R.id.fileList)
         select = findViewById(R.id.select)
         showHide = findViewById(R.id.show_hide)
