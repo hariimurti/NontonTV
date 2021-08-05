@@ -1,6 +1,6 @@
 {
-    "versionCode": 500,
-    "versionName": "v2.0",
-    "changelog": ["New UI v2.0", "player: support remote navigation", "player: random user-agent", "and more.."],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v2.0/net.harimurti.tv_v2.0_b500.apk"
+    "versionCode": 514,
+    "versionName": "v2.1",
+    "changelog": ["add player navigation", "add screen mode", "select playlist file", "support picture-in-picture", "and more.."],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v2.1/net.harimurti.tv_v2.1_b514.apk"
 }

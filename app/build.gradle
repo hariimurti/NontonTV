@@ -31,7 +31,7 @@ android {
         //noinspection OldTargetApi
         targetSdkVersion 29 //downgrade for android 11 to make externalstorage readable
         versionCode _versionCode
-        versionName "2.0"
+        versionName "2.1"
 
         multiDexEnabled true
         vectorDrawables.useSupportLibrary true
