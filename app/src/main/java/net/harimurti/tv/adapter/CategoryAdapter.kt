@@ -32,17 +32,19 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerV
     override fun onBindViewHolder(viewHolder: CategoryAdapter.ViewHolder, position: Int) {
         val category: Category? = categories?.get(position)
         viewHolder.textView.text = category?.name
-        viewHolder.buttonSetting.visibility = if (position == 0) View.VISIBLE else View.INVISIBLE
-        viewHolder.buttonSetting.setOnClickListener {
-            LocalBroadcastManager.getInstance(context).sendBroadcast(
-                Intent(MainActivity.MAIN_CALLBACK)
-                .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.OPEN_SETTINGS))
+        viewHolder.buttonSetting.apply {
+            visibility = if (position == 0) View.VISIBLE else View.INVISIBLE
+            setOnClickListener {
+                LocalBroadcastManager.getInstance(context).sendBroadcast(
+                    Intent(MainActivity.MAIN_CALLBACK)
+                        .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.OPEN_SETTINGS))
+            }
         }
         viewHolder.recyclerView.adapter = ChannelAdapter(category?.channels, position)
     }
 
     override fun getItemCount(): Int {
-        return categories!!.size
+        return categories?.size ?: 0
     }
 
     fun change(list: ArrayList<Category>?) {
