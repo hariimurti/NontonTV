@@ -40,6 +40,8 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerV
                         .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.OPEN_SETTINGS))
             }
         }
+        //sort channels by name before add to adapter
+        category?.channels?.sortBy { channels -> channels.name?.lowercase() }
         viewHolder.recyclerView.adapter = ChannelAdapter(category?.channels, position)
     }
 
