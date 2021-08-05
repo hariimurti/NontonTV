@@ -10,7 +10,8 @@ import java.io.*
 class PlaylistHelper(val context: Context) {
     private val preferences: Preferences = Preferences(context)
     private val cache: File = File(context.cacheDir, PLAYLIST_JSON)
-    private var local: File = File(context.getExternalFilesDir(null)?.absolutePath?.substringBefore("/Android"), PLAYLIST_JSON)
+    private var local: File = File(context.getExternalFilesDir(null)?.absolutePath
+        ?.substringBefore("/Android"), PLAYLIST_JSON)
     private val select: File = File(preferences.playlistSelect)
 
     companion object {
@@ -32,9 +33,8 @@ class PlaylistHelper(val context: Context) {
     }
 
     val urlPath: String
-        get() = if (mode() == MODE_CUSTOM) preferences.playlistExternal else context.getString(
-            R.string.json_playlist
-        )
+        get() = if (mode() == MODE_CUSTOM) preferences.playlistExternal
+        else context.getString(R.string.json_playlist)
 
     fun writeCache(content: String?) {
         try {
@@ -49,8 +49,6 @@ class PlaylistHelper(val context: Context) {
 
     private fun read(file: File): Playlist? {
         return try {
-            Log.e(TAG, file.exists().toString())
-            Log.e(TAG, file.name)
             if (!file.exists()) throw FileNotFoundException()
             val fr = FileReader(file.absoluteFile)
             val br = BufferedReader(fr)
@@ -60,7 +58,6 @@ class PlaylistHelper(val context: Context) {
                 sb.append(line).append('\n')
             }
             br.close()
-            Log.e(TAG, file.name)
             Gson().fromJson(sb.toString(), Playlist::class.java)
         } catch (e: Exception) {
             if (file == cache) e.printStackTrace()

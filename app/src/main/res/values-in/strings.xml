@@ -47,14 +47,19 @@
 
     <!-- settings -->
     <string name="settings">Pengaturan</string>
-    <string name="launch_at_boot">Jalankan app saat boot</string>
-    <string name="play_last_watched">Putar terakhir dilihat</string>
-    <string name="reload_playlist">Muat ulang Playlist</string>
-    <string name="hint_custom_playlist">kosongkan utk memuat playlist lokal</string>
-    <string name="switch_custom_playlist">Playlist kustom</string>
+    <string name="launch_at_boot">Jalankan App saat Boot</string>
+    <string name="play_last_watched">Putar Terakhir Dilihat</string>
+    <string name="reload_playlist">Muat Ulang Playlist</string>
+    <string name="hint_custom_playlist_path">Lokasi File</string>
+    <string name="hint_custom_playlist_url">URL Tautan</string>
     <string name="toast_screen_mode">Mode Layar : %s</string>
     <string name="text_screen_mode">Layar :</string>
     <string name="merge_playlist">Gabungkan</string>
-    <string name="tab_1">Startup</string>
-    <string name="tab_2">Playlist</string>
+    <string name="tab_1">Mulai</string>
+    <string name="tab_2">Daftar Putar</string>
+    <string name="rb_local_default">Lokal Bawaan</string>
+    <string name="rb_selected_file">File Terpilih</string>
+    <string name="rb_input_url">URL Tautan</string>
+    <string name="pick_file">Pilih File</string>
+    <string name="title_select_file_json">Pilih File Json</string>
 </resources>

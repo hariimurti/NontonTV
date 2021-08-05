@@ -1,5 +1,6 @@
 package net.harimurti.tv.dialog
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -274,13 +275,13 @@ class SettingsDialog : DialogFragment() {
                     root = File(Environment.getExternalStorageDirectory().path)
                     error_dir = File(Environment.getExternalStorageDirectory().path)
                     offset  = File(Environment.getExternalStorageDirectory().path)
-                }else {
+                } else {
                     root = File("/")
                     offset  = File("/mnt/sdcard:/storage")
                 }
             }
             dialog = FilePickerDialog(rootView.context).apply {
-                setTitle("Select File Json")
+                setTitle(getString(R.string.title_select_file_json))
                 setProperties(properties)
                 setDialogSelectionListener {
                     for (path in it) {
@@ -292,28 +293,32 @@ class SettingsDialog : DialogFragment() {
             return rootView
         }
 
+        @SuppressLint("SetTextI18n")
         private fun updateLayout(radioPlaylist: Int) {
             when (radioPlaylist) {
                 0 -> {
                     binding.pickButton.visibility = View.GONE
-                    binding.customPlaylist.isEnabled = false
                     binding.mergePlaylist.visibility = View.VISIBLE
-                    binding.customPlaylist.setText(PlaylistHelper.PLAYLIST_JSON)
-                    binding.textLay.endIconMode = TextInputLayout.END_ICON_NONE
+                    binding.customPlaylist.isEnabled = false
+                    binding.customPlaylist.setText("InternalStorage/${PlaylistHelper.PLAYLIST_JSON}")
+                    binding.customTextField.setHint(R.string.hint_custom_playlist_path)
+                    binding.customTextField.endIconMode = TextInputLayout.END_ICON_NONE
                 }
                 1 -> {
                     binding.pickButton.visibility = View.VISIBLE
-                    binding.customPlaylist.isEnabled = false
                     binding.mergePlaylist.visibility = View.VISIBLE
+                    binding.customPlaylist.isEnabled = false
                     binding.customPlaylist.setText(playlistSelect)
-                    binding.textLay.endIconMode = TextInputLayout.END_ICON_NONE
+                    binding.customTextField.setHint(R.string.hint_custom_playlist_path)
+                    binding.customTextField.endIconMode = TextInputLayout.END_ICON_NONE
                 }
                 else -> {
                     binding.pickButton.visibility = View.GONE
-                    binding.customPlaylist.isEnabled = true
                     binding.mergePlaylist.visibility = View.GONE
+                    binding.customPlaylist.isEnabled = true
                     binding.customPlaylist.setText(playlistExternal)
-                    binding.textLay.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
+                    binding.customTextField.setHint(R.string.hint_custom_playlist_url)
+                    binding.customTextField.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
                     mergePlaylist = false
                 }
             }

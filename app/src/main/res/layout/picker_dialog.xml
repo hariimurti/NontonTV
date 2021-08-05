@@ -94,7 +94,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_margin="5dp"
-            android:text="show hidden"
+            android:text="@string/show_hidden"
             android:gravity="center_vertical"
             android:textColor="@color/color_text"/>
 
