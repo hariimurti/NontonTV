@@ -21,7 +21,6 @@
 
     <style name="SettingsDialogThemeOverlay" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="windowNoTitle">false</item>
-        <item name="windowFixedHeightMajor">500dp</item>
         <item name="android:windowSoftInputMode">adjustPan</item>
     </style>
 
