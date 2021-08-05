@@ -158,11 +158,23 @@ open class MainActivity : AppCompatActivity() {
         // from local storage
         if (playlistHelper.mode() == PlaylistHelper.MODE_LOCAL) {
             val local = playlistHelper.readLocal()
-            if (local == null) {
+            if (local == null || local.categories.isNullOrEmpty()) {
                 showAlertLocalError()
                 return
             }
             setPlaylistToAdapter(local,false)
+            if(!preferences.mergePlaylist)
+                return
+        }
+
+        // from local pick
+        if (playlistHelper.mode() == PlaylistHelper.MODE_SELECT) {
+            val pick = playlistHelper.readSelect()
+            if (pick == null || pick.categories.isNullOrEmpty()) {
+                showAlertLocalError()
+                return
+            }
+            setPlaylistToAdapter(pick,false)
             if(!preferences.mergePlaylist)
                 return
         }
@@ -249,17 +261,21 @@ open class MainActivity : AppCompatActivity() {
 
     private fun showAlertLocalError() {
         askPermissions()
-        val alert = AlertDialog.Builder(this)
-        alert.setTitle(R.string.alert_title_playlist_error)
-            .setMessage(R.string.local_playlist_read_error)
-            .setCancelable(false)
-            .setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
-            .setNegativeButton(getString(R.string.dialog_default)) { _: DialogInterface?, _: Int ->
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.alert_title_playlist_error)
+            setMessage(R.string.local_playlist_read_error)
+            setCancelable(false)
+            setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
+            setNegativeButton(getString(R.string.dialog_default)) { _: DialogInterface?, _: Int ->
                 preferences.useCustomPlaylist = false
                 preferences.mergePlaylist = false
+                preferences.playlistSelect = ""
+                preferences.radioPlaylist = 0
                 updatePlaylist()
             }
-        alert.create().show()
+            create()
+            show()
+        }
     }
 
     private fun showAlertPlaylistError(error: String?) {
@@ -364,7 +380,6 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun openSettings(){
-        SettingsDialog(this)
-            .show(supportFragmentManager.beginTransaction(),null)
+        SettingsDialog().show(supportFragmentManager.beginTransaction(),null)
     }
 }

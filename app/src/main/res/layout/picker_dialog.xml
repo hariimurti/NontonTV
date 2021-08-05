@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    style="?android:attr/background">
+    <LinearLayout
+        android:id="@+id/header"
+        android:background="@color/colorHeader"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="?android:listPreferredItemHeight">
+
+        <ImageView
+            android:layout_marginStart="@dimen/toolbar_image_margin"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_directory_parent"
+            android:scaleType="centerInside"
+            android:background="@null"
+            android:id="@+id/imageView" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@null"
+            android:layout_gravity="center_vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@null">
+
+                <TextView
+                    android:id="@+id/dname"
+                    android:layout_marginStart="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    style="?android:attr/textViewStyle"
+                    android:background="@null"
+                    android:textColor="@color/textColorPrimary"/>
+
+                <TextView
+                    android:id="@+id/title"
+                    android:visibility="invisible"
+                    android:layout_marginStart="16dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    style="?android:attr/textViewStyle"
+                    android:background="@null"
+                    android:textColor="@color/textColorPrimary"/>
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/dir_path"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                style="?android:attr/textViewStyle"
+                android:background="@null"
+                android:textColor="@color/textColorSecondary"/>
+        </LinearLayout>
+    </LinearLayout>
+
+    <include
+        android:id="@+id/fileList"
+        layout="@layout/dialog_file_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/footer"
+        android:layout_below="@+id/header"
+        android:dividerHeight="1dp"
+        tools:listitem="@layout/dialog_file_list_item" />
+
+    <LinearLayout
+        android:id="@+id/footer"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        style="?android:attr/background">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/show_hide"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:text="show hidden"
+            android:gravity="center_vertical"
+            android:textColor="@color/color_text"/>
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/cancel_button_label"
+            android:id="@+id/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="4dp"
+            android:textColor="@color/color_text"/>
+
+        <Button
+            style="?android:attr/borderlessButtonStyle"
+            android:text="@string/choose_button_label"
+            android:id="@+id/select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:padding="4dp"/>
+    </LinearLayout>
+</RelativeLayout>

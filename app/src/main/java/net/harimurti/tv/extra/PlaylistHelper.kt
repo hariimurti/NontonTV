@@ -10,7 +10,8 @@ import java.io.*
 class PlaylistHelper(val context: Context) {
     private val preferences: Preferences = Preferences(context)
     private val cache: File = File(context.cacheDir, PLAYLIST_JSON)
-    private var local: File = File(context.getExternalFilesDir(null)?.absolutePath?.substringBefore("/Android"), preferences.playlistExternal)
+    private var local: File = File(context.getExternalFilesDir(null)?.absolutePath?.substringBefore("/Android"), PLAYLIST_JSON)
+    private val select: File = File(preferences.playlistSelect)
 
     companion object {
         private const val TAG = "PlaylistHelper"
@@ -18,11 +19,16 @@ class PlaylistHelper(val context: Context) {
         const val MODE_DEFAULT = 0
         const val MODE_CUSTOM = 1
         const val MODE_LOCAL = 2
+        const val MODE_SELECT = 3
     }
 
     fun mode(): Int {
-        if (!preferences.useCustomPlaylist) return MODE_DEFAULT
-        return if (preferences.playlistExternal.startsWith("http")) MODE_CUSTOM else MODE_LOCAL
+        return if (!preferences.useCustomPlaylist) MODE_DEFAULT
+        else when (preferences.radioPlaylist) {
+            0 -> MODE_LOCAL
+            1 -> MODE_SELECT
+            else -> MODE_CUSTOM
+        }
     }
 
     val urlPath: String
@@ -69,5 +75,9 @@ class PlaylistHelper(val context: Context) {
 
     fun readLocal(): Playlist? {
         return read(local)
+    }
+
+    fun readSelect(): Playlist? {
+        return read(select)
     }
 }
