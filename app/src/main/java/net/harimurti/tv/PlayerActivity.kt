@@ -196,6 +196,10 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun switchChannel(mode: Int) {
+        switchChannel(mode, false)
+    }
+
+    private fun switchChannel(mode: Int, lastCh: Boolean) {
         val catId = playlist?.categories?.indexOf(category) as Int
         val chId = category?.channels?.indexOf(current) as Int
         when(mode) {
@@ -203,7 +207,8 @@ class PlayerActivity : AppCompatActivity() {
                 val previous = catId - 1
                 if (previous > -1) {
                     category = playlist?.categories?.get(previous)
-                    current = category?.channels!![0]
+                    current = if (lastCh) category?.channels?.get(category?.channels?.size?.minus(1) ?: 0)
+                    else category?.channels?.get(0)
                 }
                 else return
             }
@@ -211,24 +216,24 @@ class PlayerActivity : AppCompatActivity() {
                 val next = catId + 1
                 if (next < playlist?.categories?.size ?: 0) {
                     category = playlist?.categories?.get(next)
-                    current = category?.channels!![0]
+                    current = category?.channels?.get(0)
                 }
                 else return
             }
             CHANNEL_PREVIOUS -> {
                 val previous = chId - 1
                 if (previous > -1) {
-                    current = category?.channels!![previous]
+                    current = category?.channels?.get(previous)
                 }
                 else {
-                    switchChannel(CATEGORY_UP)
+                    switchChannel(CATEGORY_UP, true)
                     return
                 }
             }
             CHANNEL_NEXT -> {
                 val next = chId + 1
                 if (next < category?.channels?.size ?: 0) {
-                    current = category?.channels!![next]
+                    current = category?.channels?.get(next)
                 }
                 else {
                     switchChannel(CATEGORY_DOWN)
