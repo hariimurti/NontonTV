@@ -1280,20 +1280,28 @@
       "name": "Malaysia",
       "channels": [
         {
-          "name": "ASTRO AWANI",
+          "name": "8TV",
+          "stream_url": "http://50.7.161.82:8278/streams/d/TV8/playlist.m3u8"
+        },
+        {
+          "name": "Astro Awani",
           "stream_url": "http://50.7.161.82:8278/streams/d/Awani/playlist.m3u8"
         },
         {
-          "name": "ASTRO CERIA",
-          "stream_url": "https://dl.dropboxusercontent.com/s/sbqajs5q2jh5cys/daaitv.m3u8?dl=0"
+          "name": "Astro Ceria",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Ceria/playlist.m3u8"
         },
         {
-          "name": "ASTRO CITRA",
+          "name": "Astro Citra",
           "stream_url": "http://50.7.161.82:8278/streams/d/Citra/playlist.m3u8"
         },
         {
-          "name": "ASTRO OASIS",
+          "name": "Astro Oasis",
           "stream_url": "http://50.7.161.82:8278/streams/d/Oasis/playlist.m3u8"
+        },
+        {
+          "name": "Astro Shuang Xing",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Shuangxing/playlist.m3u8"
         },
         {
           "name": "Drama Sangat",
@@ -1304,12 +1312,28 @@
           "stream_url": "http://50.7.161.82:8278/streams/d/Naura/playlist.m3u8"
         },
         {
+          "name": "NTV 7",
+          "stream_url": "http://50.7.161.82:8278/streams/d/Rtmntv7/playlist.m3u8"
+        },
+        {
           "name": "TV Alhijrah",
           "stream_url": "http://50.7.161.82:8278/streams/d/Alhijrah/playlist.m3u8"
         },
         {
-          "name": "TV6",
-          "stream_url": "https://rtm6.secureswiftcontent.com/Origin03/ngrp:RTM3/manifest.mpd"
+          "name": "TV1",
+          "stream_url": "http://50.7.161.82:8278/streams/d/TV1/playlist.m3u8"
+        },
+        {
+          "name": "TV2",
+          "stream_url": "http://50.7.161.82:8278/streams/d/TV2/playlist.m3u8"
+        },
+        {
+          "name": "TV3",
+          "stream_url": "http://50.7.161.82:8278/streams/d/TV3/playlist.m3u8"
+        },
+        {
+          "name": "TV9",
+          "stream_url": "http://50.7.161.82:8278/streams/d/TV9/playlist.m3u8"
         }
       ]
     }
