@@ -2,6 +2,7 @@ package net.harimurti.tv.adapter
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,7 +42,11 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerV
             }
         }
         //sort channels by name before add to adapter
-        category?.channels?.sortBy { channels -> channels.name?.lowercase() }
+        category?.channels?.sortBy { channel -> channel.name?.lowercase() }
+        //remove channels with empty streamurl
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            category?.channels?.removeIf { channel -> channel.stream_url.isNullOrBlank() }
+        }
         viewHolder.recyclerView.adapter = ChannelAdapter(category?.channels, position)
     }
 
