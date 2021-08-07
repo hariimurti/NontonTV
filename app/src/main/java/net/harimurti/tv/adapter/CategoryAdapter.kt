@@ -32,9 +32,7 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerV
         //sort channels by name before add to adapter
         category?.channels?.sortBy { channel -> channel.name?.lowercase() }
         //remove channels with empty streamurl
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            category?.channels?.removeIf { channel -> channel.stream_url.isNullOrBlank() }
-        }
+        category?.channels?.removeAll { channel -> channel.stream_url.isNullOrBlank() }
         viewHolder.recyclerView.adapter = ChannelAdapter(category?.channels, position)
     }
 
