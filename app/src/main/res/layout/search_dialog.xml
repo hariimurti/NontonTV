@@ -68,7 +68,6 @@
             android:layout_height="wrap_content"
             android:text="@android:string/cancel"
             android:layout_alignParentBottom="true"
-            android:nextFocusUp="@id/search_input"
             style="?android:attr/borderlessButtonStyle"/>
 
     </RelativeLayout>
