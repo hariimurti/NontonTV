@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/search_input"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="8dp"
+                android:hint="Search Channel"
+                android:lines="1"
+                android:maxLines="1"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:minHeight="50dp"
+                android:paddingStart="38dp"
+                android:paddingEnd="38dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/search_reset"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/ic_clear_24"
+                app:layout_constraintBottom_toBottomOf="@+id/search_input"
+                app:layout_constraintEnd_toEndOf="@+id/search_input"
+                app:layout_constraintTop_toTopOf="@+id/search_input"
+                android:focusable="true"
+                android:visibility="gone"
+                android:background="?android:attr/selectableItemBackground"
+                tools:ignore="ContentDescription" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:srcCompat="@drawable/ic_search_24"
+                app:layout_constraintBottom_toBottomOf="@+id/search_input"
+                app:layout_constraintStart_toStartOf="@+id/search_input"
+                app:layout_constraintTop_toTopOf="@+id/search_input"
+                tools:ignore="ContentDescription" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <GridView
+            android:id="@+id/search_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/search_cancel"
+            android:layout_below="@id/search_layout"
+            android:layout_marginVertical="10dp"
+            android:columnWidth="120dp"
+            android:gravity="center"
+            android:horizontalSpacing="5dp"
+            android:numColumns="auto_fit"
+            android:padding="4dp"
+            android:scrollbars="none"
+            android:smoothScrollbar="true"
+            android:stretchMode="columnWidth"
+            android:verticalSpacing="5dp"
+            tools:listitem="@layout/item_channel"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/search_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@android:string/cancel"
+            android:layout_alignParentBottom="true"
+            android:nextFocusUp="@id/search_input"
+            style="?android:attr/borderlessButtonStyle"/>
+
+    </RelativeLayout>
+
+</layout>
