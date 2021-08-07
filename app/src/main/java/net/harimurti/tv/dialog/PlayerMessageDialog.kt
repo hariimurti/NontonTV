@@ -35,6 +35,7 @@ class PlayerMessageDialog(val context: Context) {
                 sendRetryPlayback()
             }
             binding?.btnClose?.setOnClickListener {
+                dismiss()
                 sendClosePlayer()
             }
         }
