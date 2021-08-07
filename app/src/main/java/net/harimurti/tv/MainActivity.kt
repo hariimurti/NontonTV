@@ -122,6 +122,15 @@ open class MainActivity : AppCompatActivity() {
             preferences.lastVersionCode = BuildConfig.VERSION_CODE
             getContributors()
         }
+
+        //search button
+        binding.searchButton.setOnClickListener{
+            openSearch()
+        }
+        //setting button
+        binding.mainSettings.setOnClickListener{
+            openSettings()
+        }
     }
 
     private fun setPlaylistToAdapter(playlist: Playlist, isMerge: Boolean) {
@@ -383,5 +392,9 @@ open class MainActivity : AppCompatActivity() {
 
     private fun openSettings(){
         SettingsDialog().show(supportFragmentManager.beginTransaction(),null)
+    }
+
+    private fun openSearch() {
+        TODO("Not yet implemented")
     }
 }

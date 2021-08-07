@@ -1,16 +1,12 @@
 package net.harimurti.tv.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.os.Build
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
-import net.harimurti.tv.MainActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.model.Category
 
@@ -19,7 +15,6 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerV
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val textView: TextView = itemView.findViewById(R.id.text_category)
-        val buttonSetting: ImageButton = itemView.findViewById(R.id.main_settings)
         val recyclerView: RecyclerView = itemView.findViewById(R.id.rv_channels)
     }
 
@@ -33,14 +28,7 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) : RecyclerV
     override fun onBindViewHolder(viewHolder: CategoryAdapter.ViewHolder, position: Int) {
         val category: Category? = categories?.get(position)
         viewHolder.textView.text = category?.name
-        viewHolder.buttonSetting.apply {
-            visibility = if (position == 0) View.VISIBLE else View.INVISIBLE
-            setOnClickListener {
-                LocalBroadcastManager.getInstance(context).sendBroadcast(
-                    Intent(MainActivity.MAIN_CALLBACK)
-                        .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.OPEN_SETTINGS))
-            }
-        }
+
         //sort channels by name before add to adapter
         category?.channels?.sortBy { channel -> channel.name?.lowercase() }
         //remove channels with empty streamurl
