@@ -76,8 +76,8 @@ class SearchDialog : DialogFragment() {
             layoutManager = GridLayoutManager(context,spanColumn())
         }
 
-        // button cancel
-        binding.searchCancel.apply {
+        //button close
+        binding.searchClose.apply {
             setOnClickListener {
                 dismiss()
             }

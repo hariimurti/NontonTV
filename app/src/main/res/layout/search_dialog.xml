@@ -57,7 +57,7 @@
             android:id="@+id/search_list"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:layout_above="@id/search_cancel"
+            android:layout_above="@id/search_close"
             android:layout_below="@id/search_layout"
             android:layout_centerHorizontal="true"
             android:layout_margin="8dp"
@@ -70,11 +70,12 @@
             tools:visibility="visible" />
 
         <Button
-            android:id="@+id/search_cancel"
-            android:layout_width="match_parent"
+            android:id="@+id/search_close"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@android:string/cancel"
+            android:text="@string/btn_close"
             android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
             style="?android:attr/borderlessButtonStyle"/>
 
     </RelativeLayout>
