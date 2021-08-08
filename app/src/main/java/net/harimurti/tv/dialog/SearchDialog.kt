@@ -37,7 +37,7 @@ class SearchDialog : DialogFragment() {
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val dialog = AppCompatDialog(activity, R.style.SettingsDialogThemeOverlay)
-        dialog.setTitle("Search Channel")
+        dialog.setTitle(R.string.search_channel)
         dialog.setCanceledOnTouchOutside(false)
 
         return dialog
