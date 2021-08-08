@@ -18,7 +18,8 @@
             android:layout_height="match_parent"
             android:src="@mipmap/ic_directory_parent"
             android:scaleType="centerInside"
-            android:background="@null"
+            android:focusable="true"
+            android:background="?android:attr/selectableItemBackground"
             android:id="@+id/imageView" />
 
         <LinearLayout

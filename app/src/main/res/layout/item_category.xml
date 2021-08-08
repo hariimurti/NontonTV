@@ -8,39 +8,20 @@
     android:paddingTop="@dimen/cat_layout_padding_top"
     android:paddingBottom="@dimen/cat_layout_padding_bottom">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:id="@+id/text_category"
-            android:layout_width="@dimen/cat_name_width"
-            android:layout_height="wrap_content"
-            android:paddingTop="@dimen/cat_name_padding_top_bottom"
-            android:paddingBottom="@dimen/cat_name_padding_top_bottom"
-            android:paddingStart="@dimen/cat_name_padding_top_bottom"
-            android:paddingEnd="@dimen/cat_name_padding_end"
-            android:ellipsize="end"
-            android:textStyle="bold"
-            android:textAllCaps="true"
-            android:textSize="@dimen/cat_text_size"
-            android:background="@drawable/corner_right"
-            tools:text="CATEGORY_NAME" />
-
-        <ImageButton
-            android:id="@+id/main_settings"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="@dimen/cat_setting_margin_end"
-            android:layout_alignParentEnd="true"
-            android:layout_alignTop="@id/text_category"
-            android:layout_alignBottom="@id/text_category"
-            android:background="@color/btn_settings_bg"
-            android:src="@drawable/exo_ic_settings"
-            android:visibility="invisible"
-            tools:ignore="ContentDescription" />
-
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/text_category"
+        android:layout_width="@dimen/cat_name_width"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/cat_name_padding_top_bottom"
+        android:paddingBottom="@dimen/cat_name_padding_top_bottom"
+        android:paddingStart="@dimen/cat_name_padding_top_bottom"
+        android:paddingEnd="@dimen/cat_name_padding_end"
+        android:ellipsize="end"
+        android:textStyle="bold"
+        android:textAllCaps="true"
+        android:textSize="@dimen/cat_text_size"
+        android:background="@drawable/corner_right"
+        tools:text="CATEGORY_NAME" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_channels"
