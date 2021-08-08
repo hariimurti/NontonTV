@@ -74,7 +74,6 @@ class SearchDialog : DialogFragment() {
         binding.searchList.apply {
             adapter = searchAdapter
             layoutManager = GridLayoutManager(context,spanColumn())
-
         }
 
         // button cancel

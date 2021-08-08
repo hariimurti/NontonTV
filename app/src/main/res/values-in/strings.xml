@@ -18,6 +18,7 @@
     <string name="mode_fill">Mengisi</string>
     <string name="mode_zoom">Perbesar</string>
     <string name="must_allow_permissions">Kamu harus mengizinkan semua permintaan izin agar aplikasi ini berfungsi dengan baik!</string>
+    <string name="search_channel">Cari Siaran</string>
 
     <!-- alert playlist error -->
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>
