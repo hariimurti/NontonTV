@@ -87,13 +87,6 @@ open class MainActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(broadcastReceiver, IntentFilter(MAIN_CALLBACK))
 
-        // launch player if playlastwatched is true
-        if (preferences.playLastWatched && PlayerActivity.isFirst) {
-            val intent = Intent(this, PlayerActivity::class.java)
-            intent.putExtra(PlayData.VALUE, preferences.watched)
-            this.startActivity(intent)
-        }
-
         // volley library
         var stack: BaseHttpStack = HurlStack()
         try {
@@ -158,7 +151,16 @@ open class MainActivity : AppCompatActivity() {
         if (Playlist.loaded != null)
             Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
 
+        // write cache
         Playlist.loaded = playlistSet
+        playlistHelper.writeCache(playlistSet)
+
+        // launch player if playlastwatched is true
+        if (preferences.playLastWatched && PlayerActivity.isFirst) {
+            val intent = Intent(this, PlayerActivity::class.java)
+            intent.putExtra(PlayData.VALUE, preferences.watched)
+            this.startActivity(intent)
+        }
     }
 
     private fun updatePlaylist() {
@@ -195,7 +197,6 @@ open class MainActivity : AppCompatActivity() {
             { response: String? ->
                 try {
                     val newPls = Gson().fromJson(response, Playlist::class.java)
-                    playlistHelper.writeCache(response)
                     setPlaylistToAdapter(newPls,preferences.mergePlaylist)
                 } catch (error: JsonSyntaxException) {
                     showAlertPlaylistError(error.message)

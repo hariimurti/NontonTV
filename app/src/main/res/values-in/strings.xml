@@ -29,6 +29,7 @@
     <string name="player_playback_error">Kesalahan Pemutaran</string>
     <string name="player_no_playlist">Kita punya masalah dgn playlist</string>
     <string name="player_no_channel">Tidak ada saluran utk diputar</string>
+    <string name="player_playdata_error">Tidak bisa memprocess data putar</string>
     <string name="playlist_local_read_error">Tidak bisa memuat NontonTV.json dari penyimpanan internal!</string>
     <string name="playlist_selected_read_error">Tidak bisa memuat json:\n%s\n\nPastikan menggunakan format NontonTV!</string>
 

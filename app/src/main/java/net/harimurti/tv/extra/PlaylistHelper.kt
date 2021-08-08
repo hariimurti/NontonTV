@@ -47,6 +47,10 @@ class PlaylistHelper(val context: Context) {
         }
     }
 
+    fun writeCache(playlist: Playlist) {
+        writeCache(Gson().toJson(playlist))
+    }
+
     private fun read(file: File): Playlist? {
         return try {
             if (!file.exists()) throw FileNotFoundException()

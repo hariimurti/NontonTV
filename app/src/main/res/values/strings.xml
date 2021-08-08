@@ -40,6 +40,7 @@
     <string name="player_playback_error">Playback Error</string>
     <string name="player_no_playlist">We have problem with the playlist</string>
     <string name="player_no_channel">No channels to play</string>
+    <string name="player_playdata_error">Can\'t process play data</string>
     <string name="playlist_local_read_error">Can\'t load NontonTV.json from internal storage!</string>
     <string name="playlist_selected_read_error">Can\'t load json :\n%s\n\nMake sure to use the NontonTV format!</string>
 

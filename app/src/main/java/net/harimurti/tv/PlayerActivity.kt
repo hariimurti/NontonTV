@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowInsets
@@ -46,7 +47,6 @@ class PlayerActivity : AppCompatActivity() {
     private var isTelevision = false
     private lateinit var preferences: Preferences
     private lateinit var network: Network
-    private var playlist: Playlist? = null
     private var category: Category? = null
     private var current: Channel? = null
     private lateinit var player: SimpleExoPlayer
@@ -92,34 +92,43 @@ class PlayerActivity : AppCompatActivity() {
         network = Network(this)
         messageDialog = PlayerMessageDialog(this)
 
-        // get playlist
-        playlist = if (preferences.playLastWatched && isFirst) PlaylistHelper(this).readCache() else Playlist.loaded
+        // set this is not first time
         isFirst = false
 
         // verify playlist
-        if (playlist == null) {
+        if (Playlist.loaded == null) {
+            Log.e("PLAYER", getString(R.string.player_no_playlist))
             Toast.makeText(this, R.string.player_no_playlist, Toast.LENGTH_SHORT).show()
             this.finish()
             return
         }
 
-        // set channels
-        val parcel: PlayData? = intent.getParcelableExtra(PlayData.VALUE)
-        category = parcel.let { playlist?.categories?.get(it?.catId as Int) }
-        current = parcel.let { category?.channels?.get(it?.chId as Int) }
+        // get categories & channel to play
+        try {
+            val parcel: PlayData? = intent.getParcelableExtra(PlayData.VALUE)
+            category = parcel.let { Playlist.loaded?.categories?.get(it?.catId as Int) }
+            current = parcel.let { category?.channels?.get(it?.chId as Int) }
+        }
+        catch (e: Exception) {
+            Log.e("PLAYER", getString(R.string.player_playdata_error))
+            Toast.makeText(this, R.string.player_playdata_error, Toast.LENGTH_SHORT).show()
+            this.finish()
+            return
+        }
 
-        // set listener
-        bindingListener()
-
-        // verify stream_url
-        if (current == null) {
+        // verify
+        if (category == null || current == null) {
+            Log.e("PLAYER", getString(R.string.player_no_channel))
             Toast.makeText(this, R.string.player_no_channel, Toast.LENGTH_SHORT).show()
             this.finish()
             return
         }
-        else {
-            playChannel()
-        }
+
+        // set listener
+        bindingListener()
+
+        // play the channel
+        playChannel()
 
         // local broadcast receiver to update playlist
         LocalBroadcastManager.getInstance(this)
@@ -147,7 +156,7 @@ class PlayerActivity : AppCompatActivity() {
         bindingControl.channelName.text = current?.name
 
         // define mediaitem
-        val drmLicense = playlist?.drm_licenses?.firstOrNull {
+        val drmLicense = Playlist.loaded?.drm_licenses?.firstOrNull {
             current?.drm_name?.equals(it.drm_name) == true
         }?.drm_url
         mediaItem = if (drmLicense?.isNotEmpty() == true) {
@@ -200,13 +209,13 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun switchChannel(mode: Int, lastCh: Boolean) {
-        val catId = playlist?.categories?.indexOf(category) as Int
+        val catId = Playlist.loaded?.categories?.indexOf(category) as Int
         val chId = category?.channels?.indexOf(current) as Int
         when(mode) {
             CATEGORY_UP -> {
                 val previous = catId - 1
                 if (previous > -1) {
-                    category = playlist?.categories?.get(previous)
+                    category = Playlist.loaded?.categories?.get(previous)
                     current = if (lastCh) category?.channels?.get(category?.channels?.size?.minus(1) ?: 0)
                     else category?.channels?.get(0)
                 }
@@ -214,8 +223,8 @@ class PlayerActivity : AppCompatActivity() {
             }
             CATEGORY_DOWN -> {
                 val next = catId + 1
-                if (next < playlist?.categories?.size ?: 0) {
-                    category = playlist?.categories?.get(next)
+                if (next < Playlist.loaded?.categories?.size ?: 0) {
+                    category = Playlist.loaded?.categories?.get(next)
                     current = category?.channels?.get(0)
                 }
                 else return
@@ -273,7 +282,7 @@ class PlayerActivity : AppCompatActivity() {
                 Player.STATE_READY -> {
                     errorCounter = 0
                     messageDialog.dismiss()
-                    val catId = playlist?.categories?.indexOf(category) as Int
+                    val catId = Playlist.loaded?.categories?.indexOf(category) as Int
                     val chId = category?.channels?.indexOf(current) as Int
                     preferences.watched = PlayData(catId, chId)
                 }
