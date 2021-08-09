@@ -4,61 +4,54 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import android.widget.Filter
 import android.widget.Filterable
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
+import net.harimurti.tv.BR
 import net.harimurti.tv.PlayerActivity
 import net.harimurti.tv.R
+import net.harimurti.tv.databinding.ItemChannelBinding
+import net.harimurti.tv.extra.ChannelClickListener
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 
-class SearchAdapter (val channels: ArrayList<Channel>, private var channelsId: ArrayList<String>) :
-    RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterable {
+class SearchAdapter (val channels: ArrayList<Channel>) :
+    RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterable, ChannelClickListener {
     lateinit var context: Context
     var channelsFilter: ArrayList<Channel> = ArrayList()
 
-    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val button: Button = itemView.findViewById(R.id.btn_play)
+    class ViewHolder(var itemChBinding: ItemChannelBinding) :
+        RecyclerView.ViewHolder(itemChBinding.root) {
+        fun bind(obj: Any?) {
+            itemChBinding.setVariable(BR.chModel,obj)
+            itemChBinding.executePendingBindings()
+        }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         context = parent.context
-        val inflater = LayoutInflater.from(context)
-        val itemView = inflater.inflate(R.layout.item_channel, parent, false)
-        return ViewHolder(itemView)
+        val binding: ItemChannelBinding = DataBindingUtil.inflate(
+            LayoutInflater.from(context),R.layout.item_channel,parent,false)
+        return ViewHolder(binding)
     }
 
-    override fun onBindViewHolder(viewHolder: SearchAdapter.ViewHolder, position: Int) {
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val channel = channelsFilter[position]
-        val chName = channel.name!!
-
-        viewHolder.button.apply {
-            text = chName
-            setOnClickListener {
-                for (cId in channelsId){
-                    if (cId.split("/")[2].lowercase() == chName.lowercase()) {
-                        val catId:Int = cId.split("/")[0].toInt()
-                        val chId:Int = cId.split("/")[1].toInt()
-
-                        val intent = Intent(context, PlayerActivity::class.java)
-                        intent.putExtra(PlayData.VALUE, PlayData(catId, chId))
-                        context.startActivity(intent)
-                    }
-                }
-            }
+        viewHolder.bind(channel)
+        viewHolder.itemChBinding.chClickListener = this
+        viewHolder.itemChBinding.btnPlay.apply {
             setOnFocusChangeListener { _, hasFocus ->
                 if (hasFocus) {
                     val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.zoom_120)
-                    viewHolder.button.startAnimation(anim)
+                    viewHolder.itemChBinding.btnPlay.startAnimation(anim)
                     anim.fillAfter = true
                 } else {
                     val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.zoom_100)
-                    viewHolder.button.startAnimation(anim)
+                    viewHolder.itemChBinding.btnPlay.startAnimation(anim)
                     anim.fillAfter = true
                 }
             }
@@ -103,5 +96,11 @@ class SearchAdapter (val channels: ArrayList<Channel>, private var channelsId: A
                 }
             }
         }
+    }
+
+    override fun channelClicked(ch: Channel?) {
+        val intent = Intent(context, PlayerActivity::class.java)
+        intent.putExtra(PlayData.VALUE, PlayData(ch?.cat_id!!, ch.ch_id!!))
+        context.startActivity(intent)
     }
 }

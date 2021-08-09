@@ -134,15 +134,24 @@ open class MainActivity : AppCompatActivity() {
             Playlist.loaded!!.drm_licenses?.let { playlistSet.drm_licenses?.addAll(it) }
         }
 
+        //set cat_id and ch_id
+        for (catId in playlistSet.categories?.indices!!) {
+            //sort channels by name
+            playlistSet.categories!![catId].channels!!.sortBy { channel -> channel.name?.lowercase() }
+            //remove channels with empty streamurl
+            playlistSet.categories!![catId].channels!!.removeAll { channel -> channel.stream_url.isNullOrBlank() }
+
+            for (chId in playlistSet.categories!![catId].channels!!.indices) {
+                // add catId
+                playlistSet.categories!![catId].channels!![chId].cat_id = catId
+                // add chId
+                playlistSet.categories!![catId].channels!![chId].ch_id = chId
+            }
+        }
+
         // set new playlist
-        if (binding.rvCategory.adapter == null) {
-            binding.rvCategory.adapter = CategoryAdapter(playlistSet.categories)
-            binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        }
-        else {
-            val adapter = binding.rvCategory.adapter as CategoryAdapter
-            adapter.change(playlistSet.categories)
-        }
+        binding.catAdapter = CategoryAdapter(playlistSet.categories)
+        binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         // end the loading
         loading.dismiss()
