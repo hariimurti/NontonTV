@@ -77,9 +77,6 @@ open class MainActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
 
-        // show loading message
-        loading.show(getString(R.string.loading))
-
         // ask all premissions need
         askPermissions()
 
@@ -153,26 +150,30 @@ open class MainActivity : AppCompatActivity() {
         binding.catAdapter = CategoryAdapter(playlistSet.categories)
         binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
-        // end the loading
-        loading.dismiss()
-        binding.swipeContainer.isRefreshing = false
-
-        if (Playlist.loaded != null)
-            Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
-
         // write cache
         Playlist.loaded = playlistSet
         playlistHelper.writeCache(playlistSet)
+
+        // end the loading
+        loading.dismiss()
+        binding.swipeContainer.isRefreshing = false
 
         // launch player if playlastwatched is true
         if (preferences.playLastWatched && PlayerActivity.isFirst) {
             val intent = Intent(this, PlayerActivity::class.java)
             intent.putExtra(PlayData.VALUE, preferences.watched)
             this.startActivity(intent)
+            return
         }
+
+        if (Playlist.loaded != null)
+            Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
     }
 
     private fun updatePlaylist() {
+        // show loading message
+        loading.show(getString(R.string.loading))
+
         // from local storage
         if (playlistHelper.mode() == PlaylistHelper.MODE_LOCAL) {
             val local = playlistHelper.readLocal()
