@@ -103,7 +103,7 @@ open class MainActivity : AppCompatActivity() {
         if (Playlist.loaded == null) {
             updatePlaylist()
         } else {
-            setPlaylistToAdapter(Playlist.loaded!!,false)
+            setPlaylistToAdapter(Playlist.loaded!!)
         }
 
         // check new release
@@ -127,9 +127,9 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setPlaylistToAdapter(playlist: Playlist, isMerge: Boolean) {
-        val playlistSet: Playlist = playlist
-        if(isMerge && Playlist.loaded != null){
+    private fun setPlaylistToAdapter(playlistSet: Playlist) {
+        // set playlist if merge
+        if(preferences.mergePlaylist && Playlist.loaded != null){
             Playlist.loaded!!.categories?.let { playlistSet.categories?.addAll(it) }
             Playlist.loaded!!.drm_licenses?.let { playlistSet.drm_licenses?.addAll(it) }
         }
@@ -173,9 +173,6 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun updatePlaylist() {
-        //reinit helper for new name
-        playlistHelper = PlaylistHelper(this)
-
         // from local storage
         if (playlistHelper.mode() == PlaylistHelper.MODE_LOCAL) {
             val local = playlistHelper.readLocal()
@@ -183,9 +180,12 @@ open class MainActivity : AppCompatActivity() {
                 showAlertLocalError(null)
                 return
             }
-            setPlaylistToAdapter(local,false)
-            if(!preferences.mergePlaylist)
+            if(preferences.mergePlaylist) {
+                Playlist.loaded = local
+            }else{
+                setPlaylistToAdapter(local)
                 return
+            }
         }
 
         // from local pick
@@ -195,9 +195,12 @@ open class MainActivity : AppCompatActivity() {
                 showAlertLocalError(preferences.playlistSelect)
                 return
             }
-            setPlaylistToAdapter(pick,false)
-            if(!preferences.mergePlaylist)
+            if(preferences.mergePlaylist) {
+                Playlist.loaded = pick
+            }else{
+                setPlaylistToAdapter(pick)
                 return
+            }
         }
 
         // from internet
@@ -206,7 +209,7 @@ open class MainActivity : AppCompatActivity() {
             { response: String? ->
                 try {
                     val newPls = Gson().fromJson(response, Playlist::class.java)
-                    setPlaylistToAdapter(newPls,preferences.mergePlaylist)
+                    setPlaylistToAdapter(newPls)
                 } catch (error: JsonSyntaxException) {
                     showAlertPlaylistError(error.message)
                 }
@@ -309,7 +312,7 @@ open class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
         val cache = playlistHelper.readCache()
         if (cache != null) {
-            alert.setNegativeButton(R.string.dialog_cached) { _: DialogInterface?, _: Int -> setPlaylistToAdapter(cache,false) }
+            alert.setNegativeButton(R.string.dialog_cached) { _: DialogInterface?, _: Int -> setPlaylistToAdapter(cache) }
         }
         alert.create().show()
     }
