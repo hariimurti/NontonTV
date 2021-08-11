@@ -20,10 +20,7 @@ import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.VolleyError
-import com.android.volley.toolbox.BaseHttpStack
-import com.android.volley.toolbox.HurlStack
 import com.android.volley.toolbox.StringRequest
-import com.android.volley.toolbox.Volley
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import net.harimurti.tv.adapter.CategoryAdapter
@@ -41,7 +38,7 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var preferences: Preferences
     private lateinit var playlistHelper: PlaylistHelper
-    private lateinit var volley: RequestQueue
+    private lateinit var request: RequestQueue
     private lateinit var loading: ProgressDialog
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -70,6 +67,7 @@ open class MainActivity : AppCompatActivity() {
         preferences = Preferences(this)
         playlistHelper = PlaylistHelper(this)
         loading = ProgressDialog(this)
+        request = VolleyRequestQueue.create(this)
 
         isTelevision = UiMode(this).isTelevision()
         if (isTelevision) {
@@ -83,18 +81,6 @@ open class MainActivity : AppCompatActivity() {
         // local broadcast receiver to update playlist
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(broadcastReceiver, IntentFilter(MAIN_CALLBACK))
-
-        // volley library
-        var stack: BaseHttpStack = HurlStack()
-        try {
-            val factory = TLSSocketFactory(this)
-            factory.trustAllHttps()
-            stack = HurlStack(null, factory)
-        } catch (e: Exception) {
-            Log.e("MainApp", "Could not trust all HTTPS connection!", e)
-        } finally {
-            volley = Volley.newRequestQueue(this, stack)
-        }
 
         // playlist update
         if (Playlist.loaded == null) {
@@ -245,8 +231,8 @@ open class MainActivity : AppCompatActivity() {
             }
             showAlertPlaylistError(message)
         }
-        volley.cache.clear()
-        volley.add(stringRequest)
+        request.cache.clear()
+        request.add(stringRequest)
     }
 
     private fun checkNewRelease() {
@@ -275,7 +261,7 @@ open class MainActivity : AppCompatActivity() {
                 }
             }, null
         )
-        volley.add(stringRequest)
+        request.add(stringRequest)
     }
 
     private fun getContributors() {
@@ -297,7 +283,7 @@ open class MainActivity : AppCompatActivity() {
                     }
                 }, null
             )
-            volley.add(stringRequest)
+            request.add(stringRequest)
         }
 
     private fun showAlertLocalError(filepath: String?) {
