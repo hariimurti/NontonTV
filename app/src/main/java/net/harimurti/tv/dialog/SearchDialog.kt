@@ -16,13 +16,11 @@ import net.harimurti.tv.databinding.SearchDialogBinding
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.Playlist
 
-@Suppress("DEPRECATION")
 class SearchDialog : DialogFragment() {
     private var _binding : SearchDialogBinding? = null
     private val binding get() = _binding!!
     lateinit var searchAdapter: SearchAdapter
     private val channels: ArrayList<Channel> = ArrayList()
-    private var channelsId: ArrayList<String> = ArrayList()
 
     override fun onStart() {
         super.onStart()
@@ -72,7 +70,6 @@ class SearchDialog : DialogFragment() {
 
         //RecyclerView
         binding.searchList.apply {
-            adapter = searchAdapter
             layoutManager = GridLayoutManager(context,spanColumn())
         }
 
@@ -93,17 +90,17 @@ class SearchDialog : DialogFragment() {
     private fun setAdapter(){
         val playlist = Playlist.loaded
         for (catId in playlist?.categories?.indices!!) {
-            for ((chId, ch) in playlist.categories!![catId].channels!!.withIndex()) {
+            for (ch in playlist.categories!![catId].channels!!) {
                 channels.add(ch)
-                channelsId.add("$catId/$chId/${ch.name}")
             }
         }
 
-        searchAdapter = SearchAdapter(channels,channelsId)
+        searchAdapter = SearchAdapter(channels)
+        binding.searchAdapter = searchAdapter
     }
 
     private fun spanColumn(): Int {
         val screenWidthDp = resources.displayMetrics.widthPixels / resources.displayMetrics.density
-        return (screenWidthDp / 130F + 0.5).toInt()
+        return (screenWidthDp / 150 + 0.5).toInt()
     }
 }

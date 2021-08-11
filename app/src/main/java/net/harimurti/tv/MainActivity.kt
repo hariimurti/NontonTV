@@ -77,9 +77,6 @@ open class MainActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
 
-        // show loading message
-        loading.show(getString(R.string.loading))
-
         // ask all premissions need
         askPermissions()
 
@@ -103,7 +100,7 @@ open class MainActivity : AppCompatActivity() {
         if (Playlist.loaded == null) {
             updatePlaylist()
         } else {
-            setPlaylistToAdapter(Playlist.loaded!!,false)
+            setPlaylistToAdapter(Playlist.loaded!!)
         }
 
         // check new release
@@ -127,45 +124,55 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setPlaylistToAdapter(playlist: Playlist, isMerge: Boolean) {
-        val playlistSet: Playlist = playlist
-        if(isMerge && Playlist.loaded != null){
+    private fun setPlaylistToAdapter(playlistSet: Playlist) {
+        // set playlist if merge
+        if(preferences.mergePlaylist && Playlist.loaded != null){
             Playlist.loaded!!.categories?.let { playlistSet.categories?.addAll(it) }
             Playlist.loaded!!.drm_licenses?.let { playlistSet.drm_licenses?.addAll(it) }
         }
 
+        //set cat_id and ch_id
+        for (catId in playlistSet.categories?.indices!!) {
+            //sort channels by name
+            playlistSet.categories!![catId].channels!!.sortBy { channel -> channel.name?.lowercase() }
+            //remove channels with empty streamurl
+            playlistSet.categories!![catId].channels!!.removeAll { channel -> channel.stream_url.isNullOrBlank() }
+
+            for (chId in playlistSet.categories!![catId].channels!!.indices) {
+                // add catId
+                playlistSet.categories!![catId].channels!![chId].cat_id = catId
+                // add chId
+                playlistSet.categories!![catId].channels!![chId].ch_id = chId
+            }
+        }
+
         // set new playlist
-        if (binding.rvCategory.adapter == null) {
-            binding.rvCategory.adapter = CategoryAdapter(playlistSet.categories)
-            binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        }
-        else {
-            val adapter = binding.rvCategory.adapter as CategoryAdapter
-            adapter.change(playlistSet.categories)
-        }
-
-        // end the loading
-        loading.dismiss()
-        binding.swipeContainer.isRefreshing = false
-
-        if (Playlist.loaded != null)
-            Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
+        binding.catAdapter = CategoryAdapter(playlistSet.categories)
+        binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         // write cache
         Playlist.loaded = playlistSet
         playlistHelper.writeCache(playlistSet)
+
+        // end the loading
+        loading.dismiss()
+        binding.swipeContainer.isRefreshing = false
 
         // launch player if playlastwatched is true
         if (preferences.playLastWatched && PlayerActivity.isFirst) {
             val intent = Intent(this, PlayerActivity::class.java)
             intent.putExtra(PlayData.VALUE, preferences.watched)
             this.startActivity(intent)
+            return
         }
+
+        if (Playlist.loaded != null)
+            Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
     }
 
     private fun updatePlaylist() {
-        //reinit helper for new name
-        playlistHelper = PlaylistHelper(this)
+        // show loading message
+        loading.show(getString(R.string.loading))
 
         // from local storage
         if (playlistHelper.mode() == PlaylistHelper.MODE_LOCAL) {
@@ -174,9 +181,12 @@ open class MainActivity : AppCompatActivity() {
                 showAlertLocalError(null)
                 return
             }
-            setPlaylistToAdapter(local,false)
-            if(!preferences.mergePlaylist)
+            if(preferences.mergePlaylist) {
+                Playlist.loaded = local
+            }else{
+                setPlaylistToAdapter(local)
                 return
+            }
         }
 
         // from local pick
@@ -186,9 +196,12 @@ open class MainActivity : AppCompatActivity() {
                 showAlertLocalError(preferences.playlistSelect)
                 return
             }
-            setPlaylistToAdapter(pick,false)
-            if(!preferences.mergePlaylist)
+            if(preferences.mergePlaylist) {
+                Playlist.loaded = pick
+            }else{
+                setPlaylistToAdapter(pick)
                 return
+            }
         }
 
         // from internet
@@ -197,7 +210,7 @@ open class MainActivity : AppCompatActivity() {
             { response: String? ->
                 try {
                     val newPls = Gson().fromJson(response, Playlist::class.java)
-                    setPlaylistToAdapter(newPls,preferences.mergePlaylist)
+                    setPlaylistToAdapter(newPls)
                 } catch (error: JsonSyntaxException) {
                     showAlertPlaylistError(error.message)
                 }
@@ -300,7 +313,7 @@ open class MainActivity : AppCompatActivity() {
             .setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
         val cache = playlistHelper.readCache()
         if (cache != null) {
-            alert.setNegativeButton(R.string.dialog_cached) { _: DialogInterface?, _: Int -> setPlaylistToAdapter(cache,false) }
+            alert.setNegativeButton(R.string.dialog_cached) { _: DialogInterface?, _: Int -> setPlaylistToAdapter(cache) }
         }
         alert.create().show()
     }
