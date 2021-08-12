@@ -61,6 +61,7 @@ open class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         binding.swipeContainer.setOnRefreshListener {
+            binding.swipeContainer.isRefreshing = false
             updatePlaylist()
         }
 
@@ -142,7 +143,6 @@ open class MainActivity : AppCompatActivity() {
 
         // end the loading
         loading.dismiss()
-        binding.swipeContainer.isRefreshing = false
 
         // launch player if playlastwatched is true
         if (preferences.playLastWatched && PlayerActivity.isFirst) {
