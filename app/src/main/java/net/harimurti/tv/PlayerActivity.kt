@@ -38,7 +38,6 @@ import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
 import java.util.*
 
-
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
     private var isTelevision = false
@@ -295,49 +294,55 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
-        override fun onPlayerError(error: ExoPlaybackException) {
-            val message = if (error.type == ExoPlaybackException.TYPE_SOURCE) getString(R.string.stream_source_offline)
-            else if (!network.isConnected()) getString(R.string.no_network) else getString(R.string.something_went_wrong)
-
+        override fun onPlayerError(error: PlaybackException) {
             // if error more than 5 times, then show message dialog
             if (errorCounter < 5 && network.isConnected()) {
                 errorCounter++
-                Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show()
                 retryPlayback(false)
             }
             else {
-                showMessage(message)
+                showMessage(
+                    String.format(getString(R.string.player_error_message),
+                        error.errorCode, error.errorCodeName, error.message), true
+                )
             }
         }
 
         override fun onTracksChanged(trackGroups: TrackGroupArray, trackSelections: TrackSelectionArray) {
             if (trackGroups == lastSeenTrackGroupArray) return
-            val mappedTrackInfo = trackSelector.currentMappedTrackInfo
-            if (mappedTrackInfo != null) {
-                if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO) == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
-                    Toast.makeText(applicationContext, getString(R.string.error_unsupported_video), Toast.LENGTH_LONG).show()
+            else lastSeenTrackGroupArray = trackGroups
+
+            val mappedTrackInfo = trackSelector.currentMappedTrackInfo ?: return
+            val isVideoProblem = mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO) == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS
+            val isAudioProblem = mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_AUDIO) == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS
+            if (isVideoProblem || isAudioProblem) {
+                val problem = when {
+                    isVideoProblem && isAudioProblem -> "video & audio"
+                    isVideoProblem -> "video"
+                    else -> "audio"
                 }
-                if (mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_AUDIO) == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS) {
-                    Toast.makeText(applicationContext, getString(R.string.error_unsupported_audio), Toast.LENGTH_LONG).show()
-                }
+                val message = String.format(getString(R.string.error_unsupported), problem)
+                showMessage(message, false)
             }
-            lastSeenTrackGroupArray = trackGroups
         }
     }
 
-    private fun showMessage(message: String) {
+    private fun showMessage(message: String, autoretry: Boolean) {
         val waitInSecond = 30
         val btnRetryText = String.format(getString(R.string.btn_retry_count), waitInSecond)
-        val builder = AlertDialog.Builder(this, R.style.PlayerMessage).apply {
+        val builder = AlertDialog.Builder(this).apply {
             setTitle(R.string.player_playback_error)
             setMessage(message)
             setCancelable(false)
-            setNegativeButton(getString(R.string.btn_next_channel)) { _, _ -> switchChannel(CHANNEL_NEXT) }
+            setNegativeButton(getString(R.string.btn_next_channel)) { _,_ -> switchChannel(CHANNEL_NEXT) }
             setPositiveButton(btnRetryText) { _,_ -> retryPlayback(true) }
             setNeutralButton(R.string.btn_close) { _,_ -> finish() }
             create()
         }
         val dialog = builder.show()
+
+        if (!autoretry) return
         AsyncSleep(this).task(object : AsyncSleep.Task{
             override fun onCountDown(count: Int) {
                 val text = if (count <= 0) getString(R.string.btn_retry)

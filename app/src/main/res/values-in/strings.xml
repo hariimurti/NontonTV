@@ -10,8 +10,7 @@
     <string name="press_back_twice_exit_app">Tekan lagi untuk keluar dari aplikasi!</string>
     <string name="press_back_twice_exit_player">Tekan lagi untuk keluar dari pemutar!</string>
     <string name="track_selection_title">Pilih trek</string>
-    <string name="error_unsupported_video">Media menyertakan trek video, tetapi tidak ada yang dapat diputar oleh perangkat ini</string>
-    <string name="error_unsupported_audio">Media menyertakan trek audio, tetapi tidak ada yang dapat diputar oleh perangkat ini</string>
+    <string name="error_unsupported">Media menyertakan trek %s, tetapi tidak ada yang dapat diputar oleh perangkat ini</string>
     <string name="mode_fit">Bawaan</string>
     <string name="mode_fixed_width">Lebar tetap</string>
     <string name="mode_fixed_height">Tinggi tetap</string>
@@ -25,6 +24,7 @@
     <string name="playlist_cant_be_parsed">Playlist tidak ada, tidak bisa diuraikan?</string>
     <string name="null_content">Konten kosong</string>
     <string name="btn_next_channel">Saluran Berikutnya</string>
+    <string name="player_error_message">Kode : %s\nNamaKode : %s\nPesan Error : %s</string>
 
     <!-- alert playlist error -->
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>

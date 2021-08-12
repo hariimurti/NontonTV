@@ -30,8 +30,4 @@
         <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
-    <style name="PlayerMessage" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:backgroundDimEnabled">true</item>
-    </style>
-
 </resources>
