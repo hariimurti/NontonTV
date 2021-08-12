@@ -29,6 +29,8 @@
     <string name="mode_zoom">Zoom</string>
     <string name="must_allow_permissions">You must allow all permission requests for this app to work properly!</string>
     <string name="search_channel">Search Channel</string>
+    <string name="top_category">No more categories above this</string>
+    <string name="bottom_category">No more categories below</string>
 
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>

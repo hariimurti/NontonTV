@@ -219,7 +219,10 @@ class PlayerActivity : AppCompatActivity() {
                     current = if (lastCh) category?.channels?.get(category?.channels?.size?.minus(1) ?: 0)
                     else category?.channels?.get(0)
                 }
-                else return
+                else {
+                    Toast.makeText(this, R.string.top_category, Toast.LENGTH_SHORT).show()
+                    return
+                }
             }
             CATEGORY_DOWN -> {
                 val next = catId + 1
@@ -227,7 +230,10 @@ class PlayerActivity : AppCompatActivity() {
                     category = Playlist.loaded?.categories?.get(next)
                     current = category?.channels?.get(0)
                 }
-                else return
+                else {
+                    Toast.makeText(this, R.string.bottom_category, Toast.LENGTH_SHORT).show()
+                    return
+                }
             }
             CHANNEL_PREVIOUS -> {
                 val previous = chId - 1
