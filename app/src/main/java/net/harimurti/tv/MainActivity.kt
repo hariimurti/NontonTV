@@ -59,7 +59,9 @@ open class MainActivity : AppCompatActivity() {
     @SuppressLint("DefaultLocale")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         binding = ActivityMainBinding.inflate(layoutInflater)
+        binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         binding.swipeContainer.setOnRefreshListener {
             binding.swipeContainer.isRefreshing = false
             updatePlaylist()
@@ -135,7 +137,6 @@ open class MainActivity : AppCompatActivity() {
 
         // set new playlist
         binding.catAdapter = CategoryAdapter(playlistSet.categories)
-        binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         // write cache
         Playlist.loaded = playlistSet
