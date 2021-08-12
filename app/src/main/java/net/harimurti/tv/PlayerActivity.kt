@@ -83,8 +83,11 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         bindingRoot = ActivityPlayerBinding.inflate(layoutInflater)
         bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
+        bindingControl.buttonBack.setOnClickListener { finish() }
+
         setContentView(bindingRoot.root)
 
         isTelevision = UiMode(this).isTelevision()
