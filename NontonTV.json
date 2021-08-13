@@ -182,7 +182,8 @@
         },
         {
           "name": "Metro TV",
-          "stream_url": "http://edge.metrotvnews.com:1935/live-edge/smil:metro.smil/playlist.m3u8"
+          "stream_url": "https://akamai.mncnow.id/live/eds/MetroTV/sa_dash_vmx/MetroTV.mpd",
+		  "drm_name": "mncnow"
         },
         {
           "name": "MNC News",
