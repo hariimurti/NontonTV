@@ -70,17 +70,6 @@ class PlaylistHelper(val context: Context) {
         }
     }
 
-    private fun readM3u(file: File): Playlist? {
-        return try {
-            if (!file.exists()) throw FileNotFoundException()
-            val fs = FileInputStream(file.absoluteFile)
-            return M3uTool().load(fs)
-        } catch (e: Exception) {
-            Log.e("readM3u", "$e")
-            null
-        }
-    }
-
     fun readCache(): Playlist? {
         return read(cache)
     }
@@ -92,6 +81,6 @@ class PlaylistHelper(val context: Context) {
     fun readSelect(): Playlist? {
         val select = File(preferences.playlistSelect)
         return if(preferences.playlistSelect.endsWith(".json")) read(select)
-        else readM3u(select)
+        else M3uTool().load(preferences.playlistSelect)
     }
 }
