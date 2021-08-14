@@ -209,7 +209,11 @@ open class MainActivity : AppCompatActivity() {
             playlistHelper.urlPath,
             { response: String? ->
                 try {
-                    val newPls = Gson().fromJson(response, Playlist::class.java)
+                    val newPls = playlistHelper.readUrl(response)
+                    if (newPls == null || newPls.categories.isNullOrEmpty()) {
+                        showAlertLocalError(playlistHelper.urlPath)
+                        return@StringRequest
+                    }
                     setPlaylistToAdapter(newPls)
                 } catch (error: JsonSyntaxException) {
                     showAlertPlaylistError(error.message)

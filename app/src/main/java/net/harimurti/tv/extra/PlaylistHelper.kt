@@ -83,4 +83,16 @@ class PlaylistHelper(val context: Context) {
         return if(preferences.playlistSelect.endsWith(".json")) read(select)
         else M3uTool().load(preferences.playlistSelect)
     }
+
+    fun readUrl(response: String?): Playlist? {
+        return try {
+            if (urlPath.endsWith(".json"))
+                Gson().fromJson(response, Playlist::class.java)
+            else
+                M3uTool().loadUrl(response)
+        } catch (e: Exception) {
+            Log.e(TAG, String.format("Could not read %s", urlPath), e)
+            null
+        }
+    }
 }
