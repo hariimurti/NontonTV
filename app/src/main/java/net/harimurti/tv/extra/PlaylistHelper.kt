@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import net.harimurti.tv.R
+import net.harimurti.tv.m3u.M3uTool
 import net.harimurti.tv.model.Playlist
 import java.io.*
 
@@ -12,7 +13,6 @@ class PlaylistHelper(val context: Context) {
     private val cache: File = File(context.cacheDir, PLAYLIST_JSON)
     private var local: File = File(context.getExternalFilesDir(null)?.absolutePath
         ?.substringBefore("/Android"), PLAYLIST_JSON)
-    private val select: File = File(preferences.playlistSelect)
 
     companion object {
         private const val TAG = "PlaylistHelper"
@@ -79,6 +79,8 @@ class PlaylistHelper(val context: Context) {
     }
 
     fun readSelect(): Playlist? {
-        return read(select)
+        val select = File(preferences.playlistSelect)
+        return if(preferences.playlistSelect.endsWith(".json")) read(select)
+        else M3uTool().load(preferences.playlistSelect)
     }
 }

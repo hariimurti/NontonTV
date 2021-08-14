@@ -291,7 +291,7 @@ class SettingsDialog : DialogFragment() {
             }
 
             val properties = DialogProperties().apply {
-                extensions = arrayOf("json")
+                extensions = arrayOf("json","m3u")
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     root = File(Environment.getExternalStorageDirectory().path)
                     error_dir = File(Environment.getExternalStorageDirectory().path)
