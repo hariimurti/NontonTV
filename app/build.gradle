@@ -4,16 +4,17 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-parcelize'
 
 android {
+    def versionProps = new Properties()
     def versionPropsFile = file('version.prop')
-    Properties versionProps = new Properties()
-    if (versionPropsFile.exists()) {
+    def versionPropsCode = 1
+    if (versionPropsFile.canRead()) {
         versionProps.load(new FileInputStream(versionPropsFile))
+        versionPropsCode = (versionProps['VERSION_CODE'] ?: "1").toInteger()
     }
-    def _versionCode = (versionProps['VERSION_CODE'] ?: "1").toInteger()
     gradle.taskGraph.whenReady { taskGraph ->
-        if (taskGraph.hasTask(assembleDebug)) {
-            _versionCode += 1
-            versionProps['VERSION_CODE'] = _versionCode.toString()
+        if (taskGraph.hasTask(assembleRelease)) {
+            versionPropsCode += 1
+            versionProps['VERSION_CODE'] = versionPropsCode.toString()
             versionProps.store(versionPropsFile.newWriter(), null)
         }
     }
@@ -30,7 +31,7 @@ android {
         minSdkVersion 19
         //noinspection OldTargetApi
         targetSdkVersion 29 //downgrade for android 11 to make externalstorage readable
-        versionCode _versionCode
+        versionCode versionPropsCode
         versionName "2.1"
 
         multiDexEnabled true
