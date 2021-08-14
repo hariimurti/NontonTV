@@ -78,10 +78,10 @@ class PlaylistHelper(val context: Context) {
         return read(local)
     }
 
-    fun readSelect(): Playlist? {
-        val select = File(preferences.playlistSelect)
-        return if(preferences.playlistSelect.endsWith(".json")) read(select)
-        else M3uTool().load(preferences.playlistSelect)
+    fun readSelect(path:String): Playlist? {
+        val select = File(path)
+        return if(path.endsWith(".json")) read(select)
+        else M3uTool().load(path)
     }
 
     fun readUrl(response: String?): Playlist? {

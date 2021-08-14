@@ -191,15 +191,28 @@ open class MainActivity : AppCompatActivity() {
 
         // from local pick
         if (playlistHelper.mode() == PlaylistHelper.MODE_SELECT) {
-            val pick = playlistHelper.readSelect()
-            if (pick == null || pick.categories.isNullOrEmpty()) {
+            val paths: List<String> = preferences.playlistSelect.split(",")
+            var picks: Playlist? = null
+            for (path in paths) {
+                val pick = playlistHelper.readSelect(path)!!
+                if (pick.categories.isNullOrEmpty()) {
+                    showAlertLocalError(path)
+                    return
+                }
+                if(picks != null) {
+                    pick.categories?.let { picks!!.categories?.addAll(it) }
+                    pick.drm_licenses?.let { picks!!.drm_licenses?.addAll(it) }
+                }else picks = pick
+            }
+
+            if (picks == null || picks.categories.isNullOrEmpty()) {
                 showAlertLocalError(preferences.playlistSelect)
                 return
             }
-            if(preferences.mergePlaylist) {
-                Playlist.loaded = pick
-            }else{
-                setPlaylistToAdapter(pick)
+            if (preferences.mergePlaylist) {
+                Playlist.loaded = picks
+            } else {
+                setPlaylistToAdapter(picks)
                 return
             }
         }
