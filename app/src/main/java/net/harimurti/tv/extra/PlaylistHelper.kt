@@ -84,15 +84,11 @@ class PlaylistHelper(val context: Context) {
         else M3uTool().load(path)
     }
 
-    fun readUrl(response: String?): Playlist? {
-        return try {
-            if (urlPath.endsWith(".json"))
-                Gson().fromJson(response, Playlist::class.java)
-            else
-                M3uTool().loadUrl(response)
-        } catch (e: Exception) {
-            Log.e(TAG, String.format("Could not read %s", urlPath), e)
-            null
+    fun parse(response: String): Playlist? {
+        return if (response.startsWith("{") && response.endsWith("}")) {
+            Gson().fromJson(response, Playlist::class.java)
+        } else {
+            M3uTool().loadUrl(response)
         }
     }
 }

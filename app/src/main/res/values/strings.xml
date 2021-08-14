@@ -31,6 +31,8 @@
     <string name="search_channel">Search Channel</string>
     <string name="top_category">No more categories above this</string>
     <string name="bottom_category">No more categories below</string>
+    <string name="playlist_cant_be_parsed">Playlist doesn\'t exist, can\'t be parsed?</string>
+    <string name="null_content">Null Content</string>
 
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>

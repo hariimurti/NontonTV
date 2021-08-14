@@ -22,7 +22,6 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
 import net.harimurti.tv.adapter.CategoryAdapter
 import net.harimurti.tv.databinding.ActivityMainBinding
 import net.harimurti.tv.dialog.ProgressDialog
@@ -209,13 +208,13 @@ open class MainActivity : AppCompatActivity() {
             playlistHelper.urlPath,
             { response: String? ->
                 try {
-                    val newPls = playlistHelper.readUrl(response)
+                    if (response == null) throw Exception(getString(R.string.null_content))
+                    val newPls = playlistHelper.parse(response.trim())
                     if (newPls == null || newPls.categories.isNullOrEmpty()) {
-                        showAlertLocalError(playlistHelper.urlPath)
-                        return@StringRequest
+                        throw Exception(getString(R.string.playlist_cant_be_parsed))
                     }
                     setPlaylistToAdapter(newPls)
-                } catch (error: JsonSyntaxException) {
+                } catch (error: Exception) {
                     showAlertPlaylistError(error.message)
                 }
             }
