@@ -23,6 +23,7 @@
     <string name="bottom_category">Kategori paling bawah</string>
     <string name="playlist_cant_be_parsed">Playlist tidak ada, tidak bisa diuraikan?</string>
     <string name="null_content">Konten kosong</string>
+    <string name="btn_next_channel">Saluran Berikutnya</string>
 
     <!-- alert playlist error -->
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>

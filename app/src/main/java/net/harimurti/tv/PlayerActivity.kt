@@ -1,10 +1,8 @@
 package net.harimurti.tv
 
+import android.app.AlertDialog
 import android.app.PictureInPictureParams
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
 import android.content.res.Configuration
 import android.net.Uri
 import android.os.Build
@@ -32,7 +30,6 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.upstream.HttpDataSource
 import net.harimurti.tv.databinding.ActivityPlayerBinding
 import net.harimurti.tv.databinding.CustomControlBinding
-import net.harimurti.tv.dialog.PlayerMessageDialog
 import net.harimurti.tv.dialog.TrackSelectionDialog
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.Category
@@ -55,7 +52,6 @@ class PlayerActivity : AppCompatActivity() {
     private var lastSeenTrackGroupArray: TrackGroupArray? = null
     private lateinit var bindingRoot: ActivityPlayerBinding
     private lateinit var bindingControl: CustomControlBinding
-    private lateinit var messageDialog: PlayerMessageDialog
     private var errorCounter = 0
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -93,7 +89,6 @@ class PlayerActivity : AppCompatActivity() {
         isTelevision = UiMode(this).isTelevision()
         preferences = Preferences(this)
         network = Network(this)
-        messageDialog = PlayerMessageDialog(this)
 
         // set this is not first time
         isFirst = false
@@ -286,16 +281,14 @@ class PlayerActivity : AppCompatActivity() {
             bindingControl.trackSelection.isEnabled =
                 TrackSelectionDialog.willHaveContent(trackSelector)
             when (state) {
-                Player.STATE_IDLE -> { }
-                Player.STATE_BUFFERING -> messageDialog.dismiss()
                 Player.STATE_READY -> {
                     errorCounter = 0
-                    messageDialog.dismiss()
                     val catId = Playlist.loaded?.categories?.indexOf(category) as Int
                     val chId = category?.channels?.indexOf(current) as Int
                     preferences.watched = PlayData(catId, chId)
                 }
                 Player.STATE_ENDED -> retryPlayback(true)
+                else -> { }
             }
         }
 
@@ -310,7 +303,7 @@ class PlayerActivity : AppCompatActivity() {
                 retryPlayback(false)
             }
             else {
-                messageDialog.show(message)
+                showMessage(message)
             }
         }
 
@@ -327,6 +320,33 @@ class PlayerActivity : AppCompatActivity() {
             }
             lastSeenTrackGroupArray = trackGroups
         }
+    }
+
+    private fun showMessage(message: String) {
+        val waitInSecond = 30
+        val btnRetryText = String.format(getString(R.string.btn_retry_count), waitInSecond)
+        val builder = AlertDialog.Builder(this, R.style.PlayerMessage).apply {
+            setTitle(R.string.player_playback_error)
+            setMessage(message)
+            setCancelable(false)
+            setNegativeButton(getString(R.string.btn_next_channel)) { _, _ -> switchChannel(CHANNEL_NEXT) }
+            setPositiveButton(btnRetryText) { _,_ -> retryPlayback(true) }
+            setNeutralButton(R.string.btn_close) { _,_ -> finish() }
+            create()
+        }
+        val dialog = builder.show()
+        AsyncSleep(this).task(object : AsyncSleep.Task{
+            override fun onCountDown(count: Int) {
+                val text = if (count <= 0) getString(R.string.btn_retry)
+                else String.format(getString(R.string.btn_retry_count), count)
+                dialog.getButton(AlertDialog.BUTTON_POSITIVE).text = text
+            }
+
+            override fun onFinish() {
+                dialog.dismiss()
+                retryPlayback(true)
+            }
+        }).start(waitInSecond)
     }
 
     private fun showTrackSelector() {
