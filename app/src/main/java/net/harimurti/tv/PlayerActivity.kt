@@ -202,11 +202,14 @@ class PlayerActivity : AppCompatActivity() {
         player.prepare()
     }
 
-    private fun switchChannel(mode: Int) {
+    private fun switchChannel(mode: Int): Boolean {
         switchChannel(mode, false)
+        bindingRoot.playerView.hideController()
+        return true
     }
 
     private fun switchChannel(mode: Int, lastCh: Boolean) {
+        bindingRoot.playerView.showController()
         val catId = Playlist.loaded?.categories?.indexOf(category) as Int
         val chId = category?.channels?.indexOf(current) as Int
         when(mode) {
@@ -349,9 +352,10 @@ class PlayerActivity : AppCompatActivity() {
         }).start(waitInSecond)
     }
 
-    private fun showTrackSelector() {
+    private fun showTrackSelector(): Boolean {
         TrackSelectionDialog.createForTrackSelector(trackSelector) { }
             .show(supportFragmentManager, null)
+        return true
     }
 
     private fun changeScreenMode(mode: Int) {
@@ -420,19 +424,22 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
         when(keyCode) {
-            KeyEvent.KEYCODE_MENU -> showTrackSelector()
-            KeyEvent.KEYCODE_DPAD_CENTER -> showTrackSelector()
-            KeyEvent.KEYCODE_DPAD_UP -> switchChannel(CATEGORY_UP)
-            KeyEvent.KEYCODE_DPAD_DOWN -> switchChannel(CATEGORY_DOWN)
-            KeyEvent.KEYCODE_DPAD_LEFT -> switchChannel(CHANNEL_PREVIOUS)
-            KeyEvent.KEYCODE_DPAD_RIGHT -> switchChannel(CHANNEL_NEXT)
-            KeyEvent.KEYCODE_PAGE_UP -> switchChannel(CATEGORY_UP)
-            KeyEvent.KEYCODE_PAGE_DOWN -> switchChannel(CATEGORY_DOWN)
-            KeyEvent.KEYCODE_MEDIA_PREVIOUS -> switchChannel(CHANNEL_PREVIOUS)
-            KeyEvent.KEYCODE_MEDIA_NEXT -> switchChannel(CHANNEL_NEXT)
-            else -> return super.onKeyUp(keyCode, event)
+            KeyEvent.KEYCODE_MENU -> return showTrackSelector()
+            KeyEvent.KEYCODE_PAGE_UP -> return switchChannel(CATEGORY_UP)
+            KeyEvent.KEYCODE_PAGE_DOWN -> return switchChannel(CATEGORY_DOWN)
+            KeyEvent.KEYCODE_MEDIA_PREVIOUS -> return switchChannel(CHANNEL_PREVIOUS)
+            KeyEvent.KEYCODE_MEDIA_NEXT -> return switchChannel(CHANNEL_NEXT)
         }
-        return true
+        if (bindingRoot.playerView.isControllerVisible) {
+            return super.onKeyUp(keyCode, event)
+        }
+        when(keyCode) {
+            KeyEvent.KEYCODE_DPAD_UP -> return switchChannel(CATEGORY_UP)
+            KeyEvent.KEYCODE_DPAD_DOWN -> return switchChannel(CATEGORY_DOWN)
+            KeyEvent.KEYCODE_DPAD_LEFT -> return switchChannel(CHANNEL_PREVIOUS)
+            KeyEvent.KEYCODE_DPAD_RIGHT -> return switchChannel(CHANNEL_NEXT)
+        }
+        return super.onKeyUp(keyCode, event)
     }
 
     override fun onBackPressed() {
