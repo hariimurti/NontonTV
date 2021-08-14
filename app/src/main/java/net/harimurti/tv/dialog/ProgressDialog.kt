@@ -14,11 +14,11 @@ class ProgressDialog(val context: Context) {
 
     fun show(message: String): ProgressDialog {
         // set text message
-        val loadView: View = LayoutInflater.from(context).inflate(R.layout.progress_dialog_message, null)
+        val loadView: View = LayoutInflater.from(context).inflate(R.layout.progress_dialog, null)
         loadView.findViewById<TextView>(R.id.tv_message).text = message
         // create dialog
         if (dialog == null) {
-            dialog = AlertDialog.Builder(context, R.style.DialogMessage).create()
+            dialog = AlertDialog.Builder(context, R.style.ProgressDialog).create()
         }
         dialog?.setView(loadView, 0, 0, 0, 0)
         dialog?.setCanceledOnTouchOutside(false)
@@ -27,10 +27,7 @@ class ProgressDialog(val context: Context) {
     }
 
     fun dismiss() {
-        if (dialog == null) return
-        if (dialog?.isShowing == true) {
-            try { dialog?.dismiss() }
-            catch (e: Exception) { }
-        }
+        try { dialog?.dismiss() }
+        catch (e: Exception) { }
     }
 }
