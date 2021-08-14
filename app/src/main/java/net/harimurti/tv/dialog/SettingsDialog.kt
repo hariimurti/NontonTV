@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
 import com.google.android.material.textfield.TextInputLayout
 import net.harimurti.tv.MainActivity
@@ -30,6 +31,7 @@ import net.harimurti.tv.databinding.SettingsStartupFragmentBinding
 import net.harimurti.tv.extra.PlaylistHelper
 import net.harimurti.tv.extra.Preferences
 import java.io.File
+import java.lang.StringBuilder
 
 
 @Suppress("DEPRECATION")
@@ -292,6 +294,7 @@ class SettingsDialog : DialogFragment() {
 
             val properties = DialogProperties().apply {
                 extensions = arrayOf("json","m3u")
+                selection_mode = DialogConfigs.MULTI_MODE
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
                     root = File(Environment.getExternalStorageDirectory().path)
                     error_dir = File(Environment.getExternalStorageDirectory().path)
@@ -305,10 +308,14 @@ class SettingsDialog : DialogFragment() {
                 setTitle(getString(R.string.title_select_file_json))
                 setProperties(properties)
                 setDialogSelectionListener {
-                    for (path in it) {
-                        playlistSelect = File(path).path
-                        binding.customPlaylist.setText(playlistSelect)
+                    val buffer = StringBuilder()
+                    for (each in it){
+                        val file = File(each).path
+                        buffer.append(",").append(file)
                     }
+                    val paths = buffer.deleteCharAt(0).toString()
+                    playlistSelect = paths
+                    binding.customPlaylist.setText(playlistSelect)
                 }
             }
             return rootView

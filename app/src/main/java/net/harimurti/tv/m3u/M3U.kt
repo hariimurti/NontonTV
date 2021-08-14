@@ -105,6 +105,67 @@ class M3U {
         return result
     }
 
+    fun parseUrl(filepath: String?): List<M3U> {
+
+        val stream: Reader = StringReader(filepath)
+        val result: MutableList<M3U> = ArrayList()
+        var lineNumber = 0
+        var line: String?
+        try {
+            val buffer = BufferedReader(stream)
+            line = buffer.readLine()
+
+            lineNumber++
+
+            var m3u= M3U()
+            while (buffer.readLine().also { line = it } != null) {
+                lineNumber++
+                when {
+                    isExtGrp(line) -> {
+                        // reset if GroupName is set
+                        if(!m3u.groupName.isNullOrEmpty())
+                            m3u= M3U()
+
+                        // set group name
+                        m3u.groupName = regexGrp(line)
+                    }
+                    isExtInf(line) -> {
+                        // reset if ChannelName is set
+                        if(!m3u.channelName.isNullOrEmpty())
+                            m3u= M3U()
+
+                        // set channel name
+                        m3u.channelName = regexCh(line)
+
+                        // set group name
+                        m3u.groupName = regexTitle(line)
+                    }
+                    isKodi(line) -> {
+                        // set drm license
+                        m3u.licenseKey = regexKodi(line)
+                        m3u.licenseName = md5(regexKodi(line).toString())
+                    }
+                    isStream(line) -> {
+                        if(m3u.channelName.isNullOrEmpty() || m3u.channelName!!.startsWith(EXTINF))
+                            m3u.channelName = "NO NAME"
+                        if(m3u.groupName.isNullOrBlank())
+                            m3u.groupName = "UNCATAGORIZED"
+
+                        // add channel
+                        m3u.streamUrl = line
+                        result.add(m3u)
+
+                        // reset channel
+                        m3u= M3U()
+                    }
+                }
+            }
+        } catch (e: IOException) {
+            throw ParsingException(lineNumber, "Cannot read file", e)
+        }
+        return result
+    }
+
     private fun isExtGrp(line: String?): Boolean {
         return line!!.startsWith(EXTGRP)
     }
@@ -145,7 +206,7 @@ class M3U {
     }
 
     class ParsingException : RuntimeException {
-        var line: Int
+        private var line: Int
 
         constructor(line: Int, message: String) : super("$message at line $line") {
             this.line = line
