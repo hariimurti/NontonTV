@@ -46,6 +46,15 @@
             tools:text="CHANNEL_NAME" />
 
         <ImageButton
+            android:id="@+id/button_lock"
+            android:layout_marginEnd="@dimen/player_info_margin_start"
+            app:layout_constraintBottom_toBottomOf="@+id/channel_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/category_name"
+            app:srcCompat="@drawable/ic_lock_open"
+            style="@style/ExoStyledControls.Button.Bottom" />
+
+        <ImageButton
             android:id="@+id/button_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

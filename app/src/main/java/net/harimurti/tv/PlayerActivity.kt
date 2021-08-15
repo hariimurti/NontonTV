@@ -14,6 +14,7 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -52,6 +53,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var bindingRoot: ActivityPlayerBinding
     private lateinit var bindingControl: CustomControlBinding
     private var errorCounter = 0
+    private var isLocked = false
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
@@ -81,8 +83,6 @@ class PlayerActivity : AppCompatActivity() {
 
         bindingRoot = ActivityPlayerBinding.inflate(layoutInflater)
         bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
-        bindingControl.buttonBack.setOnClickListener { finish() }
-
         setContentView(bindingRoot.root)
 
         isTelevision = UiMode(this).isTelevision()
@@ -133,7 +133,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun bindingListener() {
-        bindingRoot.playerView.setOnTouchListener(object : OnSwipeTouchListener(applicationContext){
+        bindingRoot.playerView.setOnTouchListener(object : OnSwipeTouchListener(baseContext) {
             override fun onSwipeDown() { switchChannel(CATEGORY_UP) }
             override fun onSwipeUp() { switchChannel(CATEGORY_DOWN) }
             override fun onSwipeLeft() { switchChannel(CHANNEL_NEXT) }
@@ -145,6 +145,31 @@ class PlayerActivity : AppCompatActivity() {
             if (mode > 4) mode = 0
             changeScreenMode(mode)
         }
+        bindingControl.buttonBack.setOnClickListener { finish() }
+        bindingControl.buttonLock.visibility = if (isTelevision) View.GONE else View.VISIBLE
+        bindingControl.buttonLock.setOnClickListener {
+            if (!isLocked) {
+                (it as ImageButton).setImageResource(R.drawable.ic_lock)
+                setControlVisibility(true)
+            }
+        }
+        bindingControl.buttonLock.setOnLongClickListener {
+            if (isLocked) {
+                (it as ImageButton).setImageResource(R.drawable.ic_lock_open)
+                setControlVisibility(false)
+            }
+            true
+        }
+    }
+
+    private fun setControlVisibility(locked: Boolean) {
+        val visibility = if (locked) View.INVISIBLE else View.VISIBLE
+        bindingControl.categoryName.visibility = visibility
+        bindingControl.channelName.visibility = visibility
+        bindingControl.buttonBack.visibility = visibility
+        bindingControl.screenMode.visibility = visibility
+        bindingControl.trackSelection.visibility = visibility
+        isLocked = locked
     }
 
     private fun playChannel() {
@@ -202,6 +227,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun switchChannel(mode: Int): Boolean {
+        if (isLocked) return true
         switchChannel(mode, false)
         bindingRoot.playerView.hideController()
         return true
