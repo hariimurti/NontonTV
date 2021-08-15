@@ -85,10 +85,11 @@ class PlaylistHelper(val context: Context) {
     }
 
     fun parse(response: String): Playlist? {
+        val content = String(response.toByteArray(Charsets.ISO_8859_1), Charsets.UTF_8)
         return if (response.startsWith("{") && response.endsWith("}")) {
-            Gson().fromJson(response, Playlist::class.java)
+            Gson().fromJson(content, Playlist::class.java)
         } else {
-            M3uTool().loadUrl(response)
+            M3uTool().loadUrl(content)
         }
     }
 }
