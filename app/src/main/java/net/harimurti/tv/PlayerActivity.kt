@@ -322,7 +322,8 @@ class PlayerActivity : AppCompatActivity() {
                     isVideoProblem -> "video"
                     else -> "audio"
                 }
-                val message = String.format(getString(R.string.error_unsupported), problem)
+                val codec = CodecInfo.getDecoder(problem)
+                val message = String.format(getString(R.string.error_unsupported), problem, codec)
                 showMessage(message, false)
             }
         }
