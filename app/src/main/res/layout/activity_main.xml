@@ -35,7 +35,7 @@
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
-                    app:srcCompat="@drawable/ic_search_24"
+                    app:srcCompat="@drawable/ic_search"
                     android:background="?android:attr/selectableItemBackground"
                     android:focusable="true"
                     android:clickable="true"

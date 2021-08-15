@@ -65,14 +65,14 @@
             android:id="@+id/track_selection"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/player_ic_track_selector"
+            app:srcCompat="@drawable/ic_track_selector"
             style="@style/ExoStyledControls.Button.Bottom" />
 
         <ImageButton
             android:id="@+id/screen_mode"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/track_selection"
-            app:srcCompat="@drawable/player_ic_aspect_ratio"
+            app:srcCompat="@drawable/ic_aspect_ratio"
             style="@style/ExoStyledControls.Button.Bottom" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
