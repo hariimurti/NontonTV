@@ -4,8 +4,7 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import net.harimurti.tv.R
-import net.harimurti.tv.m3u.M3uTool
-import net.harimurti.tv.model.Playlist
+import net.harimurti.tv.model.*
 import java.io.*
 
 class PlaylistHelper(val context: Context) {
@@ -36,7 +35,8 @@ class PlaylistHelper(val context: Context) {
         get() = if (mode() == MODE_CUSTOM) preferences.playlistExternal
         else context.getString(R.string.json_playlist)
 
-    fun writeCache(content: String?) {
+    fun writeCache(playlist: Playlist) {
+        val content = Gson().toJson(playlist)
         try {
             val fw = FileWriter(cache.absoluteFile)
             val bw = BufferedWriter(fw)
@@ -47,25 +47,26 @@ class PlaylistHelper(val context: Context) {
         }
     }
 
-    fun writeCache(playlist: Playlist) {
-        writeCache(Gson().toJson(playlist))
-    }
-
     private fun read(file: File): Playlist? {
         return try {
             if (!file.exists()) throw FileNotFoundException()
-            val fr = FileReader(file.absoluteFile)
-            val br = BufferedReader(fr)
-            val sb = StringBuilder()
-            var line: String?
-            while (br.readLine().also { line = it } != null) {
-                sb.append(line).append('\n')
-            }
-            br.close()
-            Gson().fromJson(sb.toString(), Playlist::class.java)
+            FileReader(file.absoluteFile).readText().toPlaylist()
         } catch (e: Exception) {
             if (file == cache) e.printStackTrace()
             else Log.e(TAG, String.format("Could not read %s", file.name), e)
+            null
+        }
+    }
+
+    private fun readM3U(file: File): Playlist? {
+        return try {
+            if (!file.exists()) throw FileNotFoundException()
+            val fr = FileReader(file.absoluteFile)
+            val content = fr.readText()
+            if (!content.contains(M3U.EXTINF)) throw M3U.ParsingException("${file.name} is malformed")
+            return M3uTool.parse(content).toPlaylist()
+        } catch (e: Exception) {
+            Log.e(TAG, String.format("Could not read %s", file.name), e)
             null
         }
     }
@@ -78,18 +79,10 @@ class PlaylistHelper(val context: Context) {
         return read(local)
     }
 
-    fun readSelect(path:String): Playlist? {
+    fun readSelect(path: String): Playlist? {
         val select = File(path)
-        return if(path.endsWith(".json")) read(select)
-        else M3uTool().load(path)
-    }
-
-    fun parse(response: String): Playlist? {
-        val content = String(response.toByteArray(Charsets.ISO_8859_1), Charsets.UTF_8)
-        return if (response.startsWith("{") && response.endsWith("}")) {
-            Gson().fromJson(content, Playlist::class.java)
-        } else {
-            M3uTool().loadUrl(content)
-        }
+        return if(path.endsWith(".json", ignoreCase = true)) read(select)
+        else readM3U(select)
     }
 }
+

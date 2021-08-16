@@ -178,24 +178,24 @@ class PlayerActivity : AppCompatActivity() {
         bindingControl.channelName.text = current?.name
 
         // define mediaitem
-        val drmLicense = Playlist.loaded?.drm_licenses?.firstOrNull {
-            current?.drm_name?.equals(it.drm_name) == true
-        }?.drm_url
+        val drmLicense = Playlist.loaded?.drmLicenses?.firstOrNull {
+            current?.drmName?.equals(it.name) == true
+        }?.url
         mediaItem = if (drmLicense?.isNotEmpty() == true) {
             MediaItem.Builder()
-                .setUri(Uri.parse(current?.stream_url))
+                .setUri(Uri.parse(current?.streamUrl))
                 .setDrmUuid(C.WIDEVINE_UUID)
                 .setDrmLicenseUri(drmLicense)
                 .setDrmMultiSession(true)
                 .build()
         } else {
-            MediaItem.fromUri(Uri.parse(current?.stream_url))
+            MediaItem.fromUri(Uri.parse(current?.streamUrl))
         }
 
         // define User-Agent
         val userAgents = listOf(*resources.getStringArray(R.array.user_agent))
         var userAgent = userAgents.firstOrNull {
-            current?.stream_url?.contains(it.substring(0, it.indexOf("/")).lowercase(Locale.getDefault())) == true
+            current?.streamUrl?.contains(it.substring(0, it.indexOf("/")).lowercase(Locale.getDefault())) == true
         }
         if (userAgent.isNullOrEmpty()) {
             userAgent = userAgents[Random().nextInt(userAgents.size)]

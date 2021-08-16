@@ -1,6 +1,10 @@
 package net.harimurti.tv.model
 
+import com.google.gson.annotations.SerializedName
+
 class DrmLicense {
-    var drm_name: String? = null
-    var drm_url: String? = null
+    @SerializedName("drm_name")
+    var name: String? = null
+    @SerializedName("drm_url")
+    var url: String? = null
 }

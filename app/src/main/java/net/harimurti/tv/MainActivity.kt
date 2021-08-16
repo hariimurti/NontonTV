@@ -116,7 +116,7 @@ open class MainActivity : AppCompatActivity() {
         // set playlist if merge
         if(preferences.mergePlaylist && Playlist.loaded != null){
             Playlist.loaded!!.categories?.let { playlistSet.categories?.addAll(it) }
-            Playlist.loaded!!.drm_licenses?.let { playlistSet.drm_licenses?.addAll(it) }
+            Playlist.loaded!!.drmLicenses?.let { playlistSet.drmLicenses?.addAll(it) }
         }
 
         //set cat_id and ch_id
@@ -124,13 +124,13 @@ open class MainActivity : AppCompatActivity() {
             //sort channels by name
             playlistSet.categories!![catId].channels!!.sortBy { channel -> channel.name?.lowercase() }
             //remove channels with empty streamurl
-            playlistSet.categories!![catId].channels!!.removeAll { channel -> channel.stream_url.isNullOrBlank() }
+            playlistSet.categories!![catId].channels!!.removeAll { channel -> channel.streamUrl.isNullOrBlank() }
 
             for (chId in playlistSet.categories!![catId].channels!!.indices) {
                 // add catId
-                playlistSet.categories!![catId].channels!![chId].cat_id = catId
+                playlistSet.categories!![catId].channels!![chId].catId = catId
                 // add chId
-                playlistSet.categories!![catId].channels!![chId].ch_id = chId
+                playlistSet.categories!![catId].channels!![chId].chId = chId
             }
         }
 
@@ -187,7 +187,7 @@ open class MainActivity : AppCompatActivity() {
                 }
                 if(picks != null) {
                     pick.categories?.let { picks!!.categories?.addAll(it) }
-                    pick.drm_licenses?.let { picks!!.drm_licenses?.addAll(it) }
+                    pick.drmLicenses?.let { picks!!.drmLicenses?.addAll(it) }
                 }else picks = pick
             }
 
@@ -209,7 +209,7 @@ open class MainActivity : AppCompatActivity() {
             { response: String? ->
                 try {
                     if (response == null) throw Exception(getString(R.string.null_content))
-                    val newPls = playlistHelper.parse(response.trim())
+                    val newPls = response.trim().toPlaylist()
                     if (newPls == null || newPls.categories.isNullOrEmpty()) {
                         throw Exception(getString(R.string.playlist_cant_be_parsed))
                     }

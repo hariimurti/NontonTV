@@ -100,7 +100,7 @@ class SearchAdapter (val channels: ArrayList<Channel>) :
 
     override fun channelClicked(ch: Channel?) {
         val intent = Intent(context, PlayerActivity::class.java)
-        intent.putExtra(PlayData.VALUE, PlayData(ch?.cat_id!!, ch.ch_id!!))
+        intent.putExtra(PlayData.VALUE, PlayData(ch?.catId!!, ch.chId!!))
         context.startActivity(intent)
     }
 }
