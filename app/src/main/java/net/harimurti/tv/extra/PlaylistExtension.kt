@@ -81,3 +81,7 @@ fun String?.toPlaylist(): Playlist? {
     // content cant be parsed
     return null
 }
+
+fun Playlist?.isCategoriesEmpty(): Boolean {
+    return this?.categories?.isEmpty() == true
+}

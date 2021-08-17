@@ -8,6 +8,6 @@ class Playlist {
     var drmLicenses: ArrayList<DrmLicense> = ArrayList()
 
     companion object {
-        var loaded: Playlist? = null
+        var cached: Playlist = Playlist()
     }
 }

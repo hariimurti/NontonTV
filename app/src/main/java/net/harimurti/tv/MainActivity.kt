@@ -74,19 +74,31 @@ open class MainActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
 
-        // ask all premissions need
-        askPermissions()
+        //search button
+        binding.searchButton.setOnClickListener{
+            openSearch()
+        }
+        //setting button
+        binding.mainSettings.setOnClickListener{
+            openSettings()
+        }
 
         // local broadcast receiver to update playlist
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(broadcastReceiver, IntentFilter(MAIN_CALLBACK))
 
-        // playlist update
-        if (Playlist.loaded == null) {
-            updatePlaylist()
-        } else {
-            setPlaylistToAdapter(Playlist.loaded!!)
+        // set adapter with existed playlist
+        if (savedInstanceState != null) {
+            if (Playlist.cached.isCategoriesEmpty()) updatePlaylist()
+            else setPlaylistToAdapter(Playlist.cached)
+            return
         }
+
+        // ask all premissions need
+        askPermissions()
+
+        // playlist update
+        updatePlaylist()
 
         // check new release
         if (!preferences.isCheckedReleaseUpdate) {
@@ -97,15 +109,6 @@ open class MainActivity : AppCompatActivity() {
         if (preferences.lastVersionCode != BuildConfig.VERSION_CODE || !preferences.showLessContributors) {
             preferences.lastVersionCode = BuildConfig.VERSION_CODE
             getContributors()
-        }
-
-        //search button
-        binding.searchButton.setOnClickListener{
-            openSearch()
-        }
-        //setting button
-        binding.mainSettings.setOnClickListener{
-            openSettings()
         }
     }
 
@@ -141,7 +144,7 @@ open class MainActivity : AppCompatActivity() {
         binding.catAdapter = CategoryAdapter(playlistSet.categories)
 
         // write cache
-        Playlist.loaded = playlistSet
+        Playlist.cached = playlistSet
         helper.writeCache(playlistSet)
 
         // launch player if playlastwatched is true

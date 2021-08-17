@@ -88,9 +88,9 @@ class SearchDialog : DialogFragment() {
     }
 
     private fun setAdapter(){
-        val playlist = Playlist.loaded
-        for (catId in playlist?.categories?.indices!!) {
-            for (ch in playlist.categories!![catId].channels!!) {
+        val playlist = Playlist.cached
+        for (catId in playlist.categories.indices) {
+            for (ch in playlist.categories[catId].channels!!) {
                 channels.add(ch)
             }
         }
