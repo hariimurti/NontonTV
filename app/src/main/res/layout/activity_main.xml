@@ -49,8 +49,6 @@
                         <include layout="@layout/item_category_dummy" />
                         <include layout="@layout/item_category_dummy" />
                         <include layout="@layout/item_category_dummy" />
-                        <include layout="@layout/item_category_dummy" />
-                        <include layout="@layout/item_category_dummy" />
 
                     </LinearLayout>
 
