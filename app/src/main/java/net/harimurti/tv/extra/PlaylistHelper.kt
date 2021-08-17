@@ -109,6 +109,7 @@ class PlaylistHelper(val context: Context) {
                 taskResponse?.onError(Exception(message), source)
                 getResponse()
             })
+        volley.cache.clear()
         volley.add(stringRequest)
     }
 
@@ -137,6 +138,7 @@ class PlaylistHelper(val context: Context) {
                 Log.e(TAG, message, error)
                 taskChecker?.onCheckResult(result)
             })
+        volley.cache.clear()
         volley.add(stringRequest)
     }
 }
