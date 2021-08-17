@@ -61,14 +61,22 @@
 
         </RelativeLayout>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_sources"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/layout_input"
-            android:adapter="@{sourcesAdapter}"
-            app:layoutManager="LinearLayoutManager"
-            tools:listitem="@layout/item_source"/>
+            android:scrollbars="vertical"
+            android:fadeScrollbars="false">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_sources"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adapter="@{sourcesAdapter}"
+                app:layoutManager="LinearLayoutManager"
+                tools:listitem="@layout/item_source"/>
+
+        </androidx.core.widget.NestedScrollView>
 
     </RelativeLayout>
 
