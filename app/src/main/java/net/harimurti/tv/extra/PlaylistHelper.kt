@@ -32,24 +32,21 @@ class PlaylistHelper(val context: Context) {
     }
 
     fun writeCache(playlist: Playlist) {
-        val content = Gson().toJson(playlist)
         try {
-            val fw = FileWriter(cache.absoluteFile)
-            val bw = BufferedWriter(fw)
-            bw.write(content)
-            bw.close()
+            val content = Gson().toJson(playlist)
+            File(cache.absolutePath).writeText(content)
         } catch (e: Exception) {
-            Log.e(TAG, String.format("Could not write %s", cache.name), e)
+            Log.e(TAG, String.format("Could not write to %s", cache.name), e)
         }
     }
 
     fun readFile(file: File): Playlist? {
         return try {
             if (!file.exists()) throw FileNotFoundException()
-            FileReader(file.absoluteFile).readText().toPlaylist()
+            file.readText(Charsets.ISO_8859_1).toPlaylist()
         } catch (e: Exception) {
             if (file == cache) e.printStackTrace()
-            else Log.e(TAG, String.format("Could not read %s", file.name), e)
+            else Log.e(TAG, String.format("Could not read from %s", file.name), e)
             null
         }
     }
