@@ -86,4 +86,6 @@
     <string name="title_select_file_json">Select File Json</string>
     <string name="default_playlist" translatable="false">NontonTV (Default)</string>
     <string name="null_playlist">No playlists that can be displayed. Check your settings!</string>
+    <string name="checking_url">checking url…</string>
+    <string name="link_error">Link Error!</string>
 </resources>

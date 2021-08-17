@@ -26,6 +26,7 @@ import net.harimurti.tv.adapter.SourcesAdapter
 import net.harimurti.tv.databinding.SettingsApplicationFragmentBinding
 import net.harimurti.tv.databinding.SettingsDialogBinding
 import net.harimurti.tv.databinding.SettingsSourcesFragmentBinding
+import net.harimurti.tv.extra.PlaylistHelper
 import net.harimurti.tv.extra.Preferences
 import net.harimurti.tv.model.Source
 import java.io.File
@@ -191,12 +192,29 @@ class SettingsDialog : DialogFragment() {
             binding.btnAdd.setOnClickListener {
                 val input = binding.inputSource.text.toString()
                 if (input.isBlank()) return@setOnClickListener
-                adapter.addItem(Source().apply {
+
+                it.isEnabled = false
+                binding.inputSource.isEnabled = false
+                binding.inputSource.setText(R.string.checking_url)
+
+                val source = Source().apply {
                     path = input
                     active = true
-                })
-                sources = adapter.getItems()
-                binding.inputSource.text?.clear()
+                }
+
+                PlaylistHelper(rootView.context).task(source, object: PlaylistHelper.TaskChecker{
+                    override fun onCheckResult(result: Boolean) {
+                        adapter.addItem(source)
+                        sources = adapter.getItems()
+                        it.isEnabled = true
+                        binding.inputSource.text?.clear()
+                        binding.inputSource.isEnabled =true
+                        if (!result) {
+                            binding.inputSource.setText(input)
+                            Toast.makeText(context, R.string.link_error, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }).checkResult()
             }
 
             binding.btnPick.setOnClickListener {

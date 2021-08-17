@@ -11,18 +11,24 @@ import java.io.*
 
 class PlaylistHelper(val context: Context) {
     private val cache: File = File(context.cacheDir, "NontonTV.json")
-    private var taskListener: TaskListener? = null
+    private var taskResponse: TaskResponse? = null
+    private var taskChecker: TaskChecker? = null
     private var sources: ArrayList<Source> = ArrayList()
+    private var checkSource: Source? = null
     private val volley = VolleyRequestQueue.create(context)
 
     companion object {
         private const val TAG = "PlaylistHelper"
     }
 
-    interface TaskListener {
+    interface TaskResponse {
         fun onResponse(playlist: Playlist?) {}
         fun onError(error: Exception, source: Source) {}
         fun onFinish() {}
+    }
+
+    interface TaskChecker {
+        fun onCheckResult(result: Boolean) {}
     }
 
     fun writeCache(playlist: Playlist) {
@@ -52,16 +58,22 @@ class PlaylistHelper(val context: Context) {
         return readFile(cache)
     }
 
-    fun request(sources: ArrayList<Source>?, taskListener: TaskListener?): PlaylistHelper {
+    fun task(sources: ArrayList<Source>?, taskResponse: TaskResponse?): PlaylistHelper {
         sources?.let { this.sources.addAll(it) }
-        this.taskListener = taskListener
+        this.taskResponse = taskResponse
         return this
     }
 
-    fun get() {
-        // throw onFinish when sources is empty
+    fun task(source: Source, taskChecker: TaskChecker?): PlaylistHelper {
+        checkSource = source
+        this.taskChecker = taskChecker
+        return this
+    }
+
+    fun getResponse() {
+        // send onFinish when sources is empty
         if (sources.isEmpty()) {
-            taskListener?.onFinish()
+            taskResponse?.onFinish()
             return
         }
 
@@ -69,15 +81,15 @@ class PlaylistHelper(val context: Context) {
         val source = sources.first()
         sources.remove(source)
         if (!source.active) {
-            get()
+            getResponse()
             return
         }
 
         // local playlist
         if (source.path?.startsWith("http", ignoreCase = true) == false) {
             val playlist = readFile(File(source.path.toString()))
-            taskListener?.onResponse(playlist)
-            get()
+            taskResponse?.onResponse(playlist)
+            getResponse()
             return
         }
 
@@ -85,20 +97,48 @@ class PlaylistHelper(val context: Context) {
         val stringRequest = StringRequest(
             Request.Method.GET, source.path,
             { content ->
-                taskListener?.onResponse(content.toPlaylist())
-                get()
+                taskResponse?.onResponse(content.toPlaylist())
+                getResponse()
             },
             { error ->
                 var message = "[UNKNOWN] : ${source.path}"
                 if (error.networkResponse != null) {
                     val errorcode = error.networkResponse.statusCode
-                    message = "[$errorcode] : ${source.path}"
+                    message = "[HTTP_$errorcode] : ${source.path}"
                 } else if (!Network(context).isConnected()) {
                     message = context.getString(R.string.no_network)
                 }
                 Log.e(TAG, "Source : ${source.path}", error)
-                taskListener?.onError(Exception(message), source)
-                get()
+                taskResponse?.onError(Exception(message), source)
+                getResponse()
+            })
+        volley.add(stringRequest)
+    }
+
+    fun checkResult() {
+        var result = false
+        if (checkSource?.path?.startsWith("http", ignoreCase = true) == false) {
+            result = File(checkSource?.path.toString()).exists()
+            taskChecker?.onCheckResult(result)
+        }
+
+        val stringRequest = StringRequest(
+            Request.Method.GET, checkSource?.path.toString(),
+            { content ->
+                val pls = content.toPlaylist()
+                result = pls != null && pls.categories.isNotEmpty()
+                taskChecker?.onCheckResult(result)
+            },
+            { error ->
+                var message = "[UNKNOWN] : ${checkSource?.path}"
+                if (error.networkResponse != null) {
+                    val errorcode = error.networkResponse.statusCode
+                    message = "[HTTP_$errorcode] : ${checkSource?.path}"
+                } else if (!Network(context).isConnected()) {
+                    message = context.getString(R.string.no_network)
+                }
+                Log.e(TAG, message, error)
+                taskChecker?.onCheckResult(result)
             })
         volley.add(stringRequest)
     }

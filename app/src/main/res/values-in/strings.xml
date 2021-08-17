@@ -69,4 +69,6 @@
     <string name="input_url">URL Tautan</string>
     <string name="title_select_file_json">Pilih File Json</string>
     <string name="null_playlist">No playlists that can be displayed. Check your settings!</string>
+    <string name="checking_url">memeriksa tautan…</string>
+    <string name="link_error">Tautan Bermasalah!</string>
 </resources>

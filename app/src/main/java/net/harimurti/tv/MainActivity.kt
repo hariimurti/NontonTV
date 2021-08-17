@@ -76,6 +76,9 @@ open class MainActivity : AppCompatActivity() {
         }
         setContentView(binding.root)
 
+        // show loading message
+        loading.show(getString(R.string.loading))
+
         // ask all premissions need
         askPermissions()
 
@@ -148,21 +151,21 @@ open class MainActivity : AppCompatActivity() {
         loading.show(getString(R.string.loading))
 
         val playlistSet = Playlist()
-        PlaylistHelper(this).request(preferences.sources,
-            object: PlaylistHelper.TaskListener {
+        PlaylistHelper(this).task(preferences.sources,
+            object: PlaylistHelper.TaskResponse {
                 override fun onError(error: Exception, source: Source) {
                     val message = if (error.message.isNullOrBlank()) "Problem with $source" else error.message
                     Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
                 }
                 override fun onResponse(playlist: Playlist?) {
-                    if (playlist == null) {
-                        Toast.makeText(applicationContext, getString(R.string.playlist_cant_be_parsed), Toast.LENGTH_SHORT).show()
-                        return
-                    }
                     // merge into playlistset
-                    playlist.categories.let { playlistSet.categories.addAll(it) }
-                    playlist.drmLicenses.let { playlistSet.drmLicenses.addAll(it) }
-                    setPlaylistToAdapter(playlistSet)
+                    if (playlist != null) {
+                        playlist.categories.let { playlistSet.categories.addAll(it) }
+                        playlist.drmLicenses.let { playlistSet.drmLicenses.addAll(it) }
+                        setPlaylistToAdapter(playlistSet)
+                    }
+                    else Toast.makeText(applicationContext, getString(R.string.playlist_cant_be_parsed), Toast.LENGTH_SHORT).show()
+
                 }
                 override fun onFinish() {
                     // dismiss loading message
@@ -172,7 +175,7 @@ open class MainActivity : AppCompatActivity() {
                     }
                     else Toast.makeText(applicationContext, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
                 }
-        }).get()
+        }).getResponse()
     }
 
     private fun showAlertPlaylistError(error: String?) {
