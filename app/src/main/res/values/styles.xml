@@ -3,11 +3,11 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
+        <item name="colorPrimaryDark">@color/color_dark</item>
         <item name="colorAccent">@color/color_accent</item>
     </style>
 
-    <style name="AppThemePlayer" parent="Theme.AppCompat.NoActionBar">
+    <style name="AppThemePlayer" parent="AppTheme">
         <item name="android:keepScreenOn">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
@@ -22,11 +22,6 @@
     <style name="SettingsDialogThemeOverlay" parent="ThemeOverlay.AppCompat.Dialog.Alert">
         <item name="windowNoTitle">false</item>
         <item name="android:windowSoftInputMode">adjustPan</item>
-    </style>
-
-    <style name="ProgressDialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:backgroundDimEnabled">true</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
     </style>
 
     <style name="ImageButton" parent="Widget.AppCompat.ImageButton">
