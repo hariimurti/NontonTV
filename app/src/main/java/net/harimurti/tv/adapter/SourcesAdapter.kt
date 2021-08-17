@@ -1,11 +1,15 @@
 package net.harimurti.tv.adapter
 
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
+import android.content.Context.CLIPBOARD_SERVICE
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.Toast
-import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import net.harimurti.tv.BR
@@ -14,8 +18,9 @@ import net.harimurti.tv.databinding.ItemSourceBinding
 import net.harimurti.tv.model.Source
 
 interface SourceClickListener {
-    fun buttonClicked(source: Source?)
-    fun checkBoxClicked(view: View, source: Source?)
+    fun onClicked(source: Source?)
+    fun onCheckChanged(view: View, checked: Boolean, source: Source?)
+    fun onlongClicked(view: View, source: Source?): Boolean
 }
 
 class SourcesAdapter(private val sources: ArrayList<Source>?):
@@ -47,7 +52,7 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
         }
     }
 
-    override fun buttonClicked(source: Source?) {
+    override fun onClicked(source: Source?) {
         val position = sources?.indexOf(source) ?: 0
         sources?.remove(source)
         notifyItemRemoved(position)
@@ -57,14 +62,25 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
         }
     }
 
-    override fun checkBoxClicked(view: View, source: Source?) {
+    override fun onlongClicked(view: View, source: Source?): Boolean {
+        val clipboardManager = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newUri(context.contentResolver, "URI", Uri.parse(source?.path))
+        clipboardManager.setPrimaryClip(clipData)
+
+        Toast.makeText(context, R.string.link_copied_to_clipboard, Toast.LENGTH_SHORT).show()
+
+        val checkBox = view as CheckBox
+        checkBox.isChecked = !checkBox.isChecked
+        return false
+    }
+
+    override fun onCheckChanged(view: View, checked: Boolean, source: Source?) {
         val position = sources?.indexOf(source) ?: 0
-        val checkBox = view as AppCompatCheckBox
-        sources?.get(position)?.active = checkBox.isChecked
-        if (!checkBox.isChecked && sources?.filter { s -> s.active }?.size == 0 && !sources[0].active) {
+        sources?.get(position)?.active = checked
+        if (!checked && sources?.filter { s -> s.active }?.size == 0 && !sources[0].active) {
             sources[0].active = true
             notifyItemChanged(0)
-            Toast.makeText(context, "Can't disable the default, you're only have one active playlist!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, R.string.warning_none_source_active, Toast.LENGTH_SHORT).show()
         }
     }
 

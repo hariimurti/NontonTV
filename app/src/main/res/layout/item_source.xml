@@ -23,7 +23,8 @@
             android:ellipsize="end"
             android:text="@{modelSource.path}"
             android:checked="@{modelSource.active}"
-            android:onClick="@{(view) -> clickListener.checkBoxClicked(view, modelSource)}"/>
+            android:onCheckedChanged="@{(view, checked) -> clickListener.onCheckChanged(view, checked, modelSource)}"
+            android:onLongClick="@{(view) -> clickListener.onlongClicked(view, modelSource)}"/>
 
         <ImageButton
             android:id="@+id/btn_remove"
@@ -33,7 +34,7 @@
             android:padding="10dp"
             android:layout_alignParentEnd="true"
             app:srcCompat="@drawable/ic_remove"
-            android:onClick="@{() -> clickListener.buttonClicked(modelSource)}"
+            android:onClick="@{() -> clickListener.onClicked(modelSource)}"
             tools:ignore="ContentDescription" />
 
     </RelativeLayout>

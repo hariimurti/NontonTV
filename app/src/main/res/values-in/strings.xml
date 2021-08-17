@@ -71,4 +71,6 @@
     <string name="null_playlist">No playlists that can be displayed. Check your settings!</string>
     <string name="checking_url">memeriksa tautan…</string>
     <string name="link_error">Tautan Bermasalah!</string>
+    <string name="link_copied_to_clipboard">Tautan disalin ke papan klip!</string>
+    <string name="warning_none_source_active">Tidak ada sumber lain yang aktif, default harus diaktifkan!</string>
 </resources>
