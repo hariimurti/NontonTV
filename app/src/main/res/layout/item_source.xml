@@ -25,8 +25,9 @@
             android:checked="@{modelSource.active}"
             android:onClick="@{(view) -> clickListener.checkBoxClicked(view, modelSource)}"/>
 
-        <ImageView
+        <ImageButton
             android:id="@+id/btn_remove"
+            style="@style/ImageButton"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:padding="10dp"

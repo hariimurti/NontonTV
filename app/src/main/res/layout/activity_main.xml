@@ -11,7 +11,8 @@
         android:id="@+id/swipe_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".MainActivity"
+        tools:ignore="ContentDescription">
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -32,29 +33,23 @@
 
                 <ImageButton
                     android:id="@+id/search_button"
+                    style="@style/ImageButton"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
                     app:srcCompat="@drawable/ic_search"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:focusable="true"
-                    android:clickable="true"
                     app:layout_constraintEnd_toStartOf="@id/main_settings"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:ignore="ContentDescription"/>
+                    app:layout_constraintTop_toTopOf="parent"/>
 
                 <ImageButton
                     android:id="@+id/main_settings"
+                    style="@style/ImageButton"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_marginTop="5dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    android:src="@drawable/exo_ic_settings"
-                    android:background="?android:attr/selectableItemBackground"
-                    android:focusable="true"
-                    android:clickable="true"
-                    tools:ignore="ContentDescription" />
+                    android:src="@drawable/exo_ic_settings"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>

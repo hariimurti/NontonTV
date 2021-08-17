@@ -9,7 +9,8 @@
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/search_layout"
@@ -18,7 +19,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/search_input"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="8dp"
                 android:hint="@string/name_channel"
@@ -26,26 +27,22 @@
                 android:maxLines="1"
                 android:imeOptions="actionDone"
                 android:inputType="text"
-                android:minHeight="50dp"
                 android:paddingStart="38dp"
                 android:paddingEnd="38dp"
-                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
                 android:id="@+id/search_reset"
+                style="@style/ImageButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:srcCompat="@drawable/ic_clear"
                 app:layout_constraintBottom_toBottomOf="@+id/search_input"
                 app:layout_constraintEnd_toEndOf="@+id/search_input"
                 app:layout_constraintTop_toTopOf="@+id/search_input"
-                android:focusable="true"
-                android:visibility="gone"
-                android:background="?android:attr/selectableItemBackground"
-                tools:ignore="ContentDescription" />
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="30dp"
@@ -53,8 +50,7 @@
                 app:srcCompat="@drawable/ic_search"
                 app:layout_constraintBottom_toBottomOf="@+id/search_input"
                 app:layout_constraintStart_toStartOf="@+id/search_input"
-                app:layout_constraintTop_toTopOf="@+id/search_input"
-                tools:ignore="ContentDescription" />
+                app:layout_constraintTop_toTopOf="@+id/search_input" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

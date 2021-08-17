@@ -18,16 +18,18 @@
             android:layout_height="55dp"
             android:layout_marginTop="5dp">
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btn_pick"
+                style="@style/ImageButton"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:padding="10dp"
                 android:layout_centerVertical="true"
                 app:srcCompat="@drawable/ic_pick_file" />
 
-            <ImageView
+            <ImageButton
                 android:id="@+id/btn_add"
+                style="@style/ImageButton"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
                 android:padding="10dp"
