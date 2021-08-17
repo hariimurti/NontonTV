@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="sourcesAdapter"
+            type="net.harimurti.tv.adapter.SourcesAdapter" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ContentDescription">
+
+        <RelativeLayout
+            android:id="@+id/layout_input"
+            android:layout_width="match_parent"
+            android:layout_height="55dp"
+            android:layout_marginTop="5dp">
+
+            <ImageView
+                android:id="@+id/btn_pick"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="10dp"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_pick_file" />
+
+            <ImageView
+                android:id="@+id/btn_add"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:padding="10dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                app:srcCompat="@drawable/ic_add_url" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/btn_add"
+                android:layout_toEndOf="@+id/btn_pick"
+                android:hint="@string/input_url"
+                app:endIconMode="clear_text"
+                app:hintTextColor="@color/color_text">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/input_source"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/setting_content_margin_top"
+                    android:focusable="true"
+                    android:inputType="textUri"
+                    android:maxLines="1" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_sources"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/layout_input"
+            android:adapter="@{sourcesAdapter}"
+            app:layoutManager="LinearLayoutManager"
+            tools:listitem="@layout/item_source"/>
+
+    </RelativeLayout>
+
+</layout>

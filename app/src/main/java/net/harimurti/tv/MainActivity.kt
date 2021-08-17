@@ -19,7 +19,6 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import com.android.volley.Request
 import com.android.volley.RequestQueue
 import com.android.volley.Response
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
 import net.harimurti.tv.adapter.CategoryAdapter
@@ -36,7 +35,7 @@ open class MainActivity : AppCompatActivity() {
     private var isTelevision = false
     private lateinit var binding: ActivityMainBinding
     private lateinit var preferences: Preferences
-    private lateinit var playlistHelper: PlaylistHelper
+    private lateinit var helper: PlaylistHelper
     private lateinit var request: RequestQueue
     private lateinit var loading: ProgressDialog
 
@@ -67,7 +66,7 @@ open class MainActivity : AppCompatActivity() {
         }
 
         preferences = Preferences(this)
-        playlistHelper = PlaylistHelper(this)
+        helper = PlaylistHelper(this)
         loading = ProgressDialog(this)
         request = VolleyRequestQueue.create(this)
 
@@ -113,24 +112,18 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun setPlaylistToAdapter(playlistSet: Playlist) {
-        // set playlist if merge
-        if(preferences.mergePlaylist && Playlist.loaded != null){
-            Playlist.loaded!!.categories?.let { playlistSet.categories?.addAll(it) }
-            Playlist.loaded!!.drmLicenses?.let { playlistSet.drmLicenses?.addAll(it) }
-        }
-
         //set cat_id and ch_id
-        for (catId in playlistSet.categories?.indices!!) {
+        for (catId in playlistSet.categories.indices) {
             //sort channels by name
-            playlistSet.categories!![catId].channels!!.sortBy { channel -> channel.name?.lowercase() }
+            playlistSet.categories[catId].channels!!.sortBy { channel -> channel.name?.lowercase() }
             //remove channels with empty streamurl
-            playlistSet.categories!![catId].channels!!.removeAll { channel -> channel.streamUrl.isNullOrBlank() }
+            playlistSet.categories[catId].channels!!.removeAll { channel -> channel.streamUrl.isNullOrBlank() }
 
-            for (chId in playlistSet.categories!![catId].channels!!.indices) {
+            for (chId in playlistSet.categories[catId].channels!!.indices) {
                 // add catId
-                playlistSet.categories!![catId].channels!![chId].catId = catId
+                playlistSet.categories[catId].channels!![chId].catId = catId
                 // add chId
-                playlistSet.categories!![catId].channels!![chId].chId = chId
+                playlistSet.categories[catId].channels!![chId].chId = chId
             }
         }
 
@@ -139,10 +132,7 @@ open class MainActivity : AppCompatActivity() {
 
         // write cache
         Playlist.loaded = playlistSet
-        playlistHelper.writeCache(playlistSet)
-
-        // end the loading
-        loading.dismiss()
+        helper.writeCache(playlistSet)
 
         // launch player if playlastwatched is true
         if (preferences.playLastWatched && PlayerActivity.isFirst) {
@@ -151,88 +141,54 @@ open class MainActivity : AppCompatActivity() {
             this.startActivity(intent)
             return
         }
-
-        if (Playlist.loaded != null)
-            Toast.makeText(this, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
     }
 
     private fun updatePlaylist() {
         // show loading message
         loading.show(getString(R.string.loading))
 
-        // from local storage
-        if (playlistHelper.mode() == PlaylistHelper.MODE_LOCAL) {
-            val local = playlistHelper.readLocal()
-            if (local == null || local.categories.isNullOrEmpty()) {
-                showAlertLocalError(null)
-                return
-            }
-            if(preferences.mergePlaylist) {
-                Playlist.loaded = local
-            }else{
-                setPlaylistToAdapter(local)
-                return
-            }
-        }
-
-        // from local pick
-        if (playlistHelper.mode() == PlaylistHelper.MODE_SELECT) {
-            val paths: List<String> = preferences.playlistSelect.split(",")
-            var picks: Playlist? = null
-            for (path in paths) {
-                val pick = playlistHelper.readSelect(path)!!
-                if (pick.categories.isNullOrEmpty()) {
-                    showAlertLocalError(path)
-                    return
+        val playlistSet = Playlist()
+        PlaylistHelper(this).request(preferences.sources,
+            object: PlaylistHelper.TaskListener {
+                override fun onError(error: Exception, source: Source) {
+                    val message = if (error.message.isNullOrBlank()) "Problem with $source" else error.message
+                    Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
                 }
-                if(picks != null) {
-                    pick.categories?.let { picks!!.categories?.addAll(it) }
-                    pick.drmLicenses?.let { picks!!.drmLicenses?.addAll(it) }
-                }else picks = pick
-            }
-
-            if (picks == null || picks.categories.isNullOrEmpty()) {
-                showAlertLocalError(preferences.playlistSelect)
-                return
-            }
-            if (preferences.mergePlaylist) {
-                Playlist.loaded = picks
-            } else {
-                setPlaylistToAdapter(picks)
-                return
-            }
-        }
-
-        // from internet
-        val stringRequest = StringRequest(Request.Method.GET,
-            playlistHelper.urlPath,
-            { response: String? ->
-                try {
-                    if (response == null) throw Exception(getString(R.string.null_content))
-                    val newPls = response.trim().toPlaylist()
-                    if (newPls == null || newPls.categories.isNullOrEmpty()) {
-                        throw Exception(getString(R.string.playlist_cant_be_parsed))
+                override fun onResponse(playlist: Playlist?) {
+                    if (playlist == null) {
+                        Toast.makeText(applicationContext, getString(R.string.playlist_cant_be_parsed), Toast.LENGTH_SHORT).show()
+                        return
                     }
-                    setPlaylistToAdapter(newPls)
-                } catch (error: Exception) {
-                    showAlertPlaylistError(error.message)
+                    // merge into playlistset
+                    playlist.categories.let { playlistSet.categories.addAll(it) }
+                    playlist.drmLicenses.let { playlistSet.drmLicenses.addAll(it) }
+                    setPlaylistToAdapter(playlistSet)
                 }
-            }
-        ) { error: VolleyError ->
-            var message = getString(R.string.something_went_wrong)
-            if (error.networkResponse != null) {
-                val errorcode = error.networkResponse.statusCode
-                if (errorcode in 400..499) message =
-                    String.format(getString(R.string.error_4xx), errorcode)
-                if (errorcode in 500..599) message =
-                    String.format(getString(R.string.error_5xx), errorcode)
-            } else if (!Network(this).isConnected()) {
-                message = getString(R.string.no_network)
-            }
-            showAlertPlaylistError(message)
+                override fun onFinish() {
+                    // dismiss loading message
+                    loading.dismiss()
+                    if (playlistSet.categories.size == 0) {
+                        showAlertPlaylistError(null)
+                    }
+                    else Toast.makeText(applicationContext, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
+                }
+        }).get()
+    }
+
+    private fun showAlertPlaylistError(error: String?) {
+        val message = error ?: getString(R.string.null_playlist)
+        val alert = AlertDialog.Builder(this).apply {
+            setTitle(R.string.alert_title_playlist_error)
+            setMessage(message)
+            setCancelable(false)
+            setNeutralButton(R.string.settings) { _,_ -> openSettings() }
+            setPositiveButton(R.string.dialog_retry) { _,_ -> updatePlaylist() }
         }
-        request.cache.clear()
-        request.add(stringRequest)
+        val cache = helper.readCache()
+        if (cache != null) {
+            alert.setNegativeButton(R.string.dialog_cached) { _,_ -> setPlaylistToAdapter(cache) }
+        }
+        alert.create().show()
     }
 
     private fun checkNewRelease() {
@@ -264,85 +220,53 @@ open class MainActivity : AppCompatActivity() {
         request.add(stringRequest)
     }
 
-    private fun getContributors() {
-            val stringRequest = StringRequest(Request.Method.GET,
-                getString(R.string.gh_contributors),
-                { response: String? ->
-                    try {
-                        val users = Gson().fromJson(response, Array<GithubUser>::class.java)
-                        val message = StringBuilder(getString(R.string.message_thanks_to))
-                        for (user in users) {
-                            message.append(user.login).append(", ")
-                        }
-                        if (users.isNotEmpty() && preferences.totalContributors < users.size) {
-                            preferences.totalContributors = users.size
-                            showAlertContributors(message.substring(0, message.length - 2))
-                        }
-                    } catch (e: Exception) {
-                        Log.e("Volley", "Could not get contributors!", e)
-                    }
-                }, null
-            )
-            request.add(stringRequest)
-        }
-
-    private fun showAlertLocalError(filepath: String?) {
-        askPermissions()
-        val message = if (filepath == null) getString(R.string.playlist_local_read_error)
-        else String.format(getString(R.string.playlist_selected_read_error), filepath)
-        AlertDialog.Builder(this).apply {
-            setTitle(R.string.alert_title_playlist_error)
-            setMessage(message)
-            setCancelable(false)
-            setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
-            setNegativeButton(getString(R.string.dialog_default)) { _: DialogInterface?, _: Int ->
-                preferences.useCustomPlaylist = false
-                preferences.mergePlaylist = false
-                preferences.playlistSelect = ""
-                preferences.radioPlaylist = 0
-                updatePlaylist()
-            }
-            create()
-            show()
-        }
-    }
-
-    private fun showAlertPlaylistError(error: String?) {
-        val message = error ?: getString(R.string.something_went_wrong)
-        val alert = AlertDialog.Builder(this)
-        alert.setTitle(R.string.alert_title_playlist_error)
-            .setMessage(message)
-            .setCancelable(false)
-            .setPositiveButton(R.string.dialog_retry) { _: DialogInterface?, _: Int -> updatePlaylist() }
-        val cache = playlistHelper.readCache()
-        if (cache != null) {
-            alert.setNegativeButton(R.string.dialog_cached) { _: DialogInterface?, _: Int -> setPlaylistToAdapter(cache) }
-        }
-        alert.create().show()
-    }
-
     private fun showAlertUpdate(message: String, fileUrl: String) {
         askPermissions()
-        val alert = AlertDialog.Builder(this)
-        alert.setTitle(R.string.alert_new_update)
-            .setMessage(message)
-            .setPositiveButton(R.string.dialog_download) { _: DialogInterface?, _: Int -> downloadFile(fileUrl) }
-            .setNegativeButton(R.string.dialog_skip) { _: DialogInterface?, _: Int -> preferences.setLastCheckUpdate() }
-        alert.create().show()
+        val alert = AlertDialog.Builder(this).apply {
+            setTitle(R.string.alert_new_update)
+            setMessage(message)
+            setPositiveButton(R.string.dialog_download) { _,_ -> downloadFile(fileUrl) }
+            setNegativeButton(R.string.dialog_skip) { _,_ -> preferences.setLastCheckUpdate() }
+            create()
+        }
+        alert.show()
+    }
+
+    private fun getContributors() {
+        val stringRequest = StringRequest(Request.Method.GET,
+            getString(R.string.gh_contributors),
+            { response: String? ->
+                try {
+                    val users = Gson().fromJson(response, Array<GithubUser>::class.java)
+                    val message = StringBuilder(getString(R.string.message_thanks_to))
+                    for (user in users) {
+                        message.append(user.login).append(", ")
+                    }
+                    if (users.isNotEmpty() && preferences.totalContributors < users.size) {
+                        preferences.totalContributors = users.size
+                        showAlertContributors(message.substring(0, message.length - 2))
+                    }
+                } catch (e: Exception) {
+                    Log.e("Volley", "Could not get contributors!", e)
+                }
+            }, null
+        )
+        request.add(stringRequest)
     }
 
     private fun showAlertContributors(message: String) {
-        val alert = AlertDialog.Builder(this)
-        alert.setTitle(R.string.alert_title_contributors)
-            .setMessage(message)
-            .setNeutralButton(R.string.dialog_telegram) { _: DialogInterface?, _: Int -> openWebsite(getString(R.string.telegram_group)) }
-            .setNegativeButton(R.string.dialog_website) { _: DialogInterface?, _: Int -> openWebsite(getString(R.string.website)) }
-            .setPositiveButton(if (preferences.showLessContributors) R.string.dialog_close else R.string.dialog_show_less) {
-                    _: DialogInterface?, _: Int -> preferences.showLessContributors()
-            }
+        val positiveBtn = if (preferences.showLessContributors) R.string.dialog_close else R.string.dialog_show_less
+        val alert = AlertDialog.Builder(this).apply {
+            setTitle(R.string.alert_title_contributors)
+            setMessage(message)
+            setNeutralButton(R.string.dialog_telegram) { _,_ -> openWebsite(getString(R.string.telegram_group)) }
+            setNegativeButton(R.string.dialog_website) { _,_ -> openWebsite(getString(R.string.website)) }
+            setPositiveButton(positiveBtn) { _,_ -> preferences.showLessContributors() }
+        }
         val dialog = alert.create()
-        dialog.show()
-        Handler(Looper.getMainLooper()).postDelayed({ try { dialog.dismiss() } catch (e: Exception) { }}, 10000)
+        alert.show()
+        Handler(Looper.getMainLooper())
+            .postDelayed({ try { dialog.dismiss() } catch (e: Exception) { }}, 10000)
     }
 
     private fun openWebsite(link: String) {

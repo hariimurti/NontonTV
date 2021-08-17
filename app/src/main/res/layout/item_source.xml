@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="modelSource"
+            type="net.harimurti.tv.model.Source" />
+        <variable
+            name="clickListener"
+            type="net.harimurti.tv.adapter.SourceClickListener" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatCheckBox
+            android:id="@+id/sw_source"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_toStartOf="@id/btn_remove"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="@{modelSource.path}"
+            android:checked="@{modelSource.active}"
+            android:onClick="@{(view) -> clickListener.checkBoxClicked(view, modelSource)}"/>
+
+        <ImageView
+            android:id="@+id/btn_remove"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:padding="10dp"
+            android:layout_alignParentEnd="true"
+            app:srcCompat="@drawable/ic_remove"
+            android:onClick="@{() -> clickListener.buttonClicked(modelSource)}"
+            tools:ignore="ContentDescription" />
+
+    </RelativeLayout>
+</layout>

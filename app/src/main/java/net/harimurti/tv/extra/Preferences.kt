@@ -4,10 +4,13 @@ import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
+import net.harimurti.tv.R
 import net.harimurti.tv.model.PlayData
+import net.harimurti.tv.model.Source
 import java.util.*
+import kotlin.collections.ArrayList
 
-class Preferences(context: Context) {
+class Preferences(val context: Context) {
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
     private lateinit var editor: SharedPreferences.Editor
 
@@ -16,15 +19,11 @@ class Preferences(context: Context) {
         private const val LAST_WATCHED = "LAST_WATCHED"
         private const val OPEN_LAST_WATCHED = "OPEN_LAST_WATCHED"
         private const val LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT"
-        private const val USE_CUSTOM_PLAYLIST = "USE_CUSTOM_PLAYLIST"
-        private const val MERGE_PLAYLIST = "MERGE_PLAYLIST"
-        private const val RADIO_PLAYLIST = "RADIO_PLAYLIST"
-        private const val PLAYLIST_EXTERNAL = "PLAYLIST_EXTERNAL"
-        private const val PLAYLIST_SELECT = "PLAYLIST_SELECT"
         private const val LAST_VERSIONCODE = "LAST_VERSIONCODE"
         private const val TOTAL_CONTRIBUTORS = "TOTAL_CONTRIBUTORS"
         private const val SHOW_LESS_CONTRIBUTORS = "SHOW_LESS_CONTRIBUTORS"
         private const val RESIZE_MODE = "RESIZE_MODE"
+        private const val SOURCES_PLAYLIST = "SOURCES_PLAYLIST"
     }
 
     fun setLastCheckUpdate() {
@@ -74,43 +73,35 @@ class Preferences(context: Context) {
             editor.apply()
         }
 
-    var useCustomPlaylist: Boolean
-        get() = preferences.getBoolean(USE_CUSTOM_PLAYLIST, false)
-        set(value) {
-            editor = preferences.edit()
-            editor.putBoolean(USE_CUSTOM_PLAYLIST, value)
-            editor.apply()
+    var sources: ArrayList<Source>?
+        get() {
+            val default = Source().apply {
+                path = context.getString(R.string.json_playlist)
+                active = true
+            }
+            return try {
+                val result = ArrayList<Source>()
+                val json = preferences.getString(SOURCES_PLAYLIST, "").toString()
+                if (json.isBlank()) {
+                    result.add(default)
+                }
+                else {
+                    val list = Gson().fromJson(json, Array<Source>::class.java)
+                    val active = list.filter { s -> s.active }
+                    if (list[0].path != default.path) result.add(default)
+                    if (active.size == 1 && active[0].path == default.path) list[0].active = true
+                    result.addAll(list)
+                }
+                result
+            } catch (e: Exception) {
+                e.printStackTrace()
+                null
+            }
         }
-
-    var mergePlaylist: Boolean
-        get() = preferences.getBoolean(MERGE_PLAYLIST, false)
         set(value) {
+            val json = Gson().toJson(value)
             editor = preferences.edit()
-            editor.putBoolean(MERGE_PLAYLIST, value)
-            editor.apply()
-        }
-
-    var playlistExternal: String
-        get() = preferences.getString(PLAYLIST_EXTERNAL, "").toString()
-        set(value) {
-            editor = preferences.edit()
-            editor.putString(PLAYLIST_EXTERNAL, value)
-            editor.apply()
-        }
-
-    var radioPlaylist: Int
-        get() = preferences.getInt(RADIO_PLAYLIST, 0)
-        set(value) {
-            editor = preferences.edit()
-            editor.putInt(RADIO_PLAYLIST, value)
-            editor.apply()
-        }
-
-    var playlistSelect: String
-        get() = preferences.getString(PLAYLIST_SELECT, "").toString()
-        set(value) {
-            editor = preferences.edit()
-            editor.putString(PLAYLIST_SELECT, value)
+            editor.putString(SOURCES_PLAYLIST, json)
             editor.apply()
         }
 

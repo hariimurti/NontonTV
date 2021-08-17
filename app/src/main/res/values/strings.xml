@@ -79,12 +79,11 @@
     <string name="toast_screen_mode">Screen Mode : %s</string>
     <string name="text_screen_mode">Screen :</string>
     <string name="merge_playlist">Merge</string>
-    <string name="tab_1">Startup</string>
-    <string name="tab_2">Playlist</string>
-    <string name="rb_local_default">Local Default</string>
-    <string name="rb_selected_file">Selected File</string>
-    <string name="rb_input_url">Link URL</string>
-    <string name="pick_file">Pick File</string>
+    <string name="tab_1">Playlist</string>
+    <string name="tab_2">Application</string>
+    <string name="input_url">Link URL</string>
     <string name="show_hidden" translatable="false">Hidden</string>
     <string name="title_select_file_json">Select File Json</string>
+    <string name="default_playlist" translatable="false">NontonTV (Default)</string>
+    <string name="null_playlist">No playlists that can be displayed. Check your settings!</string>
 </resources>

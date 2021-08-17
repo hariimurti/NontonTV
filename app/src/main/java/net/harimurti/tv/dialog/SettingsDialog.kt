@@ -1,6 +1,5 @@
 package net.harimurti.tv.dialog
 
-import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent
@@ -8,8 +7,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,38 +17,31 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import androidx.recyclerview.widget.DividerItemDecoration
 import com.developer.filepicker.model.DialogConfigs
 import com.developer.filepicker.model.DialogProperties
-import com.google.android.material.textfield.TextInputLayout
 import net.harimurti.tv.MainActivity
 import net.harimurti.tv.R
+import net.harimurti.tv.adapter.SourcesAdapter
+import net.harimurti.tv.databinding.SettingsApplicationFragmentBinding
 import net.harimurti.tv.databinding.SettingsDialogBinding
-import net.harimurti.tv.databinding.SettingsPlaylistFragmentBinding
-import net.harimurti.tv.databinding.SettingsStartupFragmentBinding
-import net.harimurti.tv.extra.PlaylistHelper
+import net.harimurti.tv.databinding.SettingsSourcesFragmentBinding
 import net.harimurti.tv.extra.Preferences
+import net.harimurti.tv.model.Source
 import java.io.File
-import java.lang.StringBuilder
-
 
 @Suppress("DEPRECATION")
 class SettingsDialog : DialogFragment() {
     private var _binding : SettingsDialogBinding? = null
     private val binding get() = _binding!!
-    private val tabFragment = arrayOf(
-        StartupFragment(),
-        PlaylistFragment()
-    )
-    private val tabTitle = arrayOf(
-        R.string.tab_1,
-        R.string.tab_2
-    )
+    private val tabFragment = arrayOf(SourcesFragment(), ApplicationFragment())
+    private val tabTitle = arrayOf(R.string.tab_1, R.string.tab_2)
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val dialog = AppCompatDialog(activity, R.style.SettingsDialogThemeOverlay)
-        dialog.setTitle(R.string.settings)
-        dialog.setCanceledOnTouchOutside(false)
-        return dialog
+        return AppCompatDialog(activity, R.style.SettingsDialogThemeOverlay).apply {
+            setTitle(R.string.settings)
+            setCanceledOnTouchOutside(false)
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -60,18 +50,9 @@ class SettingsDialog : DialogFragment() {
         val preferences = Preferences(dialogView.context)
 
         // init
-        StartupFragment.launchAtBoot = preferences.launchAtBoot
-        StartupFragment.playLastWatched = preferences.playLastWatched
-        val useCustomPlaylist = preferences.useCustomPlaylist
-        PlaylistFragment.useCustomPlaylist = useCustomPlaylist
-        val mergePlaylist = preferences.mergePlaylist
-        PlaylistFragment.mergePlaylist = mergePlaylist
-        val radioPlaylist = preferences.radioPlaylist
-        PlaylistFragment.radioPlaylist = radioPlaylist
-        val playlistSelect = preferences.playlistSelect
-        PlaylistFragment.playlistSelect = playlistSelect
-        val playlistExternal = preferences.playlistExternal
-        PlaylistFragment.playlistExternal = playlistExternal
+        ApplicationFragment.launchAtBoot = preferences.launchAtBoot
+        ApplicationFragment.playLastWatched = preferences.playLastWatched
+        SourcesFragment.sources = preferences.sources
 
         // view pager
         binding.settingViewPager.apply {
@@ -83,31 +64,16 @@ class SettingsDialog : DialogFragment() {
         }
         // button cancel
         binding.settingCancelButton.apply {
-            setOnClickListener {
-                //revert tab 2 only
-                preferences.useCustomPlaylist = useCustomPlaylist
-                preferences.mergePlaylist = mergePlaylist
-                preferences.radioPlaylist = radioPlaylist
-                preferences.playlistSelect = playlistSelect
-                preferences.playlistExternal = playlistExternal
-                //update playlist
-                sendUpdatePlaylist(rootView.context)
-                dismiss()
-            }
+            setOnClickListener { dismiss() }
         }
         // button ok
         binding.settingOkButton.apply {
             setOnClickListener {
-                //save tab 1
-                preferences.launchAtBoot = StartupFragment.launchAtBoot
-                preferences.playLastWatched = StartupFragment.playLastWatched
+                //update sources
+                preferences.sources = SourcesFragment.sources
                 //save tab 2
-                preferences.useCustomPlaylist = PlaylistFragment.useCustomPlaylist
-                preferences.mergePlaylist = PlaylistFragment.mergePlaylist
-                preferences.radioPlaylist = PlaylistFragment.radioPlaylist
-                preferences.playlistSelect = PlaylistFragment.playlistSelect
-                preferences.playlistExternal = PlaylistFragment.playlistExternal
-                //update playlist
+                preferences.launchAtBoot = ApplicationFragment.launchAtBoot
+                preferences.playLastWatched = ApplicationFragment.playLastWatched
                 sendUpdatePlaylist(rootView.context)
                 dismiss()
             }
@@ -142,8 +108,8 @@ class SettingsDialog : DialogFragment() {
         }
     }
 
-    class StartupFragment : Fragment() {
-        private var _binding: SettingsStartupFragmentBinding? = null
+    class ApplicationFragment : Fragment() {
+        private var _binding: SettingsApplicationFragmentBinding? = null
         private val binding get() = _binding!!
 
         companion object {
@@ -152,7 +118,7 @@ class SettingsDialog : DialogFragment() {
         }
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
-            _binding = SettingsStartupFragmentBinding.inflate(inflater, container, false)
+            _binding = SettingsApplicationFragmentBinding.inflate(inflater, container, false)
             val rootView = binding.root
 
             binding.launchAtBoot.apply {
@@ -178,119 +144,22 @@ class SettingsDialog : DialogFragment() {
         }
     }
 
-    class PlaylistFragment : Fragment() {
-        private var _binding: SettingsPlaylistFragmentBinding? = null
+    class SourcesFragment: Fragment() {
+        private var _binding: SettingsSourcesFragmentBinding? = null
         private val binding get() = _binding!!
-        private lateinit var dialog : FilePickerDialog
+        private lateinit var filePicker: FilePickerDialog
 
         companion object {
-            var useCustomPlaylist = false
-            var mergePlaylist = false
-            var radioPlaylist = 0
-            var playlistSelect = ""
-            var playlistExternal = ""
+            var sources: ArrayList<Source>? = null
         }
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
-            _binding = SettingsPlaylistFragmentBinding.inflate(inflater, container, false)
+            _binding = SettingsSourcesFragmentBinding.inflate(inflater, container, false)
             val rootView = binding.root
-            val preferences = Preferences(rootView.context)
 
-            //init
-            updateLayout(radioPlaylist)
-            binding.customSelected.apply {
-                check(binding.customSelected.getChildAt(radioPlaylist).id)
-            }
-            if(!useCustomPlaylist) binding.pickButton.visibility = View.GONE
-            // layout custom playlist
-            binding.layoutCustomPlaylist.apply {
-                visibility = if (useCustomPlaylist) View.VISIBLE else View.GONE
-            }
-            // switch custom playlist
-            binding.useCustomPlaylist.apply {
-                isChecked = useCustomPlaylist
-                setOnClickListener {
-                    binding.layoutCustomPlaylist.visibility = if (isChecked) View.VISIBLE else View.GONE
-                    useCustomPlaylist = isChecked
-                    updateLayout(radioPlaylist)
-                    if (!isChecked) {
-                        binding.pickButton.visibility = View.GONE
-                        mergePlaylist = false
-                    }
-                }
-            }
-
-            // RadioButton localPlaylist
-            binding.localPlaylist.apply {
-                setOnClickListener{
-                    radioPlaylist = 0
-                    updateLayout(radioPlaylist)
-                    binding.reloadPlaylist.requestFocus()
-                }
-            }
-            // RadioButton pickPlaylist
-            binding.pickPlaylist.apply {
-                setOnClickListener{
-                    radioPlaylist = 1
-                    updateLayout(radioPlaylist)
-                    binding.pickButton.requestFocus()
-                }
-            }
-            // RadioButton urlPlaylist
-            binding.urlPlaylist.apply {
-                setOnClickListener{
-                    radioPlaylist = 2
-                    updateLayout(radioPlaylist)
-                    binding.customPlaylist.requestFocus()
-                }
-            }
-            // button pick playlist
-            binding.pickButton.apply {
-                setOnClickListener {
-                    openFilePicker()
-                }
-            }
-            // edittext custom playlist
-            binding.customPlaylist.apply {
-                //setText(preferences.playlistExternal)
-                addTextChangedListener(object : TextWatcher {
-                    override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
-                    override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
-                    override fun afterTextChanged(s: Editable) {
-                        val text = s.toString()
-                        when (radioPlaylist) {
-                            1 -> {
-                                playlistSelect = text
-                            }
-                            2 -> {
-                                playlistExternal = text
-                            }
-                        }
-                    }
-                })
-            }
-            // switch merge playlist
-            binding.mergePlaylist.apply {
-                isChecked = mergePlaylist
-                setOnClickListener {
-                    mergePlaylist = isChecked
-                }
-            }
-            // button reload playlist
-            binding.reloadPlaylist.apply {
-                setOnClickListener {
-                    //update preferences before load
-                    preferences.useCustomPlaylist = useCustomPlaylist
-                    preferences.mergePlaylist = mergePlaylist
-                    preferences.radioPlaylist = radioPlaylist
-                    preferences.playlistSelect = playlistSelect
-                    preferences.playlistExternal = playlistExternal
-                    //load playlist
-                    LocalBroadcastManager.getInstance(rootView.context).sendBroadcast(
-                        Intent(MainActivity.MAIN_CALLBACK)
-                            .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.UPDATE_PLAYLIST))
-                }
-            }
+            val adapter = SourcesAdapter(sources)
+            binding.sourcesAdapter = adapter
+            binding.rvSources.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
             val properties = DialogProperties().apply {
                 extensions = arrayOf("json","m3u")
@@ -304,64 +173,41 @@ class SettingsDialog : DialogFragment() {
                     offset  = File("/mnt/sdcard:/storage")
                 }
             }
-            dialog = FilePickerDialog(rootView.context).apply {
+
+            filePicker = FilePickerDialog(rootView.context).apply {
                 setTitle(getString(R.string.title_select_file_json))
                 setProperties(properties)
                 setDialogSelectionListener {
-                    val buffer = StringBuilder()
-                    for (each in it){
-                        val file = File(each).path
-                        buffer.append(",").append(file)
+                    for (path in it){
+                        adapter.addItem(Source().apply {
+                            this.path = path
+                            active = true
+                        })
                     }
-                    val paths = buffer.deleteCharAt(0).toString()
-                    playlistSelect = paths
-                    binding.customPlaylist.setText(playlistSelect)
+                    sources = adapter.getItems()
                 }
             }
+
+            binding.btnAdd.setOnClickListener {
+                val input = binding.inputSource.text.toString()
+                if (input.isBlank()) return@setOnClickListener
+                adapter.addItem(Source().apply {
+                    path = input
+                    active = true
+                })
+                sources = adapter.getItems()
+                binding.inputSource.text?.clear()
+            }
+
+            binding.btnPick.setOnClickListener {
+                openFilePicker()
+            }
+
             return rootView
         }
 
-        @SuppressLint("SetTextI18n")
-        private fun updateLayout(radioPlaylist: Int) {
-            when (radioPlaylist) {
-                0 -> {
-                    binding.pickButton.visibility = View.GONE
-                    binding.mergePlaylist.visibility = View.VISIBLE
-                    binding.customPlaylist.isEnabled = false
-                    binding.customPlaylist.setText("InternalStorage/${PlaylistHelper.PLAYLIST_JSON}")
-                    binding.customTextField.setHint(R.string.hint_custom_playlist_path)
-                    binding.customTextField.endIconMode = TextInputLayout.END_ICON_NONE
-                }
-                1 -> {
-                    binding.pickButton.visibility = View.VISIBLE
-                    binding.mergePlaylist.visibility = View.VISIBLE
-                    binding.customPlaylist.isEnabled = false
-                    binding.customPlaylist.setText(playlistSelect)
-                    binding.customTextField.setHint(R.string.hint_custom_playlist_path)
-                    binding.customTextField.endIconMode = TextInputLayout.END_ICON_NONE
-                }
-                else -> {
-                    binding.pickButton.visibility = View.GONE
-                    binding.mergePlaylist.visibility = View.GONE
-                    binding.customPlaylist.isEnabled = true
-                    binding.customPlaylist.setText(playlistExternal)
-                    binding.customTextField.setHint(R.string.hint_custom_playlist_url)
-                    binding.customTextField.endIconMode = TextInputLayout.END_ICON_CLEAR_TEXT
-                    mergePlaylist = false
-                }
-            }
-        }
-
-        override fun onDestroyView() {
-            super.onDestroyView()
-            _binding = null
-        }
-
         private fun openFilePicker() {
-            //set focus to reload button
-            binding.reloadPlaylist.requestFocus()
-            //show dialog
-            dialog.show()
+            filePicker.show()
         }
 
         override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray ) {
@@ -375,6 +221,11 @@ class SettingsDialog : DialogFragment() {
                     }
                 }
             }
+        }
+
+        override fun onDestroyView() {
+            super.onDestroyView()
+            _binding = null
         }
     }
 }

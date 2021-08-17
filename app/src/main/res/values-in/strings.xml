@@ -64,11 +64,9 @@
     <string name="toast_screen_mode">Mode Layar : %s</string>
     <string name="text_screen_mode">Layar :</string>
     <string name="merge_playlist">Gabungkan</string>
-    <string name="tab_1">Mulai</string>
-    <string name="tab_2">Daftar Putar</string>
-    <string name="rb_local_default">Lokal Bawaan</string>
-    <string name="rb_selected_file">File Terpilih</string>
-    <string name="rb_input_url">URL Tautan</string>
-    <string name="pick_file">Pilih File</string>
+    <string name="tab_1">Daftar Putar</string>
+    <string name="tab_2">Aplikasi</string>
+    <string name="input_url">URL Tautan</string>
     <string name="title_select_file_json">Pilih File Json</string>
+    <string name="null_playlist">No playlists that can be displayed. Check your settings!</string>
 </resources>

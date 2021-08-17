@@ -29,6 +29,7 @@
                 android:minHeight="50dp"
                 android:paddingStart="38dp"
                 android:paddingEnd="38dp"
+                app:endIconMode="clear_text"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
