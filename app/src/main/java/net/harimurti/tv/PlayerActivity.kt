@@ -103,7 +103,7 @@ class PlayerActivity : AppCompatActivity() {
         // get categories & channel to play
         try {
             val parcel: PlayData? = intent.getParcelableExtra(PlayData.VALUE)
-            category = parcel.let { Playlist.cached.categories.get(it?.catId as Int) }
+            category = parcel.let { Playlist.cached.categories[it?.catId as Int] }
             current = parcel.let { category?.channels?.get(it?.chId as Int) }
         }
         catch (e: Exception) {
@@ -235,13 +235,13 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun switchChannel(mode: Int, lastCh: Boolean) {
         bindingRoot.playerView.showController()
-        val catId = Playlist.cached.categories.indexOf(category) as Int
+        val catId = Playlist.cached.categories.indexOf(category)
         val chId = category?.channels?.indexOf(current) as Int
         when(mode) {
             CATEGORY_UP -> {
                 val previous = catId - 1
                 if (previous > -1) {
-                    category = Playlist.cached.categories.get(previous)
+                    category = Playlist.cached.categories[previous]
                     current = if (lastCh) category?.channels?.get(category?.channels?.size?.minus(1) ?: 0)
                     else category?.channels?.get(0)
                 }
@@ -252,8 +252,8 @@ class PlayerActivity : AppCompatActivity() {
             }
             CATEGORY_DOWN -> {
                 val next = catId + 1
-                if (next < Playlist.cached.categories.size ?: 0) {
-                    category = Playlist.cached.categories.get(next)
+                if (next < Playlist.cached.categories.size) {
+                    category = Playlist.cached.categories[next]
                     current = category?.channels?.get(0)
                 }
                 else {
@@ -311,7 +311,7 @@ class PlayerActivity : AppCompatActivity() {
             when (state) {
                 Player.STATE_READY -> {
                     errorCounter = 0
-                    val catId = Playlist.cached?.categories?.indexOf(category) as Int
+                    val catId = Playlist.cached.categories.indexOf(category)
                     val chId = category?.channels?.indexOf(current) as Int
                     preferences.watched = PlayData(catId, chId)
                 }
