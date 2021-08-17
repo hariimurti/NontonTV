@@ -51,4 +51,10 @@ class CategoryAdapter (cat: ArrayList<Category>?) :
     override fun getItemCount(): Int {
         return categories?.size ?: 0
     }
+
+    fun clear() {
+        val size = itemCount
+        categories?.clear()
+        notifyItemRangeRemoved(0, size)
+    }
 }

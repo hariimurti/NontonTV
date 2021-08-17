@@ -31,6 +31,29 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_category"/>
 
+                <com.facebook.shimmer.ShimmerFrameLayout
+                    android:id="@+id/loading"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:shimmer_auto_start="true">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:showDividers="middle">
+
+                        <include layout="@layout/item_category_dummy" />
+                        <include layout="@layout/item_category_dummy" />
+                        <include layout="@layout/item_category_dummy" />
+                        <include layout="@layout/item_category_dummy" />
+                        <include layout="@layout/item_category_dummy" />
+                        <include layout="@layout/item_category_dummy" />
+
+                    </LinearLayout>
+
+                </com.facebook.shimmer.ShimmerFrameLayout>
+
                 <ImageButton
                     android:id="@+id/search_button"
                     style="@style/ImageButton"

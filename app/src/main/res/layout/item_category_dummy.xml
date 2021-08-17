@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/cat_layout_padding_top">
+
+        <TextView
+            android:id="@+id/text_category"
+            android:layout_width="@dimen/cat_name_width"
+            android:layout_height="wrap_content"
+            android:paddingTop="@dimen/cat_name_padding_top_bottom"
+            android:paddingBottom="@dimen/cat_name_padding_top_bottom"
+            android:paddingStart="@dimen/cat_name_padding_top_bottom"
+            android:paddingEnd="@dimen/cat_name_padding_end"
+            android:ellipsize="end"
+            android:textStyle="bold"
+            android:textAllCaps="true"
+            android:textSize="@dimen/cat_text_size"
+            android:background="@drawable/corner_right"
+            tools:text="CATEGORY_NAME" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/cat_name_padding_top_bottom">
+
+            <include layout="@layout/item_channel" />
+            <include layout="@layout/item_channel" />
+            <include layout="@layout/item_channel" />
+            <include layout="@layout/item_channel" />
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/cat_name_padding_top_bottom"
+            android:background="@color/color_gray"/>
+
+    </LinearLayout>
+</layout>

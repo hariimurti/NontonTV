@@ -11,6 +11,7 @@ import android.os.*
 import android.os.Build.VERSION_CODES
 import android.util.Log
 import android.view.KeyEvent
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -23,7 +24,6 @@ import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
 import net.harimurti.tv.adapter.CategoryAdapter
 import net.harimurti.tv.databinding.ActivityMainBinding
-import net.harimurti.tv.dialog.ProgressDialog
 import net.harimurti.tv.dialog.SearchDialog
 import net.harimurti.tv.dialog.SettingsDialog
 import net.harimurti.tv.extra.*
@@ -37,7 +37,6 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var preferences: Preferences
     private lateinit var helper: PlaylistHelper
     private lateinit var request: RequestQueue
-    private lateinit var loading: ProgressDialog
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
@@ -67,7 +66,6 @@ open class MainActivity : AppCompatActivity() {
 
         preferences = Preferences(this)
         helper = PlaylistHelper(this)
-        loading = ProgressDialog(this)
         request = VolleyRequestQueue.create(this)
 
         isTelevision = UiMode(this).isTelevision()
@@ -75,9 +73,6 @@ open class MainActivity : AppCompatActivity() {
             setTheme(R.style.AppThemeTv)
         }
         setContentView(binding.root)
-
-        // show loading message
-        loading.show(getString(R.string.loading))
 
         // ask all premissions need
         askPermissions()
@@ -114,6 +109,18 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun setLoadingPlaylist(show: Boolean) {
+        /* i don't why hideShimmer() leaves drawable visible */
+        if (show) {
+            binding.loading.startShimmer()
+            binding.loading.visibility = View.VISIBLE
+        }
+        else {
+            binding.loading.stopShimmer()
+            binding.loading.visibility = View.GONE
+        }
+    }
+
     private fun setPlaylistToAdapter(playlistSet: Playlist) {
         //set cat_id and ch_id
         for (catId in playlistSet.categories.indices) {
@@ -144,13 +151,19 @@ open class MainActivity : AppCompatActivity() {
             this.startActivity(intent)
             return
         }
+
+        // hide loading
+        setLoadingPlaylist(false)
     }
 
     private fun updatePlaylist() {
-        // show loading message
-        loading.show(getString(R.string.loading))
+        // show loading
+        setLoadingPlaylist(true)
 
+        // clearing adapter
+        binding.catAdapter?.clear()
         val playlistSet = Playlist()
+
         PlaylistHelper(this).task(preferences.sources,
             object: PlaylistHelper.TaskResponse {
                 override fun onError(error: Exception, source: Source) {
@@ -168,8 +181,6 @@ open class MainActivity : AppCompatActivity() {
 
                 }
                 override fun onFinish() {
-                    // dismiss loading message
-                    loading.dismiss()
                     if (playlistSet.categories.size == 0) {
                         showAlertPlaylistError(null)
                     }
