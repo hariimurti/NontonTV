@@ -357,7 +357,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun showMessage(message: String, autoretry: Boolean) {
         val waitInSecond = 30
-        val btnRetryText = String.format(getString(R.string.btn_retry_count), waitInSecond)
+        val btnRetryText = if (autoretry) String.format(getString(R.string.btn_retry_count), waitInSecond) else getString(R.string.btn_retry)
         val builder = AlertDialog.Builder(this).apply {
             setTitle(R.string.player_playback_error)
             setMessage(message)
