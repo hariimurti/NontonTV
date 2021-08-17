@@ -1,7 +1,7 @@
-package net.harimurti.tv.extra
+package net.harimurti.tv.adapter
 
 import net.harimurti.tv.model.Channel
 
 interface ChannelClickListener {
-    fun channelClicked(ch: Channel?)
+    fun onClicked(ch: Channel?)
 }

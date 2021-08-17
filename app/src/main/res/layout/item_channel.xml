@@ -3,11 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="chModel"
+            name="modelChannel"
             type="net.harimurti.tv.model.Channel" />
         <variable
-            name="chClickListener"
-            type="net.harimurti.tv.extra.ChannelClickListener" />
+            name="clickListener"
+            type="net.harimurti.tv.adapter.ChannelClickListener" />
     </data>
     <FrameLayout
         android:layout_width="wrap_content"
@@ -22,8 +22,8 @@
             android:lines="3"
             android:padding="@dimen/btn_channel_padding"
             tools:text="DUMMY CHANNEL WITH LONG NAME IN IT"
-            android:text="@{chModel.name}"
-            android:onClick="@{() -> chClickListener.channelClicked(chModel)}"/>
+            android:text="@{modelChannel.name}"
+            android:onClick="@{() -> clickListener.onClicked(modelChannel)}"/>
 
     </FrameLayout>
 </layout>
