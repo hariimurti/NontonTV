@@ -45,7 +45,6 @@
                 android:layout_toStartOf="@+id/btn_add"
                 android:layout_toEndOf="@+id/btn_pick"
                 android:hint="@string/input_url"
-                app:endIconMode="clear_text"
                 app:hintTextColor="@color/color_text">
 
                 <com.google.android.material.textfield.TextInputEditText
