@@ -11,10 +11,10 @@
     <string name="press_back_twice_exit_player">Tekan lagi untuk keluar dari pemutar!</string>
     <string name="track_selection_title">Pilih trek</string>
     <string name="error_unsupported">Media menyertakan trek %s, tetapi tidak ada yang dapat diputar oleh perangkat ini</string>
-    <string name="mode_fit">Bawaan</string>
-    <string name="mode_fixed_width">Lebar tetap</string>
-    <string name="mode_fixed_height">Tinggi tetap</string>
-    <string name="mode_fill">Mengisi</string>
+    <string name="mode_fit">Pas Layar</string>
+    <string name="mode_fixed_width">Lebar Tetap</string>
+    <string name="mode_fixed_height">Tinggi Tetap</string>
+    <string name="mode_fill">Isi Layar</string>
     <string name="mode_zoom">Perbesar</string>
     <string name="must_allow_permissions">Kamu harus mengizinkan semua permintaan izin agar aplikasi ini berfungsi dengan baik!</string>
     <string name="search_channel">Cari Saluran</string>

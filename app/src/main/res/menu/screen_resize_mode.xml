@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/mode_fit"
+        android:title="@string/mode_fit" />
+    <item
+        android:id="@+id/mode_fixed_width"
+        android:title="@string/mode_fixed_width" />
+    <item
+        android:id="@+id/mode_fixed_height"
+        android:title="@string/mode_fixed_height" />
+    <item
+        android:id="@+id/mode_fill"
+        android:title="@string/mode_fill" />
+    <item
+        android:id="@+id/mode_zoom"
+        android:title="@string/mode_zoom" />
+</menu>

@@ -10,13 +10,11 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
-import android.view.KeyEvent
-import android.view.View
-import android.view.WindowInsets
-import android.view.WindowInsetsController
+import android.view.*
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.exoplayer2.*
 import com.google.android.exoplayer2.source.DefaultMediaSourceFactory
@@ -25,7 +23,6 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector.ParametersBuilder
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector.MappedTrackInfo
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
-import com.google.android.exoplayer2.ui.AspectRatioFrameLayout
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import com.google.android.exoplayer2.upstream.HttpDataSource
@@ -60,7 +57,6 @@ class PlayerActivity : AppCompatActivity() {
             when(intent.getStringExtra(PLAYER_CALLBACK)) {
                 RETRY_PLAYBACK -> retryPlayback(true)
                 CLOSE_PLAYER -> finish()
-                CHANGE_SCREEN_MODE -> changeScreenMode(intent.getIntExtra(SCREEN_MODE, 0))
             }
         }
     }
@@ -70,8 +66,6 @@ class PlayerActivity : AppCompatActivity() {
         const val PLAYER_CALLBACK = "PLAYER_CALLBACK"
         const val RETRY_PLAYBACK = "RETRY_PLAYBACK"
         const val CLOSE_PLAYER = "CLOSE_PLAYER"
-        const val CHANGE_SCREEN_MODE = "CHANGE_SCREEN_MODE"
-        const val SCREEN_MODE = "SCREEN_MODE"
         private const val CHANNEL_NEXT = 0
         private const val CHANNEL_PREVIOUS = 1
         private const val CATEGORY_UP = 2
@@ -140,11 +134,7 @@ class PlayerActivity : AppCompatActivity() {
             override fun onSwipeRight() { switchChannel(CHANNEL_PREVIOUS) }
         })
         bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
-        bindingControl.screenMode.setOnClickListener {
-            var mode = bindingRoot.playerView.resizeMode + 1
-            if (mode > 4) mode = 0
-            changeScreenMode(mode)
-        }
+        bindingControl.screenMode.setOnClickListener { showScreenMenu(it) }
         bindingControl.buttonBack.setOnClickListener { finish() }
         bindingControl.buttonLock.visibility = if (isTelevision) View.GONE else View.VISIBLE
         bindingControl.buttonLock.setOnClickListener {
@@ -389,20 +379,27 @@ class PlayerActivity : AppCompatActivity() {
         return true
     }
 
-    private fun changeScreenMode(mode: Int) {
-        if (bindingRoot.playerView.resizeMode == mode) return
-
-        bindingRoot.playerView.resizeMode = mode
-        preferences.resizeMode = mode
-
-        val text = when (mode) {
-            AspectRatioFrameLayout.RESIZE_MODE_FIXED_WIDTH -> getString(R.string.mode_fixed_width)
-            AspectRatioFrameLayout.RESIZE_MODE_FIXED_HEIGHT -> getString(R.string.mode_fixed_height)
-            AspectRatioFrameLayout.RESIZE_MODE_FILL -> getString(R.string.mode_fill)
-            AspectRatioFrameLayout.RESIZE_MODE_ZOOM -> getString(R.string.mode_zoom)
-            else -> getString(R.string.mode_fit)
+    private fun showScreenMenu(view: View) {
+        val menu = PopupMenu(this, view).apply {
+            inflate(R.menu.screen_resize_mode)
+            setOnMenuItemClickListener { m: MenuItem ->
+                val mode = when(m.itemId) {
+                    R.id.mode_fixed_width -> 1
+                    R.id.mode_fixed_height -> 2
+                    R.id.mode_fill -> 3
+                    R.id.mode_zoom -> 4
+                    else -> 0
+                }
+                if (bindingRoot.playerView.resizeMode != mode) {
+                    bindingRoot.playerView.resizeMode = mode
+                    preferences.resizeMode = mode
+                }
+                true
+            }
+            show()
         }
-        Toast.makeText(applicationContext, String.format(getString(R.string.toast_screen_mode), text), Toast.LENGTH_SHORT).show()
+        val timeout = bindingRoot.playerView.controllerShowTimeoutMs.toLong() - 500
+        Handler(Looper.getMainLooper()).postDelayed({ menu.dismiss() }, timeout)
     }
 
     override fun onResume() {
