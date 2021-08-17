@@ -64,18 +64,12 @@ fun List<M3U>?.toPlaylist(): Playlist? {
 }
 
 fun String?.toPlaylist(): Playlist? {
-    var content = this
-
-    // trying to fix char encoding
-    try { content = this?.toByteArray(Charsets.ISO_8859_1)?.let { String(it, Charsets.UTF_8) } }
-    catch (e: Exception) { e.printStackTrace() }
-
     // trying to parse json first
-    try { return Gson().fromJson(content, Playlist::class.java) }
+    try { return Gson().fromJson(this, Playlist::class.java) }
     catch (e: JsonParseException) { e.printStackTrace() }
 
     // if not json then m3u
-    try { return M3uTool.parse(content).toPlaylist() }
+    try { return M3uTool.parse(this).toPlaylist() }
     catch (e: Exception) { e.printStackTrace() }
 
     // content cant be parsed

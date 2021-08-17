@@ -8,6 +8,11 @@ import com.google.gson.Gson
 import net.harimurti.tv.R
 import net.harimurti.tv.model.*
 import java.io.*
+import com.android.volley.toolbox.HttpHeaderParser
+
+import com.android.volley.NetworkResponse
+import com.android.volley.Response
+
 
 class PlaylistHelper(val context: Context) {
     private val cache: File = File(context.cacheDir, "NontonTV.json")
@@ -43,7 +48,7 @@ class PlaylistHelper(val context: Context) {
     fun readFile(file: File): Playlist? {
         return try {
             if (!file.exists()) throw FileNotFoundException()
-            file.readText(Charsets.ISO_8859_1).toPlaylist()
+            file.readText(Charsets.UTF_8).toPlaylist()
         } catch (e: Exception) {
             if (file == cache) e.printStackTrace()
             else Log.e(TAG, String.format("Could not read from %s", file.name), e)
@@ -91,8 +96,7 @@ class PlaylistHelper(val context: Context) {
         }
 
         // online playlist
-        val stringRequest = StringRequest(
-            Request.Method.GET, source.path,
+        val stringRequest = object: StringRequest(Method.GET, source.path,
             { content ->
                 taskResponse?.onResponse(content.toPlaylist())
                 getResponse()
@@ -108,7 +112,19 @@ class PlaylistHelper(val context: Context) {
                 Log.e(TAG, "Source : ${source.path}", error)
                 taskResponse?.onError(Exception(message), source)
                 getResponse()
-            })
+            }) {
+            override fun parseNetworkResponse(response: NetworkResponse): Response<String?>? {
+                // Volley's default charset is "ISO-8859-1".
+                // If no charset is specified, we want to default to UTF-8.
+                val charset = HttpHeaderParser.parseCharset(response.headers, null)
+                if (null == charset) {
+                    var contentType = response.headers!!["Content-Type"]
+                    contentType = if (null != contentType) "$contentType;charset=UTF-8" else "charset=UTF-8"
+                    response.headers!!["Content-Type"] = contentType
+                }
+                return super.parseNetworkResponse(response)
+            }
+        }
         volley.cache.clear()
         volley.add(stringRequest)
     }
