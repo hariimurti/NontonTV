@@ -34,6 +34,7 @@
     <string name="null_content">Null Content</string>
     <string name="btn_next_channel">Next Channel</string>
     <string name="player_error_message">Code : %s\nCodeName : %s\nError Message : %s</string>
+    <string name="device_not_support_widevine">Your device does not support DRM Widevine!</string>
 
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>

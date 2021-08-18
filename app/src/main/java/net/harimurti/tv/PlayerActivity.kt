@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.app.PictureInPictureParams
 import android.content.*
 import android.content.res.Configuration
+import android.media.MediaDrm
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -43,7 +44,7 @@ class PlayerActivity : AppCompatActivity() {
     private lateinit var network: Network
     private var category: Category? = null
     private var current: Channel? = null
-    private lateinit var player: SimpleExoPlayer
+    private var player: SimpleExoPlayer? = null
     private lateinit var mediaItem: MediaItem
     private lateinit var trackSelector: DefaultTrackSelector
     private var lastSeenTrackGroupArray: TrackGroupArray? = null
@@ -162,6 +163,20 @@ class PlayerActivity : AppCompatActivity() {
         isLocked = locked
     }
 
+    private fun isDrmWidevineSupported(): Boolean {
+        if (MediaDrm.isCryptoSchemeSupported(C.WIDEVINE_UUID)) return true
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.player_playback_error)
+            setMessage(R.string.device_not_support_widevine)
+            setCancelable(false)
+            setPositiveButton(getString(R.string.btn_next_channel)) { _,_ -> switchChannel(CHANNEL_NEXT) }
+            setNegativeButton(R.string.btn_close) { _,_ -> finish() }
+            create()
+            show()
+        }
+        return false
+    }
+
     private fun playChannel() {
         // set category & channel name
         bindingControl.categoryName.text = category?.name
@@ -171,15 +186,15 @@ class PlayerActivity : AppCompatActivity() {
         val drmLicense = Playlist.cached.drmLicenses.firstOrNull {
             current?.drmName?.equals(it.name) == true
         }?.url
-        mediaItem = if (drmLicense?.isNotEmpty() == true) {
-            MediaItem.Builder()
+        mediaItem = MediaItem.fromUri(Uri.parse(current?.streamUrl))
+        if (drmLicense?.isNotEmpty() == true) {
+            mediaItem = MediaItem.Builder()
                 .setUri(Uri.parse(current?.streamUrl))
                 .setDrmUuid(C.WIDEVINE_UUID)
                 .setDrmLicenseUri(drmLicense)
                 .setDrmMultiSession(true)
                 .build()
-        } else {
-            MediaItem.fromUri(Uri.parse(current?.streamUrl))
+            if (!isDrmWidevineSupported()) return
         }
 
         // define User-Agent
@@ -203,7 +218,7 @@ class PlayerActivity : AppCompatActivity() {
             .setMediaSourceFactory(mediaSourceFactory)
             .setTrackSelector(trackSelector)
             .build()
-        player.addListener(PlayerListener())
+        player?.addListener(PlayerListener())
 
         // set player view
         bindingRoot.playerView.player = player
@@ -211,9 +226,9 @@ class PlayerActivity : AppCompatActivity() {
         bindingRoot.playerView.requestFocus()
 
         // play mediasouce
-        player.playWhenReady = true
-        player.setMediaItem(mediaItem)
-        player.prepare()
+        player?.playWhenReady = true
+        player?.setMediaItem(mediaItem)
+        player?.prepare()
     }
 
     private fun switchChannel(mode: Int): Boolean {
@@ -274,16 +289,16 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // reset player & play
-        player.playWhenReady = false
-        player.release()
+        player?.playWhenReady = false
+        player?.release()
         playChannel()
     }
 
     private fun retryPlayback(force: Boolean) {
         if (force) {
-            player.playWhenReady = true
-            player.setMediaItem(mediaItem)
-            player.prepare()
+            player?.playWhenReady = true
+            player?.setMediaItem(mediaItem)
+            player?.prepare()
             return
         }
 
@@ -404,19 +419,19 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        player.playWhenReady = true
+        player?.playWhenReady = true
     }
 
     override fun onPause() {
         super.onPause()
-        player.playWhenReady = false
+        player?.playWhenReady = false
     }
 
     @Suppress("DEPRECATION")
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
         if (isTelevision) return
-        if (!player.isPlaying) return
+        if (player?.isPlaying == false) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 val params = PictureInPictureParams.Builder().build()
@@ -431,7 +446,7 @@ class PlayerActivity : AppCompatActivity() {
     override fun onPictureInPictureModeChanged(pip: Boolean, config: Configuration) {
         super.onPictureInPictureModeChanged(pip, config)
         bindingRoot.playerView.useController = !pip
-        player.playWhenReady = true
+        player?.playWhenReady = true
     }
 
     @Suppress("DEPRECATION")
@@ -487,7 +502,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onDestroy() {
-        player.release()
+        player?.release()
         LocalBroadcastManager.getInstance(this)
             .unregisterReceiver(broadcastReceiver)
         super.onDestroy()

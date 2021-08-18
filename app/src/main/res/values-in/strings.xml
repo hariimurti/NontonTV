@@ -25,6 +25,7 @@
     <string name="null_content">Konten kosong</string>
     <string name="btn_next_channel">Saluran Berikutnya</string>
     <string name="player_error_message">Kode : %s\nNamaKode : %s\nPesan Error : %s</string>
+    <string name="device_not_support_widevine">Perangkat anda tidak mendukung DRM Widevine!</string>
 
     <!-- alert playlist error -->
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>
