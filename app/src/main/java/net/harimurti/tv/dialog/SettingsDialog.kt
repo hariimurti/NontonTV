@@ -7,9 +7,11 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.DialogFragment
@@ -30,6 +32,7 @@ import net.harimurti.tv.extra.PlaylistHelper
 import net.harimurti.tv.extra.Preferences
 import net.harimurti.tv.model.Source
 import java.io.File
+import java.util.regex.Pattern
 
 @Suppress("DEPRECATION")
 class SettingsDialog : DialogFragment() {
@@ -189,32 +192,16 @@ class SettingsDialog : DialogFragment() {
                 }
             }
 
-            binding.btnAdd.setOnClickListener {
-                val input = binding.inputSource.text.toString()
-                if (input.isBlank()) return@setOnClickListener
-
-                it.isEnabled = false
-                binding.inputSource.isEnabled = false
-                binding.inputSource.setText(R.string.checking_url)
-
-                val source = Source().apply {
-                    path = input
-                    active = true
+            binding.inputSource.setOnEditorActionListener { _, i, k ->
+                if (i == EditorInfo.IME_ACTION_DONE || k.keyCode == KeyEvent.KEYCODE_ENTER) {
+                    addLinkUrl()
+                    true
                 }
+                else false
+            }
 
-                PlaylistHelper(rootView.context).task(source, object: PlaylistHelper.TaskChecker{
-                    override fun onCheckResult(result: Boolean) {
-                        adapter.addItem(source)
-                        sources = adapter.getItems()
-                        it.isEnabled = true
-                        binding.inputSource.text?.clear()
-                        binding.inputSource.isEnabled =true
-                        if (!result) {
-                            binding.inputSource.setText(input)
-                            Toast.makeText(context, R.string.link_error, Toast.LENGTH_SHORT).show()
-                        }
-                    }
-                }).checkResult()
+            binding.btnAdd.setOnClickListener {
+                addLinkUrl()
             }
 
             binding.btnPick.setOnClickListener {
@@ -222,6 +209,38 @@ class SettingsDialog : DialogFragment() {
             }
 
             return rootView
+        }
+
+        private fun addLinkUrl() {
+            val input = binding.inputSource.text.toString()
+            if (input.isBlank()) return
+            if (!input.contains(Regex("https?://", RegexOption.IGNORE_CASE))) return
+
+            binding.btnAdd.isEnabled = false
+            binding.inputSource.isEnabled = false
+            binding.inputSource.setText(R.string.checking_url)
+
+            val adapter = binding.sourcesAdapter
+            val source = Source().apply {
+                path = input
+                active = true
+            }
+
+            PlaylistHelper(binding.root.context).task(source, object: PlaylistHelper.TaskChecker{
+                override fun onCheckResult(result: Boolean) {
+                    binding.btnAdd.isEnabled = true
+                    binding.inputSource.text?.clear()
+                    binding.inputSource.isEnabled =true
+                    if (result) {
+                        adapter?.addItem(source)
+                        sources = adapter?.getItems()
+                    }
+                    else {
+                        binding.inputSource.setText(input)
+                        Toast.makeText(context, R.string.link_error, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }).checkResult()
         }
 
         private fun openFilePicker() {

@@ -54,7 +54,9 @@
                     android:layout_marginTop="@dimen/setting_content_margin_top"
                     android:focusable="true"
                     android:inputType="textUri"
-                    android:maxLines="1" />
+                    android:imeOptions="actionDone"
+                    android:lines="1"
+                    android:maxLines="1"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
