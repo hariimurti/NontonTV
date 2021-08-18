@@ -30,6 +30,7 @@ import net.harimurti.tv.databinding.SettingsDialogBinding
 import net.harimurti.tv.databinding.SettingsSourcesFragmentBinding
 import net.harimurti.tv.extra.PlaylistHelper
 import net.harimurti.tv.extra.Preferences
+import net.harimurti.tv.extra.isWebsite
 import net.harimurti.tv.model.Source
 import java.io.File
 import java.util.regex.Pattern
@@ -214,7 +215,7 @@ class SettingsDialog : DialogFragment() {
         private fun addLinkUrl() {
             val input = binding.inputSource.text.toString()
             if (input.isBlank()) return
-            if (!input.contains(Regex("https?://", RegexOption.IGNORE_CASE))) return
+            if (!input.isWebsite()) return
 
             binding.btnAdd.isEnabled = false
             binding.inputSource.isEnabled = false

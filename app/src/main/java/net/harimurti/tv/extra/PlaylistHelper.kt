@@ -13,7 +13,6 @@ import com.android.volley.toolbox.HttpHeaderParser
 import com.android.volley.NetworkResponse
 import com.android.volley.Response
 
-
 class PlaylistHelper(val context: Context) {
     private val cache: File = File(context.cacheDir, "NontonTV.json")
     private var taskResponse: TaskResponse? = null
@@ -47,11 +46,10 @@ class PlaylistHelper(val context: Context) {
 
     fun readFile(file: File): Playlist? {
         return try {
-            if (!file.exists()) throw FileNotFoundException()
             file.readText(Charsets.UTF_8).toPlaylist()
         } catch (e: Exception) {
             if (file == cache) e.printStackTrace()
-            else Log.e(TAG, String.format("Could not read from %s", file.name), e)
+            else Log.e(TAG, String.format("Could not read from %s", file), e)
             null
         }
     }
@@ -88,8 +86,8 @@ class PlaylistHelper(val context: Context) {
         }
 
         // local playlist
-        if (source.path?.startsWith("http", ignoreCase = true) == false) {
-            val playlist = readFile(File(source.path.toString()))
+        if (!source.path.isWebsite()) {
+            val playlist = readFile(source.path.toFile())
             taskResponse?.onResponse(playlist)
             getResponse()
             return
@@ -131,8 +129,8 @@ class PlaylistHelper(val context: Context) {
 
     fun checkResult() {
         var result = false
-        if (checkSource?.path?.startsWith("http", ignoreCase = true) == false) {
-            result = File(checkSource?.path.toString()).exists()
+        if (checkSource?.path?.isWebsite() == false) {
+            result = checkSource?.path.isPathExist()
             taskChecker?.onCheckResult(result)
         }
 
