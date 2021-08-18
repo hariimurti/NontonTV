@@ -75,11 +75,11 @@ open class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         //search button
-        binding.searchButton.setOnClickListener{
+        binding.buttonSearch.setOnClickListener{
             openSearch()
         }
         //setting button
-        binding.mainSettings.setOnClickListener{
+        binding.buttonSettings.setOnClickListener{
             openSettings()
         }
 

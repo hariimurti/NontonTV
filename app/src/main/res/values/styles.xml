@@ -24,10 +24,28 @@
         <item name="android:windowSoftInputMode">adjustPan</item>
     </style>
 
-    <style name="ImageButton" parent="Widget.AppCompat.ImageButton">
-        <item name="android:background">?android:attr/selectableItemBackground</item>
+    <style name="ImageButtonBase" parent="Widget.AppCompat.ImageButton">
+        <item name="android:background">@drawable/button_rounded_background</item>
         <item name="android:focusable">true</item>
         <item name="android:clickable">true</item>
+    </style>
+
+    <style name="ImageButtonControl" parent="ImageButtonBase">
+        <item name="android:background">@drawable/button_control_background</item>
+        <item name="android:layout_width">@dimen/btn_control_size</item>
+        <item name="android:layout_height">@dimen/btn_control_size</item>
+    </style>
+
+    <style name="ImageButtonLock" parent="ImageButtonBase">
+        <item name="android:background">@drawable/button_lock_background</item>
+        <item name="android:layout_width">@dimen/btn_control_size</item>
+        <item name="android:layout_height">@dimen/btn_control_size</item>
+    </style>
+
+    <style name="ImageButtonMain" parent="ImageButtonBase">
+        <item name="android:layout_width">@dimen/btn_main_size</item>
+        <item name="android:layout_height">@dimen/btn_main_size</item>
+        <item name="android:layout_marginTop">@dimen/btn_main_margin_top</item>
     </style>
 
 </resources>

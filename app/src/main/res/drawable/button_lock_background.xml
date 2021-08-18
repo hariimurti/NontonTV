@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:bottom="@dimen/btn_background_padding"
+        android:left="@dimen/btn_background_padding"
+        android:right="@dimen/btn_background_padding"
+        android:top="@dimen/btn_background_padding">
+        <selector>
+            <item
+                android:state_pressed="true"
+                android:state_enabled="true">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/btn_pressed" />
+                    <corners android:radius="@dimen/btn_control_size" />
+                </shape>
+            </item>
+            <item
+                android:state_focused="true"
+                android:state_enabled="true">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/btn_focused" />
+                    <corners android:radius="@dimen/btn_control_size" />
+                </shape>
+            </item>
+            <item
+                android:state_enabled="true">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/control_backgorund" />
+                    <corners android:radius="@dimen/btn_control_size" />
+                </shape>
+            </item>
+        </selector>
+    </item>
+</layer-list>

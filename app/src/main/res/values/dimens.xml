@@ -31,4 +31,9 @@
     <dimen name="setting_content_margin_top">15dp</dimen>
     <dimen name="setting_padding">20dp</dimen>
     <dimen name="setting_switch_min_height">48dp</dimen>
+    <dimen name="btn_control_radius">10dp</dimen>
+    <dimen name="btn_control_size">48dp</dimen>
+    <dimen name="btn_main_size">40dp</dimen>
+    <dimen name="btn_main_margin_top">5dp</dimen>
+    <dimen name="btn_settings_size">48dp</dimen>
 </resources>

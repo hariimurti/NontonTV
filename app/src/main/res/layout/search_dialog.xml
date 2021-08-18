@@ -35,7 +35,7 @@
 
             <ImageView
                 android:id="@+id/search_reset"
-                style="@style/ImageButton"
+                style="@style/ImageButtonBase"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 app:srcCompat="@drawable/ic_clear"

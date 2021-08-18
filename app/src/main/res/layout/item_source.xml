@@ -28,9 +28,9 @@
 
         <ImageButton
             android:id="@+id/btn_remove"
-            style="@style/ImageButton"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            style="@style/ImageButtonBase"
+            android:layout_width="@dimen/btn_settings_size"
+            android:layout_height="@dimen/btn_settings_size"
             android:padding="10dp"
             android:layout_alignParentEnd="true"
             app:srcCompat="@drawable/ic_remove"

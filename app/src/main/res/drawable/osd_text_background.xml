@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/ch_name_bg"/>
-    <corners android:radius="@dimen/ch_name_corner" />
-</shape>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape>
+            <solid android:color="@color/control_backgorund"/>
+            <corners android:radius="@dimen/ch_name_corner" />
+        </shape>
+    </item>
+    <item
+        android:bottom="3px"
+        android:left="3px"
+        android:right="3px"
+        android:top="3px">
+        <shape>
+            <solid android:color="@color/osd_inside_background"/>
+            <corners android:radius="@dimen/ch_name_corner" />
+        </shape>
+    </item>
+</layer-list>

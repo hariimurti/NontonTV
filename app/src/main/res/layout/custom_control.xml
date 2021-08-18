@@ -46,34 +46,34 @@
             tools:text="CHANNEL_NAME" />
 
         <ImageButton
-            android:id="@+id/button_lock"
-            android:layout_marginEnd="@dimen/player_info_margin_start"
-            app:layout_constraintBottom_toBottomOf="@+id/channel_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/category_name"
-            app:srcCompat="@drawable/ic_lock_open"
-            style="@style/ExoStyledControls.Button.Bottom" />
-
-        <ImageButton
             android:id="@+id/button_back"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:srcCompat="@drawable/ic_back"
-            style="@style/ExoStyledControls.Button.Bottom" />
-
-        <ImageButton
-            android:id="@+id/track_selection"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/ic_track_selector"
-            style="@style/ExoStyledControls.Button.Bottom" />
+            style="@style/ImageButtonControl" />
 
         <ImageButton
             android:id="@+id/screen_mode"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/track_selection"
             app:srcCompat="@drawable/ic_aspect_ratio"
-            style="@style/ExoStyledControls.Button.Bottom" />
+            style="@style/ImageButtonControl" />
+
+        <ImageButton
+            android:id="@+id/track_selection"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:srcCompat="@drawable/ic_track_selector"
+            style="@style/ImageButtonControl" />
+
+        <ImageButton
+            android:id="@+id/button_lock"
+            android:layout_marginEnd="@dimen/player_info_margin_start"
+            app:layout_constraintBottom_toBottomOf="@+id/channel_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/category_name"
+            app:srcCompat="@drawable/ic_lock_open"
+            style="@style/ImageButtonLock" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

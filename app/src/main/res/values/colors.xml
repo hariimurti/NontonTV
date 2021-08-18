@@ -12,6 +12,9 @@
     <color name="btn_focused">@color/color_primary</color>
     <color name="btn_pressed">@color/color_red_light</color>
     <color name="btn_settings_bg">#00FFFFFF</color>
-    <color name="ch_name_bg">#CCFFFFFF</color>
+    <color name="control_backgorund">#B3202020</color>
+    <color name="control_focused">@color/color_primary</color>
+    <color name="control_pressed">@color/color_red_light</color>
+    <color name="osd_inside_background">#FFFFFF</color>
     <color name="dialog_background">#343134</color>
 </resources>
