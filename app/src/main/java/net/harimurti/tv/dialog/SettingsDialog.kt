@@ -33,7 +33,6 @@ import net.harimurti.tv.extra.Preferences
 import net.harimurti.tv.extra.isWebsite
 import net.harimurti.tv.model.Source
 import java.io.File
-import java.util.regex.Pattern
 
 @Suppress("DEPRECATION")
 class SettingsDialog : DialogFragment() {
