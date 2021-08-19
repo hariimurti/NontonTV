@@ -56,6 +56,8 @@ class SettingsDialog : DialogFragment() {
         // init
         ApplicationFragment.launchAtBoot = preferences.launchAtBoot
         ApplicationFragment.playLastWatched = preferences.playLastWatched
+        ApplicationFragment.sortCategory = preferences.sortCategory
+        ApplicationFragment.sortChannel = preferences.sortChannel
         SourcesFragment.sources = preferences.sources
 
         // view pager
@@ -78,6 +80,8 @@ class SettingsDialog : DialogFragment() {
                 //save tab 2
                 preferences.launchAtBoot = ApplicationFragment.launchAtBoot
                 preferences.playLastWatched = ApplicationFragment.playLastWatched
+                preferences.sortCategory = ApplicationFragment.sortCategory
+                preferences.sortChannel = ApplicationFragment.sortChannel
                 sendUpdatePlaylist(rootView.context)
                 dismiss()
             }
@@ -119,6 +123,8 @@ class SettingsDialog : DialogFragment() {
         companion object {
             var launchAtBoot = false
             var playLastWatched = false
+            var sortCategory = false
+            var sortChannel = true
         }
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -136,6 +142,20 @@ class SettingsDialog : DialogFragment() {
                 isChecked = playLastWatched
                 setOnClickListener {
                     playLastWatched = isChecked
+                }
+            }
+
+            binding.sortCategory.apply {
+                isChecked = sortCategory
+                setOnClickListener {
+                    sortCategory = isChecked
+                }
+            }
+
+            binding.sortChannel.apply {
+                isChecked = sortChannel
+                setOnClickListener {
+                    sortChannel = isChecked
                 }
             }
 

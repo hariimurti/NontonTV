@@ -20,6 +20,25 @@
             android:minHeight="@dimen/setting_switch_min_height"
             android:text="@string/play_last_watched" />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="@dimen/setting_padding"
+            android:background="@color/color_text"/>
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sort_category"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/setting_switch_min_height"
+            android:text="@string/sort_category" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/sort_channel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="@dimen/setting_switch_min_height"
+            android:text="@string/sort_channel" />
     </LinearLayout>
 
 </layout>

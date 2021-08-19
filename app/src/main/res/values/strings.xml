@@ -72,6 +72,8 @@
     <string name="settings">Preferences</string>
     <string name="launch_at_boot">Run App on Boot</string>
     <string name="play_last_watched">Play Last Watched</string>
+    <string name="sort_category">Sort Category</string>
+    <string name="sort_channel">Sort Channel</string>
     <string name="reload_playlist">Reload Playlist</string>
     <string name="hint_custom_playlist_path">File Path</string>
     <string name="hint_custom_playlist_url">Link URL</string>
