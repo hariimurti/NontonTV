@@ -37,6 +37,7 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var preferences: Preferences
     private lateinit var helper: PlaylistHelper
     private lateinit var request: RequestQueue
+    private var listSize = 0
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
@@ -125,10 +126,14 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun setPlaylistToAdapter(playlistSet: Playlist) {
+        //sort category by name
+        if(preferences.sortCategory)
+            playlistSet.categories.sortBy { category -> category.name?.lowercase() }
         //set cat_id and ch_id
         for (catId in playlistSet.categories.indices) {
             //sort channels by name
-            playlistSet.categories[catId].channels!!.sortBy { channel -> channel.name?.lowercase() }
+            if(preferences.sortChannel)
+                playlistSet.categories[catId].channels!!.sortBy { channel -> channel.name?.lowercase() }
             //remove channels with empty streamurl
             playlistSet.categories[catId].channels!!.removeAll { channel -> channel.streamUrl.isNullOrBlank() }
 
@@ -139,6 +144,18 @@ open class MainActivity : AppCompatActivity() {
                 playlistSet.categories[catId].channels!![chId].chId = chId
             }
         }
+
+        // count active source
+        listSize++
+        var aktif = 0
+        for(count in preferences.sources!!.indices)
+            aktif += when { preferences.sources!![count].active -> 1 else -> 0 }
+
+        // hide loading after all playlist complete merge
+        if(listSize == aktif) {
+            setLoadingPlaylist(false)
+            listSize = 0
+        } else return
 
         // set new playlist
         binding.catAdapter = CategoryAdapter(playlistSet.categories)
@@ -152,11 +169,7 @@ open class MainActivity : AppCompatActivity() {
             val intent = Intent(this, PlayerActivity::class.java)
             intent.putExtra(PlayData.VALUE, preferences.watched)
             this.startActivity(intent)
-            return
         }
-
-        // hide loading
-        setLoadingPlaylist(false)
     }
 
     private fun updatePlaylist() {

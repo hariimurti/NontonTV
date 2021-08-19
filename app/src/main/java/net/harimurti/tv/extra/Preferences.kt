@@ -19,6 +19,8 @@ class Preferences(val context: Context) {
         private const val LAST_WATCHED = "LAST_WATCHED"
         private const val OPEN_LAST_WATCHED = "OPEN_LAST_WATCHED"
         private const val LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT"
+        private const val SORT_CATEGORY = "SORT_CATEGORY"
+        private const val SORT_CHANNEL = "SORT_CHANNEL"
         private const val LAST_VERSIONCODE = "LAST_VERSIONCODE"
         private const val TOTAL_CONTRIBUTORS = "TOTAL_CONTRIBUTORS"
         private const val SHOW_LESS_CONTRIBUTORS = "SHOW_LESS_CONTRIBUTORS"
@@ -61,6 +63,22 @@ class Preferences(val context: Context) {
         set(value) {
             editor = preferences.edit()
             editor.putBoolean(OPEN_LAST_WATCHED, value)
+            editor.apply()
+        }
+
+    var sortCategory: Boolean
+        get() = preferences.getBoolean(SORT_CATEGORY, false)
+        set(value) {
+            editor = preferences.edit()
+            editor.putBoolean(SORT_CATEGORY, value)
+            editor.apply()
+        }
+
+    var sortChannel: Boolean
+        get() = preferences.getBoolean(SORT_CHANNEL, true)
+        set(value) {
+            editor = preferences.edit()
+            editor.putBoolean(SORT_CHANNEL, value)
             editor.apply()
         }
 
