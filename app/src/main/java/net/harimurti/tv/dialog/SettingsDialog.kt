@@ -30,7 +30,7 @@ import net.harimurti.tv.databinding.SettingsDialogBinding
 import net.harimurti.tv.databinding.SettingsSourcesFragmentBinding
 import net.harimurti.tv.extra.PlaylistHelper
 import net.harimurti.tv.extra.Preferences
-import net.harimurti.tv.extra.isWebsite
+import net.harimurti.tv.extra.isLinkUrl
 import net.harimurti.tv.model.Source
 import java.io.File
 
@@ -234,7 +234,7 @@ class SettingsDialog : DialogFragment() {
         private fun addLinkUrl() {
             val input = binding.inputSource.text.toString()
             if (input.isBlank()) return
-            if (!input.isWebsite()) return
+            if (!input.isLinkUrl()) return
 
             binding.btnAdd.isEnabled = false
             binding.inputSource.isEnabled = false

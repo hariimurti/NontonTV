@@ -95,7 +95,7 @@ class M3uTool {
         }
 
         private fun isStream(line: String?): Boolean {
-            return line!!.lowercase().startsWith("http")
+            return line!!.isStreamUrl()
         }
 
         private fun regexCh(line: String?): String? {
