@@ -86,7 +86,7 @@ class PlaylistHelper(val context: Context) {
         }
 
         // local playlist
-        if (!source.path.isWebsite()) {
+        if (!source.path.isLinkUrl()) {
             val playlist = readFile(source.path.toFile())
             taskResponse?.onResponse(playlist)
             getResponse()
@@ -129,7 +129,7 @@ class PlaylistHelper(val context: Context) {
 
     fun checkResult() {
         var result = false
-        if (checkSource?.path?.isWebsite() == false) {
+        if (checkSource?.path?.isLinkUrl() == false) {
             result = checkSource?.path.isPathExist()
             taskChecker?.onCheckResult(result)
         }

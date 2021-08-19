@@ -8,6 +8,7 @@ buildscript {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://repository.jsweet.org/artifactory/simple/jcenter/' }
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:7.0.0'
@@ -22,6 +23,7 @@ allprojects {
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://repository.jsweet.org/artifactory/simple/jcenter/' }
     }
 }
 

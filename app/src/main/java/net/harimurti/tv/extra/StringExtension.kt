@@ -2,8 +2,12 @@ package net.harimurti.tv.extra
 
 import java.io.File
 
-fun String?.isWebsite(): Boolean {
-    return Regex("(https?://.+?\\..+)", RegexOption.IGNORE_CASE).matches(this.toString())
+fun String?.isLinkUrl(): Boolean {
+    return this?.startsWith("http", true) == true
+}
+
+fun String?.isStreamUrl(): Boolean {
+    return this?.isLinkUrl() == true || this?.startsWith("rtmp", true) == true
 }
 
 fun String?.isPathExist(): Boolean {
