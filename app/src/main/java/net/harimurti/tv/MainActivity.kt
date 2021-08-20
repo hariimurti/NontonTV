@@ -37,7 +37,6 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var preferences: Preferences
     private lateinit var helper: PlaylistHelper
     private lateinit var request: RequestQueue
-    private var listSize = 0
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
@@ -145,24 +144,16 @@ open class MainActivity : AppCompatActivity() {
             }
         }
 
-        // count active source
-        listSize++
-        var aktif = 0
-        for(count in preferences.sources!!.indices)
-            aktif += when { preferences.sources!![count].active -> 1 else -> 0 }
-
-        // hide loading after all playlist complete merge
-        if(listSize == aktif) {
-            setLoadingPlaylist(false)
-            listSize = 0
-        } else return
-
         // set new playlist
         binding.catAdapter = CategoryAdapter(playlistSet.categories)
 
         // write cache
         Playlist.cached = playlistSet
         helper.writeCache(playlistSet)
+
+        // hide loading
+        setLoadingPlaylist(false)
+        Toast.makeText(applicationContext, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
 
         // launch player if playlastwatched is true
         if (preferences.playLastWatched && PlayerActivity.isFirst) {
@@ -191,16 +182,12 @@ open class MainActivity : AppCompatActivity() {
                     if (playlist != null) {
                         playlist.categories.let { playlistSet.categories.addAll(it) }
                         playlist.drmLicenses.let { playlistSet.drmLicenses.addAll(it) }
-                        setPlaylistToAdapter(playlistSet)
                     }
                     else Toast.makeText(applicationContext, getString(R.string.playlist_cant_be_parsed), Toast.LENGTH_SHORT).show()
-
                 }
                 override fun onFinish() {
-                    if (playlistSet.categories.size == 0) {
-                        showAlertPlaylistError(null)
-                    }
-                    else Toast.makeText(applicationContext, R.string.playlist_updated, Toast.LENGTH_SHORT).show()
+                    if (playlistSet.categories.size == 0) showAlertPlaylistError(null)
+                    else setPlaylistToAdapter(playlistSet)
                 }
         }).getResponse()
     }
