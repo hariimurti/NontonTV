@@ -178,10 +178,7 @@ open class MainActivity : AppCompatActivity() {
                 }
                 override fun onResponse(playlist: Playlist?) {
                     // merge into playlistset
-                    if (playlist != null) {
-                        playlist.categories.let { playlistSet.categories.addAll(it) }
-                        playlist.drmLicenses.let { playlistSet.drmLicenses.addAll(it) }
-                    }
+                    if (playlist != null) playlistSet.mergeWith(playlist)
                     else Toast.makeText(applicationContext, getString(R.string.playlist_cant_be_parsed), Toast.LENGTH_SHORT).show()
                 }
                 override fun onFinish() {

@@ -74,6 +74,12 @@ fun Playlist?.sortChannels() {
     }
 }
 
+fun Playlist?.mergeWith(playlist: Playlist?) {
+    if (playlist == null) return
+    playlist.categories.let { this?.categories?.addAll(it) }
+    playlist.drmLicenses.let { this?.drmLicenses?.addAll(it) }
+}
+
 fun String?.toPlaylist(): Playlist? {
     // trying to parse json first
     try { return Gson().fromJson(this, Playlist::class.java) }
