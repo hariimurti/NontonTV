@@ -126,13 +126,12 @@ open class MainActivity : AppCompatActivity() {
 
     private fun setPlaylistToAdapter(playlistSet: Playlist) {
         //sort category by name
-        if(preferences.sortCategory)
-            playlistSet.categories.sortBy { category -> category.name?.lowercase() }
+        if(preferences.sortCategory) playlistSet.sortCategories()
+        //sort channels by name
+        if(preferences.sortChannel) playlistSet.sortChannels()
+
         //set cat_id and ch_id
         for (catId in playlistSet.categories.indices) {
-            //sort channels by name
-            if(preferences.sortChannel)
-                playlistSet.categories[catId].channels!!.sortBy { channel -> channel.name?.lowercase() }
             //remove channels with empty streamurl
             playlistSet.categories[catId].channels!!.removeAll { channel -> channel.streamUrl.isNullOrBlank() }
 

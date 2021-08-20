@@ -63,6 +63,17 @@ fun List<M3U>?.toPlaylist(): Playlist? {
     return playlist
 }
 
+fun Playlist?.sortCategories() {
+    this?.categories?.sortBy { category -> category.name?.lowercase() }
+}
+
+fun Playlist?.sortChannels() {
+    if (this == null) return
+    for (catId in this.categories.indices) {
+        this.categories[catId].channels?.sortBy { channel -> channel.name?.lowercase() }
+    }
+}
+
 fun String?.toPlaylist(): Playlist? {
     // trying to parse json first
     try { return Gson().fromJson(this, Playlist::class.java) }
