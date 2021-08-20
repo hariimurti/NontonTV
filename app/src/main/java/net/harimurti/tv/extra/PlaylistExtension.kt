@@ -74,6 +74,13 @@ fun Playlist?.sortChannels() {
     }
 }
 
+fun Playlist?.trimChannelWithEmptyStreamUrl() {
+    if (this == null) return
+    for (catId in this.categories.indices) {
+        this.categories[catId].channels!!.removeAll { channel -> channel.streamUrl.isNullOrBlank() }
+    }
+}
+
 fun Playlist?.mergeWith(playlist: Playlist?) {
     if (playlist == null) return
     playlist.categories.let { this?.categories?.addAll(it) }

@@ -129,12 +129,11 @@ open class MainActivity : AppCompatActivity() {
         if(preferences.sortCategory) playlistSet.sortCategories()
         //sort channels by name
         if(preferences.sortChannel) playlistSet.sortChannels()
+        //remove channels with empty streamurl
+        playlistSet.trimChannelWithEmptyStreamUrl()
 
         //set cat_id and ch_id
         for (catId in playlistSet.categories.indices) {
-            //remove channels with empty streamurl
-            playlistSet.categories[catId].channels!!.removeAll { channel -> channel.streamUrl.isNullOrBlank() }
-
             for (chId in playlistSet.categories[catId].channels!!.indices) {
                 // add catId
                 playlistSet.categories[catId].channels!![chId].catId = catId
