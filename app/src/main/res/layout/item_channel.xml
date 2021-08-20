@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
+            name="catId"
+            type="int" />
+        <variable
+            name="chId"
+            type="int" />
+        <variable
             name="modelChannel"
             type="net.harimurti.tv.model.Channel" />
         <variable
@@ -23,7 +29,7 @@
             android:padding="@dimen/btn_channel_padding"
             tools:text="DUMMY CHANNEL WITH LONG NAME IN IT"
             android:text="@{modelChannel.name}"
-            android:onClick="@{() -> clickListener.onClicked(modelChannel)}"/>
+            android:onClick="@{() -> clickListener.onClicked(modelChannel, catId, chId)}"/>
 
     </FrameLayout>
 </layout>

@@ -14,7 +14,11 @@ import net.harimurti.tv.extra.startAnimation
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 
-class ChannelAdapter (private val channels: ArrayList<Channel>?) :
+interface ChannelClickListener {
+    fun onClicked(ch: Channel, catId: Int, chId: Int)
+}
+
+class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int) :
     RecyclerView.Adapter<ChannelAdapter.ViewHolder>(), ChannelClickListener {
     lateinit var context: Context
 
@@ -36,6 +40,8 @@ class ChannelAdapter (private val channels: ArrayList<Channel>?) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val channel: Channel? = channels?.get(position)
         viewHolder.bind(channel)
+        viewHolder.itemChBinding.catId = catId
+        viewHolder.itemChBinding.chId = position
         viewHolder.itemChBinding.clickListener = this
         viewHolder.itemChBinding.btnPlay.apply {
             setOnFocusChangeListener { v, hasFocus ->
@@ -48,9 +54,9 @@ class ChannelAdapter (private val channels: ArrayList<Channel>?) :
         return channels?.size ?: 0
     }
 
-    override fun onClicked(ch: Channel?) {
+    override fun onClicked(ch: Channel, catId: Int, chId: Int) {
         val intent = Intent(context, PlayerActivity::class.java)
-        intent.putExtra(PlayData.VALUE, PlayData(ch?.catId!!, ch.chId!!))
+        intent.putExtra(PlayData.VALUE, PlayData(catId, chId))
         context.startActivity(intent)
     }
 }

@@ -41,7 +41,7 @@ class CategoryAdapter (cat: ArrayList<Category>?) :
             else -> 1
         }
 
-        viewHolder.itemCatBinding.chAdapter = ChannelAdapter(category?.channels)
+        viewHolder.itemCatBinding.chAdapter = ChannelAdapter(category?.channels, position)
         viewHolder.itemCatBinding.rvChannels.layoutManager =
                 StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.HORIZONTAL)
 

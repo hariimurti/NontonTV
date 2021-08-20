@@ -132,16 +132,6 @@ open class MainActivity : AppCompatActivity() {
         //remove channels with empty streamurl
         playlistSet.trimChannelWithEmptyStreamUrl()
 
-        //set cat_id and ch_id
-        for (catId in playlistSet.categories.indices) {
-            for (chId in playlistSet.categories[catId].channels!!.indices) {
-                // add catId
-                playlistSet.categories[catId].channels!![chId].catId = catId
-                // add chId
-                playlistSet.categories[catId].channels!![chId].chId = chId
-            }
-        }
-
         // set new playlist
         binding.catAdapter = CategoryAdapter(playlistSet.categories)
 

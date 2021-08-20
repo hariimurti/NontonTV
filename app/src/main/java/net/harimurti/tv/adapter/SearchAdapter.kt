@@ -17,10 +17,11 @@ import net.harimurti.tv.extra.startAnimation
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 
-class SearchAdapter (val channels: ArrayList<Channel>) :
+class SearchAdapter (val channels: ArrayList<Channel>, private val listdata: ArrayList<PlayData>) :
     RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterable, ChannelClickListener {
     lateinit var context: Context
-    var channelsFilter: ArrayList<Channel> = ArrayList()
+    var listChannel = ArrayList<Channel>()
+    var listPlayData = ArrayList<PlayData>()
 
     class ViewHolder(var itemChBinding: ItemChannelBinding) :
         RecyclerView.ViewHolder(itemChBinding.root) {
@@ -38,59 +39,62 @@ class SearchAdapter (val channels: ArrayList<Channel>) :
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        val channel = channelsFilter[position]
+        val channel = listChannel[position]
+        val playdata = listPlayData[position]
+
         viewHolder.bind(channel)
+        viewHolder.itemChBinding.catId = playdata.catId
+        viewHolder.itemChBinding.chId = playdata.chId
         viewHolder.itemChBinding.clickListener = this
-        viewHolder.itemChBinding.btnPlay.apply {
-            setOnFocusChangeListener { v, hasFocus ->
-                v.startAnimation(context, hasFocus)
-            }
+        viewHolder.itemChBinding.btnPlay.setOnFocusChangeListener { v, hasFocus ->
+            v.startAnimation(context, hasFocus)
         }
     }
 
     override fun getItemCount(): Int {
-        return channelsFilter.size
+        return listChannel.size
     }
 
     override fun getFilter(): Filter {
         return object : Filter() {
             override fun performFiltering(constraint: CharSequence): FilterResults {
-                val r = FilterResults()
                 if (constraint.isEmpty()) {
-                    channelsFilter = channels
+                    listChannel = channels
+                    listPlayData = listdata
                 } else {
-                    val filterCh: ArrayList<Channel> = ArrayList()
-                    for (ch in channels) {
-                        if (ch.name?.lowercase()?.contains(constraint.toString().lowercase()) == true) {
-                            filterCh.add(ch)
+                    val listCh = ArrayList<Channel>()
+                    val listDt = ArrayList<PlayData>()
+                    for (id in channels.indices) {
+                        if (channels[id].name?.contains(constraint.toString(), true) == true) {
+                            listCh.add(channels[id])
+                            listDt.add(listdata[id])
                         }
-                        channelsFilter = filterCh
                     }
+                    listChannel = listCh
+                    listPlayData = listDt
                 }
-                r.values = channelsFilter
-                r.count = channelsFilter.size
-                return r
+                return FilterResults().apply {
+                    values = listChannel
+                    count = listChannel.size
+                }
             }
 
             @SuppressLint("NotifyDataSetChanged")
             override fun publishResults(charSequence: CharSequence, filterResults: FilterResults) {
-                channelsFilter  = objToArrayList(filterResults.values)
+                listChannel = objToArrayList(filterResults.values)
                 notifyDataSetChanged()
             }
 
             private fun objToArrayList(obj: Any?): ArrayList<Channel> {
-                return if (obj is ArrayList<*>) {
-                    ArrayList(obj.filterIsInstance<Channel>())
-                } else {
-                    ArrayList()
-                }
+                return if (obj is ArrayList<*>) ArrayList(obj.filterIsInstance<Channel>())
+                    else ArrayList()
             }
         }
     }
 
-    override fun onClicked(ch: Channel?) {
+    override fun onClicked(ch: Channel, catId: Int, chId: Int) {
         val intent = Intent(context, PlayerActivity::class.java)
-        intent.putExtra(PlayData.VALUE, PlayData(ch?.catId!!, ch.chId!!))
+        intent.putExtra(PlayData.VALUE, PlayData(catId, chId))
         context.startActivity(intent)
     }
 }

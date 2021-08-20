@@ -14,13 +14,13 @@ import net.harimurti.tv.R
 import net.harimurti.tv.adapter.SearchAdapter
 import net.harimurti.tv.databinding.SearchDialogBinding
 import net.harimurti.tv.model.Channel
+import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
 
 class SearchDialog : DialogFragment() {
     private var _binding : SearchDialogBinding? = null
     private val binding get() = _binding!!
     lateinit var searchAdapter: SearchAdapter
-    private val channels: ArrayList<Channel> = ArrayList()
 
     override fun onStart() {
         super.onStart()
@@ -45,7 +45,21 @@ class SearchDialog : DialogFragment() {
         _binding = SearchDialogBinding.inflate(inflater,container, false)
         val dialogView = binding.root
 
-        setAdapter()
+        val channels = ArrayList<Channel>()
+        val listdata = ArrayList<PlayData>()
+        val playlist = Playlist.cached
+        for (catId in playlist.categories.indices) {
+            val ch = playlist.categories[catId].channels ?: continue
+            for (chId in ch.indices) {
+                channels.add(ch[chId])
+                listdata.add(PlayData(catId, chId))
+            }
+        }
+
+        //recycler view
+        searchAdapter = SearchAdapter(channels, listdata)
+        binding.searchAdapter = searchAdapter
+        binding.searchList.layoutManager = GridLayoutManager(context,spanColumn())
 
         //edittext
         binding.searchInput.apply {
@@ -56,28 +70,18 @@ class SearchDialog : DialogFragment() {
                     searchAdapter.filter.filter(s)
                     binding.searchList.visibility = if(s.isNotEmpty()) View.VISIBLE else View.GONE
                     binding.searchReset.visibility = if(s.isNotEmpty()) View.VISIBLE else View.GONE
-
                 }
             })
         }
 
         //button cleartext
-        binding.searchReset.apply {
-            setOnClickListener {
-                binding.searchInput.setText("")
-            }
-        }
-
-        //RecyclerView
-        binding.searchList.apply {
-            layoutManager = GridLayoutManager(context,spanColumn())
+        binding.searchReset.setOnClickListener {
+            binding.searchInput.text?.clear()
         }
 
         //button close
-        binding.searchClose.apply {
-            setOnClickListener {
-                dismiss()
-            }
+        binding.searchClose.setOnClickListener {
+            dismiss()
         }
         return dialogView
     }
@@ -85,18 +89,6 @@ class SearchDialog : DialogFragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-    private fun setAdapter(){
-        val playlist = Playlist.cached
-        for (catId in playlist.categories.indices) {
-            for (ch in playlist.categories[catId].channels!!) {
-                channels.add(ch)
-            }
-        }
-
-        searchAdapter = SearchAdapter(channels)
-        binding.searchAdapter = searchAdapter
     }
 
     private fun spanColumn(): Int {
