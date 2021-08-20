@@ -5,8 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.view.animation.Animation
-import android.view.animation.AnimationUtils
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.databinding.DataBindingUtil
@@ -15,6 +13,7 @@ import net.harimurti.tv.BR
 import net.harimurti.tv.PlayerActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.ItemChannelBinding
+import net.harimurti.tv.extra.startAnimation
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 
@@ -43,16 +42,8 @@ class SearchAdapter (val channels: ArrayList<Channel>) :
         viewHolder.bind(channel)
         viewHolder.itemChBinding.clickListener = this
         viewHolder.itemChBinding.btnPlay.apply {
-            setOnFocusChangeListener { _, hasFocus ->
-                if (hasFocus) {
-                    val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.zoom_120)
-                    viewHolder.itemChBinding.btnPlay.startAnimation(anim)
-                    anim.fillAfter = true
-                } else {
-                    val anim: Animation = AnimationUtils.loadAnimation(context, R.anim.zoom_100)
-                    viewHolder.itemChBinding.btnPlay.startAnimation(anim)
-                    anim.fillAfter = true
-                }
+            setOnFocusChangeListener { v, hasFocus ->
+                v.startAnimation(context, hasFocus)
             }
         }
     }
