@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import net.harimurti.tv.R
 import net.harimurti.tv.adapter.SearchAdapter
 import net.harimurti.tv.databinding.SearchDialogBinding
+import net.harimurti.tv.extra.isFavorite
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
@@ -49,6 +50,7 @@ class SearchDialog : DialogFragment() {
         val listdata = ArrayList<PlayData>()
         val playlist = Playlist.cached
         for (catId in playlist.categories.indices) {
+            if (playlist.categories[catId].isFavorite(requireContext())) continue
             val ch = playlist.categories[catId].channels ?: continue
             for (chId in ch.indices) {
                 channels.add(ch[chId])
@@ -59,7 +61,7 @@ class SearchDialog : DialogFragment() {
         //recycler view
         searchAdapter = SearchAdapter(channels, listdata)
         binding.searchAdapter = searchAdapter
-        binding.searchList.layoutManager = GridLayoutManager(context,spanColumn())
+        binding.searchList.layoutManager = GridLayoutManager(context, spanColumn())
 
         //edittext
         binding.searchInput.apply {

@@ -15,6 +15,7 @@ import com.android.volley.Response
 
 class PlaylistHelper(val context: Context) {
     private val cache: File = File(context.cacheDir, "NontonTV.json")
+    private val favorite: File = File(context.cacheDir, "Favorite.json")
     private var taskResponse: TaskResponse? = null
     private var taskChecker: TaskChecker? = null
     private var sources: ArrayList<Source> = ArrayList()
@@ -44,7 +45,17 @@ class PlaylistHelper(val context: Context) {
         }
     }
 
-    fun readFile(file: File): Playlist? {
+    fun writeFavorites(fav: Favorites) {
+        try {
+            Playlist.favorites = fav
+            val content = Gson().toJson(fav)
+            File(favorite.absolutePath).writeText(content)
+        } catch (e: Exception) {
+            Log.e(TAG, "Could not write to ${favorite.name}", e)
+        }
+    }
+
+    private fun readFile(file: File): Playlist? {
         return try {
             file.readText(Charsets.UTF_8).toPlaylist()
         } catch (e: Exception) {
@@ -56,6 +67,19 @@ class PlaylistHelper(val context: Context) {
 
     fun readCache(): Playlist? {
         return readFile(cache)
+    }
+
+    fun readFavorites(): Favorites {
+        val fav = try {
+            val content = favorite.readText(Charsets.UTF_8)
+            Gson().fromJson(content, Favorites::class.java)
+        } catch (e: Exception) {
+            if (e == FileNotFoundException()) e.printStackTrace()
+            else Log.e(TAG, "Could not read from ${favorite.name}", e)
+            Favorites()
+        }
+        Playlist.favorites = fav
+        return fav
     }
 
     fun task(sources: ArrayList<Source>?, taskResponse: TaskResponse?): PlaylistHelper {

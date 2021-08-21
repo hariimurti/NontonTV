@@ -29,7 +29,8 @@
             android:padding="@dimen/btn_channel_padding"
             tools:text="DUMMY CHANNEL WITH LONG NAME IN IT"
             android:text="@{modelChannel.name}"
-            android:onClick="@{() -> clickListener.onClicked(modelChannel, catId, chId)}"/>
+            android:onClick="@{() -> clickListener.onClicked(modelChannel, catId, chId)}"
+            android:onLongClick="@{() -> clickListener.onLongClicked(modelChannel, catId, chId)}"/>
 
     </FrameLayout>
 </layout>

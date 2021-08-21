@@ -8,6 +8,7 @@ class Playlist {
     var drmLicenses: ArrayList<DrmLicense> = ArrayList()
 
     companion object {
-        var cached: Playlist = Playlist()
+        var cached = Playlist()
+        var favorites = Favorites()
     }
 }

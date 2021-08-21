@@ -1,5 +1,6 @@
 package net.harimurti.tv.extra
 
+import android.content.Context
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
 import net.harimurti.tv.model.*
@@ -85,6 +86,20 @@ fun Playlist?.mergeWith(playlist: Playlist?) {
     if (playlist == null) return
     playlist.categories.let { this?.categories?.addAll(it) }
     playlist.drmLicenses.let { this?.drmLicenses?.addAll(it) }
+}
+
+fun Playlist?.addFav(context: Context, channels: ArrayList<Channel>) {
+    if (this == null) return
+    if (this.categories[0].isFavorite(context))
+        this.categories[0].channels = channels
+    else
+        this.categories.addFavorite(context, channels)
+}
+
+fun Playlist?.remFav(context: Context) {
+    if (this == null) return
+    if (this.categories[0].isFavorite(context))
+        this.categories.removeAt(0)
 }
 
 fun String?.toPlaylist(): Playlist? {

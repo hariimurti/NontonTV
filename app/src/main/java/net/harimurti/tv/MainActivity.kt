@@ -37,12 +37,15 @@ open class MainActivity : AppCompatActivity() {
     private lateinit var preferences: Preferences
     private lateinit var helper: PlaylistHelper
     private lateinit var request: RequestQueue
+    private lateinit var adapter: CategoryAdapter
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
             when(intent.getStringExtra(MAIN_CALLBACK)){
                 UPDATE_PLAYLIST -> updatePlaylist()
                 OPEN_SETTINGS -> openSettings()
+                INSERT_FAVORITE -> adapter.insertFavList()
+                REMOVE_FAVORITE -> adapter.removeFavList()
             }
         }
     }
@@ -51,6 +54,8 @@ open class MainActivity : AppCompatActivity() {
         const val MAIN_CALLBACK = "MAIN_CALLBACK"
         const val UPDATE_PLAYLIST = "UPDATE_PLAYLIST"
         const val OPEN_SETTINGS = "OPEN_SETTINGS"
+        const val INSERT_FAVORITE = "REFRESH_FAVORITE"
+        const val REMOVE_FAVORITE = "REMOVE_FAVORITE"
     }
 
     @SuppressLint("DefaultLocale")
@@ -125,15 +130,21 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun setPlaylistToAdapter(playlistSet: Playlist) {
-        //sort category by name
+        // sort category by name
         if(preferences.sortCategory) playlistSet.sortCategories()
-        //sort channels by name
+        // sort channels by name
         if(preferences.sortChannel) playlistSet.sortChannels()
-        //remove channels with empty streamurl
+        // remove channels with empty streamurl
         playlistSet.trimChannelWithEmptyStreamUrl()
 
+        // favorites part
+        val fav = helper.readFavorites().trimNotExistFrom(playlistSet)
+        if (fav?.channels?.isNotEmpty() == true) playlistSet.addFav(this, fav.channels)
+        else playlistSet.remFav(this)
+
         // set new playlist
-        binding.catAdapter = CategoryAdapter(playlistSet.categories)
+        adapter = CategoryAdapter(playlistSet.categories)
+        binding.catAdapter = adapter
 
         // write cache
         Playlist.cached = playlistSet

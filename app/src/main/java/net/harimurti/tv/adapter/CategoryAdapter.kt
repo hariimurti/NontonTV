@@ -9,13 +9,15 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import net.harimurti.tv.BR
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.ItemCategoryBinding
+import net.harimurti.tv.extra.addFavorite
+import net.harimurti.tv.extra.isFavorite
 import net.harimurti.tv.model.Category
+import net.harimurti.tv.model.Playlist
 import kotlin.math.round
 
-class CategoryAdapter (cat: ArrayList<Category>?) :
+class CategoryAdapter (private val categories: ArrayList<Category>?) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
     lateinit var context: Context
-    var categories: ArrayList<Category>? = cat
 
     class ViewHolder(var itemCatBinding: ItemCategoryBinding) :
         RecyclerView.ViewHolder(itemCatBinding.root) {
@@ -56,5 +58,25 @@ class CategoryAdapter (cat: ArrayList<Category>?) :
         val size = itemCount
         categories?.clear()
         notifyItemRangeRemoved(0, size)
+    }
+
+    fun insertFavList() {
+        val fav = Playlist.favorites
+        if (categories?.get(0)?.isFavorite(context) == false) {
+            categories.addFavorite(context, fav.channels)
+            if (itemCount == 0) notifyItemInserted(0)
+            else notifyItemInserted(0)
+        }
+        else {
+            categories?.get(0)?.channels = fav.channels
+            notifyItemChanged(0)
+        }
+    }
+
+    fun removeFavList() {
+        if (categories?.get(0)?.isFavorite(context) == true) {
+            categories.removeAt(0)
+            notifyItemRemoved(0)
+        }
     }
 }

@@ -26,6 +26,10 @@
     <string name="btn_next_channel">Saluran Berikutnya</string>
     <string name="player_error_message">Kode : %s\nNamaKode : %s\nPesan Error : %s</string>
     <string name="device_not_support_widevine">Perangkat anda tidak mendukung DRM Widevine!</string>
+    <string name="favorite_channel">Saluran Favorit</string>
+    <string name="removed_from_favorite">%s telah dihapus dari Favorit</string>
+    <string name="added_into_favorite">%s telah ditambahkan ke Favorit</string>
+    <string name="already_in_favorite">%s sudah ada dalam Favorite</string>
 
     <!-- alert playlist error -->
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>

@@ -7,15 +7,21 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import net.harimurti.tv.BR
+import net.harimurti.tv.MainActivity
 import net.harimurti.tv.PlayerActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.ItemChannelBinding
+import net.harimurti.tv.extra.add
+import net.harimurti.tv.extra.save
 import net.harimurti.tv.extra.startAnimation
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
+import net.harimurti.tv.model.Playlist
 
 class SearchAdapter (val channels: ArrayList<Channel>, private val listdata: ArrayList<PlayData>) :
     RecyclerView.Adapter<SearchAdapter.ViewHolder>(), Filterable, ChannelClickListener {
@@ -96,5 +102,22 @@ class SearchAdapter (val channels: ArrayList<Channel>, private val listdata: Arr
         val intent = Intent(context, PlayerActivity::class.java)
         intent.putExtra(PlayData.VALUE, PlayData(catId, chId))
         context.startActivity(intent)
+    }
+
+    override fun onLongClicked(ch: Channel, catId: Int, chId: Int): Boolean {
+        val fav = Playlist.favorites
+        val result = fav.add(ch)
+        if (result) {
+            LocalBroadcastManager.getInstance(context).sendBroadcast(
+                Intent(MainActivity.MAIN_CALLBACK)
+                    .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.INSERT_FAVORITE))
+            fav.save(context)
+        }
+
+        val message = if (result) String.format(context.getString(R.string.added_into_favorite), ch.name)
+        else String.format(context.getString(R.string.already_in_favorite), ch.name)
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
+        return true
     }
 }
