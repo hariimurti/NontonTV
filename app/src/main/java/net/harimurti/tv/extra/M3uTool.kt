@@ -19,6 +19,8 @@ class M3uTool {
             Pattern.compile(".*license_key=(.+?)$", Pattern.CASE_INSENSITIVE)
         private val REGEX_GRP: Pattern =
             Pattern.compile(".*:(.+?)$", Pattern.CASE_INSENSITIVE)
+        private val REGEX_USER_AGENT: Pattern =
+            Pattern.compile(".*http-user-agent=(.+?)$", Pattern.CASE_INSENSITIVE)
 
         fun parse(content: String?): List<M3U> {
             val result: MutableList<M3U> = ArrayList()
@@ -33,10 +35,15 @@ class M3uTool {
 
                 lineNumber++
 
-                var m3u= M3U()
+                var m3u = M3U()
+                var userAgent: String? = null
                 while (buffer.readLine().also { line = it } != null) {
                     lineNumber++
                     when {
+                        isExtVlcOpt(line) -> {
+                            // set useragent
+                            userAgent = regexUserAgent(line)
+                        }
                         isExtGrp(line) -> {
                             // reset if GroupName is set
                             if(!m3u.groupName.isNullOrEmpty())
@@ -68,7 +75,7 @@ class M3uTool {
                                 m3u.groupName = "UNCATAGORIZED"
 
                             // add channel
-                            m3u.streamUrl = line
+                            m3u.streamUrl = if (userAgent == null) line else "$line|User-Agent=$userAgent"
                             result.add(m3u)
 
                             // reset channel
@@ -80,6 +87,10 @@ class M3uTool {
                 throw M3U.ParsingException(lineNumber, "Cannot read file", e)
             }
             return result
+        }
+
+        private fun isExtVlcOpt(line: String?): Boolean {
+            return line!!.startsWith(M3U.EXTVLCOPT)
         }
 
         private fun isExtGrp(line: String?): Boolean {
@@ -112,6 +123,10 @@ class M3uTool {
 
         private fun regexGrp(line: String?): String? {
             return regexLine(line, REGEX_GRP)
+        }
+
+        private fun regexUserAgent(line: String?): String? {
+            return regexLine(line, REGEX_USER_AGENT)
         }
 
         private fun regexLine(line: String?, Pattern: Pattern): String? {

@@ -26,7 +26,6 @@ import com.google.android.exoplayer2.trackselection.MappingTrackSelector.MappedT
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
-import com.google.android.exoplayer2.upstream.HttpDataSource
 import net.harimurti.tv.databinding.ActivityPlayerBinding
 import net.harimurti.tv.databinding.CustomControlBinding
 import net.harimurti.tv.dialog.TrackSelectionDialog
@@ -35,6 +34,7 @@ import net.harimurti.tv.model.Category
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
+import java.net.URLDecoder
 import java.util.*
 
 class PlayerActivity : AppCompatActivity() {
@@ -182,14 +182,35 @@ class PlayerActivity : AppCompatActivity() {
         bindingControl.categoryName.text = category?.name
         bindingControl.channelName.text = current?.name
 
+        // split streamurl with referer, user-agent
+        var streamUrl = URLDecoder.decode(current?.streamUrl, "utf-8")
+        var userAgent = streamUrl.findPattern(".*user-agent=(.+?)(\\|.*)?")
+        val referer = streamUrl.findPattern(".*referer=(.+?)(\\|.*)?")
+
+        // clean streamurl
+        streamUrl = streamUrl.findPattern("(.+?)(\\|.*)?") ?: streamUrl
+
+        // if null set User-Agent with existing resources
+        if (userAgent == null) {
+            val userAgents = listOf(*resources.getStringArray(R.array.user_agent))
+            userAgent = userAgents.firstOrNull {
+                current?.streamUrl?.contains(
+                    it.substring(0, it.indexOf("/")).lowercase(Locale.getDefault())
+                ) == true
+            }
+            if (userAgent.isNullOrEmpty()) {
+                userAgent = userAgents[Random().nextInt(userAgents.size)]
+            }
+        }
+
         // define mediaitem
         val drmLicense = Playlist.cached.drmLicenses.firstOrNull {
             current?.drmName?.equals(it.name) == true
         }?.url
-        mediaItem = MediaItem.fromUri(Uri.parse(current?.streamUrl))
+        mediaItem = MediaItem.fromUri(Uri.parse(streamUrl))
         if (drmLicense?.isNotEmpty() == true) {
             mediaItem = MediaItem.Builder()
-                .setUri(Uri.parse(current?.streamUrl))
+                .setUri(Uri.parse(streamUrl))
                 .setDrmUuid(C.WIDEVINE_UUID)
                 .setDrmLicenseUri(drmLicense)
                 .setDrmMultiSession(true)
@@ -197,23 +218,20 @@ class PlayerActivity : AppCompatActivity() {
             if (!isDrmWidevineSupported()) return
         }
 
-        // define User-Agent
-        val userAgents = listOf(*resources.getStringArray(R.array.user_agent))
-        var userAgent = userAgents.firstOrNull {
-            current?.streamUrl?.contains(it.substring(0, it.indexOf("/")).lowercase(Locale.getDefault())) == true
-        }
-        if (userAgent.isNullOrEmpty()) {
-            userAgent = userAgents[Random().nextInt(userAgents.size)]
+        // create factory
+        val httpDataSourceFactory = DefaultHttpDataSource.Factory()
+            .setAllowCrossProtocolRedirects(true)
+            .setUserAgent(userAgent)
+        if (referer != null) httpDataSourceFactory.setDefaultRequestProperties(mapOf(Pair("referer", referer)))
+        val dataSourceFactory = DefaultDataSourceFactory(this, httpDataSourceFactory)
+        val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+
+        // create trackselector
+        trackSelector = DefaultTrackSelector(this).apply {
+            parameters = ParametersBuilder(applicationContext).build()
         }
 
         // create player & set listener
-        val httpDataSourceFactory: HttpDataSource.Factory = DefaultHttpDataSource.Factory()
-            .setAllowCrossProtocolRedirects(true)
-            .setUserAgent(userAgent)
-        val dataSourceFactory = DefaultDataSourceFactory(this, httpDataSourceFactory)
-        val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
-        trackSelector = DefaultTrackSelector(this)
-        trackSelector.parameters = ParametersBuilder(this).build()
         player = SimpleExoPlayer.Builder(this)
             .setMediaSourceFactory(mediaSourceFactory)
             .setTrackSelector(trackSelector)

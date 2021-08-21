@@ -17,3 +17,10 @@ fun String?.isPathExist(): Boolean {
 fun String?.toFile(): File {
     return File(this.toString())
 }
+
+fun String?.findPattern(pattern: String): String? {
+    if (this == null) return null
+    val option = setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE)
+    val result = Regex(pattern, option).matchEntire(this)
+    return result?.groups?.get(1)?.value
+}

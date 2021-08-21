@@ -19,6 +19,7 @@ class M3U {
         const val KODIPROP = "#KODIPROP"
         const val EXTINF = "#EXTINF"
         const val EXTGRP = "#EXTGRP"
+        const val EXTVLCOPT = "#EXTVLCOPT"
     }
 
     class ParsingException : RuntimeException {
