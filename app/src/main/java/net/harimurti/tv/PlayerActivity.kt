@@ -141,26 +141,26 @@ class PlayerActivity : AppCompatActivity() {
         bindingControl.buttonLock.setOnClickListener {
             if (!isLocked) {
                 (it as ImageButton).setImageResource(R.drawable.ic_lock)
-                setControlVisibility(true)
+                lockControl(true)
             }
         }
         bindingControl.buttonLock.setOnLongClickListener {
             if (isLocked) {
                 (it as ImageButton).setImageResource(R.drawable.ic_lock_open)
-                setControlVisibility(false)
+                lockControl(false)
             }
             true
         }
     }
 
-    private fun setControlVisibility(locked: Boolean) {
-        val visibility = if (locked) View.INVISIBLE else View.VISIBLE
+    private fun lockControl(isLocked: Boolean) {
+        val visibility = if (isLocked) View.INVISIBLE else View.VISIBLE
         bindingControl.categoryName.visibility = visibility
         bindingControl.channelName.visibility = visibility
         bindingControl.buttonBack.visibility = visibility
         bindingControl.screenMode.visibility = visibility
         bindingControl.trackSelection.visibility = visibility
-        isLocked = locked
+        this.isLocked = isLocked
     }
 
     private fun isDrmWidevineSupported(): Boolean {
@@ -468,6 +468,11 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onKeyUp(keyCode: Int, event: KeyEvent): Boolean {
+        if (!bindingRoot.playerView.isControllerVisible && keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+            bindingRoot.playerView.showController()
+            return true
+        }
+        if (isLocked) return true
         when(keyCode) {
             KeyEvent.KEYCODE_MENU -> return showTrackSelector()
             KeyEvent.KEYCODE_PAGE_UP -> return switchChannel(CATEGORY_UP)
@@ -475,25 +480,20 @@ class PlayerActivity : AppCompatActivity() {
             KeyEvent.KEYCODE_MEDIA_PREVIOUS -> return switchChannel(CHANNEL_PREVIOUS)
             KeyEvent.KEYCODE_MEDIA_NEXT -> return switchChannel(CHANNEL_NEXT)
         }
-        if (!bindingRoot.playerView.isControllerVisible) {
-            if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
-                bindingRoot.playerView.showController()
-                return true
+        if (bindingRoot.playerView.isControllerVisible) return super.onKeyUp(keyCode, event)
+        if (!preferences.reverseNavigation) {
+            when (keyCode) {
+                KeyEvent.KEYCODE_DPAD_UP -> return switchChannel(CATEGORY_UP)
+                KeyEvent.KEYCODE_DPAD_DOWN -> return switchChannel(CATEGORY_DOWN)
+                KeyEvent.KEYCODE_DPAD_LEFT -> return switchChannel(CHANNEL_PREVIOUS)
+                KeyEvent.KEYCODE_DPAD_RIGHT -> return switchChannel(CHANNEL_NEXT)
             }
-            if (!preferences.reverseNavigation) {
-                when (keyCode) {
-                    KeyEvent.KEYCODE_DPAD_UP -> return switchChannel(CATEGORY_UP)
-                    KeyEvent.KEYCODE_DPAD_DOWN -> return switchChannel(CATEGORY_DOWN)
-                    KeyEvent.KEYCODE_DPAD_LEFT -> return switchChannel(CHANNEL_PREVIOUS)
-                    KeyEvent.KEYCODE_DPAD_RIGHT -> return switchChannel(CHANNEL_NEXT)
-                }
-            } else {
-                when (keyCode) {
-                    KeyEvent.KEYCODE_DPAD_UP -> return switchChannel(CHANNEL_NEXT)
-                    KeyEvent.KEYCODE_DPAD_DOWN -> return switchChannel(CHANNEL_PREVIOUS)
-                    KeyEvent.KEYCODE_DPAD_LEFT -> return switchChannel(CATEGORY_UP)
-                    KeyEvent.KEYCODE_DPAD_RIGHT -> return switchChannel(CATEGORY_DOWN)
-                }
+        } else {
+            when (keyCode) {
+                KeyEvent.KEYCODE_DPAD_UP -> return switchChannel(CHANNEL_NEXT)
+                KeyEvent.KEYCODE_DPAD_DOWN -> return switchChannel(CHANNEL_PREVIOUS)
+                KeyEvent.KEYCODE_DPAD_LEFT -> return switchChannel(CATEGORY_UP)
+                KeyEvent.KEYCODE_DPAD_RIGHT -> return switchChannel(CATEGORY_DOWN)
             }
         }
         return super.onKeyUp(keyCode, event)

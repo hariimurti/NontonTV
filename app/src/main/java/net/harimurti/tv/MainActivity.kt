@@ -43,7 +43,6 @@ open class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent) {
             when(intent.getStringExtra(MAIN_CALLBACK)){
                 UPDATE_PLAYLIST -> updatePlaylist()
-                OPEN_SETTINGS -> openSettings()
                 INSERT_FAVORITE -> adapter.insertFavList()
                 REMOVE_FAVORITE -> adapter.removeFavList()
             }
@@ -53,7 +52,6 @@ open class MainActivity : AppCompatActivity() {
     companion object {
         const val MAIN_CALLBACK = "MAIN_CALLBACK"
         const val UPDATE_PLAYLIST = "UPDATE_PLAYLIST"
-        const val OPEN_SETTINGS = "OPEN_SETTINGS"
         const val INSERT_FAVORITE = "REFRESH_FAVORITE"
         const val REMOVE_FAVORITE = "REMOVE_FAVORITE"
     }
