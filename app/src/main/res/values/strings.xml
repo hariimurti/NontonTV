@@ -80,6 +80,8 @@
     <string name="playlist">Playlist</string>
     <string name="sort_category">Sort Category</string>
     <string name="sort_channel">Sort Channel</string>
+    <string name="player">Player</string>
+    <string name="reverse_player_navigation">Reverse DPAD Navigation</string>
     <string name="reload_playlist">Reload Playlist</string>
     <string name="hint_custom_playlist_path">File Path</string>
     <string name="hint_custom_playlist_url">Link URL</string>

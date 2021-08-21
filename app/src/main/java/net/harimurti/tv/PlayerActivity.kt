@@ -476,14 +476,23 @@ class PlayerActivity : AppCompatActivity() {
             KeyEvent.KEYCODE_MEDIA_NEXT -> return switchChannel(CHANNEL_NEXT)
         }
         if (!bindingRoot.playerView.isControllerVisible) {
-            when(keyCode) {
-                KeyEvent.KEYCODE_DPAD_UP -> return switchChannel(CATEGORY_UP)
-                KeyEvent.KEYCODE_DPAD_DOWN -> return switchChannel(CATEGORY_DOWN)
-                KeyEvent.KEYCODE_DPAD_LEFT -> return switchChannel(CHANNEL_PREVIOUS)
-                KeyEvent.KEYCODE_DPAD_RIGHT -> return switchChannel(CHANNEL_NEXT)
-                KeyEvent.KEYCODE_DPAD_CENTER -> {
-                    bindingRoot.playerView.showController()
-                    return true
+            if (keyCode == KeyEvent.KEYCODE_DPAD_CENTER) {
+                bindingRoot.playerView.showController()
+                return true
+            }
+            if (!preferences.reverseNavigation) {
+                when (keyCode) {
+                    KeyEvent.KEYCODE_DPAD_UP -> return switchChannel(CATEGORY_UP)
+                    KeyEvent.KEYCODE_DPAD_DOWN -> return switchChannel(CATEGORY_DOWN)
+                    KeyEvent.KEYCODE_DPAD_LEFT -> return switchChannel(CHANNEL_PREVIOUS)
+                    KeyEvent.KEYCODE_DPAD_RIGHT -> return switchChannel(CHANNEL_NEXT)
+                }
+            } else {
+                when (keyCode) {
+                    KeyEvent.KEYCODE_DPAD_UP -> return switchChannel(CHANNEL_NEXT)
+                    KeyEvent.KEYCODE_DPAD_DOWN -> return switchChannel(CHANNEL_PREVIOUS)
+                    KeyEvent.KEYCODE_DPAD_LEFT -> return switchChannel(CATEGORY_UP)
+                    KeyEvent.KEYCODE_DPAD_RIGHT -> return switchChannel(CATEGORY_DOWN)
                 }
             }
         }

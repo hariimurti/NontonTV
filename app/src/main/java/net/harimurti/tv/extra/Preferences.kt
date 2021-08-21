@@ -21,6 +21,7 @@ class Preferences(val context: Context) {
         private const val LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT"
         private const val SORT_CATEGORY = "SORT_CATEGORY"
         private const val SORT_CHANNEL = "SORT_CHANNEL"
+        private const val REVERSE_NAVIGATION = "REVERSE_NAVIGATION"
         private const val LAST_VERSIONCODE = "LAST_VERSIONCODE"
         private const val TOTAL_CONTRIBUTORS = "TOTAL_CONTRIBUTORS"
         private const val SHOW_LESS_CONTRIBUTORS = "SHOW_LESS_CONTRIBUTORS"
@@ -88,6 +89,14 @@ class Preferences(val context: Context) {
             val json = Gson().toJson(value)
             editor = preferences.edit()
             editor.putString(LAST_WATCHED, json)
+            editor.apply()
+        }
+
+    var reverseNavigation: Boolean
+        get() = preferences.getBoolean(REVERSE_NAVIGATION, false)
+        set(value) {
+            editor = preferences.edit()
+            editor.putBoolean(REVERSE_NAVIGATION, value)
             editor.apply()
         }
 

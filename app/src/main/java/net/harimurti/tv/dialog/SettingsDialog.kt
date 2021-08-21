@@ -82,6 +82,7 @@ class SettingsDialog : DialogFragment() {
                 preferences.playLastWatched = ApplicationFragment.playLastWatched
                 preferences.sortCategory = ApplicationFragment.sortCategory
                 preferences.sortChannel = ApplicationFragment.sortChannel
+                preferences.reverseNavigation = ApplicationFragment.reverseNavigation
                 sendUpdatePlaylist(rootView.context)
                 dismiss()
             }
@@ -125,6 +126,7 @@ class SettingsDialog : DialogFragment() {
             var playLastWatched = false
             var sortCategory = false
             var sortChannel = true
+            var reverseNavigation = false
         }
 
         override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View {
@@ -156,6 +158,13 @@ class SettingsDialog : DialogFragment() {
                 isChecked = sortChannel
                 setOnClickListener {
                     sortChannel = isChecked
+                }
+            }
+
+            binding.reverseNavigation.apply {
+                isChecked = reverseNavigation
+                setOnClickListener {
+                    reverseNavigation = isChecked
                 }
             }
 
