@@ -1,6 +1,5 @@
 package net.harimurti.tv.extra
 
-import android.content.Context
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.Favorites
 import net.harimurti.tv.model.Playlist
@@ -56,6 +55,6 @@ fun Favorites?.trimNotExistFrom(playlist: Playlist): Favorites? {
     return this
 }
 
-fun Favorites?.save(context: Context) {
-    PlaylistHelper(context).writeFavorites(this ?: Favorites())
+fun Favorites?.save() {
+    PlaylistHelper().writeFavorites(this ?: Favorites())
 }

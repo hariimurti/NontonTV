@@ -1,6 +1,5 @@
 package net.harimurti.tv.extra
 
-import android.content.Context
 import android.util.Log
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
@@ -9,18 +8,19 @@ import net.harimurti.tv.R
 import net.harimurti.tv.model.*
 import java.io.*
 import com.android.volley.toolbox.HttpHeaderParser
-
 import com.android.volley.NetworkResponse
 import com.android.volley.Response
+import net.harimurti.tv.App
 
-class PlaylistHelper(val context: Context) {
+class PlaylistHelper {
+    private val context = App.context
     private val cache: File = File(context.cacheDir, "NontonTV.json")
     private val favorite: File = File(context.cacheDir, "Favorite.json")
     private var taskResponse: TaskResponse? = null
     private var taskChecker: TaskChecker? = null
     private var sources: ArrayList<Source> = ArrayList()
     private var checkSource: Source? = null
-    private val volley = VolleyRequestQueue.create(context)
+    private val volley = VolleyRequestQueue.create()
 
     companion object {
         private const val TAG = "PlaylistHelper"
@@ -128,7 +128,7 @@ class PlaylistHelper(val context: Context) {
                 if (error.networkResponse != null) {
                     val errorcode = error.networkResponse.statusCode
                     message = "[HTTP_$errorcode] : ${source.path}"
-                } else if (!Network(context).isConnected()) {
+                } else if (!Network().isConnected()) {
                     message = context.getString(R.string.no_network)
                 }
                 Log.e(TAG, "Source : ${source.path}", error)
@@ -170,7 +170,7 @@ class PlaylistHelper(val context: Context) {
                 if (error.networkResponse != null) {
                     val errorcode = error.networkResponse.statusCode
                     message = "[HTTP_$errorcode] : ${checkSource?.path}"
-                } else if (!Network(context).isConnected()) {
+                } else if (!Network().isConnected()) {
                     message = context.getString(R.string.no_network)
                 }
                 Log.e(TAG, message, error)

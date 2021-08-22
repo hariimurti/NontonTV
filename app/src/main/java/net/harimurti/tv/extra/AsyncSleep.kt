@@ -1,10 +1,11 @@
 package net.harimurti.tv.extra
 
-import android.content.Context
 import android.os.Handler
 import android.os.Looper
+import net.harimurti.tv.App
 
-class AsyncSleep(val context: Context) {
+class AsyncSleep {
+    private val context = App.context
     private var task: Task? = null
 
     interface Task {

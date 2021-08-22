@@ -51,7 +51,7 @@ class SettingsDialog : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = SettingsDialogBinding.inflate(inflater,container, false)
         val dialogView = binding.root
-        val preferences = Preferences(dialogView.context)
+        val preferences = Preferences()
 
         // init
         ApplicationFragment.launchAtBoot = preferences.launchAtBoot
@@ -264,7 +264,7 @@ class SettingsDialog : DialogFragment() {
                 active = true
             }
 
-            PlaylistHelper(binding.root.context).task(source, object: PlaylistHelper.TaskChecker{
+            PlaylistHelper().task(source, object: PlaylistHelper.TaskChecker{
                 override fun onCheckResult(result: Boolean) {
                     binding.btnAdd.isEnabled = true
                     binding.inputSource.text?.clear()

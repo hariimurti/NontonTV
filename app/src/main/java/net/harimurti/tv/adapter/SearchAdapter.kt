@@ -53,7 +53,7 @@ class SearchAdapter (val channels: ArrayList<Channel>, private val listdata: Arr
         viewHolder.itemChBinding.chId = playdata.chId
         viewHolder.itemChBinding.clickListener = this
         viewHolder.itemChBinding.btnPlay.setOnFocusChangeListener { v, hasFocus ->
-            v.startAnimation(context, hasFocus)
+            v.startAnimation(hasFocus)
         }
     }
 
@@ -111,7 +111,7 @@ class SearchAdapter (val channels: ArrayList<Channel>, private val listdata: Arr
             LocalBroadcastManager.getInstance(context).sendBroadcast(
                 Intent(MainActivity.MAIN_CALLBACK)
                     .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.INSERT_FAVORITE))
-            fav.save(context)
+            fav.save()
         }
 
         val message = if (result) String.format(context.getString(R.string.added_into_favorite), ch.name)

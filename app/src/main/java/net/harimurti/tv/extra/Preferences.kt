@@ -1,17 +1,19 @@
 package net.harimurti.tv.extra
 
-import android.content.Context
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.google.gson.Gson
+import net.harimurti.tv.App
 import net.harimurti.tv.R
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Source
 import java.util.*
 import kotlin.collections.ArrayList
 
-class Preferences(val context: Context) {
-    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+class Preferences {
+    private val context = App.context
+    private val preferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
     private lateinit var editor: SharedPreferences.Editor
 
     companion object {

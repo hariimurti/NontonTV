@@ -1,13 +1,14 @@
 package net.harimurti.tv.extra
 
 import android.annotation.SuppressLint
-import android.content.Context
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import net.harimurti.tv.App
 import kotlin.math.abs
 
-open class OnSwipeTouchListener(context: Context) : View.OnTouchListener {
+open class OnSwipeTouchListener: View.OnTouchListener {
+    private val context = App.context
     private val gestureDetector = GestureDetector(context, GestureListener())
 
     companion object {

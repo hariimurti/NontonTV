@@ -1,8 +1,8 @@
 package net.harimurti.tv.extra
 
-import android.content.Context
 import android.os.Build
 import com.google.android.gms.security.ProviderInstaller
+import net.harimurti.tv.App
 import java.io.IOException
 import java.net.InetAddress
 import java.net.Socket
@@ -10,7 +10,8 @@ import java.security.NoSuchAlgorithmException
 import java.security.SecureRandom
 import javax.net.ssl.*
 
-class TLSSocketFactory(context: Context) : SSLSocketFactory() {
+class TLSSocketFactory : SSLSocketFactory() {
+    private val context = App.context
     private val factory: SSLSocketFactory
 
     @get:Throws(NoSuchAlgorithmException::class)

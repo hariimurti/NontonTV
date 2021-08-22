@@ -54,7 +54,7 @@ class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int,
         viewHolder.itemChBinding.clickListener = this
         viewHolder.itemChBinding.btnPlay.apply {
             setOnFocusChangeListener { v, hasFocus ->
-                v.startAnimation(context, hasFocus)
+                v.startAnimation(hasFocus)
             }
         }
     }
@@ -96,7 +96,7 @@ class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int,
             else String.format(context.getString(R.string.already_in_favorite), ch.name)
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
-        fav.save(context)
+        fav.save()
         return true
     }
 

@@ -18,7 +18,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.android.volley.Request
-import com.android.volley.RequestQueue
 import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
@@ -32,11 +31,11 @@ import java.util.*
 
 open class MainActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
-    private var isTelevision = false
+    private var isTelevision = UiMode().isTelevision()
+    private val preferences = Preferences()
+    private val helper = PlaylistHelper()
+    private val request = VolleyRequestQueue.create()
     private lateinit var binding: ActivityMainBinding
-    private lateinit var preferences: Preferences
-    private lateinit var helper: PlaylistHelper
-    private lateinit var request: RequestQueue
     private lateinit var adapter: CategoryAdapter
 
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -67,11 +66,6 @@ open class MainActivity : AppCompatActivity() {
             updatePlaylist()
         }
 
-        preferences = Preferences(this)
-        helper = PlaylistHelper(this)
-        request = VolleyRequestQueue.create(this)
-
-        isTelevision = UiMode(this).isTelevision()
         if (isTelevision) {
             setTheme(R.style.AppThemeTv)
         }
@@ -140,8 +134,8 @@ open class MainActivity : AppCompatActivity() {
             .trimNotExistFrom(playlistSet)
         if (preferences.sortFavorite) fav.sort()
         if (fav?.channels?.isNotEmpty() == true)
-            playlistSet.insertFavorite(this, fav.channels)
-        else playlistSet.removeFavorite(this)
+            playlistSet.insertFavorite(fav.channels)
+        else playlistSet.removeFavorite()
 
         // set new playlist
         adapter = CategoryAdapter(playlistSet.categories)
@@ -171,7 +165,7 @@ open class MainActivity : AppCompatActivity() {
         binding.catAdapter?.clear()
         val playlistSet = Playlist()
 
-        PlaylistHelper(this).task(preferences.sources,
+        PlaylistHelper().task(preferences.sources,
             object: PlaylistHelper.TaskResponse {
                 override fun onError(error: Exception, source: Source) {
                     val message = if (error.message.isNullOrBlank()) "Problem with $source" else error.message

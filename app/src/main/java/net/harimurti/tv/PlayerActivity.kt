@@ -39,9 +39,9 @@ import java.util.*
 
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
-    private var isTelevision = false
-    private lateinit var preferences: Preferences
-    private lateinit var network: Network
+    private var isTelevision = UiMode().isTelevision()
+    private val preferences = Preferences()
+    private val network = Network()
     private var category: Category? = null
     private var current: Channel? = null
     private var player: SimpleExoPlayer? = null
@@ -79,10 +79,6 @@ class PlayerActivity : AppCompatActivity() {
         bindingRoot = ActivityPlayerBinding.inflate(layoutInflater)
         bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
         setContentView(bindingRoot.root)
-
-        isTelevision = UiMode(this).isTelevision()
-        preferences = Preferences(this)
-        network = Network(this)
 
         // set this is not first time
         isFirst = false
@@ -128,7 +124,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun bindingListener() {
-        bindingRoot.playerView.setOnTouchListener(object : OnSwipeTouchListener(baseContext) {
+        bindingRoot.playerView.setOnTouchListener(object : OnSwipeTouchListener() {
             override fun onSwipeDown() { switchChannel(CATEGORY_UP) }
             override fun onSwipeUp() { switchChannel(CATEGORY_DOWN) }
             override fun onSwipeLeft() { switchChannel(CHANNEL_NEXT) }
@@ -320,7 +316,7 @@ class PlayerActivity : AppCompatActivity() {
             return
         }
 
-        AsyncSleep(this).task(object : AsyncSleep.Task {
+        AsyncSleep().task(object : AsyncSleep.Task {
             override fun onFinish() {
                 retryPlayback(true)
             }
@@ -393,7 +389,7 @@ class PlayerActivity : AppCompatActivity() {
         val dialog = builder.show()
 
         if (!autoretry) return
-        AsyncSleep(this).task(object : AsyncSleep.Task{
+        AsyncSleep().task(object : AsyncSleep.Task{
             override fun onCountDown(count: Int) {
                 val text = if (count <= 0) getString(R.string.btn_retry)
                 else String.format(getString(R.string.btn_retry_count), count)
