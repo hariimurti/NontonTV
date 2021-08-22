@@ -16,7 +16,7 @@ import net.harimurti.tv.MainActivity
 import net.harimurti.tv.PlayerActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.ItemChannelBinding
-import net.harimurti.tv.extra.add
+import net.harimurti.tv.extra.insert
 import net.harimurti.tv.extra.save
 import net.harimurti.tv.extra.startAnimation
 import net.harimurti.tv.model.Channel
@@ -106,7 +106,7 @@ class SearchAdapter (val channels: ArrayList<Channel>, private val listdata: Arr
 
     override fun onLongClicked(ch: Channel, catId: Int, chId: Int): Boolean {
         val fav = Playlist.favorites
-        val result = fav.add(ch)
+        val result = fav.insert(ch)
         if (result) {
             LocalBroadcastManager.getInstance(context).sendBroadcast(
                 Intent(MainActivity.MAIN_CALLBACK)

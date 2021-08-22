@@ -88,7 +88,7 @@ fun Playlist?.mergeWith(playlist: Playlist?) {
     playlist.drmLicenses.let { this?.drmLicenses?.addAll(it) }
 }
 
-fun Playlist?.addFav(context: Context, channels: ArrayList<Channel>) {
+fun Playlist?.insertFavorite(context: Context, channels: ArrayList<Channel>) {
     if (this == null) return
     if (this.categories[0].isFavorite(context))
         this.categories[0].channels = channels
@@ -96,7 +96,7 @@ fun Playlist?.addFav(context: Context, channels: ArrayList<Channel>) {
         this.categories.addFavorite(context, channels)
 }
 
-fun Playlist?.remFav(context: Context) {
+fun Playlist?.removeFavorite(context: Context) {
     if (this == null) return
     if (this.categories[0].isFavorite(context))
         this.categories.removeAt(0)

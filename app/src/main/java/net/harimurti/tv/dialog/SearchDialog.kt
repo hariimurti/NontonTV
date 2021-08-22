@@ -50,8 +50,9 @@ class SearchDialog : DialogFragment() {
         val listdata = ArrayList<PlayData>()
         val playlist = Playlist.cached
         for (catId in playlist.categories.indices) {
-            if (playlist.categories[catId].isFavorite(requireContext())) continue
-            val ch = playlist.categories[catId].channels ?: continue
+            val cat = playlist.categories[catId]
+            if (catId == 0 && cat.isFavorite(requireContext())) continue
+            val ch = cat.channels ?: continue
             for (chId in ch.indices) {
                 channels.add(ch[chId])
                 listdata.add(PlayData(catId, chId))

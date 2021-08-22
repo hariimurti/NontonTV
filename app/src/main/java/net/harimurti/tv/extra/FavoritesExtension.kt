@@ -5,7 +5,7 @@ import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.Favorites
 import net.harimurti.tv.model.Playlist
 
-fun Favorites?.add(channel: Channel): Boolean {
+fun Favorites?.insert(channel: Channel): Boolean {
     if (this == null) return false
     val filter = this.channels.lastOrNull {
             c -> c.name == channel.name &&

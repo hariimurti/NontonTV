@@ -14,7 +14,7 @@ import net.harimurti.tv.MainActivity
 import net.harimurti.tv.PlayerActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.ItemChannelBinding
-import net.harimurti.tv.extra.add
+import net.harimurti.tv.extra.insert
 import net.harimurti.tv.extra.remove
 import net.harimurti.tv.extra.save
 import net.harimurti.tv.extra.startAnimation
@@ -27,7 +27,7 @@ interface ChannelClickListener {
     fun onLongClicked(ch: Channel, catId: Int, chId: Int): Boolean
 }
 
-class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int) :
+class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int, private val isFav: Boolean) :
     RecyclerView.Adapter<ChannelAdapter.ViewHolder>(), ChannelClickListener {
     lateinit var context: Context
 
@@ -72,10 +72,9 @@ class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int)
     @SuppressLint("NotifyDataSetChanged")
     override fun onLongClicked(ch: Channel, catId: Int, chId: Int): Boolean {
         val fav = Playlist.favorites
-        if (fav.channels.isNotEmpty() && catId == 0) {
+        if (isFav) {
             channels?.remove(ch)
             fav.remove(ch)
-            fav.save(context)
 
             // notifyupdate
             if (itemCount != 0) notifyDataSetChanged()
@@ -86,11 +85,10 @@ class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int)
                 Toast.LENGTH_SHORT).show()
         }
         else {
-            val result = fav.add(ch)
+            val result = fav.insert(ch)
 
             // notifyupdate
             if (result) {
-                fav.save(context)
                 sendBroadcast(true)
             }
 
@@ -98,7 +96,7 @@ class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int)
             else String.format(context.getString(R.string.already_in_favorite), ch.name)
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
         }
-
+        fav.save(context)
         return true
     }
 

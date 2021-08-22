@@ -43,8 +43,8 @@ open class MainActivity : AppCompatActivity() {
         override fun onReceive(context: Context?, intent: Intent) {
             when(intent.getStringExtra(MAIN_CALLBACK)){
                 UPDATE_PLAYLIST -> updatePlaylist()
-                INSERT_FAVORITE -> adapter.insertFavList()
-                REMOVE_FAVORITE -> adapter.removeFavList()
+                INSERT_FAVORITE -> adapter.insertOrUpdateFavorite()
+                REMOVE_FAVORITE -> adapter.removeFavorite()
             }
         }
     }
@@ -139,8 +139,9 @@ open class MainActivity : AppCompatActivity() {
         val fav = helper.readFavorites()
             .trimNotExistFrom(playlistSet)
         if (preferences.sortFavorite) fav.sort()
-        if (fav?.channels?.isNotEmpty() == true) playlistSet.addFav(this, fav.channels)
-        else playlistSet.remFav(this)
+        if (fav?.channels?.isNotEmpty() == true)
+            playlistSet.insertFavorite(this, fav.channels)
+        else playlistSet.removeFavorite(this)
 
         // set new playlist
         adapter = CategoryAdapter(playlistSet.categories)

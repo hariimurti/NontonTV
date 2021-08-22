@@ -45,7 +45,8 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) :
             else -> 1
         }
 
-        viewHolder.itemCatBinding.chAdapter = ChannelAdapter(category?.channels, position)
+        val isFav = category.isFavorite(context) && position == 0
+        viewHolder.itemCatBinding.chAdapter = ChannelAdapter(category?.channels, position, isFav)
         viewHolder.itemCatBinding.rvChannels.layoutManager =
                 StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.HORIZONTAL)
 
@@ -62,13 +63,12 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) :
         notifyItemRangeRemoved(0, size)
     }
 
-    fun insertFavList() {
+    fun insertOrUpdateFavorite() {
         val fav = Playlist.favorites
         if (Preferences(context).sortFavorite) fav.sort()
         if (categories?.get(0)?.isFavorite(context) == false) {
             categories.addFavorite(context, fav.channels)
-            if (itemCount == 0) notifyItemInserted(0)
-            else notifyItemInserted(0)
+            notifyItemInserted(0)
         }
         else {
             categories?.get(0)?.channels = fav.channels
@@ -76,7 +76,7 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) :
         }
     }
 
-    fun removeFavList() {
+    fun removeFavorite() {
         if (categories?.get(0)?.isFavorite(context) == true) {
             categories.removeAt(0)
             notifyItemRemoved(0)
