@@ -9,9 +9,6 @@
     <string name="gh_contributors" translatable="false">https://api.github.com/repos/hariimurti/NontonTV/contributors</string>
 
     <!-- some text -->
-    <string name="something_went_wrong">Something went wrong!</string>
-    <string name="stream_has_ended">Broadcast has been ended</string>
-    <string name="stream_source_offline">Broadcast not accessible</string>
     <string name="btn_retry">Retry</string>
     <string name="btn_retry_count">Retry (%d)</string>
     <string name="btn_close">Close</string>
@@ -31,7 +28,6 @@
     <string name="top_category">No more categories above this</string>
     <string name="bottom_category">No more categories below</string>
     <string name="playlist_cant_be_parsed">Playlist doesn\'t exist, can\'t be parsed?</string>
-    <string name="null_content">Null Content</string>
     <string name="btn_next_channel">Next Channel</string>
     <string name="player_error_message">Code : %s\nCodeName : %s\nError Message : %s</string>
     <string name="device_not_support_widevine">Your device does not support DRM Widevine!</string>
@@ -43,17 +39,12 @@
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>
     <string name="alert_title_playlist_error" translatable="false">Playlist Error</string>
-    <string name="error_4xx">Playlist url cannot be accessed!\nResponse code : %d</string>
-    <string name="error_5xx">Server cannot be accessed!\nResponse code : %d</string>
     <string name="dialog_retry">Try again</string>
     <string name="dialog_cached">Use cache</string>
-    <string name="dialog_default">Use default</string>
     <string name="player_playback_error">Playback Error</string>
     <string name="player_no_playlist">We have problem with the playlist</string>
     <string name="player_no_channel">No channels to play</string>
     <string name="player_playdata_error">Can\'t process play data</string>
-    <string name="playlist_local_read_error">Can\'t load NontonTV.json from internal storage!</string>
-    <string name="playlist_selected_read_error">Can\'t load json :\n%s\n\nMake sure to use the NontonTV format!</string>
 
     <!-- alert update -->
     <string name="alert_new_update">Update</string>
@@ -62,7 +53,6 @@
     <string name="message_update">Version\n• Installed : %s (%d)\n• Latest : %s (%d)\n\nChanges :</string>
     <string name="message_update_changelog" translatable="false">\n• %s</string>
     <string name="message_update_no_changelog">\n• others</string>
-    <string name="no_donnload_manager">This android do not have a download manager</string>
 
     <!-- alert contributors -->
     <string name="alert_title_contributors">Contributors</string>
@@ -83,13 +73,6 @@
     <string name="sort_channel">Sort Channel</string>
     <string name="player">Player</string>
     <string name="reverse_player_navigation">Reverse DPAD Navigation</string>
-    <string name="reload_playlist">Reload Playlist</string>
-    <string name="hint_custom_playlist_path">File Path</string>
-    <string name="hint_custom_playlist_url">Link URL</string>
-    <string name="switch_custom_playlist" translatable="false">Custom Playlist</string>
-    <string name="toast_screen_mode">Screen Mode : %s</string>
-    <string name="text_screen_mode">Screen :</string>
-    <string name="merge_playlist">Merge</string>
     <string name="tab_1">Playlist</string>
     <string name="tab_2">Application</string>
     <string name="input_url">Link URL</string>

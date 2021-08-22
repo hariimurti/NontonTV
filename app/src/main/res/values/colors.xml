@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="color_primary">#5c6bc0</color>
-    <color name="color_primary_dark">#26418f</color>
-    <color name="color_accent">#8e99f3</color>
+    <color name="ic_launcher_background">#3C8CF0</color>
+    <color name="color_primary">#5C6BC0</color>
+    <color name="color_accent">#8E99f3</color>
     <color name="color_dark">#2B2B2B</color>
-    <color name="color_dark_transparent">#CC202020</color>
     <color name="color_text">#A9B7C6</color>
     <color name="color_gray">#4C4C4C</color>
     <color name="color_red_light">#FF4444</color>
     <color name="btn_default">#5A595B</color>
     <color name="btn_focused">@color/color_primary</color>
     <color name="btn_pressed">@color/color_red_light</color>
-    <color name="btn_settings_bg">#00FFFFFF</color>
     <color name="control_backgorund">#B3202020</color>
-    <color name="control_focused">@color/color_primary</color>
-    <color name="control_pressed">@color/color_red_light</color>
     <color name="osd_inside_background">#FFFFFF</color>
-    <color name="dialog_background">#343134</color>
 </resources>

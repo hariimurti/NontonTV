@@ -1,8 +1,5 @@
 <resources>
     <!-- some text -->
-    <string name="something_went_wrong">Ada sesuatu yang salah!</string>
-    <string name="stream_has_ended">Siaran telah berakhir</string>
-    <string name="stream_source_offline">Siaran tidak dapat diakses</string>
     <string name="btn_retry">Coba Ulang</string>
     <string name="btn_retry_count">Coba Ulang (%d)</string>
     <string name="btn_close">Keluar</string>
@@ -22,7 +19,6 @@
     <string name="top_category">Kategori paling atas</string>
     <string name="bottom_category">Kategori paling bawah</string>
     <string name="playlist_cant_be_parsed">Playlist tidak ada, tidak bisa diuraikan?</string>
-    <string name="null_content">Konten kosong</string>
     <string name="btn_next_channel">Saluran Berikutnya</string>
     <string name="player_error_message">Kode : %s\nNamaKode : %s\nPesan Error : %s</string>
     <string name="device_not_support_widevine">Perangkat anda tidak mendukung DRM Widevine!</string>
@@ -33,17 +29,12 @@
 
     <!-- alert playlist error -->
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>
-    <string name="error_4xx">Tautan playlist tidak dapat diakses!\nKode respon : %d</string>
-    <string name="error_5xx">Server tidak dapat diakses!\nKode respon : %d</string>
     <string name="dialog_retry">Coba lagi</string>
     <string name="dialog_cached">Gunakan cache</string>
-    <string name="dialog_default">Gunakan default</string>
     <string name="player_playback_error">Kesalahan Pemutaran</string>
     <string name="player_no_playlist">Kita punya masalah dgn playlist</string>
     <string name="player_no_channel">Tidak ada saluran utk diputar</string>
     <string name="player_playdata_error">Tidak bisa memprocess data putar</string>
-    <string name="playlist_local_read_error">Tidak bisa memuat NontonTV.json dari penyimpanan internal!</string>
-    <string name="playlist_selected_read_error">Tidak bisa memuat json:\n%s\n\nPastikan menggunakan format NontonTV!</string>
 
     <!-- alert update -->
     <string name="alert_new_update">Pembaharuan</string>
@@ -51,7 +42,6 @@
     <string name="dialog_skip">Abaikan Sehari</string>
     <string name="message_update">Versi\n• Terpasang : %s (%d)\n• Terkini : %s (%d)\n\nPerubahan :</string>
     <string name="message_update_no_changelog">\n• lain-lain</string>
-    <string name="no_donnload_manager">Android ini tidak punya pengelola unduhan</string>
 
     <!-- alert contributors -->
     <string name="alert_title_contributors">Penyumbang</string>
@@ -70,12 +60,6 @@
     <string name="sort_channel">Urutkan Saluran</string>
     <string name="player">Pemutar</string>
     <string name="reverse_player_navigation">Navigasi DPAD Terbalik</string>
-    <string name="reload_playlist">Muat Ulang Playlist</string>
-    <string name="hint_custom_playlist_path">Lokasi File</string>
-    <string name="hint_custom_playlist_url">URL Tautan</string>
-    <string name="toast_screen_mode">Mode Layar : %s</string>
-    <string name="text_screen_mode">Layar :</string>
-    <string name="merge_playlist">Gabungkan</string>
     <string name="tab_1">Daftar Putar</string>
     <string name="tab_2">Aplikasi</string>
     <string name="input_url">URL Tautan</string>
