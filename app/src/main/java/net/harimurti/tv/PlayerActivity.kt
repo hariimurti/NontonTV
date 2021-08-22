@@ -329,8 +329,9 @@ class PlayerActivity : AppCompatActivity() {
 
     private inner class PlayerListener : Player.Listener {
         override fun onPlaybackStateChanged(state: Int) {
-            bindingControl.trackSelection.isEnabled =
-                TrackSelectionDialog.willHaveContent(trackSelector)
+            val trackHaveContent = TrackSelectionDialog.willHaveContent(trackSelector)
+            bindingControl.trackSelection.visibility =
+                if (trackHaveContent) View.VISIBLE else View.GONE
             when (state) {
                 Player.STATE_READY -> {
                     errorCounter = 0
