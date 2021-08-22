@@ -136,7 +136,9 @@ open class MainActivity : AppCompatActivity() {
         playlistSet.trimChannelWithEmptyStreamUrl()
 
         // favorites part
-        val fav = helper.readFavorites().trimNotExistFrom(playlistSet)
+        val fav = helper.readFavorites()
+            .trimNotExistFrom(playlistSet)
+        if (preferences.sortFavorite) fav.sort()
         if (fav?.channels?.isNotEmpty() == true) playlistSet.addFav(this, fav.channels)
         else playlistSet.remFav(this)
 

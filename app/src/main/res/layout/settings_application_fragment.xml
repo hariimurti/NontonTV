@@ -72,6 +72,15 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/sort_favorite"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/setting_switch_margin"
+                android:layout_marginEnd="@dimen/setting_switch_margin"
+                android:minHeight="@dimen/setting_switch_min_height"
+                android:text="@string/sort_favorite" />
+
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/sort_category"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

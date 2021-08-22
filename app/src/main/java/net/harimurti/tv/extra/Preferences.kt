@@ -19,6 +19,7 @@ class Preferences(val context: Context) {
         private const val LAST_WATCHED = "LAST_WATCHED"
         private const val OPEN_LAST_WATCHED = "OPEN_LAST_WATCHED"
         private const val LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT"
+        private const val SORT_FAVORITE = "SORT_FAVORITE"
         private const val SORT_CATEGORY = "SORT_CATEGORY"
         private const val SORT_CHANNEL = "SORT_CHANNEL"
         private const val REVERSE_NAVIGATION = "REVERSE_NAVIGATION"
@@ -64,6 +65,14 @@ class Preferences(val context: Context) {
         set(value) {
             editor = preferences.edit()
             editor.putBoolean(OPEN_LAST_WATCHED, value)
+            editor.apply()
+        }
+
+    var sortFavorite: Boolean
+        get() = preferences.getBoolean(SORT_FAVORITE, false)
+        set(value) {
+            editor = preferences.edit()
+            editor.putBoolean(SORT_FAVORITE, value)
             editor.apply()
         }
 

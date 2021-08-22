@@ -9,8 +9,10 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import net.harimurti.tv.BR
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.ItemCategoryBinding
+import net.harimurti.tv.extra.Preferences
 import net.harimurti.tv.extra.addFavorite
 import net.harimurti.tv.extra.isFavorite
+import net.harimurti.tv.extra.sort
 import net.harimurti.tv.model.Category
 import net.harimurti.tv.model.Playlist
 import kotlin.math.round
@@ -62,6 +64,7 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) :
 
     fun insertFavList() {
         val fav = Playlist.favorites
+        if (Preferences(context).sortFavorite) fav.sort()
         if (categories?.get(0)?.isFavorite(context) == false) {
             categories.addFavorite(context, fav.channels)
             if (itemCount == 0) notifyItemInserted(0)

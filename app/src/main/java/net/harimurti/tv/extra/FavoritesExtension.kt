@@ -34,6 +34,11 @@ fun Favorites?.remove(channel: Channel): Boolean {
     else false
 }
 
+fun Favorites?.sort(): Favorites? {
+    this?.channels?.sortBy { channel -> channel.name?.lowercase() }
+    return this
+}
+
 fun Favorites?.trimNotExistFrom(playlist: Playlist): Favorites? {
     if (this == null) return this
     val verified = ArrayList<Channel>()

@@ -80,6 +80,7 @@ class SettingsDialog : DialogFragment() {
                 //save tab 2
                 preferences.launchAtBoot = ApplicationFragment.launchAtBoot
                 preferences.playLastWatched = ApplicationFragment.playLastWatched
+                preferences.sortFavorite = ApplicationFragment.sortFavorite
                 preferences.sortCategory = ApplicationFragment.sortCategory
                 preferences.sortChannel = ApplicationFragment.sortChannel
                 preferences.reverseNavigation = ApplicationFragment.reverseNavigation
@@ -124,6 +125,7 @@ class SettingsDialog : DialogFragment() {
         companion object {
             var launchAtBoot = false
             var playLastWatched = false
+            var sortFavorite = false
             var sortCategory = false
             var sortChannel = true
             var reverseNavigation = false
@@ -144,6 +146,13 @@ class SettingsDialog : DialogFragment() {
                 isChecked = playLastWatched
                 setOnClickListener {
                     playLastWatched = isChecked
+                }
+            }
+
+            binding.sortFavorite.apply {
+                isChecked = sortFavorite
+                setOnClickListener {
+                    sortFavorite = isChecked
                 }
             }
 

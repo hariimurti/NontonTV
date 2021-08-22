@@ -65,6 +65,7 @@
     <string name="launch_at_boot">Jalankan App saat Boot</string>
     <string name="play_last_watched">Putar Terakhir Dilihat</string>
     <string name="playlist">Daftar Putar</string>
+    <string name="sort_favorite">Urutkan Favorit</string>
     <string name="sort_category">Urutkan Kategori</string>
     <string name="sort_channel">Urutkan Saluran</string>
     <string name="player">Pemutar</string>
