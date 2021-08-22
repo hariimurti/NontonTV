@@ -69,6 +69,7 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) :
         if (categories?.get(0)?.isFavorite() == false) {
             categories.addFavorite(fav.channels)
             notifyItemInserted(0)
+            notifyItemRangeChanged(1, itemCount-1)
         }
         else {
             categories?.get(0)?.channels = fav.channels
@@ -80,6 +81,7 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) :
         if (categories?.get(0)?.isFavorite() == true) {
             categories.removeAt(0)
             notifyItemRemoved(0)
+            notifyItemRangeChanged(0, itemCount)
         }
     }
 }

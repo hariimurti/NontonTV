@@ -1,6 +1,5 @@
 package net.harimurti.tv.adapter
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -69,7 +68,6 @@ class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int,
         context.startActivity(intent)
     }
 
-    @SuppressLint("NotifyDataSetChanged")
     override fun onLongClicked(ch: Channel, catId: Int, chId: Int): Boolean {
         val fav = Playlist.favorites
         if (isFav) {
@@ -77,8 +75,10 @@ class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int,
             fav.remove(ch)
 
             // notifyupdate
-            if (itemCount != 0) notifyDataSetChanged()
-            else sendBroadcast(false)
+            if (itemCount != 0) {
+                notifyItemRemoved(chId)
+                notifyItemRangeChanged(0, itemCount)
+            } else sendBroadcast(false)
 
             Toast.makeText(context,
                 String.format(context.getString(R.string.removed_from_favorite), ch.name),
@@ -88,9 +88,7 @@ class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int,
             val result = fav.insert(ch)
 
             // notifyupdate
-            if (result) {
-                sendBroadcast(true)
-            }
+            if (result) sendBroadcast(true)
 
             val message = if (result) String.format(context.getString(R.string.added_into_favorite), ch.name)
             else String.format(context.getString(R.string.already_in_favorite), ch.name)
