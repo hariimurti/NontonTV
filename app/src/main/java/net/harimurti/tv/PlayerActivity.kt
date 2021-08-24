@@ -446,7 +446,6 @@ class PlayerActivity : AppCompatActivity() {
     @Suppress("DEPRECATION")
     override fun onUserLeaveHint() {
         super.onUserLeaveHint()
-        if (isTelevision) return
         if (player?.isPlaying == false) return
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
