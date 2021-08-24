@@ -334,6 +334,15 @@ open class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed({ doubleBackToExitPressedOnce = false }, 2000)
     }
 
+    override fun onResume() {
+        super.onResume()
+        if (PlayerActivity.isPipMode) {
+            val intent = Intent(this, PlayerActivity::class.java)
+                .addFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT)
+            this.startActivity(intent)
+        }
+    }
+
     override fun onDestroy() {
         LocalBroadcastManager.getInstance(this)
             .unregisterReceiver(broadcastReceiver)

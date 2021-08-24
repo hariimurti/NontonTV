@@ -45,6 +45,7 @@
             android:supportsPictureInPicture="true"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:launchMode="singleTask"
+            android:excludeFromRecents="true"
             android:theme="@style/AppThemePlayer"
             tools:ignore="LockedOrientationActivity" />
 

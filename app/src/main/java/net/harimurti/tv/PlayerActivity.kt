@@ -64,6 +64,7 @@ class PlayerActivity : AppCompatActivity() {
 
     companion object {
         var isFirst = true
+        var isPipMode = false
         const val PLAYER_CALLBACK = "PLAYER_CALLBACK"
         const val RETRY_PLAYBACK = "RETRY_PLAYBACK"
         const val CLOSE_PLAYER = "CLOSE_PLAYER"
@@ -462,6 +463,7 @@ class PlayerActivity : AppCompatActivity() {
         super.onPictureInPictureModeChanged(pip, config)
         bindingRoot.playerView.useController = !pip
         player?.playWhenReady = true
+        isPipMode = pip
     }
 
     @Suppress("DEPRECATION")
