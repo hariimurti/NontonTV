@@ -132,8 +132,13 @@ class PlayerActivity : AppCompatActivity() {
             override fun onSwipeRight() { switchChannel(CHANNEL_PREVIOUS) }
         })
         bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
+        bindingControl.buttonExit.setOnClickListener { finish() }
+        bindingControl.buttonPrevious.setOnClickListener { switchChannel(CHANNEL_PREVIOUS) }
+        bindingControl.buttonRewind.setOnClickListener { player?.seekBack() }
+        bindingControl.buttonForward.setOnClickListener { player?.seekForward() }
+        bindingControl.buttonNext.setOnClickListener { switchChannel(CHANNEL_NEXT) }
         bindingControl.screenMode.setOnClickListener { showScreenMenu(it) }
-        bindingControl.buttonBack.setOnClickListener { finish() }
+        bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
         bindingControl.buttonLock.visibility = if (isTelevision) View.GONE else View.VISIBLE
         bindingControl.buttonLock.setOnClickListener {
             if (!isLocked) {
@@ -142,22 +147,39 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
         bindingControl.buttonLock.setOnLongClickListener {
-            if (isLocked) {
-                (it as ImageButton).setImageResource(R.drawable.ic_lock_open)
-                lockControl(false)
-            }
+            (it as ImageButton).setImageResource(
+                if (isLocked) R.drawable.ic_lock_open else R.drawable.ic_lock
+            )
+            lockControl(!isLocked)
             true
         }
     }
 
-    private fun lockControl(isLocked: Boolean) {
-        val visibility = if (isLocked) View.INVISIBLE else View.VISIBLE
+    private fun lockControl(setLocked: Boolean) {
+        this.isLocked = setLocked
+        val visibility = if (setLocked) View.INVISIBLE else View.VISIBLE
         bindingControl.categoryName.visibility = visibility
         bindingControl.channelName.visibility = visibility
-        bindingControl.buttonBack.visibility = visibility
+        bindingControl.buttonExit.visibility = visibility
+        bindingControl.layoutControl.visibility = visibility
         bindingControl.screenMode.visibility = visibility
         bindingControl.trackSelection.visibility = visibility
-        this.isLocked = isLocked
+        switchLiveOrVideo()
+    }
+
+    private fun switchLiveOrVideo() { switchLiveOrVideo(false) }
+    private fun switchLiveOrVideo(reset: Boolean) {
+        var visibility = when {
+            reset -> View.GONE
+            isLocked -> View.INVISIBLE
+            player?.isCurrentWindowLive == true -> View.GONE
+            else -> View.VISIBLE
+        }
+        bindingControl.layoutSeekbar.visibility = visibility
+        // override visibility if not seekable
+        if (player?.isCurrentWindowSeekable == false) visibility = View.GONE
+        bindingControl.buttonRewind.visibility = visibility
+        bindingControl.buttonForward.visibility = visibility
     }
 
     private fun isDrmWidevineSupported(): Boolean {
@@ -175,6 +197,9 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun playChannel() {
+        // reset view
+        switchLiveOrVideo(true)
+
         // set category & channel name
         bindingControl.categoryName.text = category?.name
         bindingControl.channelName.text = current?.name
@@ -335,6 +360,7 @@ class PlayerActivity : AppCompatActivity() {
                     val catId = Playlist.cached.categories.indexOf(category)
                     val chId = category?.channels?.indexOf(current) as Int
                     preferences.watched = PlayData(catId, chId)
+                    switchLiveOrVideo()
                 }
                 Player.STATE_ENDED -> retryPlayback(true)
                 else -> { }
