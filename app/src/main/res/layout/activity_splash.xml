@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_primary"
+        tools:context=".SplashActivity">
+
+        <TextView
+            android:id="@+id/text_presents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:text="@string/text_presents"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <LinearLayout
+            android:id="@+id/layout_banner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@id/layout_contributor"
+            app:layout_constraintTop_toBottomOf="@id/text_presents">
+
+            <TextView
+                android:id="@+id/text_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/capture_it"
+                android:text="@string/app_name"
+                android:textSize="50sp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/app_tagline_one"
+                android:textStyle="italic"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="@string/app_tagline_two"
+                android:textStyle="italic"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_contributor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="100dp"
+            android:paddingEnd="100dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toTopOf="@+id/text_status"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layout_banner">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="@string/thanks_to" />
+
+            <TextView
+                android:id="@+id/textUsers"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:text="@string/main_contributors" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/text_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="@string/status_checking_new_update" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

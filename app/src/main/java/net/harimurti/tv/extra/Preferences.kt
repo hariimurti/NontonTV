@@ -25,9 +25,7 @@ class Preferences {
         private const val SORT_CATEGORY = "SORT_CATEGORY"
         private const val SORT_CHANNEL = "SORT_CHANNEL"
         private const val REVERSE_NAVIGATION = "REVERSE_NAVIGATION"
-        private const val LAST_VERSIONCODE = "LAST_VERSIONCODE"
-        private const val TOTAL_CONTRIBUTORS = "TOTAL_CONTRIBUTORS"
-        private const val SHOW_LESS_CONTRIBUTORS = "SHOW_LESS_CONTRIBUTORS"
+        private const val CONTRIBUTORS = "CONTRIBUTORS"
         private const val RESIZE_MODE = "RESIZE_MODE"
         private const val SOURCES_PLAYLIST = "SOURCES_PLAYLIST"
     }
@@ -143,29 +141,11 @@ class Preferences {
             editor.apply()
         }
 
-    var lastVersionCode: Int
-        get() = preferences.getInt(LAST_VERSIONCODE, 0)
+    var contributors: String?
+        get() = preferences.getString(CONTRIBUTORS, context.getString(R.string.main_contributors))
         set(value) {
             editor = preferences.edit()
-            editor.putInt(LAST_VERSIONCODE, value)
-            editor.putInt(TOTAL_CONTRIBUTORS, 0)
-            editor.apply()
-        }
-
-    fun showLessContributors() {
-        editor = preferences.edit()
-        editor.putBoolean(SHOW_LESS_CONTRIBUTORS, true)
-        editor.apply()
-    }
-
-    val showLessContributors: Boolean
-        get() = preferences.getBoolean(SHOW_LESS_CONTRIBUTORS, false)
-
-    var totalContributors: Int
-        get() = preferences.getInt(TOTAL_CONTRIBUTORS, 0)
-        set(value) {
-            editor = preferences.edit()
-            editor.putInt(TOTAL_CONTRIBUTORS, value)
+            editor.putString(CONTRIBUTORS, value)
             editor.apply()
         }
 

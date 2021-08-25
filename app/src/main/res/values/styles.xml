@@ -7,6 +7,10 @@
         <item name="colorAccent">@color/color_accent</item>
     </style>
 
+    <style name="AppThemeSplash" parent="AppTheme">
+        <item name="colorPrimaryDark">@color/color_primary</item>
+    </style>
+
     <style name="AppThemePlayer" parent="AppTheme">
         <item name="android:keepScreenOn">true</item>
         <item name="android:windowContentOverlay">@null</item>

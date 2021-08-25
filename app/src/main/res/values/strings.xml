@@ -7,8 +7,14 @@
     <string name="json_playlist" translatable="false">https://github.com/hariimurti/NontonTV/raw/playlist/NontonTV.json</string>
     <string name="json_release" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/release.json</string>
     <string name="gh_contributors" translatable="false">https://api.github.com/repos/hariimurti/NontonTV/contributors</string>
+    <string name="main_contributors" translatable="false">harimurti, madbulls and people who support this project</string>
 
     <!-- some text -->
+    <string name="text_presents">.: PaijemDev Presents :.</string>
+    <string name="app_tagline_one">Free - OpenSource - No Ads,</string>
+    <string name="app_tagline_two">Light - Simple - Minimalist</string>
+    <string name="thanks_to">Thanks To :</string>
+    <string name="thanks_for_support">and people who support this project</string>
     <string name="btn_retry">Retry</string>
     <string name="btn_retry_count">Retry (%d)</string>
     <string name="btn_close">Close</string>
@@ -35,6 +41,9 @@
     <string name="removed_from_favorite">%s has been removed from Favorite</string>
     <string name="added_into_favorite">%s has been added into Favorite</string>
     <string name="already_in_favorite">%s is already in Favorite</string>
+    <string name="status_checking_permission">status: checking permission…</string>
+    <string name="status_checking_new_update">status: checking updates…</string>
+    <string name="status_preparing_playlist">status: preparing playlist…</string>
 
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>

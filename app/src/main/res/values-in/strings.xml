@@ -1,5 +1,10 @@
 <resources>
     <!-- some text -->
+    <string name="text_presents">.: PaijemDev Mempersembahkan :.</string>
+    <string name="app_tagline_one">Gratis - OpenSource - Tanpa Iklan</string>
+    <string name="app_tagline_two">Ringan - Simpel - Minimalis</string>
+    <string name="thanks_to">Terimakasih Kepada :</string>
+    <string name="thanks_for_support">dan orang yg mendukung proyek ini</string>
     <string name="btn_retry">Coba Ulang</string>
     <string name="btn_retry_count">Coba Ulang (%d)</string>
     <string name="btn_close">Keluar</string>
@@ -26,6 +31,9 @@
     <string name="removed_from_favorite">%s telah dihapus dari Favorit</string>
     <string name="added_into_favorite">%s telah ditambahkan ke Favorit</string>
     <string name="already_in_favorite">%s sudah ada dalam Favorite</string>
+    <string name="status_checking_permission">status: mengecek perijinan…</string>
+    <string name="status_checking_new_update">status: mengecek rilisan terbaru…</string>
+    <string name="status_preparing_playlist">status: mempersiapkan playlist…</string>
 
     <!-- alert playlist error -->
     <string name="playlist_updated">Playlist sudah diperbaharui!</string>
