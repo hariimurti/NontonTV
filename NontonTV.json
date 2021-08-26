@@ -327,8 +327,7 @@
         },
         {
           "name": "HBO",
-          "stream_url": "https://liveanevia.mncnow.id/live/eds/HBO2/sa_dash_vmx/HBO2.mpd",
-          "drm_name": "mncnow"
+          "stream_url": "https://liveorigin01.hbogoasia.com:8443/origin/live/main/HBO/index.m3u8"
         },
         {
           "name": "HBO Family",
@@ -623,18 +622,6 @@
           "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=citradangdut&bandwidth=default&sync=0"
         },
         {
-          "name": "DJing Hits",
-          "stream_url": "https://www.djing.com/tv/hits.m3u8"
-        },
-        {
-          "name": "DJing Karaoke",
-          "stream_url": "https://www.djing.com/tv/karaoke.m3u8"
-        },
-        {
-          "name": "DJing Live",
-          "stream_url": "https://www.djing.com/tv/live.m3u8"
-        },
-        {
           "name": "Maleo",
           "stream_url": "http://stream1.ninmedia.tv:1935/maleo/udp.stream_360p/playlist.m3u8"
         },
@@ -863,6 +850,11 @@
         {
           "name": "Discovery Asia",
           "stream_url": "https://livecdn.fptplay.net/qnetlive/discoveryasia_hls.smil/chunklist_b2500000.m3u8"
+        },
+	{
+          "name": "Discovery Channel [ALT]",
+          "stream_url": "https://liveanevia.mncnow.id/live/eds/Discovery/sa_dash_vmx/Discovery.mpd",
+          "drm_name": "mncnow"  
         },
         {
           "name": "Discovery Channel",
