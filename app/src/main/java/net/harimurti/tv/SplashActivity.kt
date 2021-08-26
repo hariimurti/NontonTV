@@ -55,6 +55,40 @@ class SplashActivity : AppCompatActivity() {
         // update constributors
         getContributors()
 
+        // first time alert
+        if (preferences.isFirstTime) {
+            AlertDialog.Builder(this).apply {
+                setTitle(R.string.app_name)
+                setMessage(R.string.alert_first_time)
+                setCancelable(false)
+                setPositiveButton(android.R.string.ok) { _,_ ->
+                    preferences.isFirstTime = false
+                    prepareWhatIsNeeded()
+                }
+                create()
+                show()
+            }
+        }
+        else prepareWhatIsNeeded()
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        this.finish()
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        // check new release
+        checkNewRelease()
+
+        if (requestCode != 260621) return
+        if (!grantResults.contains(PackageManager.PERMISSION_DENIED)) return
+        Toast.makeText(this, getString(R.string.must_allow_permissions), Toast.LENGTH_LONG).show()
+    }
+
+    private fun prepareWhatIsNeeded() {
         // ask to grant all permissions
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             setStatus(R.string.status_checking_permission)
@@ -74,22 +108,6 @@ class SplashActivity : AppCompatActivity() {
 
         // check new release
         checkNewRelease()
-    }
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        this.finish()
-    }
-
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String?>, grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
-        // check new release
-        checkNewRelease()
-
-        if (requestCode != 260621) return
-        if (!grantResults.contains(PackageManager.PERMISSION_DENIED)) return
-        Toast.makeText(this, getString(R.string.must_allow_permissions), Toast.LENGTH_LONG).show()
     }
 
     private fun checkNewRelease() {

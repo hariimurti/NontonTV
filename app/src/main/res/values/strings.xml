@@ -44,6 +44,7 @@
     <string name="status_checking_permission">status: checking permission…</string>
     <string name="status_checking_new_update">status: checking updates…</string>
     <string name="status_preparing_playlist">status: preparing playlist…</string>
+    <string name="alert_first_time">For those who bought this app, please ask the seller to refund your money.\n\nThis app is FREE!!!</string>
 
     <!-- alert playlist -->
     <string name="playlist_updated">Playlist has been updated!</string>

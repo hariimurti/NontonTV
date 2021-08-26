@@ -17,6 +17,7 @@ class Preferences {
     private lateinit var editor: SharedPreferences.Editor
 
     companion object {
+        private const val FIRST_TIME = "FIRST_TIME"
         private const val LAST_CHECK_UPDATE = "LAST_CHECK_UPDATE"
         private const val LAST_WATCHED = "LAST_WATCHED"
         private const val OPEN_LAST_WATCHED = "OPEN_LAST_WATCHED"
@@ -29,6 +30,14 @@ class Preferences {
         private const val RESIZE_MODE = "RESIZE_MODE"
         private const val SOURCES_PLAYLIST = "SOURCES_PLAYLIST"
     }
+
+    var isFirstTime: Boolean
+        get() = preferences.getBoolean(FIRST_TIME, true)
+        set(value) {
+            editor = preferences.edit()
+            editor.putBoolean(FIRST_TIME, value)
+            editor.apply()
+        }
 
     fun setLastCheckUpdate() {
         val nextday = Calendar.getInstance()
