@@ -69,8 +69,9 @@
     <string name="sort_channel">Urutkan Saluran</string>
     <string name="player">Pemutar</string>
     <string name="reverse_player_navigation">Navigasi DPAD Terbalik</string>
-    <string name="tab_1">Daftar Putar</string>
-    <string name="tab_2">Aplikasi</string>
+    <string name="tab_about">Tentang</string>
+    <string name="tab_sources">Daftar Putar</string>
+    <string name="tab_app">Aplikasi</string>
     <string name="input_url">URL Tautan</string>
     <string name="title_select_file_json">Pilih File Json</string>
     <string name="null_playlist">No playlists that can be displayed. Check your settings!</string>

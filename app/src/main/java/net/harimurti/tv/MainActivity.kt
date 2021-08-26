@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import net.harimurti.tv.adapter.CategoryAdapter
 import net.harimurti.tv.databinding.ActivityMainBinding
 import net.harimurti.tv.dialog.SearchDialog
-import net.harimurti.tv.dialog.SettingsDialog
+import net.harimurti.tv.dialog.SettingDialog
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.*
 
@@ -199,7 +199,7 @@ open class MainActivity : AppCompatActivity() {
     }
 
     private fun openSettings(){
-        SettingsDialog().show(supportFragmentManager.beginTransaction(),null)
+        SettingDialog().show(supportFragmentManager.beginTransaction(),null)
     }
 
     private fun openSearch() {

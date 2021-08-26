@@ -83,8 +83,9 @@
     <string name="sort_channel">Sort Channel</string>
     <string name="player">Player</string>
     <string name="reverse_player_navigation">Reverse DPAD Navigation</string>
-    <string name="tab_1">Playlist</string>
-    <string name="tab_2">Application</string>
+    <string name="tab_about">About</string>
+    <string name="tab_sources">Playlist</string>
+    <string name="tab_app">Application</string>
     <string name="input_url">Link URL</string>
     <string name="show_hidden" translatable="false">Hidden</string>
     <string name="title_select_file_json">Select File Json</string>
