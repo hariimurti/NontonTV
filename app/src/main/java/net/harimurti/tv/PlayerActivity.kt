@@ -50,6 +50,7 @@ class PlayerActivity : AppCompatActivity() {
     private var lastSeenTrackGroupArray: TrackGroupArray? = null
     private lateinit var bindingRoot: ActivityPlayerBinding
     private lateinit var bindingControl: CustomControlBinding
+    private var handlerInfo: Handler? = null
     private var errorCounter = 0
     private var isLocked = false
 
@@ -125,12 +126,17 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun bindingListener() {
-        bindingRoot.playerView.setOnTouchListener(object : OnSwipeTouchListener() {
-            override fun onSwipeDown() { switchChannel(CATEGORY_UP) }
-            override fun onSwipeUp() { switchChannel(CATEGORY_DOWN) }
-            override fun onSwipeLeft() { switchChannel(CHANNEL_NEXT) }
-            override fun onSwipeRight() { switchChannel(CHANNEL_PREVIOUS) }
-        })
+        bindingRoot.playerView.apply {
+            setOnTouchListener(object : OnSwipeTouchListener() {
+                override fun onSwipeDown() { switchChannel(CATEGORY_UP) }
+                override fun onSwipeUp() { switchChannel(CATEGORY_DOWN) }
+                override fun onSwipeLeft() { switchChannel(CHANNEL_NEXT) }
+                override fun onSwipeRight() { switchChannel(CHANNEL_PREVIOUS) }
+            })
+            setControllerVisibilityListener {
+                setChannelInformation (it == View.VISIBLE)
+            }
+        }
         bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
         bindingControl.buttonExit.setOnClickListener { finish() }
         bindingControl.buttonPrevious.setOnClickListener { switchChannel(CHANNEL_PREVIOUS) }
@@ -155,11 +161,28 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
+    private fun setChannelInformation(visible: Boolean) {
+        bindingRoot.layoutInfo.visibility = if (visible) View.VISIBLE else View.GONE
+
+        if (visible == bindingRoot.playerView.isControllerVisible) return
+        if (visible) bindingRoot.playerView.clearFocus()
+        else return
+
+        if (handlerInfo == null)
+            handlerInfo = Handler(Looper.getMainLooper())
+
+        handlerInfo?.removeCallbacksAndMessages(null)
+        handlerInfo?.postDelayed({
+                if (bindingRoot.playerView.isControllerVisible) return@postDelayed
+                bindingRoot.layoutInfo.visibility = View.GONE
+            },
+            bindingRoot.playerView.controllerShowTimeoutMs.toLong()
+        )
+    }
+
     private fun lockControl(setLocked: Boolean) {
         this.isLocked = setLocked
         val visibility = if (setLocked) View.INVISIBLE else View.VISIBLE
-        bindingControl.categoryName.visibility = visibility
-        bindingControl.channelName.visibility = visibility
         bindingControl.buttonExit.visibility = visibility
         bindingControl.layoutControl.visibility = visibility
         bindingControl.screenMode.visibility = visibility
@@ -201,8 +224,8 @@ class PlayerActivity : AppCompatActivity() {
         switchLiveOrVideo(true)
 
         // set category & channel name
-        bindingControl.categoryName.text = category?.name
-        bindingControl.channelName.text = current?.name
+        bindingRoot.categoryName.text = category?.name
+        bindingRoot.channelName.text = current?.name
 
         // split streamurl with referer, user-agent
         var streamUrl = URLDecoder.decode(current?.streamUrl, "utf-8")
@@ -279,7 +302,6 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun switchChannel(mode: Int, lastCh: Boolean) {
-        bindingRoot.playerView.showController()
         val catId = Playlist.cached.categories.indexOf(category)
         val chId = category?.channels?.indexOf(current) as Int
         when(mode) {
@@ -365,6 +387,11 @@ class PlayerActivity : AppCompatActivity() {
                 Player.STATE_ENDED -> retryPlayback(true)
                 else -> { }
             }
+        }
+
+        override fun onIsPlayingChanged(isPlaying: Boolean) {
+            super.onIsPlayingChanged(isPlaying)
+            if (isPlaying) setChannelInformation(true)
         }
 
         override fun onPlayerError(error: PlaybackException) {

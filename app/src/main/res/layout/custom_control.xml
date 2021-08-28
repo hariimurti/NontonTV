@@ -9,42 +9,6 @@
         android:layout_height="match_parent"
         tools:ignore="ContentDescription">
 
-        <TextView
-            android:id="@+id/category_name"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:background="@drawable/osd_text_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/player_info_margin_start"
-            android:layout_marginTop="@dimen/player_info_margin_start"
-            android:padding="@dimen/ch_name_padding"
-            android:gravity="start|center_vertical"
-            android:paddingStart="@dimen/exo_icon_padding_bottom"
-            android:paddingEnd="@dimen/exo_icon_padding_bottom"
-            android:textAllCaps="true"
-            android:textColor="@color/color_dark"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="CATEGORY_NAME" />
-
-        <TextView
-            android:id="@+id/channel_name"
-            style="@style/TextAppearance.AppCompat.Small"
-            android:background="@drawable/osd_text_background"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/player_info_margin_start"
-            android:layout_marginTop="@dimen/player_info_margin_space"
-            android:padding="@dimen/ch_name_padding"
-            android:gravity="start|center_vertical"
-            android:paddingStart="@dimen/exo_icon_padding_bottom"
-            android:paddingEnd="@dimen/exo_icon_padding_bottom"
-            android:textAllCaps="true"
-            android:textColor="@color/color_dark"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/category_name"
-            tools:text="CHANNEL_NAME" />
-
         <ImageButton
             android:id="@+id/button_exit"
             app:layout_constraintStart_toStartOf="parent"
@@ -114,9 +78,9 @@
         <ImageButton
             android:id="@+id/button_lock"
             android:layout_marginEnd="@dimen/player_info_margin_start"
-            app:layout_constraintBottom_toBottomOf="@+id/channel_name"
+            android:layout_marginTop="27dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/category_name"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_lock_open"
             style="@style/ImageButtonLock" />
 

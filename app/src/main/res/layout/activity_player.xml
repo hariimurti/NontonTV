@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".PlayerActivity">
@@ -17,6 +17,48 @@
             app:controller_layout_id="@layout/custom_control"
             app:keep_content_on_player_reset="true"/>
 
-    </LinearLayout>
+        <LinearLayout
+            android:id="@+id/layout_info"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/player_info_margin_start"
+            android:layout_marginTop="@dimen/player_info_margin_start"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:focusable="false"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/category_name"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:background="@drawable/osd_text_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/ch_name_padding"
+                android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/exo_icon_padding_bottom"
+                android:paddingEnd="@dimen/exo_icon_padding_bottom"
+                android:textAllCaps="true"
+                android:textColor="@color/color_dark"
+                tools:text="CATEGORY_NAME" />
+
+            <TextView
+                android:id="@+id/channel_name"
+                style="@style/TextAppearance.AppCompat.Small"
+                android:background="@drawable/osd_text_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/player_info_margin_space"
+                android:padding="@dimen/ch_name_padding"
+                android:gravity="start|center_vertical"
+                android:paddingStart="@dimen/exo_icon_padding_bottom"
+                android:paddingEnd="@dimen/exo_icon_padding_bottom"
+                android:textAllCaps="true"
+                android:textColor="@color/color_dark"
+                tools:text="CHANNEL_NAME" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
