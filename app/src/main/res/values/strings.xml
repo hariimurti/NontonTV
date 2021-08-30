@@ -7,14 +7,14 @@
     <string name="json_playlist" translatable="false">https://github.com/hariimurti/NontonTV/raw/playlist/NontonTV.json</string>
     <string name="json_release" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/release.json</string>
     <string name="gh_contributors" translatable="false">https://api.github.com/repos/hariimurti/NontonTV/contributors</string>
-    <string name="main_contributors" translatable="false">harimurti, madbulls and people who support this project</string>
+    <string name="main_contributors" translatable="false">harimurti, madbulls</string>
 
     <!-- some text -->
     <string name="text_presents">.: PaijemDev Presents :.</string>
     <string name="app_tagline_one">Free - OpenSource - No Ads,</string>
     <string name="app_tagline_two">Light - Simple - Minimalist</string>
     <string name="thanks_to">Thanks To :</string>
-    <string name="thanks_for_support">and people who support this project</string>
+    <string name="thanks_for_support">and people who support this project 😘</string>
     <string name="btn_retry">Retry</string>
     <string name="btn_retry_count">Retry (%d)</string>
     <string name="btn_close">Close</string>
@@ -65,14 +65,6 @@
     <string name="message_update_changelog" translatable="false">\n• %s</string>
     <string name="message_update_no_changelog">\n• others</string>
 
-    <!-- alert contributors -->
-    <string name="alert_title_contributors">Contributors</string>
-    <string name="dialog_website" translatable="false">Website</string>
-    <string name="dialog_telegram" translatable="false">Telegram</string>
-    <string name="dialog_show_less">Show Less</string>
-    <string name="dialog_close">Close</string>
-    <string name="message_thanks_to">Many thanks to everyone involved in this project!\n\nEspecially these guys on github :\n</string>
-
     <!-- settings -->
     <string name="settings">Preferences</string>
     <string name="startup">Startup</string>
@@ -97,4 +89,7 @@
     <string name="link_error">Link Error!</string>
     <string name="link_copied_to_clipboard">Link copied to clipboard!</string>
     <string name="warning_none_source_active">No other source is active, default must be enabled!</string>
+    <string name="more_information">More Information :</string>
+    <string name="button_website" translatable="false">Website</string>
+    <string name="button_telegram" translatable="false">Telegram</string>
 </resources>

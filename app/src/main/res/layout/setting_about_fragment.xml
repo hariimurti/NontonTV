@@ -13,7 +13,7 @@
             android:paddingStart="50dp"
             android:paddingEnd="50dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@id/layout_button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -28,46 +28,57 @@
                 android:id="@+id/textUsers"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 tools:text="@string/main_contributors" />
 
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/layout_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_contributor">
-
-            <Button
-                android:id="@+id/button_website"
-                style="?android:attr/buttonBarButtonStyle"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="5dp"
-                android:text="@string/dialog_website" />
-
-            <View
-                android:layout_width="1dp"
-                android:layout_height="15dp"
                 android:layout_gravity="center"
-                android:background="@color/color_text"/>
+                android:textAlignment="center"
+                android:text="@string/thanks_for_support" />
 
-            <Button
-                android:id="@+id/button_telegram"
-                style="?android:attr/buttonBarButtonStyle"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="@string/dialog_telegram" />
+                android:layout_marginTop="40dp"
+                android:layout_gravity="center"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:text="@string/more_information" />
 
+            <LinearLayout
+                android:id="@+id/layout_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_website"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="5dp"
+                    android:text="@string/button_website" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="15dp"
+                    android:layout_gravity="center"
+                    android:background="@color/color_text"/>
+
+                <Button
+                    android:id="@+id/button_telegram"
+                    style="?android:attr/buttonBarButtonStyle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="@string/button_telegram" />
+
+            </LinearLayout>
         </LinearLayout>
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -64,8 +64,8 @@
             android:id="@+id/layout_contributor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="100dp"
-            android:paddingEnd="100dp"
+            android:paddingStart="50dp"
+            android:paddingEnd="50dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toTopOf="@+id/text_status"
             app:layout_constraintEnd_toEndOf="parent"
@@ -87,6 +87,13 @@
                 android:layout_gravity="center"
                 android:textAlignment="center"
                 android:text="@string/main_contributors" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:text="@string/thanks_for_support" />
 
         </LinearLayout>
 

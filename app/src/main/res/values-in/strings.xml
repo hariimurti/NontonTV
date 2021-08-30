@@ -4,7 +4,7 @@
     <string name="app_tagline_one">Gratis - OpenSource - Tanpa Iklan</string>
     <string name="app_tagline_two">Ringan - Simpel - Minimalis</string>
     <string name="thanks_to">Terimakasih Kepada :</string>
-    <string name="thanks_for_support">dan orang yg mendukung proyek ini</string>
+    <string name="thanks_for_support">dan orang yg mendukung proyek ini 😘</string>
     <string name="btn_retry">Coba Ulang</string>
     <string name="btn_retry_count">Coba Ulang (%d)</string>
     <string name="btn_close">Keluar</string>
@@ -51,12 +51,6 @@
     <string name="message_update">Versi\n• Terpasang : %s (%d)\n• Terkini : %s (%d)\n\nPerubahan :</string>
     <string name="message_update_no_changelog">\n• lain-lain</string>
 
-    <!-- alert contributors -->
-    <string name="alert_title_contributors">Penyumbang</string>
-    <string name="dialog_show_less">Kurangi Penampilan</string>
-    <string name="dialog_close">Tutup</string>
-    <string name="message_thanks_to">Terima kasih banyak kepada semua orang yang terlibat dalam proyek ini!\n\nTerutama orang-orang ini di github :\n</string>
-
     <!-- settings -->
     <string name="settings">Pengaturan</string>
     <string name="startup">App Mulai</string>
@@ -79,4 +73,5 @@
     <string name="link_error">Tautan Bermasalah!</string>
     <string name="link_copied_to_clipboard">Tautan disalin ke papan klip!</string>
     <string name="warning_none_source_active">Tidak ada sumber lain yang aktif, default harus diaktifkan!</string>
+    <string name="more_information">Informasi Lain :</string>
 </resources>

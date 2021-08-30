@@ -1,15 +1,13 @@
 package net.harimurti.tv.extra
 
-import net.harimurti.tv.R
-import net.harimurti.tv.App
 import net.harimurti.tv.model.GithubUser
 
 fun Array<GithubUser>?.toStringContributor(): String? {
     if (this == null || this.isEmpty()) return null
     val users = StringBuilder()
-    for (user in this) {
-        users.append(user.login).append(", ")
+    for (i in this.indices) {
+        users.append(this[i].login)
+        if (i < this.size - 1) users.append(", ")
     }
-    val support = App.context.getString(R.string.thanks_for_support)
-    return users.append(support).toString()
+    return users.toString()
 }
