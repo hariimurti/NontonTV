@@ -5,6 +5,7 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 
 ## Peringatan Keras
 **DILARANG MEMPERJUAL-BELIKAN APLIKASI INI!!!**
+
 **HARAP MENCANTUMKAN CREDIT, BILA MANA ANDA MAU MENGEDIT/MEMPUBLISH APLIKASI INI DENGAN NAMA LAIN!!!**
 
 
@@ -13,15 +14,16 @@ Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet
 - bebas iklan, bebas dari tracking, apk relatif kecil
 - tampilan simpel, tdk butuh banyak interaksi
 - otomatis mencoba putar kembali jika tayangan putus/error
+- pin/unpin saluran favorit (pencet saluran agak lama)
 - bisa pilih kualitas video, audio, maupun subtitle (bila tayangan mendukung)
 - support screen mode : fit, fill, zoom, fixed witdh, fixed height
 - support picture-to-picture
 - support remote dpad
-- jalankan aplikasi saat booting
-- otomatis putar terakhir dilihat saat menjalankan aplikasi
 - support playlist json (nontontv) & m3u biasa
 - support playlist kustom (lokal, maupun tautan)
 - support protocol rtmp
+- jalankan aplikasi saat booting
+- otomatis putar terakhir dilihat saat menjalankan aplikasi
 - dan lain-lain
 
 
