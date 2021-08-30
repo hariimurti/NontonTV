@@ -1,6 +1,6 @@
 {
-    "versionCode": 514,
-    "versionName": "v2.1",
-    "changelog": ["add player navigation", "add screen mode", "select playlist file", "support picture-in-picture", "and more.."],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v2.1/net.harimurti.tv_v2.1_b514.apk"
+    "versionCode": 532,
+    "versionName": "v2.2",
+    "changelog": ["multiple playlist", "support m3u", "sorting category and channel", "pin favorite channel", "and more.."],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v2.2/net.harimurti.tv_v2.2_b533.apk"
 }
