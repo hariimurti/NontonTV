@@ -94,7 +94,7 @@ class PlaylistHelper {
         return this
     }
 
-    fun getResponse() {
+    fun getResponse(useCache: Boolean) {
         // send onFinish when sources is empty
         if (sources.isEmpty()) {
             taskResponse?.onFinish()
@@ -105,7 +105,7 @@ class PlaylistHelper {
         val source = sources.first()
         sources.remove(source)
         if (!source.active) {
-            getResponse()
+            getResponse(useCache)
             return
         }
 
@@ -113,7 +113,7 @@ class PlaylistHelper {
         if (!source.path.isLinkUrl()) {
             val playlist = readFile(source.path.toFile())
             taskResponse?.onResponse(playlist)
-            getResponse()
+            getResponse(useCache)
             return
         }
 
@@ -121,7 +121,7 @@ class PlaylistHelper {
         val stringRequest = object: StringRequest(Method.GET, source.path,
             { content ->
                 taskResponse?.onResponse(content.toPlaylist())
-                getResponse()
+                getResponse(useCache)
             },
             { error ->
                 var message = "[UNKNOWN] : ${source.path}"
@@ -133,7 +133,7 @@ class PlaylistHelper {
                 }
                 Log.e(TAG, "Source : ${source.path}", error)
                 taskResponse?.onError(Exception(message), source)
-                getResponse()
+                getResponse(useCache)
             }) {
             override fun parseNetworkResponse(response: NetworkResponse): Response<String?>? {
                 // Volley's default charset is "ISO-8859-1".
@@ -147,7 +147,7 @@ class PlaylistHelper {
                 return super.parseNetworkResponse(response)
             }
         }
-        volley.cache.clear()
+        if (!useCache) volley.cache.clear()
         volley.add(stringRequest)
     }
 
@@ -176,7 +176,6 @@ class PlaylistHelper {
                 Log.e(TAG, message, error)
                 taskChecker?.onCheckResult(result)
             })
-        volley.cache.clear()
         volley.add(stringRequest)
     }
 }

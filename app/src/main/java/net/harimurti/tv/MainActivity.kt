@@ -39,7 +39,7 @@ open class MainActivity : AppCompatActivity() {
                 UPDATE_SETTINGS -> {
                     requestedOrientation = if (preferences.isLandscape) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
                         else ActivityInfo.SCREEN_ORIENTATION_SENSOR
-                    updatePlaylist()
+                    updatePlaylist(false)
                 }
                 INSERT_FAVORITE -> adapter.insertOrUpdateFavorite()
                 REMOVE_FAVORITE -> adapter.removeFavorite()
@@ -67,7 +67,7 @@ open class MainActivity : AppCompatActivity() {
         binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         binding.swipeContainer.setOnRefreshListener {
             binding.swipeContainer.isRefreshing = false
-            updatePlaylist()
+            updatePlaylist(false)
         }
 
         //search button
@@ -137,7 +137,7 @@ open class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun updatePlaylist() {
+    private fun updatePlaylist(useCache: Boolean) {
         // show loading
         setLoadingPlaylist(true)
 
@@ -160,7 +160,7 @@ open class MainActivity : AppCompatActivity() {
                     if (playlistSet.isCategoriesEmpty()) showAlertPlaylistError(getString(R.string.null_playlist))
                     else setPlaylistToAdapter(playlistSet)
                 }
-        }).getResponse()
+        }).getResponse(useCache)
     }
 
     private fun showAlertPlaylistError(message: String?) {
@@ -169,7 +169,7 @@ open class MainActivity : AppCompatActivity() {
             setMessage(message)
             setCancelable(false)
             setNeutralButton(R.string.settings) { _,_ -> openSettings() }
-            setPositiveButton(R.string.dialog_retry) { _,_ -> updatePlaylist() }
+            setPositiveButton(R.string.dialog_retry) { _,_ -> updatePlaylist(true) }
         }
         val cache = helper.readCache()
         if (cache != null) {

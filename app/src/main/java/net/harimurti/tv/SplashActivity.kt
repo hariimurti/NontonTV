@@ -206,7 +206,7 @@ class SplashActivity : AppCompatActivity() {
                         finish()
                     }, 2000)
                 }
-            }).getResponse()
+            }).getResponse(true)
     }
 
     private fun openWebsite(link: String) {
