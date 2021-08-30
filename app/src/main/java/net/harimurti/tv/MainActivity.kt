@@ -38,7 +38,7 @@ open class MainActivity : AppCompatActivity() {
             when(intent.getStringExtra(MAIN_CALLBACK)){
                 UPDATE_SETTINGS -> {
                     requestedOrientation = if (preferences.isLandscape) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
-                        else ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                        else ActivityInfo.SCREEN_ORIENTATION_USER
                     updatePlaylist(false)
                 }
                 INSERT_FAVORITE -> adapter.insertOrUpdateFavorite()
