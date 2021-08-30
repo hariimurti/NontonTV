@@ -71,17 +71,10 @@ open class MainActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this)
             .registerReceiver(broadcastReceiver, IntentFilter(MAIN_CALLBACK))
 
-        // set adapter with existed playlist
-        if (savedInstanceState != null && !Playlist.cached.isCategoriesEmpty()) {
-            if (Playlist.cached.isCategoriesEmpty())
-                showAlertPlaylistError(getString(R.string.null_playlist))
-            else setPlaylistToAdapter(Playlist.cached)
-            return
-        }
+        // set playlist
+        if (!Playlist.cached.isCategoriesEmpty()) setPlaylistToAdapter(Playlist.cached)
+        else showAlertPlaylistError(getString(R.string.null_playlist))
 
-        // playlist update
-        if (Playlist.cached.isCategoriesEmpty()) updatePlaylist()
-        else setPlaylistToAdapter(Playlist.cached)
     }
 
     private fun setLoadingPlaylist(show: Boolean) {
