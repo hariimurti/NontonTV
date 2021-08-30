@@ -351,6 +351,7 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         // reset player & play
+        errorCounter = 0
         player?.playWhenReady = false
         player?.release()
         playChannel()
@@ -435,9 +436,18 @@ class PlayerActivity : AppCompatActivity() {
             setTitle(R.string.player_playback_error)
             setMessage(message)
             setCancelable(false)
-            setNegativeButton(getString(R.string.btn_next_channel)) { _,_ -> switchChannel(CHANNEL_NEXT) }
-            setPositiveButton(btnRetryText) { _,_ -> retryPlayback(true) }
-            setNeutralButton(R.string.btn_close) { _,_ -> finish() }
+            setNegativeButton(getString(R.string.btn_next_channel)) { di,_ ->
+                switchChannel(CHANNEL_NEXT)
+                di.dismiss()
+            }
+            setPositiveButton(btnRetryText) { di,_ ->
+                retryPlayback(true)
+                di.dismiss()
+            }
+            setNeutralButton(R.string.btn_close) { di,_ ->
+                di.dismiss()
+                finish()
+            }
             create()
         }
         val dialog = builder.show()
