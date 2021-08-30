@@ -146,12 +146,18 @@ class SplashActivity : AppCompatActivity() {
                         message.append(getString(R.string.message_update_no_changelog))
                     }
 
+                    val downloadUrl = if (release.downloadUrl.isBlank()) {
+                        String.format(getString(R.string.apk_release),
+                            release.versionName, release.versionName, release.versionCode)
+                    }
+                    else release.downloadUrl
+
                     AlertDialog.Builder(this).apply {
                         setTitle(R.string.alert_new_update)
                         setMessage(message)
                         setCancelable(false)
                         setPositiveButton(R.string.dialog_download) { _,_ ->
-                            downloadFile(release.downloadUrl)
+                            downloadFile(downloadUrl)
                             lunchMainActivity()
                         }
                         setNegativeButton(R.string.dialog_skip) { _,_ ->

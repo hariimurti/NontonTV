@@ -6,6 +6,7 @@
     <string name="telegram_group" translatable="false">https://t.me/paijemdev</string>
     <string name="json_playlist" translatable="false">https://github.com/hariimurti/NontonTV/raw/playlist/NontonTV.json</string>
     <string name="json_release" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/release.json</string>
+    <string name="apk_release" translatable="false">https://github.com/hariimurti/NontonTV/releases/download/%s/net.harimurti.tv_%s_b%d.apk</string>
     <string name="gh_contributors" translatable="false">https://api.github.com/repos/hariimurti/NontonTV/contributors</string>
     <string name="main_contributors" translatable="false">harimurti, madbulls</string>
 
