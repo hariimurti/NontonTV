@@ -18,6 +18,7 @@ class Preferences {
 
     companion object {
         private const val FIRST_TIME = "FIRST_TIME"
+        private const val LANDSCAPE_MODE = "LANDSCAPE_MODE"
         private const val LAST_CHECK_UPDATE = "LAST_CHECK_UPDATE"
         private const val LAST_WATCHED = "LAST_WATCHED"
         private const val OPEN_LAST_WATCHED = "OPEN_LAST_WATCHED"
@@ -36,6 +37,14 @@ class Preferences {
         set(value) {
             editor = preferences.edit()
             editor.putBoolean(FIRST_TIME, value)
+            editor.apply()
+        }
+
+    var isLandscape: Boolean
+        get() = preferences.getBoolean(LANDSCAPE_MODE, false)
+        set(value) {
+            editor = preferences.edit()
+            editor.putBoolean(LANDSCAPE_MODE, value)
             editor.apply()
         }
 

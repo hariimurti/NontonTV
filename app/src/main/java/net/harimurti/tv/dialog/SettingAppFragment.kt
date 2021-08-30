@@ -9,6 +9,7 @@ import net.harimurti.tv.databinding.SettingAppFragmentBinding
 
 class SettingAppFragment : Fragment() {
     companion object {
+        var isLandscape = false
         var launchAtBoot = false
         var playLastWatched = false
         var sortFavorite = false
@@ -19,6 +20,13 @@ class SettingAppFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = SettingAppFragmentBinding.inflate(inflater, container, false)
+
+        binding.forceLandscape.apply {
+            isChecked = isLandscape
+            setOnClickListener {
+                isLandscape = isChecked
+            }
+        }
 
         binding.launchAtBoot.apply {
             isChecked = launchAtBoot

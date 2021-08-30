@@ -1,8 +1,14 @@
 package net.harimurti.tv
 
 import android.annotation.SuppressLint
-import android.content.*
-import android.os.*
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.content.pm.ActivityInfo
+import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.KeyEvent
 import android.view.View
 import android.widget.Toast
@@ -15,7 +21,9 @@ import net.harimurti.tv.databinding.ActivityMainBinding
 import net.harimurti.tv.dialog.SearchDialog
 import net.harimurti.tv.dialog.SettingDialog
 import net.harimurti.tv.extra.*
-import net.harimurti.tv.model.*
+import net.harimurti.tv.model.PlayData
+import net.harimurti.tv.model.Playlist
+import net.harimurti.tv.model.Source
 
 open class MainActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
@@ -28,7 +36,11 @@ open class MainActivity : AppCompatActivity() {
     private val broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent) {
             when(intent.getStringExtra(MAIN_CALLBACK)){
-                UPDATE_PLAYLIST -> updatePlaylist()
+                UPDATE_SETTINGS -> {
+                    requestedOrientation = if (preferences.isLandscape) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+                        else ActivityInfo.SCREEN_ORIENTATION_SENSOR
+                    updatePlaylist()
+                }
                 INSERT_FAVORITE -> adapter.insertOrUpdateFavorite()
                 REMOVE_FAVORITE -> adapter.removeFavorite()
             }
@@ -37,7 +49,7 @@ open class MainActivity : AppCompatActivity() {
 
     companion object {
         const val MAIN_CALLBACK = "MAIN_CALLBACK"
-        const val UPDATE_PLAYLIST = "UPDATE_PLAYLIST"
+        const val UPDATE_SETTINGS = "UPDATE_SETTINGS"
         const val INSERT_FAVORITE = "REFRESH_FAVORITE"
         const val REMOVE_FAVORITE = "REMOVE_FAVORITE"
     }
@@ -46,17 +58,17 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        if (isTelevision) setTheme(R.style.AppThemeTv)
+        if (preferences.isLandscape) requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         binding.swipeContainer.setOnRefreshListener {
             binding.swipeContainer.isRefreshing = false
             updatePlaylist()
         }
-
-        if (isTelevision) {
-            setTheme(R.style.AppThemeTv)
-        }
-        setContentView(binding.root)
 
         //search button
         binding.buttonSearch.setOnClickListener{

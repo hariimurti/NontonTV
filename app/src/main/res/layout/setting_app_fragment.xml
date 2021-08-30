@@ -32,6 +32,15 @@
             </LinearLayout>
 
             <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/force_landscape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/setting_switch_margin"
+                android:layout_marginEnd="@dimen/setting_switch_margin"
+                android:minHeight="@dimen/setting_switch_min_height"
+                android:text="@string/force_landscape" />
+
+            <androidx.appcompat.widget.SwitchCompat
                 android:id="@+id/launch_at_boot"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

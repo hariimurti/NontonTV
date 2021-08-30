@@ -38,6 +38,9 @@ class SplashActivity : AppCompatActivity() {
             return
         }
 
+        requestedOrientation = if (preferences.isLandscape) ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
+        else ActivityInfo.SCREEN_ORIENTATION_LOCKED
+
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -48,9 +51,6 @@ class SplashActivity : AppCompatActivity() {
             openWebsite(getString(R.string.website))
         }
         binding.textUsers.text = preferences.contributors
-
-        // lock screen orientation
-        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LOCKED
 
         // update constributors
         getContributors()
