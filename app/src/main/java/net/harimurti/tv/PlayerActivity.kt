@@ -558,13 +558,17 @@ class PlayerActivity : AppCompatActivity() {
             KeyEvent.KEYCODE_PAGE_DOWN -> return switchChannel(CATEGORY_DOWN)
             KeyEvent.KEYCODE_MEDIA_PREVIOUS -> return switchChannel(CHANNEL_PREVIOUS)
             KeyEvent.KEYCODE_MEDIA_NEXT -> return switchChannel(CHANNEL_NEXT)
-            KeyEvent.KEYCODE_MEDIA_REWIND -> { player?.seekBack(); return true }
-            KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> { player?.seekForward(); return true }
             KeyEvent.KEYCODE_MEDIA_PLAY -> { player?.play(); return true; }
             KeyEvent.KEYCODE_MEDIA_PAUSE -> { player?.pause(); return true; }
             KeyEvent.KEYCODE_MEDIA_PLAY_PAUSE -> {
                 if (player?.isPlaying == false) player?.play() else player?.pause()
                 return true
+            }
+        }
+        if (player?.isCurrentWindowLive == false) {
+            when(keyCode) {
+                KeyEvent.KEYCODE_MEDIA_REWIND -> { player?.seekBack(); return true }
+                KeyEvent.KEYCODE_MEDIA_FAST_FORWARD -> { player?.seekForward(); return true }
             }
         }
         if (bindingRoot.playerView.isControllerVisible) return super.onKeyUp(keyCode, event)
