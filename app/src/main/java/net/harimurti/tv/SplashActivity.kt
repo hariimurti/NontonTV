@@ -61,9 +61,15 @@ class SplashActivity : AppCompatActivity() {
                 setTitle(R.string.app_name)
                 setMessage(R.string.alert_first_time)
                 setCancelable(false)
-                setPositiveButton(android.R.string.ok) { _,_ ->
+                setPositiveButton(android.R.string.ok) { di,_ ->
                     preferences.isFirstTime = false
                     prepareWhatIsNeeded()
+                    di.dismiss()
+                }
+                setNeutralButton(R.string.button_website) { _,_ ->
+                    preferences.isFirstTime = false
+                    openWebsite(getString(R.string.website))
+                    finish()
                 }
                 create()
                 show()
