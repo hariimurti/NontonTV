@@ -10,8 +10,6 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.*
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.google.android.material.tabs.TabLayoutMediator
 import net.harimurti.tv.MainActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.SettingDialogBinding
@@ -21,9 +19,21 @@ class SettingDialog : DialogFragment() {
     private val tabFragment = arrayOf(SettingSourcesFragment(), SettingAppFragment(), SettingAboutFragment())
     private val tabTitle = arrayOf(R.string.tab_sources, R.string.tab_app, R.string.tab_about)
 
-    inner class PagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
-        override fun getItemCount(): Int = tabFragment.size
-        override fun createFragment(position: Int): Fragment = tabFragment[position]
+    @Suppress("DEPRECATION")
+    inner class FragmentAdapter(fragmentManager: FragmentManager?) :
+        FragmentPagerAdapter(fragmentManager!!, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+
+        override fun getItem(position: Int): Fragment {
+            return tabFragment[position]
+        }
+
+        override fun getCount(): Int {
+            return tabFragment.size
+        }
+
+        override fun getPageTitle(position: Int): CharSequence {
+            return getString(tabTitle[position])
+        }
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -46,11 +56,9 @@ class SettingDialog : DialogFragment() {
         SettingSourcesFragment.sources = preferences.sources
 
         // view pager
-        binding.settingViewPager.adapter = PagerAdapter(this.requireActivity())
+        binding.settingViewPager.adapter = FragmentAdapter(childFragmentManager)
         // tab layout
-        TabLayoutMediator(binding.settingTabLayout, binding.settingViewPager) {
-            tab, position -> tab.text = getString(tabTitle[position])
-        }.attach()
+        binding.settingTabLayout.setupWithViewPager(binding.settingViewPager)
         // button cancel
         binding.settingCancelButton.setOnClickListener { dismiss() }
         // button ok
