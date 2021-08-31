@@ -115,28 +115,30 @@ class Preferences {
 
     var sources: ArrayList<Source>?
         get() {
+            val result = ArrayList<Source>()
             val default = Source().apply {
                 path = context.getString(R.string.json_playlist)
                 active = true
             }
-            return try {
-                val result = ArrayList<Source>()
+            try {
                 val json = preferences.getString(SOURCES_PLAYLIST, "").toString()
-                if (json.isBlank()) {
-                    result.add(default)
-                }
-                else {
+                if (json.isNotBlank()) {
                     val list = Gson().fromJson(json, Array<Source>::class.java)
-                    val active = list.filter { s -> s.active }
-                    if (list[0].path != default.path) result.add(default)
-                    if (active.size == 1 && active[0].path == default.path) list[0].active = true
-                    result.addAll(list)
-                }
-                result
+                    if (list.firstOrNull()?.path != default.path) result.add(default)
+                    list.forEach {
+                        if (it.path.isLinkUrl()) result.add(it)
+                        else if (it.path.isPathExist()) result.add(it)
+                    }
+                } else throw Exception("no playlist sources in preference")
             } catch (e: Exception) {
                 e.printStackTrace()
-                null
             }
+
+            if (result.isEmpty()) result.add(default)
+            val active = result.filter { s -> s.active }
+            if (active.isEmpty()) result.first().active = true
+
+            return result
         }
         set(value) {
             val json = Gson().toJson(value)
