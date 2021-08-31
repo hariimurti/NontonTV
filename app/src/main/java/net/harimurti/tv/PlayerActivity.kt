@@ -162,6 +162,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun setChannelInformation(visible: Boolean) {
+        if (isLocked) return
         bindingRoot.layoutInfo.visibility = if (visible) View.VISIBLE else View.GONE
 
         if (visible == bindingRoot.playerView.isControllerVisible) return
@@ -181,8 +182,9 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun lockControl(setLocked: Boolean) {
-        this.isLocked = setLocked
+        isLocked = setLocked
         val visibility = if (setLocked) View.INVISIBLE else View.VISIBLE
+        bindingRoot.layoutInfo.visibility = visibility
         bindingControl.buttonExit.visibility = visibility
         bindingControl.layoutControl.visibility = visibility
         bindingControl.screenMode.visibility = visibility
