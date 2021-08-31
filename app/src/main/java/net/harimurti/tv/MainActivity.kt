@@ -58,7 +58,7 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (isTelevision) setTheme(R.style.AppThemeTv)
+        if (isTelevision) setTheme(R.style.AppThemeTV)
         if (preferences.isLandscape) requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
 
         binding = ActivityMainBinding.inflate(layoutInflater)
