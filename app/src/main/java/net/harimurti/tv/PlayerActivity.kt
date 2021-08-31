@@ -474,7 +474,9 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun showScreenMenu(view: View) {
-        val menu = PopupMenu(this, view).apply {
+        val timeout = bindingRoot.playerView.controllerShowTimeoutMs
+        bindingRoot.playerView.controllerShowTimeoutMs = 0
+        PopupMenu(this, view).apply {
             inflate(R.menu.screen_resize_mode)
             setOnMenuItemClickListener { m: MenuItem ->
                 val mode = when(m.itemId) {
@@ -490,10 +492,11 @@ class PlayerActivity : AppCompatActivity() {
                 }
                 true
             }
+            setOnDismissListener {
+                bindingRoot.playerView.controllerShowTimeoutMs = timeout
+            }
             show()
         }
-        val timeout = bindingRoot.playerView.controllerShowTimeoutMs.toLong() - 500
-        Handler(Looper.getMainLooper()).postDelayed({ menu.dismiss() }, timeout)
     }
 
     override fun onResume() {
