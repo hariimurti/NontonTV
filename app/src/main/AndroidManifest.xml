@@ -33,6 +33,7 @@
             android:name=".SplashActivity"
             android:theme="@style/AppThemeSplash"
             android:launchMode="singleTask"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
