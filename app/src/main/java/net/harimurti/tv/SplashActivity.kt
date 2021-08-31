@@ -117,10 +117,6 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun checkNewRelease() {
-        // skip if already done
-        if (preferences.isCheckedReleaseUpdate) {
-            return lunchMainActivity()
-        }
         // start checking
         setStatus(R.string.status_checking_new_update)
         val stringRequest = StringRequest(
@@ -129,7 +125,8 @@ class SplashActivity : AppCompatActivity() {
             Response.Listener { response: String? ->
                 try {
                     val release = Gson().fromJson(response, Release::class.java)
-                    if (release.versionCode <= BuildConfig.VERSION_CODE)
+                    if (release.versionCode <= BuildConfig.VERSION_CODE ||
+                        release.versionCode <= preferences.ignoredVersion)
                         return@Listener lunchMainActivity()
 
                     val message = StringBuilder(
@@ -160,8 +157,12 @@ class SplashActivity : AppCompatActivity() {
                             downloadFile(downloadUrl)
                             lunchMainActivity()
                         }
-                        setNegativeButton(R.string.dialog_skip) { _,_ ->
-                            preferences.setLastCheckUpdate()
+                        setNegativeButton(R.string.dialog_ignore) { _, _ ->
+                            preferences.ignoredVersion = release.versionCode
+                            lunchMainActivity()
+                        }
+                        setNeutralButton(R.string.button_website) { _,_ ->
+                            openWebsite(getString(R.string.website))
                             lunchMainActivity()
                         }
                         create()

@@ -19,7 +19,7 @@ class Preferences {
     companion object {
         private const val FIRST_TIME = "FIRST_TIME"
         private const val LANDSCAPE_MODE = "LANDSCAPE_MODE"
-        private const val LAST_CHECK_UPDATE = "LAST_CHECK_UPDATE"
+        private const val IGNORED_VERSION = "IGNORED_VERSION"
         private const val LAST_WATCHED = "LAST_WATCHED"
         private const val OPEN_LAST_WATCHED = "OPEN_LAST_WATCHED"
         private const val LAUNCH_AT_BOOT = "LAUNCH_AT_BOOT"
@@ -48,26 +48,12 @@ class Preferences {
             editor.apply()
         }
 
-    fun setLastCheckUpdate() {
-        val nextday = Calendar.getInstance()
-        nextday.add(Calendar.DATE, 1)
-        nextday[Calendar.HOUR_OF_DAY] = 0
-        editor = preferences.edit()
-        editor.putLong(LAST_CHECK_UPDATE, nextday.timeInMillis)
-        editor.apply()
-    }
-
-    val isCheckedReleaseUpdate: Boolean
-        get() = try {
-            val last = Calendar.getInstance()
-            last.timeInMillis = preferences.getLong(LAST_CHECK_UPDATE, 0)
-            val dateLast = last.time
-            val now = Calendar.getInstance()
-            now[Calendar.HOUR_OF_DAY] = 0
-            val dateNow = now.time
-            dateLast.after(dateNow)
-        } catch (ignore: Exception) {
-            false
+    var ignoredVersion: Int
+        get() = preferences.getInt(IGNORED_VERSION, 0)
+        set(value) {
+            editor = preferences.edit()
+            editor.putInt(IGNORED_VERSION, value)
+            editor.apply()
         }
 
     var launchAtBoot: Boolean

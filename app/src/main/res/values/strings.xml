@@ -61,7 +61,7 @@
     <!-- alert update -->
     <string name="alert_new_update">Update</string>
     <string name="dialog_download">Download APK</string>
-    <string name="dialog_skip">Ignore 1 day</string>
+    <string name="dialog_ignore">Ignore</string>
     <string name="message_update">Version\n• Installed : %s (%d)\n• Latest : %s (%d)\n\nChanges :</string>
     <string name="message_update_changelog" translatable="false">\n• %s</string>
     <string name="message_update_no_changelog">\n• others</string>
