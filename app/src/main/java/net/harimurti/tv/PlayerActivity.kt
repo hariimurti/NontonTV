@@ -226,8 +226,8 @@ class PlayerActivity : AppCompatActivity() {
         switchLiveOrVideo(true)
 
         // set category & channel name
-        bindingRoot.categoryName.text = category?.name
-        bindingRoot.channelName.text = current?.name
+        bindingRoot.categoryName.text = category?.name?.trim()
+        bindingRoot.channelName.text = current?.name?.trim()
 
         // split streamurl with referer, user-agent
         var streamUrl = URLDecoder.decode(current?.streamUrl, "utf-8")

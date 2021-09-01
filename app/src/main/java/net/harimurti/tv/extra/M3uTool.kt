@@ -50,7 +50,7 @@ class M3uTool {
                                 m3u= M3U()
 
                             // set group name
-                            m3u.groupName = regexGrp(line)
+                            m3u.groupName = regexGrp(line)?.trim()
                         }
                         isExtInf(line) -> {
                             // reset if ChannelName is set
@@ -58,10 +58,10 @@ class M3uTool {
                                 m3u= M3U()
 
                             // set channel name
-                            m3u.channelName = regexCh(line)
+                            m3u.channelName = regexCh(line)?.trim()
 
                             // set group name
-                            m3u.groupName = regexTitle(line)
+                            m3u.groupName = regexTitle(line)?.trim()
                         }
                         isKodi(line) -> {
                             // set drm license
@@ -75,7 +75,8 @@ class M3uTool {
                                 m3u.groupName = "UNCATAGORIZED"
 
                             // add channel
-                            m3u.streamUrl = if (userAgent == null) line else "$line|User-Agent=$userAgent"
+                            val streamUrl = line?.trim()
+                            m3u.streamUrl = if (userAgent == null) streamUrl else "$streamUrl|User-Agent=$userAgent"
                             result.add(m3u)
 
                             // reset channel
