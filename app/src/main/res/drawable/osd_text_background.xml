@@ -6,14 +6,4 @@
             <corners android:radius="@dimen/ch_name_corner" />
         </shape>
     </item>
-    <item
-        android:bottom="3px"
-        android:left="3px"
-        android:right="3px"
-        android:top="3px">
-        <shape>
-            <solid android:color="@color/osd_inside_background"/>
-            <corners android:radius="@dimen/ch_name_corner" />
-        </shape>
-    </item>
 </layer-list>
