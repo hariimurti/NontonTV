@@ -4,6 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
+            name="position"
+            type="int" />
+        <variable
             name="modelSource"
             type="net.harimurti.tv.model.Source" />
         <variable
@@ -23,7 +26,7 @@
             android:ellipsize="end"
             android:text="@{modelSource.path}"
             android:checked="@{modelSource.active}"
-            android:onCheckedChanged="@{(view, checked) -> clickListener.onCheckChanged(view, checked, modelSource)}"
+            android:onCheckedChanged="@{(view, checked) -> clickListener.onCheckChanged(view, checked, position)}"
             android:onLongClick="@{(view) -> clickListener.onlongClicked(view, modelSource)}"/>
 
         <ImageButton

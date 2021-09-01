@@ -17,7 +17,7 @@ import net.harimurti.tv.model.Source
 
 interface SourceClickListener {
     fun onClicked(source: Source?)
-    fun onCheckChanged(view: View, checked: Boolean, source: Source?)
+    fun onCheckChanged(view: View, checked: Boolean, position: Int)
     fun onlongClicked(view: View, source: Source?): Boolean
 }
 
@@ -43,6 +43,7 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val source = sources?.get(position)
         viewHolder.bind(source)
+        viewHolder.itemBinding.position = position
         viewHolder.itemBinding.clickListener = this
         if (source?.path?.equals(context.getString(R.string.json_playlist)) == true) {
             viewHolder.itemBinding.swSource.setText(R.string.default_playlist)
@@ -70,8 +71,7 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
         return true
     }
 
-    override fun onCheckChanged(view: View, checked: Boolean, source: Source?) {
-        val position = sources?.indexOf(source) ?: 0
+    override fun onCheckChanged(view: View, checked: Boolean, position: Int) {
         sources?.get(position)?.active = checked
     }
 
