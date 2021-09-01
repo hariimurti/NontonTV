@@ -1,5 +1,7 @@
 package net.harimurti.tv.dialog
 
+import android.content.ClipboardManager
+import android.content.Context
 import android.os.Build
 import android.os.Bundle
 import android.os.Environment
@@ -65,19 +67,27 @@ class SettingSourcesFragment: Fragment() {
             filePicker.show()
         }
 
-        binding.inputSource.setOnEditorActionListener { _, i, k ->
-            if (i == EditorInfo.IME_ACTION_DONE || k.keyCode == KeyEvent.KEYCODE_ENTER) {
-                binding.btnAdd.performClick()
-                true
+        val clipboard = context?.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        var clipText = clipboard.primaryClip?.getItemAt(0)?.text.toString()
+        binding.inputSource.apply {
+            setText(if (clipText.isLinkUrl()) clipText.trim() else "")
+            setOnEditorActionListener { _, i, k ->
+                if (i == EditorInfo.IME_ACTION_DONE || k.keyCode == KeyEvent.KEYCODE_ENTER) {
+                    binding.btnAdd.performClick(); true
+                }
+                else false
             }
-            else false
         }
 
         binding.btnAdd.setOnClickListener {
             val inputSource = binding.inputSource
-            val input = inputSource.text.toString()
-            if (input.isBlank()) return@setOnClickListener
-            if (!input.isLinkUrl()) return@setOnClickListener
+            var input = inputSource.text.toString()
+            if (input.isBlank()) {
+                clipText = clipboard.primaryClip?.getItemAt(0)?.text.toString()
+                if (clipText.isLinkUrl()) input = clipText
+                else return@setOnClickListener
+            }
+            else if (!input.isLinkUrl()) return@setOnClickListener
 
             it.isEnabled = false
             inputSource.isEnabled = false
