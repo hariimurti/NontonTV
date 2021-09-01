@@ -20,6 +20,7 @@
     </style>
 
     <style name="AppThemePlayer" parent="AppThemeTV">
+        <item name="background">@android:color/black</item>
         <item name="android:keepScreenOn">true</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowLayoutInDisplayCutoutMode" tools:ignore="NewApi">shortEdges</item>
