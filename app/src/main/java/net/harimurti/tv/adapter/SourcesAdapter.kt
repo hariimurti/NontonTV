@@ -73,11 +73,6 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
     override fun onCheckChanged(view: View, checked: Boolean, source: Source?) {
         val position = sources?.indexOf(source) ?: 0
         sources?.get(position)?.active = checked
-        if (!checked && sources?.filter { s -> s.active }?.size == 0 && !sources[0].active) {
-            sources[0].active = true
-            notifyItemChanged(0)
-            Toast.makeText(context, R.string.warning_none_source_active, Toast.LENGTH_SHORT).show()
-        }
     }
 
     override fun getItemCount(): Int {

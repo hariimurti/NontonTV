@@ -72,6 +72,6 @@
     <string name="checking_url">memeriksa tautan…</string>
     <string name="link_error">Tautan Bermasalah!</string>
     <string name="link_copied_to_clipboard">Tautan disalin ke papan klip!</string>
-    <string name="warning_none_source_active">Tidak ada sumber lain yang aktif, default harus diaktifkan!</string>
+    <string name="warning_none_source_active">Tidak ada sumber yang aktif, default akan diaktifkan!</string>
     <string name="more_information">Informasi Lain :</string>
 </resources>

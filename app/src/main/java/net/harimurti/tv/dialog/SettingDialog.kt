@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatDialog
 import androidx.fragment.app.*
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -65,7 +66,12 @@ class SettingDialog : DialogFragment() {
         binding.settingOkButton.apply {
             setOnClickListener {
                 // playlist sources
-                preferences.sources = SettingSourcesFragment.sources
+                val sources = SettingSourcesFragment.sources
+                if (sources?.filter { s -> s.active }?.size == 0) {
+                    sources[0].active = true
+                    Toast.makeText(context, R.string.warning_none_source_active, Toast.LENGTH_SHORT).show()
+                }
+                preferences.sources = sources
                 // setting app
                 preferences.isLandscape = SettingAppFragment.isLandscape
                 preferences.launchAtBoot = SettingAppFragment.launchAtBoot

@@ -89,7 +89,7 @@
     <string name="checking_url">checking url…</string>
     <string name="link_error">Link Error!</string>
     <string name="link_copied_to_clipboard">Link copied to clipboard!</string>
-    <string name="warning_none_source_active">No other source is active, default must be enabled!</string>
+    <string name="warning_none_source_active">No active source, default will be enabled!</string>
     <string name="more_information">More Information :</string>
     <string name="button_website" translatable="false">Website</string>
     <string name="button_telegram" translatable="false">Telegram</string>
