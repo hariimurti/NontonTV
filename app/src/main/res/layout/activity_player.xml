@@ -13,6 +13,7 @@
             android:background="@android:color/black"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:played_color="@color/color_red_light"
             app:show_subtitle_button="true"
             app:show_buffering="always"
             app:controller_layout_id="@layout/custom_control"
