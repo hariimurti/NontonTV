@@ -4,11 +4,9 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.content.Context.CLIPBOARD_SERVICE
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -63,15 +61,13 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
     }
 
     override fun onlongClicked(view: View, source: Source?): Boolean {
-        val clipboardManager = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
-        val clipData = ClipData.newUri(context.contentResolver, "URI", Uri.parse(source?.path))
-        clipboardManager.setPrimaryClip(clipData)
+        val clipboard = context.getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText("url", source?.path)
 
+        clipboard.setPrimaryClip(clipData)
         Toast.makeText(context, R.string.link_copied_to_clipboard, Toast.LENGTH_SHORT).show()
 
-        val checkBox = view as CheckBox
-        checkBox.isChecked = !checkBox.isChecked
-        return false
+        return true
     }
 
     override fun onCheckChanged(view: View, checked: Boolean, source: Source?) {
