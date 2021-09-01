@@ -3,11 +3,13 @@ package net.harimurti.tv.extra
 import java.io.File
 
 fun String?.isLinkUrl(): Boolean {
-    return this?.startsWith("http", true) == true
+    if (this == null) return false
+    return Regex("^https?://.+?\\..+?/.*").matches(this)
 }
 
 fun String?.isStreamUrl(): Boolean {
-    return this?.isLinkUrl() == true || this?.startsWith("rtmp", true) == true
+    if (this == null) return false
+    return Regex("^(?:https?|rtmp)://.+?\\..+?/.*").matches(this)
 }
 
 fun String?.isPathExist(): Boolean {
