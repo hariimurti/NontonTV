@@ -203,6 +203,8 @@ class PlayerActivity : AppCompatActivity() {
             else -> View.VISIBLE
         }
         bindingControl.layoutSeekbar.visibility = visibility
+        bindingControl.spacerLeft.visibility = visibility
+        bindingControl.spacerRight.visibility = visibility
         // override visibility if not seekable
         if (player?.isCurrentWindowSeekable == false) visibility = View.GONE
         bindingControl.buttonRewind.visibility = visibility

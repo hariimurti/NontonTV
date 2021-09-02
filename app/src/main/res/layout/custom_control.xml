@@ -16,6 +16,18 @@
             app:srcCompat="@drawable/ic_player_close"
             style="@style/ImageButtonControl" />
 
+        <View
+            android:id="@+id/spacer_left"
+            android:layout_width="0dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/button_exit"
+            app:layout_constraintEnd_toStartOf="@id/layout_control"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/ImageButtonControl"
+            tools:visibility="visible" />
+
         <LinearLayout
             android:id="@+id/layout_control"
             android:layout_width="wrap_content"
@@ -60,6 +72,18 @@
                 style="@style/ImageButtonControl" />
 
         </LinearLayout>
+
+        <View
+            android:id="@+id/spacer_right"
+            android:layout_width="0dp"
+            android:clickable="false"
+            android:focusable="false"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@id/layout_control"
+            app:layout_constraintEnd_toStartOf="@id/screen_mode"
+            app:layout_constraintBottom_toBottomOf="parent"
+            style="@style/ImageButtonControl"
+            tools:visibility="visible"/>
 
         <ImageButton
             android:id="@+id/screen_mode"
