@@ -596,10 +596,10 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
+        if (isLocked) return
         if (isTelevision || doubleBackToExitPressedOnce) {
             super.onBackPressed()
-            finish()
-            return
+            finish(); return
         }
         doubleBackToExitPressedOnce = true
         Toast.makeText(this, getString(R.string.press_back_twice_exit_player), Toast.LENGTH_SHORT).show()
