@@ -163,8 +163,10 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun setChannelInformation(visible: Boolean) {
         if (isLocked) return
-        bindingRoot.layoutInfo.visibility = if (visible) View.VISIBLE else View.GONE
+        bindingRoot.layoutInfo.visibility =
+            if (visible && !isPipMode) View.VISIBLE else View.INVISIBLE
 
+        if (isPipMode) return
         if (visible == bindingRoot.playerView.isControllerVisible) return
         if (visible) bindingRoot.playerView.clearFocus()
         else return
@@ -175,7 +177,7 @@ class PlayerActivity : AppCompatActivity() {
         handlerInfo?.removeCallbacksAndMessages(null)
         handlerInfo?.postDelayed({
                 if (bindingRoot.playerView.isControllerVisible) return@postDelayed
-                bindingRoot.layoutInfo.visibility = View.GONE
+                bindingRoot.layoutInfo.visibility = View.INVISIBLE
             },
             bindingRoot.playerView.controllerShowTimeoutMs.toLong()
         )
@@ -528,9 +530,10 @@ class PlayerActivity : AppCompatActivity() {
 
     override fun onPictureInPictureModeChanged(pip: Boolean, config: Configuration) {
         super.onPictureInPictureModeChanged(pip, config)
+        isPipMode = pip
+        setChannelInformation(!pip)
         bindingRoot.playerView.useController = !pip
         player?.playWhenReady = true
-        isPipMode = pip
     }
 
     @Suppress("DEPRECATION")

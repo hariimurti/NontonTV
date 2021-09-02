@@ -28,7 +28,9 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:focusable="false"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="invisible"
+            tools:visibility="visible">
 
             <TextView
                 android:id="@+id/category_name"
