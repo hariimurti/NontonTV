@@ -1,5 +1,6 @@
-package net.harimurti.tv.extra
+package net.harimurti.tv.extension
 
+import net.harimurti.tv.extra.PlaylistHelper
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.Favorites
 import net.harimurti.tv.model.Playlist

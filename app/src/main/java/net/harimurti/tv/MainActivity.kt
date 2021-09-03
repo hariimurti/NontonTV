@@ -20,6 +20,7 @@ import net.harimurti.tv.adapter.CategoryAdapter
 import net.harimurti.tv.databinding.ActivityMainBinding
 import net.harimurti.tv.dialog.SearchDialog
 import net.harimurti.tv.dialog.SettingDialog
+import net.harimurti.tv.extension.*
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist

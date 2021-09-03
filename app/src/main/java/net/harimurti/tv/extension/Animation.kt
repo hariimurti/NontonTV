@@ -1,4 +1,4 @@
-package net.harimurti.tv.extra
+package net.harimurti.tv.extension
 
 import android.view.View
 import android.view.animation.AnimationUtils

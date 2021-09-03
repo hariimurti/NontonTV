@@ -1,4 +1,4 @@
-package net.harimurti.tv.extra
+package net.harimurti.tv.extension
 
 import net.harimurti.tv.App
 import net.harimurti.tv.R

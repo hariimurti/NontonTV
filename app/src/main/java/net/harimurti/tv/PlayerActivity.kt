@@ -29,6 +29,7 @@ import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import net.harimurti.tv.databinding.ActivityPlayerBinding
 import net.harimurti.tv.databinding.CustomControlBinding
 import net.harimurti.tv.dialog.TrackSelectionDialog
+import net.harimurti.tv.extension.*
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.Category
 import net.harimurti.tv.model.Channel

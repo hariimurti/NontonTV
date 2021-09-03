@@ -1,7 +1,8 @@
-package net.harimurti.tv.extra
+package net.harimurti.tv.extension
 
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
+import net.harimurti.tv.extra.M3uTool
 import net.harimurti.tv.model.*
 
 fun List<M3U>?.toPlaylist(): Playlist? {

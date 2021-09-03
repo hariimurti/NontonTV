@@ -18,8 +18,8 @@ import com.developer.filepicker.model.DialogProperties
 import net.harimurti.tv.R
 import net.harimurti.tv.adapter.SourcesAdapter
 import net.harimurti.tv.databinding.SettingSourcesFragmentBinding
+import net.harimurti.tv.extension.isLinkUrl
 import net.harimurti.tv.extra.PlaylistHelper
-import net.harimurti.tv.extra.isLinkUrl
 import net.harimurti.tv.model.Source
 import java.io.File
 

@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import net.harimurti.tv.R
 import net.harimurti.tv.adapter.SearchAdapter
 import net.harimurti.tv.databinding.SearchDialogBinding
-import net.harimurti.tv.extra.isFavorite
+import net.harimurti.tv.extension.isFavorite
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist

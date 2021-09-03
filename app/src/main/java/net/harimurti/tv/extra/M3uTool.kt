@@ -1,5 +1,7 @@
 package net.harimurti.tv.extra
 
+import net.harimurti.tv.extension.isStreamUrl
+import net.harimurti.tv.extension.normalize
 import net.harimurti.tv.model.M3U
 import java.io.BufferedReader
 import java.io.IOException

@@ -16,6 +16,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
 import net.harimurti.tv.databinding.ActivitySplashBinding
+import net.harimurti.tv.extension.*
 import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.GithubUser
 import net.harimurti.tv.model.Playlist

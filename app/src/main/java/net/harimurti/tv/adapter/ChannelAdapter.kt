@@ -13,10 +13,7 @@ import net.harimurti.tv.MainActivity
 import net.harimurti.tv.PlayerActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.ItemChannelBinding
-import net.harimurti.tv.extra.insert
-import net.harimurti.tv.extra.remove
-import net.harimurti.tv.extra.save
-import net.harimurti.tv.extra.startAnimation
+import net.harimurti.tv.extension.*
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist

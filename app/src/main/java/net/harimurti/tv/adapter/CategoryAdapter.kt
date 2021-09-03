@@ -9,10 +9,8 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import net.harimurti.tv.BR
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.ItemCategoryBinding
+import net.harimurti.tv.extension.*
 import net.harimurti.tv.extra.Preferences
-import net.harimurti.tv.extra.addFavorite
-import net.harimurti.tv.extra.isFavorite
-import net.harimurti.tv.extra.sort
 import net.harimurti.tv.model.Category
 import net.harimurti.tv.model.Playlist
 import kotlin.math.round
