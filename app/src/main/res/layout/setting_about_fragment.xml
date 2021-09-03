@@ -2,14 +2,16 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:scrollbars="vertical">
 
         <LinearLayout
             android:id="@+id/layout_contributor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:paddingStart="50dp"
             android:paddingEnd="50dp"
             android:orientation="vertical"
@@ -17,8 +19,20 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
+                android:id="@+id/textVersion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textAlignment="center"
+                android:textColor="@color/color_accent"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                tools:text="NontonTV v2.3 b535" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="30dp"
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -43,7 +57,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="30dp"
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textSize="16sp"
@@ -82,5 +96,5 @@
 
             </LinearLayout>
         </LinearLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 </layout>
