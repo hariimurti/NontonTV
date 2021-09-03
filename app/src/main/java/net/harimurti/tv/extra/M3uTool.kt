@@ -50,7 +50,7 @@ class M3uTool {
                                 m3u= M3U()
 
                             // set group name
-                            m3u.groupName = regexGrp(line)?.trim()
+                            m3u.groupName = regexGrp(line)?.normalize()
                         }
                         isExtInf(line) -> {
                             // reset if ChannelName is set
@@ -58,10 +58,10 @@ class M3uTool {
                                 m3u= M3U()
 
                             // set channel name
-                            m3u.channelName = regexCh(line)?.trim()
+                            m3u.channelName = regexCh(line)?.normalize()
 
                             // set group name
-                            m3u.groupName = regexTitle(line)?.trim()
+                            m3u.groupName = regexTitle(line)?.normalize()
                         }
                         isKodi(line) -> {
                             // set drm license

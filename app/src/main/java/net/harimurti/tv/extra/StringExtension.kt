@@ -1,5 +1,6 @@
 package net.harimurti.tv.extra
 
+import android.text.Html
 import java.io.File
 
 fun String?.isLinkUrl(): Boolean {
@@ -25,4 +26,11 @@ fun String?.findPattern(pattern: String): String? {
     val option = setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE)
     val result = Regex(pattern, option).matchEntire(this)
     return result?.groups?.get(1)?.value
+}
+
+@Suppress("DEPRECATION")
+fun String?.normalize(): String? {
+    if (this == null) return null
+    val decoded = Html.fromHtml(this)
+    return Regex("[~@#$%&<>{}();_=]{2,}").replace(decoded, "").trim()
 }
