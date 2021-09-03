@@ -4,12 +4,12 @@ import java.io.File
 
 fun String?.isLinkUrl(): Boolean {
     if (this == null) return false
-    return Regex("^https?://.+?\\..+?/.*").matches(this)
+    return Regex("^https?://[a-zA-Z0-9-.]+\\.[a-zA-Z]{2,6}(/.*)?\$").matches(this)
 }
 
 fun String?.isStreamUrl(): Boolean {
     if (this == null) return false
-    return Regex("^(?:https?|rtmp)://.+?\\..+?/.*").matches(this)
+    return Regex("^(?:https?|rtmp)://[a-zA-Z0-9-.]+\\.[a-zA-Z]{2,6}(/.*)?\$").matches(this)
 }
 
 fun String?.isPathExist(): Boolean {
