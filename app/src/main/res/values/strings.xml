@@ -69,7 +69,6 @@
     <!-- settings -->
     <string name="settings">Preferences</string>
     <string name="startup">Startup</string>
-    <string name="force_landscape">Force Landscape</string>
     <string name="launch_at_boot">Run App on Boot</string>
     <string name="play_last_watched">Play Last Watched</string>
     <string name="playlist">Playlist</string>

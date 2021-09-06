@@ -49,7 +49,6 @@ class SettingDialog : DialogFragment() {
         val preferences = Preferences()
 
         // init
-        SettingAppFragment.isLandscape = preferences.isLandscape
         SettingAppFragment.launchAtBoot = preferences.launchAtBoot
         SettingAppFragment.playLastWatched = preferences.playLastWatched
         SettingAppFragment.sortCategory = preferences.sortCategory
@@ -61,7 +60,9 @@ class SettingDialog : DialogFragment() {
         // tab layout
         binding.settingTabLayout.setupWithViewPager(binding.settingViewPager)
         // button cancel
-        binding.settingCancelButton.setOnClickListener { dismiss() }
+        binding.settingCancelButton.apply {
+            setOnClickListener { dismiss() }
+        }
         // button ok
         binding.settingOkButton.apply {
             setOnClickListener {
@@ -73,25 +74,23 @@ class SettingDialog : DialogFragment() {
                 }
                 preferences.sources = sources
                 // setting app
-                preferences.isLandscape = SettingAppFragment.isLandscape
                 preferences.launchAtBoot = SettingAppFragment.launchAtBoot
                 preferences.playLastWatched = SettingAppFragment.playLastWatched
                 preferences.sortFavorite = SettingAppFragment.sortFavorite
                 preferences.sortCategory = SettingAppFragment.sortCategory
                 preferences.sortChannel = SettingAppFragment.sortChannel
                 preferences.reverseNavigation = SettingAppFragment.reverseNavigation
+                sendUpdatePlaylist(rootView.context)
                 dismiss()
-                // send update cmd
-                sendUpdateSettings(requireContext())
             }
         }
 
         return binding.root
     }
 
-    private fun sendUpdateSettings(context: Context) {
+    private fun sendUpdatePlaylist(context: Context) {
         LocalBroadcastManager.getInstance(context).sendBroadcast(
             Intent(MainActivity.MAIN_CALLBACK)
-                .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.UPDATE_SETTINGS))
+                .putExtra(MainActivity.MAIN_CALLBACK, MainActivity.UPDATE_PLAYLIST))
     }
 }

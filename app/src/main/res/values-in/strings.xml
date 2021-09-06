@@ -54,7 +54,6 @@
     <!-- settings -->
     <string name="settings">Pengaturan</string>
     <string name="startup">App Mulai</string>
-    <string name="force_landscape">Paksa Lanskap</string>
     <string name="launch_at_boot">Jalankan App saat Boot</string>
     <string name="play_last_watched">Putar Terakhir Dilihat</string>
     <string name="playlist">Daftar Putar</string>
