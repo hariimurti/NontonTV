@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import net.harimurti.tv.BR
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.ItemSourceBinding
+import net.harimurti.tv.dialog.SettingSourcesFragment
 import net.harimurti.tv.model.Source
 
 interface SourceClickListener {
@@ -59,6 +60,7 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
             sources[0].active = true
             notifyItemChanged(0)
         }
+        SettingSourcesFragment.isChanged = true
     }
 
     override fun onlongClicked(view: View, source: Source?): Boolean {
@@ -73,6 +75,7 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
 
     override fun onCheckChanged(view: View, checked: Boolean, position: Int) {
         sources?.get(position)?.active = checked
+        SettingSourcesFragment.isChanged = true
     }
 
     override fun getItemCount(): Int {
@@ -86,5 +89,6 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
     fun addItem(source: Source) {
         sources?.add(source)
         notifyItemChanged(sources?.indexOf(source) ?: 0)
+        SettingSourcesFragment.isChanged = true
     }
 }

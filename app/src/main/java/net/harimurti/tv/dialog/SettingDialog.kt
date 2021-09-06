@@ -54,6 +54,7 @@ class SettingDialog : DialogFragment() {
         SettingAppFragment.sortCategory = preferences.sortCategory
         SettingAppFragment.sortChannel = preferences.sortChannel
         SettingSourcesFragment.sources = preferences.sources
+        SettingSourcesFragment.isChanged = false
 
         // view pager
         binding.settingViewPager.adapter = FragmentAdapter(childFragmentManager)
@@ -73,6 +74,7 @@ class SettingDialog : DialogFragment() {
                     Toast.makeText(context, R.string.warning_none_source_active, Toast.LENGTH_SHORT).show()
                 }
                 preferences.sources = sources
+                if (SettingSourcesFragment.isChanged) sendUpdatePlaylist(rootView.context)
                 // setting app
                 preferences.launchAtBoot = SettingAppFragment.launchAtBoot
                 preferences.playLastWatched = SettingAppFragment.playLastWatched
@@ -80,7 +82,6 @@ class SettingDialog : DialogFragment() {
                 preferences.sortCategory = SettingAppFragment.sortCategory
                 preferences.sortChannel = SettingAppFragment.sortChannel
                 preferences.reverseNavigation = SettingAppFragment.reverseNavigation
-                sendUpdatePlaylist(rootView.context)
                 dismiss()
             }
         }
