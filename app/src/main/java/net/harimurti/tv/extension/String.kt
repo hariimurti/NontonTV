@@ -33,6 +33,6 @@ fun String?.findPattern(pattern: String): String? {
 @Suppress("DEPRECATION")
 fun String?.normalize(): String? {
     if (this == null) return null
-    val decoded = Html.fromHtml(this)
-    return Regex("[~@#$%&<>{}();_=]{2,}").replace(decoded, "").trim()
+    val decoded = Html.fromHtml(this).toString()
+    return Regex("([~@#\$%&<>{}();_=])(?:\\1{2,})").replace(decoded, "").trim()
 }
