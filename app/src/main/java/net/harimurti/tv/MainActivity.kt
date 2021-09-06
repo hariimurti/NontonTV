@@ -52,21 +52,13 @@ open class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        // init
+        // add divider on recyclerview
         binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        binding.swipeContainer.setOnRefreshListener {
-            binding.swipeContainer.isRefreshing = false
-            updatePlaylist(false)
-        }
 
-        // search button
-        binding.buttonSearch.setOnClickListener{
-            openSearch()
-        }
-        // setting button
-        binding.buttonSettings.setOnClickListener{
-            openSettings()
-        }
+        // set button click listner
+        binding.buttonSearch.setOnClickListener{ openSearch() }
+        binding.buttonRefresh.setOnClickListener { updatePlaylist(false) }
+        binding.buttonSettings.setOnClickListener{ openSettings() }
 
         // local broadcast receiver to update playlist
         LocalBroadcastManager.getInstance(this)
