@@ -3,6 +3,7 @@ package net.harimurti.tv
 import android.app.AlertDialog
 import android.app.PictureInPictureParams
 import android.content.*
+import android.content.pm.ActivityInfo
 import android.content.res.Configuration
 import android.media.MediaDrm
 import android.net.Uri
@@ -79,6 +80,7 @@ class PlayerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
         bindingRoot = ActivityPlayerBinding.inflate(layoutInflater)
         bindingControl = CustomControlBinding.bind(bindingRoot.root.findViewById(R.id.custom_control))
         setContentView(bindingRoot.root)

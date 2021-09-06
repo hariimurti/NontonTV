@@ -31,9 +31,9 @@
         tools:ignore="AllowBackup,UnusedAttribute">
         <activity
             android:name=".SplashActivity"
-            android:theme="@style/AppThemeSplash"
             android:launchMode="singleTask"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:screenOrientation="landscape"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -44,7 +44,8 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"/>
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".PlayerActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
@@ -52,12 +53,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="landscape"
             android:supportsPictureInPicture="true"
-            android:theme="@style/AppThemePlayer"
-            tools:ignore="LockedOrientationActivity" />
+            android:theme="@style/AppThemePlayer" />
 
         <receiver
             android:name=".LaunchAtBootReceiver"
-            android:enabled="true"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -67,5 +66,4 @@
             </intent-filter>
         </receiver>
     </application>
-
 </manifest>

@@ -2,6 +2,7 @@ package net.harimurti.tv
 
 import android.annotation.SuppressLint
 import android.content.*
+import android.content.pm.ActivityInfo
 import android.os.*
 import android.view.KeyEvent
 import android.view.View
@@ -47,21 +48,22 @@ open class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_SENSOR_LANDSCAPE
         binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        // init
         binding.rvCategory.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
         binding.swipeContainer.setOnRefreshListener {
             binding.swipeContainer.isRefreshing = false
             updatePlaylist(false)
         }
 
-        if (isTelevision) setTheme(R.style.AppThemeTV)
-        setContentView(binding.root)
-
-        //search button
+        // search button
         binding.buttonSearch.setOnClickListener{
             openSearch()
         }
-        //setting button
+        // setting button
         binding.buttonSettings.setOnClickListener{
             openSettings()
         }
