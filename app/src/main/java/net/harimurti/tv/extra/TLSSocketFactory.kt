@@ -15,7 +15,7 @@ class TLSSocketFactory : SSLSocketFactory() {
     private val factory: SSLSocketFactory
 
     @get:Throws(NoSuchAlgorithmException::class)
-    private val sSLContext: SSLContext
+    private val sslContext: SSLContext
         get() {
             if (Build.VERSION.SDK_INT < 22) {
                 try {
@@ -27,9 +27,10 @@ class TLSSocketFactory : SSLSocketFactory() {
             return SSLContext.getInstance("TLS")
         }
 
-    fun trustAllHttps() {
+    fun trustAllHttps(): TLSSocketFactory {
         HttpsURLConnection.setDefaultHostnameVerifier { _: String?, _: SSLSession? -> true }
         HttpsURLConnection.setDefaultSSLSocketFactory(factory)
+        return this
     }
 
     override fun getDefaultCipherSuites(): Array<String> {
@@ -92,7 +93,7 @@ class TLSSocketFactory : SSLSocketFactory() {
             e.printStackTrace()
         }
 
-        val sslContext = sSLContext
+        val sslContext = this.sslContext
         sslContext.init(null, trustManagers, SecureRandom())
         factory = sslContext.socketFactory
     }

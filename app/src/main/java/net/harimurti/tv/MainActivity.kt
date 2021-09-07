@@ -11,6 +11,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.android.material.snackbar.Snackbar
 import net.harimurti.tv.adapter.CategoryAdapter
 import net.harimurti.tv.databinding.ActivityMainBinding
 import net.harimurti.tv.dialog.SearchDialog
@@ -126,22 +127,24 @@ open class MainActivity : AppCompatActivity() {
         binding.catAdapter?.clear()
         val playlistSet = Playlist()
 
-        PlaylistHelper().task(preferences.sources,
-            object: PlaylistHelper.TaskResponse {
-                override fun onError(error: Exception, source: Source) {
-                    val message = if (error.message.isNullOrBlank()) "Problem with $source" else error.message
-                    Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
-                }
-                override fun onResponse(playlist: Playlist?) {
-                    // merge into playlistset
-                    if (playlist != null) playlistSet.mergeWith(playlist)
-                    else Toast.makeText(applicationContext, getString(R.string.playlist_cant_be_parsed), Toast.LENGTH_SHORT).show()
-                }
-                override fun onFinish() {
-                    if (playlistSet.isCategoriesEmpty()) showAlertPlaylistError(getString(R.string.null_playlist))
-                    else setPlaylistToAdapter(playlistSet)
-                }
-        }).getResponse(useCache)
+        SourcesReader().set(preferences.sources, object: SourcesReader.Result {
+            override fun onError(source: String, error: String) {
+                val snackbar = Snackbar.make(binding.root, "[${error.uppercase()}] $source", Snackbar.LENGTH_INDEFINITE)
+                snackbar.setAction(android.R.string.ok) { snackbar.dismiss() }
+                snackbar.show()
+            }
+
+            override fun onResponse(playlist: Playlist?) {
+                // merge into playlistset
+                if (playlist != null) playlistSet.mergeWith(playlist)
+                else Toast.makeText(applicationContext, R.string.playlist_cant_be_parsed, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onFinish() {
+                if (!playlistSet.isCategoriesEmpty()) setPlaylistToAdapter(playlistSet)
+                else showAlertPlaylistError(getString(R.string.null_playlist))
+            }
+        }).process(useCache)
     }
 
     private fun showAlertPlaylistError(message: String?) {

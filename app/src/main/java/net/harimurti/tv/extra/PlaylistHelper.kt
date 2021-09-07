@@ -1,40 +1,19 @@
 package net.harimurti.tv.extra
 
 import android.util.Log
-import com.android.volley.Request
-import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
-import net.harimurti.tv.R
+import net.harimurti.tv.App
 import net.harimurti.tv.model.*
 import java.io.*
-import com.android.volley.toolbox.HttpHeaderParser
-import com.android.volley.NetworkResponse
-import com.android.volley.Response
-import net.harimurti.tv.App
 import net.harimurti.tv.extension.*
 
 class PlaylistHelper {
     private val context = App.context
     private val cache: File = File(context.cacheDir, "NontonTV.json")
     private val favorite: File = File(context.filesDir, "Favorite.json")
-    private var taskResponse: TaskResponse? = null
-    private var taskChecker: TaskChecker? = null
-    private var sources: ArrayList<Source> = ArrayList()
-    private var checkSource: Source? = null
-    private val volley = VolleyRequestQueue.create()
 
     companion object {
         private const val TAG = "PlaylistHelper"
-    }
-
-    interface TaskResponse {
-        fun onResponse(playlist: Playlist?) {}
-        fun onError(error: Exception, source: Source) {}
-        fun onFinish() {}
-    }
-
-    interface TaskChecker {
-        fun onCheckResult(result: Boolean) {}
     }
 
     fun writeCache(playlist: Playlist) {
@@ -56,7 +35,7 @@ class PlaylistHelper {
         }
     }
 
-    private fun readFile(file: File): Playlist? {
+    fun readFile(file: File): Playlist? {
         return try {
             file.readText(Charsets.UTF_8).toPlaylist()
         } catch (e: Exception) {
@@ -86,103 +65,6 @@ class PlaylistHelper {
         }
         Playlist.favorites = fav
         return fav
-    }
-
-    fun task(sources: ArrayList<Source>?, taskResponse: TaskResponse?): PlaylistHelper {
-        sources?.let { this.sources.addAll(it) }
-        this.taskResponse = taskResponse
-        return this
-    }
-
-    fun task(source: Source, taskChecker: TaskChecker?): PlaylistHelper {
-        checkSource = source
-        this.taskChecker = taskChecker
-        return this
-    }
-
-    fun getResponse(useCache: Boolean) {
-        // send onFinish when sources is empty
-        if (sources.isEmpty()) {
-            taskResponse?.onFinish()
-            return
-        }
-
-        // get first source
-        val source = sources.first()
-        sources.remove(source)
-        if (!source.active) {
-            getResponse(useCache)
-            return
-        }
-
-        // local playlist
-        if (!source.path.isLinkUrl()) {
-            val playlist = readFile(source.path.toFile())
-            taskResponse?.onResponse(playlist)
-            getResponse(useCache)
-            return
-        }
-
-        // online playlist
-        val stringRequest = object: StringRequest(Method.GET, source.path,
-            { content ->
-                taskResponse?.onResponse(content.toPlaylist())
-                getResponse(useCache)
-            },
-            { error ->
-                var message = "[UNKNOWN] : ${source.path}"
-                if (error.networkResponse != null) {
-                    val errorcode = error.networkResponse.statusCode
-                    message = "[HTTP_$errorcode] : ${source.path}"
-                } else if (!Network().isConnected()) {
-                    message = context.getString(R.string.no_network)
-                }
-                Log.e(TAG, "Source : ${source.path}", error)
-                taskResponse?.onError(Exception(message), source)
-                getResponse(useCache)
-            }) {
-            override fun parseNetworkResponse(response: NetworkResponse): Response<String?>? {
-                // Volley's default charset is "ISO-8859-1".
-                // If no charset is specified, we want to default to UTF-8.
-                val charset = HttpHeaderParser.parseCharset(response.headers, null)
-                if (null == charset) {
-                    var contentType = response.headers!!["Content-Type"]
-                    contentType = if (null != contentType) "$contentType;charset=UTF-8" else "charset=UTF-8"
-                    response.headers!!["Content-Type"] = contentType
-                }
-                return super.parseNetworkResponse(response)
-            }
-        }
-        if (!useCache) volley.cache.clear()
-        volley.add(stringRequest)
-    }
-
-    fun checkResult() {
-        var result = false
-        if (checkSource?.path?.isLinkUrl() == false) {
-            result = checkSource?.path.isPathExist()
-            taskChecker?.onCheckResult(result)
-        }
-
-        val stringRequest = StringRequest(
-            Request.Method.GET, checkSource?.path.toString(),
-            { content ->
-                val pls = content.toPlaylist()
-                result = pls != null && pls.categories.isNotEmpty()
-                taskChecker?.onCheckResult(result)
-            },
-            { error ->
-                var message = "[UNKNOWN] : ${checkSource?.path}"
-                if (error.networkResponse != null) {
-                    val errorcode = error.networkResponse.statusCode
-                    message = "[HTTP_$errorcode] : ${checkSource?.path}"
-                } else if (!Network().isConnected()) {
-                    message = context.getString(R.string.no_network)
-                }
-                Log.e(TAG, message, error)
-                taskChecker?.onCheckResult(result)
-            })
-        volley.add(stringRequest)
     }
 }
 

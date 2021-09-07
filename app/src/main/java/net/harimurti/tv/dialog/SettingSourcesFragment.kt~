@@ -113,7 +113,7 @@ class SettingSourcesFragment: Fragment() {
                         Toast.makeText(context, R.string.link_error, Toast.LENGTH_SHORT).show()
                     }
                 }
-            }).run()
+            }).start()
         }
 
         return binding.root

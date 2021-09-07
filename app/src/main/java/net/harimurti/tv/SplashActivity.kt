@@ -11,9 +11,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import com.android.volley.Request
-import com.android.volley.Response
-import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
 import net.harimurti.tv.databinding.ActivitySplashBinding
 import net.harimurti.tv.extension.*
@@ -21,12 +18,14 @@ import net.harimurti.tv.extra.*
 import net.harimurti.tv.model.GithubUser
 import net.harimurti.tv.model.Playlist
 import net.harimurti.tv.model.Release
-import net.harimurti.tv.model.Source
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
+import java.io.IOException
 
 class SplashActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySplashBinding
     private val preferences = Preferences()
-    private val request = VolleyRequestQueue.create()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +51,27 @@ class SplashActivity : AppCompatActivity() {
         binding.textUsers.text = preferences.contributors
 
         // update constributors
-        getContributors()
+        HttpClient(true)
+            .create(getString(R.string.gh_contributors).toRequest())
+            .enqueue(object: Callback {
+                override fun onFailure(call: Call, e: IOException) {
+                    Log.e("HttpClient", "Could not get contributors!", e)
+                }
+
+                override fun onResponse(call: Call, response: Response) {
+                    try {
+                        val content = response.body()?.string()
+                        if (content.isNullOrBlank()) throw Exception("null content")
+                        if (!response.isSuccessful) throw Exception(response.message())
+                        val ghUsers = Gson().fromJson(content, Array<GithubUser>::class.java)
+                        val users = ghUsers.toStringContributor()
+                        preferences.contributors = users
+                        setContributors(users)
+                    } catch (e: Exception) {
+                        Log.e("HttpClient", "Could not get contributors!", e)
+                    }
+                }
+            })
 
         // first time alert
         if (preferences.isFirstTime) {
@@ -118,107 +137,94 @@ class SplashActivity : AppCompatActivity() {
     private fun checkNewRelease() {
         // start checking
         setStatus(R.string.status_checking_new_update)
-        val stringRequest = StringRequest(
-            Request.Method.GET,
-            getString(R.string.json_release),
-            Response.Listener { response: String? ->
-                try {
-                    val release = Gson().fromJson(response, Release::class.java)
-                    if (release.versionCode <= BuildConfig.VERSION_CODE ||
-                        release.versionCode <= preferences.ignoredVersion)
-                        return@Listener lunchMainActivity()
+        val request = getString(R.string.json_release).toRequest()
+        HttpClient(true).create(request).enqueue(object: Callback {
+            override fun onFailure(call: Call, e: IOException) {
+                Log.e("HttpClient", "Could not check new update!", e)
+                lunchMainActivity()
+            }
 
-                    val message = StringBuilder(
-                        String.format(
-                            getString(R.string.message_update),
-                            BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE,
-                            release.versionName, release.versionCode
-                        )
-                    )
-                    for (log in release.changelog) {
-                        message.append(String.format(getString(R.string.message_update_changelog), log))
-                    }
-                    if (release.changelog.isEmpty()) {
-                        message.append(getString(R.string.message_update_no_changelog))
-                    }
-
-                    val downloadUrl = if (release.downloadUrl.isBlank()) {
-                        String.format(getString(R.string.apk_release),
-                            release.versionName, release.versionName, release.versionCode)
-                    }
-                    else release.downloadUrl
-
-                    AlertDialog.Builder(this).apply {
-                        setTitle(R.string.alert_new_update)
-                        setMessage(message)
-                        setCancelable(false)
-                        setPositiveButton(R.string.dialog_download) { _,_ ->
-                            downloadFile(downloadUrl)
-                            lunchMainActivity()
-                        }
-                        setNegativeButton(R.string.dialog_ignore) { _, _ ->
-                            preferences.ignoredVersion = release.versionCode
-                            lunchMainActivity()
-                        }
-                        setNeutralButton(R.string.button_website) { _,_ ->
-                            openWebsite(getString(R.string.website))
-                            lunchMainActivity()
-                        }
-                        create()
-                        show()
-                    }
-                } catch (e: Exception) {
-                    Log.e("Volley", "Could not check new update!", e)
-                    lunchMainActivity()
+            override fun onResponse(call: Call, response: Response) {
+                val content = response.body()?.string()
+                if (!response.isSuccessful || content.isNullOrBlank()) {
+                    Log.e("HttpClient", "Could not check new update! ${response.message()}")
+                    return lunchMainActivity()
                 }
-            }, { lunchMainActivity() }
-        )
-        request.add(stringRequest)
+                val release = Gson().fromJson(content, Release::class.java)
+                if (release.versionCode <= BuildConfig.VERSION_CODE ||
+                    release.versionCode <= preferences.ignoredVersion) {
+                    return lunchMainActivity()
+                }
+
+                val message = StringBuilder(String.format(getString(R.string.message_update),
+                        BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE,
+                        release.versionName, release.versionCode))
+
+                for (log in release.changelog) {
+                    message.append(String.format(getString(R.string.message_update_changelog), log))
+                }
+                if (release.changelog.isEmpty()) {
+                    message.append(getString(R.string.message_update_no_changelog))
+                }
+
+                val downloadUrl = if (release.downloadUrl.isBlank()) {
+                    String.format(getString(R.string.apk_release),
+                        release.versionName, release.versionName, release.versionCode)
+                }
+                else release.downloadUrl
+
+                AlertDialog.Builder(applicationContext).apply {
+                    setTitle(R.string.alert_new_update); setMessage(message)
+                    setCancelable(false)
+                    setPositiveButton(R.string.dialog_download) { _,_ ->
+                        downloadFile(downloadUrl); lunchMainActivity()
+                    }
+                    setNegativeButton(R.string.dialog_ignore) { _, _ ->
+                        preferences.ignoredVersion = release.versionCode; lunchMainActivity()
+                    }
+                    setNeutralButton(R.string.button_website) { _,_ ->
+                        openWebsite(getString(R.string.website)); lunchMainActivity()
+                    }
+                    create(); show()
+                }
+            }
+        })
     }
 
-    private fun getContributors() {
-        val stringRequest = StringRequest(
-            Request.Method.GET,
-            getString(R.string.gh_contributors),
-            { response: String? ->
-                try {
-                    val ghUsers = Gson().fromJson(response, Array<GithubUser>::class.java)
-                    val users = ghUsers.toStringContributor()
-                    preferences.contributors = users
-                    binding.textUsers.text = users
-                } catch (e: Exception) {
-                    Log.e("Volley", "Could not get contributors!", e)
-                }
-            }, null
-        )
-        request.add(stringRequest)
+    private fun setContributors(users: String?) {
+        runOnUiThread {
+            binding.textUsers.text = users
+        }
     }
 
     private fun setStatus(resid: Int) {
-        binding.textStatus.setText(resid)
+        runOnUiThread {
+            binding.textStatus.setText(resid)
+        }
     }
 
     private fun lunchMainActivity() {
         val playlistSet = Playlist()
         setStatus(R.string.status_preparing_playlist)
-        PlaylistHelper().task(preferences.sources,
-            object: PlaylistHelper.TaskResponse {
-                override fun onError(error: Exception, source: Source) {
-                    val message = if (error.message.isNullOrBlank()) "Problem with $source" else error.message
+        SourcesReader().set(preferences.sources, object: SourcesReader.Result {
+            override fun onError(source: String, error: String) {
+                runOnUiThread {
+                    val message = "Source: $source, Error: $error"
                     Toast.makeText(applicationContext, message, Toast.LENGTH_SHORT).show()
                 }
-                override fun onResponse(playlist: Playlist?) {
-                    if (playlist != null) playlistSet.mergeWith(playlist)
-                }
-                override fun onFinish() {
-                    Playlist.cached = playlistSet
-                    Handler(Looper.getMainLooper()).postDelayed({
-                        val intent = Intent(applicationContext, MainActivity::class.java)
-                        startActivity(intent)
-                        finish()
-                    }, 2000)
-                }
-            }).getResponse(true)
+            }
+            override fun onResponse(playlist: Playlist?) {
+                if (playlist != null) playlistSet.mergeWith(playlist)
+            }
+            override fun onFinish() {
+                Playlist.cached = playlistSet
+                Handler(Looper.getMainLooper()).postDelayed({
+                    val intent = Intent(applicationContext, MainActivity::class.java)
+                    startActivity(intent)
+                    finish()
+                }, 2000)
+            }
+        }).process(true)
     }
 
     private fun openWebsite(link: String) {

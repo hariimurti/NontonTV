@@ -1,6 +1,6 @@
 package net.harimurti.tv.model
 
 class Source {
-    var path: String? = null
+    var path: String = ""
     var active = true
 }

@@ -1,6 +1,7 @@
 package net.harimurti.tv.extension
 
 import android.text.Html
+import okhttp3.Request
 import java.io.File
 
 fun String?.isLinkUrl(): Boolean {
@@ -35,4 +36,12 @@ fun String?.normalize(): String? {
     if (this == null) return null
     val decoded = Html.fromHtml(this).toString()
     return Regex("([~@#\$%&<>{}();_=])(?:\\1{2,})").replace(decoded, "").trim()
+}
+
+fun String.toRequest(): Request {
+    return Request.Builder().url(this).build()
+}
+
+fun String.toRequestBuilder(): Request.Builder {
+    return Request.Builder().url(this)
 }
