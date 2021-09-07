@@ -60,8 +60,7 @@ class PlaylistHelper {
         return try {
             file.readText(Charsets.UTF_8).toPlaylist()
         } catch (e: Exception) {
-            if (file == cache) e.printStackTrace()
-            else Log.e(TAG, String.format("Could not read from %s", file), e)
+            if (file != cache) Log.e(TAG, String.format("Could not read from %s", file), e)
             null
         }
     }
@@ -71,13 +70,19 @@ class PlaylistHelper {
     }
 
     fun readFavorites(): Favorites {
+        val newFav = Favorites()
         val fav = try {
-            val content = favorite.readText(Charsets.UTF_8)
-            Gson().fromJson(content, Favorites::class.java)
+            if (favorite.exists()) {
+                val content = favorite.readText(Charsets.UTF_8)
+                Gson().fromJson(content, Favorites::class.java)
+            }
+            else {
+                writeFavorites(newFav)
+                newFav
+            }
         } catch (e: Exception) {
-            if (e == FileNotFoundException()) e.printStackTrace()
-            else Log.e(TAG, "Could not read from ${favorite.name}", e)
-            Favorites()
+            Log.e(TAG, "Could not read from ${favorite.name}", e)
+            newFav
         }
         Playlist.favorites = fav
         return fav
