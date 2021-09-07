@@ -16,7 +16,7 @@ import net.harimurti.tv.extension.*
 class PlaylistHelper {
     private val context = App.context
     private val cache: File = File(context.cacheDir, "NontonTV.json")
-    private val favorite: File = File(context.cacheDir, "Favorite.json")
+    private val favorite: File = File(context.filesDir, "Favorite.json")
     private var taskResponse: TaskResponse? = null
     private var taskChecker: TaskChecker? = null
     private var sources: ArrayList<Source> = ArrayList()
