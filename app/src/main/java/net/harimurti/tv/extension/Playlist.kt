@@ -26,7 +26,8 @@ fun List<M3U>?.toPlaylist(): Playlist? {
             drm = DrmLicense()
             drm.name = item.licenseName
             drm.url = item.licenseKey
-            hashSet.add(drm)
+            if (hashSet.none { d -> d.name == item.licenseName })
+                hashSet.add(drm)
         }
 
         //hashmap (map same groupname as key)
