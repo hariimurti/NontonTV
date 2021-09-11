@@ -62,6 +62,7 @@ open class MainActivity : AppCompatActivity() {
         binding.buttonSearch.setOnClickListener{ openSearch() }
         binding.buttonRefresh.setOnClickListener { updatePlaylist(false) }
         binding.buttonSettings.setOnClickListener{ openSettings() }
+        binding.buttonExit.setOnClickListener { finish() }
 
         // local broadcast receiver to update playlist
         LocalBroadcastManager.getInstance(this)

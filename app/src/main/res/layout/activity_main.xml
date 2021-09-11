@@ -66,9 +66,16 @@
             <ImageButton
                 android:id="@+id/button_settings"
                 style="@style/ImageButtonMain"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/button_exit"
                 app:layout_constraintTop_toTopOf="parent"
                 android:src="@drawable/exo_ic_settings"/>
+
+            <ImageButton
+                android:id="@+id/button_exit"
+                style="@style/ImageButtonMain"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_exit"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
