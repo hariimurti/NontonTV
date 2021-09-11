@@ -141,26 +141,29 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
         bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
-        bindingControl.buttonExit.setOnClickListener { finish() }
+        bindingControl.buttonExit.apply {
+            visibility = if (isTelevision) View.GONE else View.VISIBLE
+            setOnClickListener { finish() }
+        }
         bindingControl.buttonPrevious.setOnClickListener { switchChannel(CHANNEL_PREVIOUS) }
         bindingControl.buttonRewind.setOnClickListener { player?.seekBack() }
         bindingControl.buttonForward.setOnClickListener { player?.seekForward() }
         bindingControl.buttonNext.setOnClickListener { switchChannel(CHANNEL_NEXT) }
         bindingControl.screenMode.setOnClickListener { showScreenMenu(it) }
         bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
-        bindingControl.buttonLock.visibility = if (isTelevision) View.GONE else View.VISIBLE
-        bindingControl.buttonLock.setOnClickListener {
-            if (!isLocked) {
-                (it as ImageButton).setImageResource(R.drawable.ic_lock)
-                lockControl(true)
+        bindingControl.buttonLock.apply {
+            visibility = if (isTelevision) View.GONE else View.VISIBLE
+            setOnClickListener {
+                if (!isLocked) {
+                    (it as ImageButton).setImageResource(R.drawable.ic_lock)
+                    lockControl(true)
+                }
             }
-        }
-        bindingControl.buttonLock.setOnLongClickListener {
-            (it as ImageButton).setImageResource(
-                if (isLocked) R.drawable.ic_lock_open else R.drawable.ic_lock
-            )
-            lockControl(!isLocked)
-            true
+            setOnLongClickListener {
+                val resId = if (isLocked) R.drawable.ic_lock_open else R.drawable.ic_lock
+                (it as ImageButton).setImageResource(resId)
+                lockControl(!isLocked); true
+            }
         }
     }
 
@@ -206,8 +209,7 @@ class PlayerActivity : AppCompatActivity() {
             else -> View.VISIBLE
         }
         bindingControl.layoutSeekbar.visibility = visibility
-        bindingControl.spacerLeft.visibility = visibility
-        bindingControl.spacerRight.visibility = visibility
+        bindingControl.spacerControl.visibility = visibility
         // override visibility if not seekable
         if (player?.isCurrentWindowSeekable == false) visibility = View.GONE
         bindingControl.buttonRewind.visibility = visibility

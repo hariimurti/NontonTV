@@ -11,22 +11,12 @@
 
         <ImageButton
             android:id="@+id/button_exit"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginEnd="@dimen/player_info_margin_start"
+            android:layout_marginTop="27dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_player_close"
-            style="@style/ImageButtonControl" />
-
-        <View
-            android:id="@+id/spacer_left"
-            android:layout_width="0dp"
-            android:clickable="false"
-            android:focusable="false"
-            android:visibility="gone"
-            app:layout_constraintStart_toEndOf="@id/button_exit"
-            app:layout_constraintEnd_toStartOf="@id/layout_control"
-            app:layout_constraintBottom_toBottomOf="parent"
-            style="@style/ImageButtonControl"
-            tools:visibility="visible" />
+            style="@style/ImageButtonClose" />
 
         <LinearLayout
             android:id="@+id/layout_control"
@@ -34,7 +24,6 @@
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:orientation="horizontal">
 
             <ImageButton
@@ -74,7 +63,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/spacer_right"
+            android:id="@+id/spacer_control"
             android:layout_width="0dp"
             android:clickable="false"
             android:focusable="false"
@@ -95,18 +84,16 @@
         <ImageButton
             android:id="@+id/track_selection"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/button_lock"
             app:srcCompat="@drawable/ic_track_selector"
             style="@style/ImageButtonControl" />
 
         <ImageButton
             android:id="@+id/button_lock"
-            android:layout_marginEnd="@dimen/player_info_margin_start"
-            android:layout_marginTop="27dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_lock_open"
-            style="@style/ImageButtonLock" />
+            style="@style/ImageButtonControl" />
 
         <LinearLayout
             android:id="@+id/layout_seekbar"

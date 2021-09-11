@@ -38,7 +38,7 @@
         <item name="android:layout_height">@dimen/btn_control_size</item>
     </style>
 
-    <style name="ImageButtonLock" parent="ImageButtonBase">
+    <style name="ImageButtonClose" parent="ImageButtonBase">
         <item name="android:background">@drawable/button_lock_background</item>
         <item name="android:layout_width">@dimen/btn_control_size</item>
         <item name="android:layout_height">@dimen/btn_control_size</item>
