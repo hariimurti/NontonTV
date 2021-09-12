@@ -17,7 +17,7 @@ import net.harimurti.tv.dialog.SettingSourcesFragment
 import net.harimurti.tv.model.Source
 
 interface SourceClickListener {
-    fun onClicked(source: Source?)
+    fun onClicked(position: Int)
     fun onCheckChanged(view: View, checked: Boolean, position: Int)
     fun onlongClicked(view: View, source: Source?): Boolean
 }
@@ -52,12 +52,17 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
         }
     }
 
-    override fun onClicked(source: Source?) {
-        val position = sources?.indexOf(source) ?: 0
-        sources?.remove(source)
+    override fun onViewRecycled(viewHolder: ViewHolder) {
+        super.onViewRecycled(viewHolder)
+        viewHolder.itemBinding.clickListener = null
+    }
+
+    override fun onClicked(position: Int) {
+        sources?.removeAt(position)
         notifyItemRemoved(position)
-        if (sources?.size == 1) {
-            sources[0].active = true
+        notifyItemRangeChanged(0, itemCount)
+        if (itemCount == 1) {
+            sources?.get(0)?.active = true
             notifyItemChanged(0)
         }
         SettingSourcesFragment.isChanged = true
@@ -87,8 +92,9 @@ class SourcesAdapter(private val sources: ArrayList<Source>?):
     }
 
     fun addItem(source: Source) {
+        val position = itemCount
         sources?.add(source)
-        notifyItemChanged(sources?.indexOf(source) ?: 0)
+        notifyItemInserted(position)
         SettingSourcesFragment.isChanged = true
     }
 }

@@ -37,7 +37,7 @@
             android:padding="10dp"
             android:layout_alignParentEnd="true"
             app:srcCompat="@drawable/ic_remove"
-            android:onClick="@{() -> clickListener.onClicked(modelSource)}"
+            android:onClick="@{() -> clickListener.onClicked(position)}"
             tools:ignore="ContentDescription" />
 
     </RelativeLayout>

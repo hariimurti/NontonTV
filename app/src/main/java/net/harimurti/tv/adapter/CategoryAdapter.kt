@@ -65,9 +65,10 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) :
         val fav = Playlist.favorites
         if (Preferences().sortFavorite) fav.sort()
         if (categories?.get(0)?.isFavorite() == false) {
+            val lastCount = itemCount
             categories.addFavorite(fav.channels)
             notifyItemInserted(0)
-            notifyItemRangeChanged(1, itemCount-1)
+            notifyItemRangeChanged(1, lastCount)
         }
         else {
             categories?.get(0)?.channels = fav.channels
