@@ -428,15 +428,15 @@ class PlayerActivity : AppCompatActivity() {
             val mappedTrackInfo = trackSelector.currentMappedTrackInfo ?: return
             val isVideoProblem = mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_VIDEO) == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS
             val isAudioProblem = mappedTrackInfo.getTypeSupport(C.TRACK_TYPE_AUDIO) == MappedTrackInfo.RENDERER_SUPPORT_UNSUPPORTED_TRACKS
-            if (isVideoProblem || isAudioProblem) {
-                val problem = when {
-                    isVideoProblem && isAudioProblem -> "video & audio"
-                    isVideoProblem -> "video"
-                    else -> "audio"
-                }
-                val message = String.format(getString(R.string.error_unsupported), problem)
-                showMessage(message, false)
+
+            val problem = when {
+                isVideoProblem && isAudioProblem -> "video & audio"
+                isVideoProblem -> "video"
+                else -> "audio"
             }
+            val message = String.format(getString(R.string.error_unsupported), problem)
+            if (isVideoProblem) showMessage(message, false)
+            else if (isAudioProblem) Toast.makeText(applicationContext, message, Toast.LENGTH_LONG).show()
         }
     }
 
