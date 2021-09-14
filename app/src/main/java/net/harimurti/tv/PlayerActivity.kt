@@ -287,8 +287,13 @@ class PlayerActivity : AppCompatActivity() {
             parameters = ParametersBuilder(applicationContext).build()
         }
 
+
+        // enable extension renderer
+        val renderersFactory = DefaultRenderersFactory(this)
+            .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
+
         // create player & set listener
-        player = SimpleExoPlayer.Builder(this)
+        player = SimpleExoPlayer.Builder(this, renderersFactory)
             .setMediaSourceFactory(mediaSourceFactory)
             .setTrackSelector(trackSelector)
             .build()
