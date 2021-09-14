@@ -20,6 +20,10 @@ class SettingDialog : DialogFragment() {
     private val tabFragment = arrayOf(SettingSourcesFragment(), SettingAppFragment(), SettingAboutFragment())
     private val tabTitle = arrayOf(R.string.tab_sources, R.string.tab_app, R.string.tab_about)
 
+    companion object {
+        var isChanged = false
+    }
+
     @Suppress("DEPRECATION")
     inner class FragmentAdapter(fragmentManager: FragmentManager?) :
         FragmentPagerAdapter(fragmentManager!!, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
@@ -49,13 +53,15 @@ class SettingDialog : DialogFragment() {
         val preferences = Preferences()
 
         // init
+        isChanged = false
         SettingAppFragment.launchAtBoot = preferences.launchAtBoot
         SettingAppFragment.playLastWatched = preferences.playLastWatched
+        SettingAppFragment.sortFavorite = preferences.sortFavorite
         SettingAppFragment.sortCategory = preferences.sortCategory
         SettingAppFragment.sortChannel = preferences.sortChannel
         SettingAppFragment.optimizePrebuffer = preferences.optimizePrebuffer
+        SettingAppFragment.reverseNavigation = preferences.reverseNavigation
         SettingSourcesFragment.sources = preferences.sources
-        SettingSourcesFragment.isChanged = false
 
         // view pager
         binding.settingViewPager.adapter = FragmentAdapter(childFragmentManager)
@@ -75,7 +81,7 @@ class SettingDialog : DialogFragment() {
                     Toast.makeText(context, R.string.warning_none_source_active, Toast.LENGTH_SHORT).show()
                 }
                 preferences.sources = sources
-                if (SettingSourcesFragment.isChanged) sendUpdatePlaylist(rootView.context)
+                if (isChanged) sendUpdatePlaylist(rootView.context)
                 // setting app
                 preferences.launchAtBoot = SettingAppFragment.launchAtBoot
                 preferences.playLastWatched = SettingAppFragment.playLastWatched

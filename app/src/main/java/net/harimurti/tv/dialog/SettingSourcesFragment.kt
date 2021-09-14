@@ -26,7 +26,6 @@ import java.io.File
 class SettingSourcesFragment: Fragment() {
     companion object {
         var sources: ArrayList<Source>? = null
-        var isChanged = false
     }
 
     @Suppress("DEPRECATION")
