@@ -53,6 +53,7 @@ class SettingDialog : DialogFragment() {
         SettingAppFragment.playLastWatched = preferences.playLastWatched
         SettingAppFragment.sortCategory = preferences.sortCategory
         SettingAppFragment.sortChannel = preferences.sortChannel
+        SettingAppFragment.optimizePrebuffer = preferences.optimizePrebuffer
         SettingSourcesFragment.sources = preferences.sources
         SettingSourcesFragment.isChanged = false
 
@@ -81,6 +82,7 @@ class SettingDialog : DialogFragment() {
                 preferences.sortFavorite = SettingAppFragment.sortFavorite
                 preferences.sortCategory = SettingAppFragment.sortCategory
                 preferences.sortChannel = SettingAppFragment.sortChannel
+                preferences.optimizePrebuffer = SettingAppFragment.optimizePrebuffer
                 preferences.reverseNavigation = SettingAppFragment.reverseNavigation
                 dismiss()
             }

@@ -25,6 +25,7 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector.ParametersBuilder
 import com.google.android.exoplayer2.trackselection.MappingTrackSelector.MappedTrackInfo
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
+import com.google.android.exoplayer2.upstream.DefaultAllocator
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSource
 import net.harimurti.tv.databinding.ActivityPlayerBinding
@@ -287,16 +288,30 @@ class PlayerActivity : AppCompatActivity() {
             parameters = ParametersBuilder(applicationContext).build()
         }
 
+        // optimize prebuffer
+        val loadControl: LoadControl = DefaultLoadControl.Builder()
+            .setAllocator(DefaultAllocator(true, 16))
+            .setBufferDurationsMs(
+                32 * 1024,
+                64 * 1024,
+                1024,
+                1024)
+            .setTargetBufferBytes(-1)
+            .setPrioritizeTimeOverSizeThresholds(true).build()
 
         // enable extension renderer
         val renderersFactory = DefaultRenderersFactory(this)
             .setExtensionRendererMode(DefaultRenderersFactory.EXTENSION_RENDERER_MODE_ON)
 
-        // create player & set listener
-        player = SimpleExoPlayer.Builder(this, renderersFactory)
+        // set player builder
+        val playerBuilder = SimpleExoPlayer.Builder(this, renderersFactory)
             .setMediaSourceFactory(mediaSourceFactory)
             .setTrackSelector(trackSelector)
-            .build()
+        if (preferences.optimizePrebuffer)
+            playerBuilder.setLoadControl(loadControl)
+
+        // create player & set listener
+        player = playerBuilder.build()
         player?.addListener(PlayerListener())
 
         // set player view

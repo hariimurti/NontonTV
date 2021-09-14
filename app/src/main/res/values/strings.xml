@@ -76,6 +76,7 @@
     <string name="sort_category">Sort Category</string>
     <string name="sort_channel">Sort Channel</string>
     <string name="player">Player</string>
+    <string name="optimize_prebuffer">Optimize Prebuffer</string>
     <string name="reverse_player_navigation">Reverse DPAD Navigation</string>
     <string name="tab_about">About</string>
     <string name="tab_sources">Playlist</string>

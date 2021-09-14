@@ -61,6 +61,7 @@
     <string name="sort_category">Urutkan Kategori</string>
     <string name="sort_channel">Urutkan Saluran</string>
     <string name="player">Pemutar</string>
+    <string name="optimize_prebuffer">Mengoptimalkan Prebuffer</string>
     <string name="reverse_player_navigation">Navigasi DPAD Terbalik</string>
     <string name="tab_about">Tentang</string>
     <string name="tab_sources">Daftar Putar</string>

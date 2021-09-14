@@ -27,6 +27,7 @@ class Preferences {
         private const val SORT_FAVORITE = "SORT_FAVORITE"
         private const val SORT_CATEGORY = "SORT_CATEGORY"
         private const val SORT_CHANNEL = "SORT_CHANNEL"
+        private const val OPTIMIZE_PREBUFFER = "OPTIMIZE_PREBUFFER"
         private const val REVERSE_NAVIGATION = "REVERSE_NAVIGATION"
         private const val CONTRIBUTORS = "CONTRIBUTORS"
         private const val RESIZE_MODE = "RESIZE_MODE"
@@ -95,6 +96,14 @@ class Preferences {
             val json = Gson().toJson(value)
             editor = preferences.edit()
             editor.putString(LAST_WATCHED, json)
+            editor.apply()
+        }
+
+    var optimizePrebuffer: Boolean
+        get() = preferences.getBoolean(OPTIMIZE_PREBUFFER, true)
+        set(value) {
+            editor = preferences.edit()
+            editor.putBoolean(OPTIMIZE_PREBUFFER, value)
             editor.apply()
         }
 

@@ -14,6 +14,7 @@ class SettingAppFragment : Fragment() {
         var sortFavorite = false
         var sortCategory = false
         var sortChannel = true
+        var optimizePrebuffer = true
         var reverseNavigation = false
     }
 
@@ -52,6 +53,13 @@ class SettingAppFragment : Fragment() {
             isChecked = sortChannel
             setOnClickListener {
                 sortChannel = isChecked
+            }
+        }
+
+        binding.optimizePrebuffer.apply {
+            isChecked = optimizePrebuffer
+            setOnClickListener {
+                optimizePrebuffer = isChecked
             }
         }
 
