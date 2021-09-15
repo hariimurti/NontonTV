@@ -448,6 +448,11 @@
           "stream_url": "https://crackle-plex.amagi.tv/playlist.m3u8"
         },
         {
+          "name": "Dunia Game",
+          "stream_url": "https://cdn-telkomsel-01.akamaized.net/Content/DASH/Live/channel(ec41a5e2-09e4-431d-b92e-383fa7abe25c)/manifest.mpd",
+          "drm_name": "telkomsel"
+        },
+        {
           "name": "FailArmy",
           "stream_url": "https://dai2.xumo.com/amagi_hls_data_xumo1212A-failarmy/CDN/1280x720_5000000/index.m3u8"
         },
@@ -1070,6 +1075,10 @@
     {
       "drm_name": "mncnow",
       "drm_url": "https://mrpw.ptmnc01.verspective.net/?deviceId=NTM5NDVlNjktZDQxYS0zMTExLTliZDYtZmUyZDg5M2M2ODg3"
+    },
+    {
+      "drm_name": "telkomsel",
+      "drm_url": "https://mrpw.ptmnc01.verspective.net/?deviceId=YWY0OTBlZjEtODAyNC0zZTA0LWFhYzMtY2ZmMGE4NjVjZjU1"
     }
   ]
 }
