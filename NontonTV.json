@@ -448,6 +448,16 @@
           "stream_url": "https://crackle-plex.amagi.tv/playlist.m3u8"
         },
         {
+          "name": "DIGIONE MAXstream",
+          "stream_url": "https://cdn-telkomsel-01.akamaized.net/Content/DASH/Live/channel(d2f582be-366c-4cce-9476-1b524dc854e9)/manifest.mpd",
+          "drm_name": "telkomsel"
+        },
+        {
+          "name": "Dunia Game",
+          "stream_url": "https://cdn-telkomsel-01.akamaized.net/Content/DASH/Live/channel(ec41a5e2-09e4-431d-b92e-383fa7abe25c)/manifest.mpd",
+          "drm_name": "telkomsel"
+        },
+        {
           "name": "FailArmy",
           "stream_url": "https://dai2.xumo.com/amagi_hls_data_xumo1212A-failarmy/CDN/1280x720_5000000/index.m3u8"
         },
@@ -477,6 +487,11 @@
         {
           "name": "GEM [ID]",
           "stream_url": "http://210.210.155.35/uq2663/h/h19/01.m3u8"
+        },
+        {
+          "name": "Hi Indo",
+          "stream_url": "https://cdn-telkomsel-01.akamaized.net/Content/DASH/Live/channel(0b50f52d-2491-4050-81dd-79045ddcfb34)/manifest.mpd",
+          "drm_name": "telkomsel"
         },
         {
           "name": "Jiangsu TV",
@@ -620,6 +635,11 @@
         {
           "name": "Citra Dangdut",
           "stream_url": "http://mkctvbro.my.id/horas/pakailah.m3u8?id=citradangdut&bandwidth=default&sync=0"
+        },
+        {
+          "name": "UseePrime",
+          "stream_url": "https://cdn-telkomsel-01.akamaized.net/Content/DASH/Live/channel(18564c27-ff44-4d62-9fab-dcb417fcb93f)/manifest.mpd"
+		  "drm_name": "telkomsel"
         },
         {
           "name": "Maleo",
@@ -926,9 +946,19 @@
           "stream_url": "http://a.jsrdn.com/broadcast/447912f76b/+0000/high/c.m3u8"
         },
         {
+          "name": "Ruang Trampil",
+          "stream_url": "https://cdn-telkomsel-01.akamaized.net/Content/DASH/Live/channel(2b945e2e-4297-4be9-9a45-aa023c890e13)/manifest.mpd",
+          "drm_name": "telkomsel"
+        },
+        {
           "name": "TLC",
           "stream_url": "https://liveanevia.mncnow.id/live/eds/TLC/sa_dash_vmx/TLC.mpd",
           "drm_name": "mncnow"
+        },
+        {
+          "name": "TV Edukasi",
+          "stream_url": "https://cdn-telkomsel-01.akamaized.net/Content/DASH/Live/channel(62c29969-78fa-4754-bf97-6cfcb1d29f81)/manifest.mpd",
+          "drm_name": "telkomsel"
         }
       ]
     },
@@ -1070,6 +1100,10 @@
     {
       "drm_name": "mncnow",
       "drm_url": "https://mrpw.ptmnc01.verspective.net/?deviceId=NTM5NDVlNjktZDQxYS0zMTExLTliZDYtZmUyZDg5M2M2ODg3"
+    },
+    {
+      "drm_name": "telkomsel",
+      "drm_url": "https://mrpw.ptmnc01.verspective.net/?deviceId=YWY0OTBlZjEtODAyNC0zZTA0LWFhYzMtY2ZmMGE4NjVjZjU1"
     }
   ]
 }
