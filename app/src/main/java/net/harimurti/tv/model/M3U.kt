@@ -9,7 +9,7 @@ class M3U {
     @SerializedName("name")
     var channelName: String? = null
     @SerializedName("stream_url")
-    var streamUrl: String? = null
+    var streamUrl: ArrayList<String>? = ArrayList()
     @SerializedName("drm_url")
     var licenseKey: String? = null
     @SerializedName("drm_name")

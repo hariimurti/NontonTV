@@ -39,6 +39,7 @@ class M3uTool {
 
                 var m3u = M3U()
                 var userAgent: String? = null
+                var extGrp: String? = null
                 while (buffer.readLine().also { line = it } != null) {
                     lineNumber++
                     when {
@@ -47,16 +48,13 @@ class M3uTool {
                             userAgent = regexUserAgent(line)
                         }
                         isExtGrp(line) -> {
-                            // reset if GroupName is set
-                            if(!m3u.groupName.isNullOrEmpty())
-                                m3u= M3U()
-
-                            // set group name
-                            m3u.groupName = regexGrp(line)?.normalize()
+                            // get extgroup name
+                            extGrp = regexGrp(line)?.normalize()
                         }
                         isExtInf(line) -> {
                             // reset if ChannelName is set
                             if(!m3u.channelName.isNullOrEmpty())
+                                result.add(m3u)
                                 m3u= M3U()
 
                             // set channel name
@@ -64,6 +62,11 @@ class M3uTool {
 
                             // set group name
                             m3u.groupName = regexTitle(line)?.normalize()
+
+                            if(m3u.channelName.isNullOrEmpty() || m3u.channelName!!.startsWith(M3U.EXTINF))
+                                m3u.channelName = "NO NAME"
+                            if(m3u.groupName.isNullOrBlank())
+                                m3u.groupName = extGrp ?: "UNCATAGORIZED"
                         }
                         isKodi(line) -> {
                             // set drm license
@@ -71,21 +74,13 @@ class M3uTool {
                             m3u.licenseName = md5(regexKodi(line).toString())
                         }
                         isStream(line) -> {
-                            if(m3u.channelName.isNullOrEmpty() || m3u.channelName!!.startsWith(M3U.EXTINF))
-                                m3u.channelName = "NO NAME"
-                            if(m3u.groupName.isNullOrBlank())
-                                m3u.groupName = "UNCATAGORIZED"
-
                             // add channel
                             val streamUrl = line?.trim()
-                            m3u.streamUrl = if (userAgent == null) streamUrl else "$streamUrl|User-Agent=$userAgent"
-                            result.add(m3u)
-
-                            // reset channel
-                            m3u= M3U()
+                            m3u.streamUrl!!.add((if (userAgent == null) streamUrl else "$streamUrl|User-Agent=$userAgent")!!)
                         }
                     }
                 }
+                buffer.close()
             } catch (e: IOException) {
                 throw M3U.ParsingException(lineNumber, "Cannot read file", e)
             }
