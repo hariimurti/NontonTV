@@ -32,6 +32,7 @@ class Preferences {
         private const val CONTRIBUTORS = "CONTRIBUTORS"
         private const val RESIZE_MODE = "RESIZE_MODE"
         private const val SOURCES_PLAYLIST = "SOURCES_PLAYLIST"
+        private const val COUNTRY_ID = "COUNTRY_ID"
     }
 
     var isFirstTime: Boolean
@@ -115,23 +116,31 @@ class Preferences {
             editor.apply()
         }
 
+    var countryId: String
+        get() = preferences.getString(COUNTRY_ID, "id").toString()
+    set(value) {
+        editor = preferences.edit()
+        editor.putString(COUNTRY_ID, value)
+        editor.apply()
+    }
+
     var sources: ArrayList<Source>?
         get() {
             val result = ArrayList<Source>()
             val default = Source().apply {
-                path = context.getString(R.string.json_playlist)
+                path = String.format(context.getString(R.string.iptv_playlist), countryId)
                 active = true
             }
             try {
                 val json = preferences.getString(SOURCES_PLAYLIST, "").toString()
-                if (json.isNotBlank()) {
-                    val list = Gson().fromJson(json, Array<Source>::class.java)
-                    if (list.firstOrNull()?.path != default.path) result.add(default)
-                    list.forEach {
-                        if (it.path.isLinkUrl()) result.add(it)
-                        else if (it.path.isPathExist()) result.add(it)
-                    }
-                } else throw Exception("no playlist sources in preference")
+                if (json.isBlank()) throw Exception("no playlist sources in preference")
+                val list = Gson().fromJson(json, Array<Source>::class.java)
+                if (list == null || list.isEmpty()) throw Exception("cannot parse sources?")
+                list.first().path = default.path
+                list.forEach {
+                    if (it.path.isLinkUrl()) result.add(it)
+                    else if (it.path.isPathExist()) result.add(it)
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }

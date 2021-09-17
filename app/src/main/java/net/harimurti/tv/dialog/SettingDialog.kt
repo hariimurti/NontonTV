@@ -17,11 +17,14 @@ import net.harimurti.tv.databinding.SettingDialogBinding
 import net.harimurti.tv.extra.Preferences
 
 class SettingDialog : DialogFragment() {
+    val preferences = Preferences()
     private val tabFragment = arrayOf(SettingSourcesFragment(), SettingAppFragment(), SettingAboutFragment())
     private val tabTitle = arrayOf(R.string.tab_sources, R.string.tab_app, R.string.tab_about)
+    private var revertCountryId = ""
+    private var isCancelled = true
 
     companion object {
-        var isChanged = false
+        var isSourcesChanged = false
     }
 
     @Suppress("DEPRECATION")
@@ -50,10 +53,9 @@ class SettingDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val binding = SettingDialogBinding.inflate(inflater, container, false)
-        val preferences = Preferences()
 
         // init
-        isChanged = false
+        isSourcesChanged = false
         SettingAppFragment.launchAtBoot = preferences.launchAtBoot
         SettingAppFragment.playLastWatched = preferences.playLastWatched
         SettingAppFragment.sortFavorite = preferences.sortFavorite
@@ -62,6 +64,7 @@ class SettingDialog : DialogFragment() {
         SettingAppFragment.optimizePrebuffer = preferences.optimizePrebuffer
         SettingAppFragment.reverseNavigation = preferences.reverseNavigation
         SettingSourcesFragment.sources = preferences.sources
+        revertCountryId = preferences.countryId
 
         // view pager
         binding.settingViewPager.adapter = FragmentAdapter(childFragmentManager)
@@ -74,14 +77,7 @@ class SettingDialog : DialogFragment() {
         // button ok
         binding.settingOkButton.apply {
             setOnClickListener {
-                // playlist sources
-                val sources = SettingSourcesFragment.sources
-                if (sources?.filter { s -> s.active }?.size == 0) {
-                    sources[0].active = true
-                    Toast.makeText(context, R.string.warning_none_source_active, Toast.LENGTH_SHORT).show()
-                }
-                preferences.sources = sources
-                if (isChanged) sendUpdatePlaylist(rootView.context)
+                isCancelled = false
                 // setting app
                 preferences.launchAtBoot = SettingAppFragment.launchAtBoot
                 preferences.playLastWatched = SettingAppFragment.playLastWatched
@@ -90,11 +86,24 @@ class SettingDialog : DialogFragment() {
                 preferences.sortChannel = SettingAppFragment.sortChannel
                 preferences.optimizePrebuffer = SettingAppFragment.optimizePrebuffer
                 preferences.reverseNavigation = SettingAppFragment.reverseNavigation
+                // playlist sources
+                val sources = SettingSourcesFragment.sources
+                if (sources?.filter { s -> s.active }?.size == 0) {
+                    sources[0].active = true
+                    Toast.makeText(context, R.string.warning_none_source_active, Toast.LENGTH_SHORT).show()
+                }
+                preferences.sources = sources
                 dismiss()
             }
         }
 
         return binding.root
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        if (isCancelled) preferences.countryId = revertCountryId
+        else if (isSourcesChanged) sendUpdatePlaylist(requireContext())
     }
 
     private fun sendUpdatePlaylist(context: Context) {

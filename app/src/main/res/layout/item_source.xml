@@ -27,7 +27,7 @@
             android:text="@{modelSource.path}"
             android:checked="@{modelSource.active}"
             android:onCheckedChanged="@{(view, checked) -> clickListener.onCheckChanged(view, checked, position)}"
-            android:onLongClick="@{(view) -> clickListener.onlongClicked(view, modelSource)}"/>
+            android:onLongClick="@{(view) -> clickListener.onlongClicked(view, modelSource, position)}"/>
 
         <ImageButton
             android:id="@+id/btn_remove"

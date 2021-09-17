@@ -39,7 +39,7 @@ class SettingAppFragment : Fragment() {
             isChecked = sortFavorite
             setOnClickListener {
                 sortFavorite = isChecked
-                SettingDialog.isChanged = true
+                SettingDialog.isSourcesChanged = true
             }
         }
 
@@ -47,7 +47,7 @@ class SettingAppFragment : Fragment() {
             isChecked = sortCategory
             setOnClickListener {
                 sortCategory = isChecked
-                SettingDialog.isChanged = true
+                SettingDialog.isSourcesChanged = true
             }
         }
 
@@ -55,7 +55,7 @@ class SettingAppFragment : Fragment() {
             isChecked = sortChannel
             setOnClickListener {
                 sortChannel = isChecked
-                SettingDialog.isChanged = true
+                SettingDialog.isSourcesChanged = true
             }
         }
 

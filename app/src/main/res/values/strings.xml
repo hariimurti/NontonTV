@@ -4,7 +4,7 @@
     <!-- json link -->
     <string name="website" translatable="false">https://github.com/hariimurti/NontonTV</string>
     <string name="telegram_group" translatable="false">https://t.me/paijemdev</string>
-    <string name="json_playlist" translatable="false">https://github.com/hariimurti/NontonTV/raw/playlist/NontonTV.json</string>
+    <string name="iptv_playlist" translatable="false">https://iptv-org.github.io/iptv/countries/%s.m3u</string>
     <string name="json_release" translatable="false">https://github.com/hariimurti/NontonTV/raw/master/json/release.json</string>
     <string name="apk_release" translatable="false">https://github.com/hariimurti/NontonTV/releases/download/%s/net.harimurti.tv_%s_b%d.apk</string>
     <string name="gh_contributors" translatable="false">https://api.github.com/repos/hariimurti/NontonTV/contributors</string>
@@ -15,7 +15,7 @@
     <string name="app_tagline_one">Free - OpenSource - No Ads,</string>
     <string name="app_tagline_two">Light - Simple - Minimalist</string>
     <string name="thanks_to">Thanks To :</string>
-    <string name="thanks_for_support">and people who support this project 😘</string>
+    <string name="thanks_for_support">iptv-org for playlist and people who support this project 😘</string>
     <string name="btn_retry">Retry</string>
     <string name="btn_retry_count">Retry (%d)</string>
     <string name="btn_close">Close</string>
@@ -84,7 +84,7 @@
     <string name="input_url">Link URL</string>
     <string name="show_hidden" translatable="false">Hidden</string>
     <string name="title_select_file_json">Select File Json</string>
-    <string name="default_playlist" translatable="false">NontonTV (Default)</string>
+    <string name="default_playlist" translatable="false">IPTV-ORG ( %s )</string>
     <string name="null_playlist">No playlists that can be displayed. Check your settings!</string>
     <string name="checking_url">checking url…</string>
     <string name="link_error">Link Error!</string>
@@ -93,4 +93,9 @@
     <string name="more_information">More Information :</string>
     <string name="button_website" translatable="false">Website</string>
     <string name="button_telegram" translatable="false">Telegram</string>
+    <string name="indonesia" translatable="false">Indonesia</string>
+    <string name="japan" translatable="false">Japan</string>
+    <string name="malaysia" translatable="false">Malaysia</string>
+    <string name="singapore" translatable="false">Singapore</string>
+    <string name="south_korea" translatable="false">South Korea</string>
 </resources>
