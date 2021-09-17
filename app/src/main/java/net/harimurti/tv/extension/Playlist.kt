@@ -2,7 +2,6 @@ package net.harimurti.tv.extension
 
 import com.google.gson.Gson
 import com.google.gson.JsonParseException
-import net.harimurti.tv.extra.AppLog
 import net.harimurti.tv.extra.M3uTool
 import net.harimurti.tv.model.*
 
@@ -52,7 +51,6 @@ fun List<M3U>?.toPlaylist(): Playlist? {
                 map.add(ch)
             }
             hashMap[item.groupName.toString()] = map
-            AppLog.d("Load channel "+map.size.toString())
         }
     }
 
