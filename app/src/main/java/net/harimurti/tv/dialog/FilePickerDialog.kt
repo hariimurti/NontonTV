@@ -44,9 +44,6 @@ class FilePickerDialog(context: Context) : Dialog(context), OnItemClickListener 
     private lateinit var offset1: File
     private lateinit var offset2: File
 
-    companion object {
-        const val EXTERNAL_READ_PERMISSION_GRANT = 112
-    }
     init {
         properties = DialogProperties()
         filter = ExtensionFilter(properties)
@@ -57,7 +54,7 @@ class FilePickerDialog(context: Context) : Dialog(context), OnItemClickListener 
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.picker_dialog)
-        window?.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
+        window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT)
         listView = findViewById(R.id.fileList)
         select = findViewById(R.id.select)
         showHide = findViewById(R.id.show_hide)
