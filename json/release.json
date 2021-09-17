@@ -1,6 +1,6 @@
 {
-    "versionCode": 534,
-    "versionName": "v2.3",
-    "changelog": ["fullscreen on device with notch", "fix force landscape bug", "disable timeout while selecting screenmode", "auto paste to inputsorce when clipboard contains url", "and more.."],
-    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v2.3/net.harimurti.tv_v2.3_b534.apk"
+    "versionCode": 540,
+    "versionName": "v2.4",
+    "changelog": ["iptv-org as default playlist", "app in landscape mode", "ffmpeg libs", "optimize prebuffer", "change player layout", "and more.."],
+    "downloadUrl": "https://github.com/hariimurti/NontonTV/releases/download/v2.4/net.harimurti.tv_v2.4_b540.apk"
 }
