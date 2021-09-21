@@ -1,13 +1,15 @@
 package net.harimurti.tv.extra
 
 import android.annotation.SuppressLint
+import android.os.Handler
+import android.os.Looper
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import net.harimurti.tv.App
 import kotlin.math.abs
 
-open class OnSwipeTouchListener: View.OnTouchListener {
+open class OnSwipeTouchListener(private val view: View): View.OnTouchListener {
     private val context = App.context
     private val gestureDetector = GestureDetector(context, GestureListener())
 
@@ -24,8 +26,33 @@ open class OnSwipeTouchListener: View.OnTouchListener {
 
     private inner class GestureListener : GestureDetector.SimpleOnGestureListener() {
 
+        private val mHandler = Handler(Looper.getMainLooper())
+        private val mRunnable = Runnable {
+            isDoubleTapping = false
+            clicksDouble = if(isLeft) clicksLeft else clicksRight
+            onTapDoubleFinish(clicksDouble,isLeft)
+            clicksDouble = 0
+            clicksLeft = 0
+            clicksRight = 0
+        }
+        private var isDoubleTapping = false
+        private var doubleTapDelay: Long = 2000
+        private var clicksDouble = 0
+        private var clicksLeft = 0
+        private var clicksRight = 0
+        private var isLeft = false
+
+        fun keepInDoubleTapMode() {
+            isDoubleTapping = true
+            mHandler.removeCallbacks(mRunnable)
+            mHandler.postDelayed(mRunnable, doubleTapDelay)
+        }
+
         override fun onDown(e: MotionEvent): Boolean {
-            return true
+            if (isDoubleTapping) {
+                return true
+            }
+            return super.onDown(e)
         }
 
         override fun onFling(e1: MotionEvent, e2: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
@@ -56,6 +83,54 @@ open class OnSwipeTouchListener: View.OnTouchListener {
 
             return result
         }
+
+        override fun onDoubleTap(e: MotionEvent): Boolean {
+            //doubleTap start
+            if (!isDoubleTapping) {
+                keepInDoubleTapMode()
+            }
+            return true
+        }
+
+        override fun onDoubleTapEvent(e: MotionEvent): Boolean {
+            if (e.actionMasked == MotionEvent.ACTION_UP && isDoubleTapping) {
+                keepInDoubleTapMode()
+                if (e.x < view.width / 2) {
+                    clicksLeft++
+                    isLeft = true
+                    onTapDoubleLeft(clicksLeft)
+                } else{
+                    clicksRight++
+                    isLeft = false
+                    onTapDoubleRight(clicksRight)
+                }
+                return true
+            }
+            return super.onDoubleTapEvent(e)
+        }
+
+        //when doubleTap start, single tap run as doubleTap seek
+        /*override fun onSingleTapUp(e: MotionEvent): Boolean {
+            if (isDoubleTapping) {
+                keepInDoubleTapMode()
+                if (e.x < view.width / 2) {
+                    clicksLeft++
+                    isLeft = true
+                    onTapDoubleLeft(clicksLeft)
+                } else{
+                    clicksRight++
+                    isLeft = false
+                    onTapDoubleRight(clicksRight)
+                }
+                return true
+            }
+            return super.onSingleTapUp(e)
+        }
+
+        override fun onSingleTapConfirmed(e: MotionEvent?): Boolean {
+            if (isDoubleTapping) return true
+            return super.onSingleTapConfirmed(e)
+        }*/
     }
 
     open fun onSwipeRight() {}
@@ -65,4 +140,10 @@ open class OnSwipeTouchListener: View.OnTouchListener {
     open fun onSwipeUp() {}
 
     open fun onSwipeDown() {}
+
+    open fun onTapDoubleLeft(click: Int) {}
+
+    open fun onTapDoubleRight(click: Int) {}
+
+    open fun onTapDoubleFinish(click: Int,isLeft: Boolean) {}
 }
