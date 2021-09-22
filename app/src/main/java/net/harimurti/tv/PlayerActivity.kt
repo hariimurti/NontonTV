@@ -1,5 +1,6 @@
 package net.harimurti.tv
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.PictureInPictureParams
 import android.content.*
@@ -13,6 +14,7 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.view.*
+import android.view.animation.AlphaAnimation
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -39,6 +41,7 @@ import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
 import java.net.URLDecoder
 import java.util.*
+import kotlin.math.ceil
 
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
@@ -131,11 +134,16 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun bindingListener() {
         bindingRoot.playerView.apply {
-            setOnTouchListener(object : OnSwipeTouchListener() {
+            setOnTouchListener(object : OnSwipeTouchListener(this@apply) {
                 override fun onSwipeDown() { switchChannel(CATEGORY_UP) }
                 override fun onSwipeUp() { switchChannel(CATEGORY_DOWN) }
                 override fun onSwipeLeft() { switchChannel(CHANNEL_NEXT) }
                 override fun onSwipeRight() { switchChannel(CHANNEL_PREVIOUS) }
+                override fun onTapDoubleLeft(click: Int) { doubleTapLeft(click) }
+                override fun onTapDoubleRight(click: Int) { doubleTapRight(click) }
+                override fun onTapDoubleFinish(click: Int,isLeft: Boolean) {
+                    doubleTapFinish(click,isLeft)
+                }
             })
             setControllerVisibilityListener {
                 setChannelInformation (it == View.VISIBLE)
@@ -165,6 +173,66 @@ class PlayerActivity : AppCompatActivity() {
                 (it as ImageButton).setImageResource(resId)
                 lockControl(!isLocked); true
             }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun doubleTapLeft(clicks: Int) {
+        if(player?.isCurrentWindowSeekable == true) {
+            bindingRoot.seekBack.text = "- ${timeToString((clicks * 10).toDouble())}"
+            bindingRoot.seekBack.alpha = 1f
+            val seekAnimation = AlphaAnimation(0f, 1f)
+            seekAnimation.fillAfter = true
+            bindingRoot.seekBack.startAnimation(seekAnimation)
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun doubleTapRight(clicks: Int) {
+        if(player?.isCurrentWindowSeekable == true) {
+            bindingRoot.seekForward.text = "+ ${timeToString((clicks * 10).toDouble())}"
+            bindingRoot.seekForward.alpha = 1f
+            val seekAnimation = AlphaAnimation(0f, 1f)
+            seekAnimation.fillAfter = true
+            bindingRoot.seekForward.startAnimation(seekAnimation)
+        }
+    }
+
+    private fun doubleTapFinish(clicks: Int, isLeft:Boolean) {
+        if(player?.isCurrentWindowSeekable == true) {
+            val click = if (isLeft) clicks * -1 else clicks
+            seekTime((click * 10000).toLong())
+
+            val seekAnimation = AlphaAnimation(1f, 0f)
+            seekAnimation.duration = 2000
+            seekAnimation.fillAfter = true
+            if (isLeft) bindingRoot.seekBack.startAnimation(seekAnimation)
+            else bindingRoot.seekForward.startAnimation(seekAnimation)
+        }
+    }
+
+    private fun seekTime(time: Long) {
+        player?.seekTo(maxOf(minOf(player?.currentPosition?.plus(time)!!,
+            player?.duration!!), 0))
+    }
+
+    private fun timeToString(time: Double): String {
+        val second = time.toInt()
+        val rsec = second % 60
+        val minute = ceil((second - rsec) / 60.0).toInt()
+        val rmin = minute % 60
+        val hour = ceil((minute - rmin) / 60.0).toInt()
+        return (if (hour > 0) forceTwoDigit(hour) + ":" else "") +
+                (if (rmin >= 0 || hour >= 0) forceTwoDigit(rmin) + ":" else "") +
+                forceTwoDigit(rsec)
+    }
+
+    private fun forceTwoDigit(inp: Int, length: Int = 2): String {
+        val added: Int = length - inp.toString().length
+        return if (added > 0) {
+            "0".repeat(added) + inp.toString()
+        } else {
+            inp.toString()
         }
     }
 
