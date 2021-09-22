@@ -39,6 +39,7 @@ import com.google.android.exoplayer2.ui.TrackSelectionView.TrackSelectionListene
 import com.google.android.exoplayer2.util.Assertions
 import com.google.android.material.tabs.TabLayout
 import net.harimurti.tv.R
+import net.harimurti.tv.extension.setFullScreenFlags
 import java.util.*
 
 /** Dialog to select tracks.  */
@@ -95,6 +96,7 @@ class TrackSelectionDialog : DialogFragment() {
         // the AlertDialog theme overlay with force-enabled title.
         val dialog = AppCompatDialog(activity, R.style.TrackSelectionDialogThemeOverlay)
         dialog.setTitle(titleId)
+        dialog.window?.setFullScreenFlags()
         return dialog
     }
 

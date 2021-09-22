@@ -21,6 +21,7 @@ import com.developer.filepicker.utils.ExtensionFilter
 import com.developer.filepicker.utils.Utility
 import com.developer.filepicker.widget.MaterialCheckbox
 import net.harimurti.tv.R
+import net.harimurti.tv.extension.setFullScreenFlags
 import java.io.File
 import java.util.*
 
@@ -55,6 +56,7 @@ class FilePickerDialog(context: Context) : Dialog(context), OnItemClickListener 
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.picker_dialog)
         window?.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.MATCH_PARENT)
+        window?.setFullScreenFlags()
         listView = findViewById(R.id.fileList)
         select = findViewById(R.id.select)
         showHide = findViewById(R.id.show_hide)

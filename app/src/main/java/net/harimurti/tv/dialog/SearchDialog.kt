@@ -14,6 +14,7 @@ import net.harimurti.tv.R
 import net.harimurti.tv.adapter.SearchAdapter
 import net.harimurti.tv.databinding.SearchDialogBinding
 import net.harimurti.tv.extension.isFavorite
+import net.harimurti.tv.extension.setFullScreenFlags
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
@@ -31,6 +32,7 @@ class SearchDialog : DialogFragment() {
             val height = ViewGroup.LayoutParams.MATCH_PARENT
             //full screen
             dialog.window!!.setLayout(width, height)
+            dialog.window?.setFullScreenFlags()
         }
     }
 

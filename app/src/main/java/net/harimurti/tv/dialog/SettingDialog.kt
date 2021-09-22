@@ -14,6 +14,7 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import net.harimurti.tv.MainActivity
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.SettingDialogBinding
+import net.harimurti.tv.extension.setFullScreenFlags
 import net.harimurti.tv.extra.Preferences
 
 class SettingDialog : DialogFragment() {
@@ -48,6 +49,7 @@ class SettingDialog : DialogFragment() {
         return AppCompatDialog(activity, R.style.SettingsDialogThemeOverlay).apply {
             setTitle(R.string.settings)
             setCanceledOnTouchOutside(false)
+            window?.setFullScreenFlags()
         }
     }
 
