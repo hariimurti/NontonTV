@@ -7,7 +7,7 @@ import java.io.File
 class HttpClient(private val useCache: Boolean) {
     fun create(request: Request): Call {
         val cacheFile = File(App.context.cacheDir, "HttpClient")
-        val cacheSize: Long = 10 * 1024 * 1024
+        val cacheSize = 10L * 1024L * 1024L
         val client = OkHttpClient.Builder()
             .followRedirects(true)
             .followSslRedirects(true)
