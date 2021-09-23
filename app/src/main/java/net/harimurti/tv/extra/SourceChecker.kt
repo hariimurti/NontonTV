@@ -44,7 +44,9 @@ class SourceChecker {
                     runOnUiThread {
                         if (response.isSuccessful && !content.isNullOrBlank()) {
                             if (!content.toPlaylist().isCategoriesEmpty())
-                                result?.onCheckResult(true); return@runOnUiThread
+                                result?.onCheckResult(true)
+                            response.close()
+                            return@runOnUiThread
                         }
                         result?.onCheckResult(false)
                     }

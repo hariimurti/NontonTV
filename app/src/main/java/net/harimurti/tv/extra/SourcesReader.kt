@@ -72,6 +72,7 @@ class SourcesReader {
                                 if (!playlist.isCategoriesEmpty()) result?.onResponse(playlist)
                                 else result?.onError(source.path, "parse error?")
                             } else result?.onError(source.path, "null content")
+                            response.close()
                         } else result?.onError(source.path, response.message())
                         // repeat until sources is empty
                         process(useCache)
