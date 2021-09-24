@@ -40,12 +40,11 @@ class SourceChecker {
                 }
 
                 override fun onResponse(call: Call, response: Response) {
-                    val content = response.body()?.string()
+                    val content = response.content()
                     runOnUiThread {
                         if (response.isSuccessful && !content.isNullOrBlank()) {
                             if (!content.toPlaylist().isCategoriesEmpty())
                                 result?.onCheckResult(true)
-                            response.close()
                             return@runOnUiThread
                         }
                         result?.onCheckResult(false)

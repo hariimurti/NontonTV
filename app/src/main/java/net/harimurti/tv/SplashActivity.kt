@@ -60,7 +60,7 @@ class SplashActivity : AppCompatActivity() {
 
                 override fun onResponse(call: Call, response: Response) {
                     try {
-                        val content = response.body()?.string()
+                        val content = response.content()
                         if (content.isNullOrBlank()) throw Exception("null content")
                         if (!response.isSuccessful) throw Exception(response.message())
                         val ghUsers = Gson().fromJson(content, Array<GithubUser>::class.java)
@@ -145,7 +145,7 @@ class SplashActivity : AppCompatActivity() {
             }
 
             override fun onResponse(call: Call, response: Response) {
-                val content = response.body()?.string()
+                val content = response.content()
                 if (!response.isSuccessful || content.isNullOrBlank()) {
                     Log.e("HttpClient", "Could not check new update! ${response.message()}")
                     return lunchMainActivity()
