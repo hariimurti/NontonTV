@@ -49,7 +49,7 @@ class SettingDialog : DialogFragment() {
         return AppCompatDialog(activity, R.style.SettingsDialogThemeOverlay).apply {
             setTitle(R.string.settings)
             setCanceledOnTouchOutside(false)
-            window?.setFullScreenFlags()
+            dialog?.window?.setFullScreenFlags()
         }
     }
 
