@@ -150,45 +150,52 @@ class SplashActivity : AppCompatActivity() {
                     Log.e("HttpClient", "Could not check new update! ${response.message()}")
                     return lunchMainActivity()
                 }
+
                 val release = Gson().fromJson(content, Release::class.java)
                 if (release.versionCode <= BuildConfig.VERSION_CODE ||
                     release.versionCode <= preferences.ignoredVersion) {
                     return lunchMainActivity()
                 }
 
-                val message = StringBuilder(String.format(getString(R.string.message_update),
-                        BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE,
-                        release.versionName, release.versionCode))
-
-                for (log in release.changelog) {
-                    message.append(String.format(getString(R.string.message_update_changelog), log))
-                }
-                if (release.changelog.isEmpty()) {
-                    message.append(getString(R.string.message_update_no_changelog))
-                }
-
-                val downloadUrl = if (release.downloadUrl.isBlank()) {
-                    String.format(getString(R.string.apk_release),
-                        release.versionName, release.versionName, release.versionCode)
-                }
-                else release.downloadUrl
-
-                AlertDialog.Builder(applicationContext).apply {
-                    setTitle(R.string.alert_new_update); setMessage(message)
-                    setCancelable(false)
-                    setPositiveButton(R.string.dialog_download) { _,_ ->
-                        downloadFile(downloadUrl); lunchMainActivity()
-                    }
-                    setNegativeButton(R.string.dialog_ignore) { _, _ ->
-                        preferences.ignoredVersion = release.versionCode; lunchMainActivity()
-                    }
-                    setNeutralButton(R.string.button_website) { _,_ ->
-                        openWebsite(getString(R.string.website)); lunchMainActivity()
-                    }
-                    create(); show()
+                runOnUiThread {
+                    showNewRelease(release)
                 }
             }
         })
+    }
+
+    private fun showNewRelease(release: Release) {
+        val message = StringBuilder(String.format(getString(R.string.message_update),
+            BuildConfig.VERSION_NAME, BuildConfig.VERSION_CODE,
+            release.versionName, release.versionCode))
+
+        for (log in release.changelog) {
+            message.append(String.format(getString(R.string.message_update_changelog), log))
+        }
+        if (release.changelog.isEmpty()) {
+            message.append(getString(R.string.message_update_no_changelog))
+        }
+
+        val downloadUrl = if (release.downloadUrl.isBlank()) {
+            String.format(getString(R.string.apk_release),
+                release.versionName, release.versionName, release.versionCode)
+        }
+        else release.downloadUrl
+
+        AlertDialog.Builder(this).apply {
+            setTitle(R.string.alert_new_update); setMessage(message)
+            setCancelable(false)
+            setPositiveButton(R.string.dialog_download) { _,_ ->
+                downloadFile(downloadUrl); lunchMainActivity()
+            }
+            setNegativeButton(R.string.dialog_ignore) { _, _ ->
+                preferences.ignoredVersion = release.versionCode; lunchMainActivity()
+            }
+            setNeutralButton(R.string.button_website) { _,_ ->
+                openWebsite(getString(R.string.website)); lunchMainActivity()
+            }
+            create(); show()
+        }
     }
 
     private fun setContributors(users: String?) {
