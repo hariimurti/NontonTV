@@ -509,7 +509,7 @@ class PlayerActivity : AppCompatActivity() {
             // if error more than 5 times, then show message dialog
             if (errorCounter < 5 && network.isConnected()) {
                 errorCounter++
-                Toast.makeText(applicationContext, error.message, Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, error.errorCodeName, Toast.LENGTH_SHORT).show()
                 retryPlayback(false)
             }
             else {
