@@ -45,3 +45,13 @@ fun String.toRequest(): Request {
 fun String.toRequestBuilder(): Request.Builder {
     return Request.Builder().url(this)
 }
+
+fun String.decodeHex(): ByteArray {
+    return chunked(2).map { it.toInt(16).toByte() }.toByteArray()
+}
+
+fun String.toClearKey(): ByteArray {
+    val keyId = this.substringBefore(":").decodeHex().toBase64Url()
+    val keyValue = this.substringAfter(":").decodeHex().toBase64Url()
+    return """{"keys":[{"kty":"oct","k":"$keyValue","kid":"$keyId"}],"type":"temporary"}""".toByteArray()
+}

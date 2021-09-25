@@ -44,6 +44,8 @@ import java.util.*
 import kotlin.math.ceil
 import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.C
+import com.google.android.exoplayer2.drm.*
+import com.google.android.exoplayer2.source.MediaSource
 
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
@@ -53,7 +55,7 @@ class PlayerActivity : AppCompatActivity() {
     private var category: Category? = null
     private var current: Channel? = null
     private var player: SimpleExoPlayer? = null
-    private lateinit var mediaItem: MediaItem
+    private lateinit var mediaSource: MediaSource
     private lateinit var trackSelector: DefaultTrackSelector
     private var lastSeenTrackGroupArray: TrackGroupArray? = null
     private lateinit var bindingRoot: ActivityPlayerBinding
@@ -286,8 +288,9 @@ class PlayerActivity : AppCompatActivity() {
         bindingControl.buttonForward.visibility = visibility
     }
 
-    private fun isDrmWidevineSupported(): Boolean {
-        if (MediaDrm.isCryptoSchemeSupported(C.WIDEVINE_UUID)) return true
+    private fun isDeviceSupportDrm(widevine: Boolean): Boolean {
+        val uuid = if (widevine) C.WIDEVINE_UUID else C.CLEARKEY_UUID
+        if (MediaDrm.isCryptoSchemeSupported(uuid)) return true
         AlertDialog.Builder(this).apply {
             setTitle(R.string.player_playback_error)
             setMessage(R.string.device_not_support_widevine)
@@ -300,6 +303,7 @@ class PlayerActivity : AppCompatActivity() {
         return false
     }
 
+    @Suppress("DEPRECATION")
     private fun playChannel() {
         // reset view
         switchLiveOrVideo(true)
@@ -313,8 +317,9 @@ class PlayerActivity : AppCompatActivity() {
         var userAgent = streamUrl.findPattern(".*user-agent=(.+?)(\\|.*)?")
         val referer = streamUrl.findPattern(".*referer=(.+?)(\\|.*)?")
 
-        // clean streamurl
+        // clean streamurl & set mediaitem
         streamUrl = streamUrl.findPattern("(.+?)(\\|.*)?") ?: streamUrl
+        val mediaItem = MediaItem.fromUri(Uri.parse(streamUrl))
 
         // if null set User-Agent with existing resources
         if (userAgent == null) {
@@ -329,21 +334,6 @@ class PlayerActivity : AppCompatActivity() {
             }
         }
 
-        // define mediaitem
-        val drmLicense = Playlist.cached.drmLicenses.firstOrNull {
-            current?.drmName?.equals(it.name) == true
-        }?.url
-        mediaItem = MediaItem.fromUri(Uri.parse(streamUrl))
-        if (drmLicense?.isNotEmpty() == true) {
-            mediaItem = MediaItem.Builder()
-                .setUri(Uri.parse(streamUrl))
-                .setDrmUuid(C.WIDEVINE_UUID)
-                .setDrmLicenseUri(drmLicense)
-                .setDrmMultiSession(true)
-                .build()
-            if (!isDrmWidevineSupported()) return
-        }
-
         // create factory
         val httpDataSourceFactory = DefaultHttpDataSource.Factory()
             .setAllowCrossProtocolRedirects(true)
@@ -351,6 +341,25 @@ class PlayerActivity : AppCompatActivity() {
         if (referer != null) httpDataSourceFactory.setDefaultRequestProperties(mapOf(Pair("referer", referer)))
         val dataSourceFactory = DefaultDataSourceFactory(this, httpDataSourceFactory)
         val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
+
+        // drm factory
+        val drmLicense = Playlist.cached.drmLicenses.firstOrNull {
+            current?.drmName?.equals(it.name) == true
+        }?.url
+        if (drmLicense?.isNotEmpty() == true) {
+            val uuid = if (drmLicense.isLinkUrl()) C.WIDEVINE_UUID else C.CLEARKEY_UUID
+            val drmCallback = if (drmLicense.isLinkUrl()) HttpMediaDrmCallback(drmLicense, httpDataSourceFactory)
+                    else LocalMediaDrmCallback(drmLicense.toClearKey())
+            val drmSessionManager = DefaultDrmSessionManager.Builder()
+                    .setUuidAndExoMediaDrmProvider(uuid, FrameworkMediaDrm.DEFAULT_PROVIDER)
+                    .setMultiSession(drmLicense.isLinkUrl())
+                    .build(drmCallback)
+            mediaSource = mediaSourceFactory.setDrmSessionManager(drmSessionManager)
+                    .createMediaSource(mediaItem)
+
+            if (!isDeviceSupportDrm(drmLicense.isLinkUrl())) return
+        }
+        else mediaSource = mediaSourceFactory.createMediaSource(mediaItem)
 
         // create trackselector
         trackSelector = DefaultTrackSelector(this).apply {
@@ -390,7 +399,7 @@ class PlayerActivity : AppCompatActivity() {
 
         // play mediasouce
         player?.playWhenReady = true
-        player?.setMediaItem(mediaItem)
+        player?.setMediaSource(mediaSource)
         player?.prepare()
         player?.playbackParameters = PlaybackParameters(preferences.speedMode)
     }
@@ -461,7 +470,7 @@ class PlayerActivity : AppCompatActivity() {
     private fun retryPlayback(force: Boolean) {
         if (force) {
             player?.playWhenReady = true
-            player?.setMediaItem(mediaItem)
+            player?.setMediaSource(mediaSource)
             player?.prepare()
             return
         }
