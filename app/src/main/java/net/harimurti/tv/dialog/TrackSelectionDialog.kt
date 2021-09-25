@@ -96,7 +96,6 @@ class TrackSelectionDialog : DialogFragment() {
         // the AlertDialog theme overlay with force-enabled title.
         val dialog = AppCompatDialog(activity, R.style.TrackSelectionDialogThemeOverlay)
         dialog.setTitle(titleId)
-        dialog.window?.setFullScreenFlags()
         return dialog
     }
 
