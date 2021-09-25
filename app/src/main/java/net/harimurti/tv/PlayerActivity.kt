@@ -540,6 +540,7 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun showMessage(message: String, autoretry: Boolean) {
+        val countdown = AsyncSleep()
         val waitInSecond = 30
         val btnRetryText = if (autoretry) String.format(getString(R.string.btn_retry_count), waitInSecond) else getString(R.string.btn_retry)
         val builder = AlertDialog.Builder(this).apply {
@@ -558,12 +559,13 @@ class PlayerActivity : AppCompatActivity() {
                 di.dismiss()
                 finish()
             }
+            setOnDismissListener { countdown.stop() }
             create()
         }
         val dialog = builder.show()
 
         if (!autoretry) return
-        AsyncSleep().task(object : AsyncSleep.Task{
+        countdown.task(object : AsyncSleep.Task{
             override fun onCountDown(count: Int) {
                 val text = if (count <= 0) getString(R.string.btn_retry)
                 else String.format(getString(R.string.btn_retry_count), count)
