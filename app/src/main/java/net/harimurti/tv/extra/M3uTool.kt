@@ -1,142 +1,97 @@
 package net.harimurti.tv.extra
 
+import net.harimurti.tv.extension.findPattern
 import net.harimurti.tv.extension.isStreamUrl
 import net.harimurti.tv.extension.normalize
-import net.harimurti.tv.model.M3U
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.StringReader
-import java.math.BigInteger
-import java.security.MessageDigest
-import java.util.regex.Matcher
-import java.util.regex.Pattern
+import net.harimurti.tv.extension.toCRC32
+import net.harimurti.tv.model.*
 
 class M3uTool {
-    companion object {
-        private val REGEX_GROUP: Pattern =
-            Pattern.compile(".*group-title=\"(.?|.+?)\".*", Pattern.CASE_INSENSITIVE)
-        private val REGEX_NAME: Pattern =
-            Pattern.compile(".*,(.+?)$", Pattern.CASE_INSENSITIVE)
-        private val REGEX_KODI: Pattern =
-            Pattern.compile(".*license_key=(.+?)$", Pattern.CASE_INSENSITIVE)
-        private val REGEX_GRP: Pattern =
-            Pattern.compile(".*:(.+?)$", Pattern.CASE_INSENSITIVE)
-        private val REGEX_USER_AGENT: Pattern =
-            Pattern.compile(".*http-user-agent=(.+?)$", Pattern.CASE_INSENSITIVE)
-
-        fun parse(content: String?): List<M3U> {
-            val result: MutableList<M3U> = ArrayList()
-            var lineNumber = 0
-            var line: String?
-            try {
-                val buffer = BufferedReader(StringReader(content))
-                line = buffer.readLine()
-                if (line == null) {
-                    throw M3U.ParsingException(0, "Empty stream")
-                }
-
-                lineNumber++
-
-                var m3u = M3U()
-                var userAgent: String? = null
-                var extGrp: String? = null
-                while (buffer.readLine().also { line = it } != null) {
-                    lineNumber++
-                    when {
-                        isExtVlcOpt(line) -> {
-                            // set useragent
-                            userAgent = regexUserAgent(line)
-                        }
-                        isExtGrp(line) -> {
-                            // get extgroup name
-                            extGrp = regexGrp(line)?.normalize()
-                        }
-                        isExtInf(line) -> {
-                            // reset if ChannelName is set
-                            if(!m3u.channelName.isNullOrEmpty())
-                                result.add(m3u)
-                                m3u= M3U()
-
-                            // set channel name
-                            m3u.channelName = regexCh(line)?.normalize()
-
-                            // set group name
-                            m3u.groupName = regexTitle(line)?.normalize()
-
-                            if(m3u.channelName.isNullOrEmpty() || m3u.channelName!!.startsWith(M3U.EXTINF))
-                                m3u.channelName = "NO NAME"
-                            if(m3u.groupName.isNullOrBlank())
-                                m3u.groupName = extGrp ?: "UNCATAGORIZED"
-                        }
-                        isKodi(line) -> {
-                            // set drm license
-                            m3u.licenseKey = regexKodi(line)
-                            m3u.licenseName = md5(regexKodi(line).toString())
-                        }
-                        isStream(line) -> {
-                            // add channel
-                            val streamUrl = line?.trim()
-                            m3u.streamUrl!!.add((if (userAgent == null) streamUrl else "$streamUrl|User-Agent=$userAgent")!!)
-                        }
-                    }
-                }
-                buffer.close()
-            } catch (e: IOException) {
-                throw M3U.ParsingException(lineNumber, "Cannot read file", e)
+    fun parse(content: String?): Playlist {
+        val result = Playlist()
+        var chRaw = ChannelRaw()
+        var chReset = true
+        val lines = content?.lines() ?: throw Exception("Empty Content")
+        lines.forEach {
+            if (it.isBlank()) return@forEach
+            if (it.startsWith("#EXTVLCOPT")) {
+                if (it.contains("user-agent"))
+                    chRaw.userAgent = it.findPattern(".*http-user-agent=(.+?)\$")
+                if (it.contains("referrer"))
+                    chRaw.referer = it.findPattern(".*http-referrer=(.+?)\$")
+                chReset = false
+                return@forEach
             }
-            return result
-        }
+            if (it.startsWith("#EXTGRP")) {
+                chRaw.group = it.findPattern(".*:(.+?)\$")
+                chReset = false
+                return@forEach
+            }
+            if (it.startsWith("#KODIPROP")) {
+                if (it.contains("license_type"))
+                    chRaw.drmType = it.findPattern(".*license_type=(.+?)\$")
+                if (it.contains("license_key"))
+                    chRaw.drmKey = it.findPattern(".*license_key=(.+?)\$")
+                chReset = false
+                return@forEach
+            }
+            if (it.startsWith("#EXTINF")) {
+                if (chReset && !chRaw.name.isNullOrBlank()) chRaw = ChannelRaw()
 
-        private fun isExtVlcOpt(line: String?): Boolean {
-            return line!!.startsWith(M3U.EXTVLCOPT)
-        }
+                chRaw.name = it.findPattern(".*,(.+?)\$")
+                chRaw.group = it.findPattern(".*group-title=\"(.*?)\".*") ?: chRaw.group
+                chRaw.logoUrl = it.findPattern(".*tvg-logo=\"(.*?)\".*")
 
-        private fun isExtGrp(line: String?): Boolean {
-            return line!!.startsWith(M3U.EXTGRP)
-        }
+                if (chRaw.name.isNullOrBlank()) chRaw.name = "NO NAME"
+                if (chRaw.group.isNullOrBlank()) chRaw.group = "UNCATAGORIZED"
 
-        private fun isExtInf(line: String?): Boolean {
-            return line!!.startsWith(M3U.EXTINF)
-        }
+                chReset = true
+                return@forEach
+            }
+            if (it.isStreamUrl()) {
+                chReset = true
+                chRaw.streamUrl = it.trim()
+                if (!chRaw.userAgent.isNullOrBlank())
+                    chRaw.streamUrl += "|user-agent=${chRaw.userAgent}"
+                if (!chRaw.referer.isNullOrBlank())
+                    chRaw.streamUrl += "|referer=${chRaw.referer}"
 
-        private fun isKodi(line: String?): Boolean {
-            return line!!.startsWith(M3U.KODIPROP) && line.contains("license_key")
+                val drmId = chRaw.drmKey?.toCRC32()
+                val drmIsExist = result.drmLicenses.firstOrNull { d -> d.id == drmId } != null
+                if (drmId != null && !drmIsExist) {
+                    result.drmLicenses.add(
+                        DrmLicense().apply {
+                            id = drmId
+                            key = chRaw.drmKey.toString()
+                            type = chRaw.drmType.toString()
+                        }
+                    )
+                }
+                val channel = Channel().apply {
+                    name = chRaw.name.normalize()
+                    logoUrl = chRaw.logoUrl
+                    streamUrl = chRaw.streamUrl
+                    this.drmId = drmId
+                }
+                val catName = chRaw.group.normalize()
+                val category = result.categories.firstOrNull { c -> c.name == catName }
+                if (category == null) {
+                    result.categories.add(
+                        Category().apply {
+                            name = catName
+                            channels = arrayListOf(channel)
+                        }
+                    )
+                }
+                else {
+                    val lastIndex = category.channels?.indexOfLast { c -> c.name == chRaw.name } ?: -1
+                    if (lastIndex >= 0) {
+                        channel.name = "${chRaw.name} #${lastIndex + 1}"
+                    }
+                    category.channels?.add(channel)
+                }
+            }
         }
-
-        private fun isStream(line: String?): Boolean {
-            return line!!.isStreamUrl()
-        }
-
-        private fun regexCh(line: String?): String? {
-            return regexLine(line, REGEX_NAME)
-        }
-
-        private fun regexTitle(line: String?): String? {
-            return regexLine(line, REGEX_GROUP)
-        }
-
-        private fun regexKodi(line: String?): String? {
-            return regexLine(line, REGEX_KODI)
-        }
-
-        private fun regexGrp(line: String?): String? {
-            return regexLine(line, REGEX_GRP)
-        }
-
-        private fun regexUserAgent(line: String?): String? {
-            return regexLine(line, REGEX_USER_AGENT)
-        }
-
-        private fun regexLine(line: String?, Pattern: Pattern): String? {
-            val matcher: Matcher = Pattern.matcher(line.toString())
-            return if (matcher.matches()) {
-                matcher.group(1)
-            } else null
-        }
-
-        private fun md5(input:String): String {
-            val md = MessageDigest.getInstance("MD5")
-            return BigInteger(1, md.digest(input.toByteArray())).toString(16).padStart(32, '0')
-        }
+        return result
     }
 }

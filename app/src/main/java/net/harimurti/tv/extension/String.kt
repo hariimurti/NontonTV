@@ -1,8 +1,12 @@
 package net.harimurti.tv.extension
 
 import android.text.Html
+import com.google.android.exoplayer2.C
 import okhttp3.Request
 import java.io.File
+import java.net.URLDecoder
+import java.util.*
+import java.util.zip.CRC32
 
 fun String?.isLinkUrl(): Boolean {
     if (this == null) return false
@@ -26,8 +30,7 @@ fun String?.toFile(): File {
 
 fun String?.findPattern(pattern: String): String? {
     if (this == null) return null
-    val option = setOf(RegexOption.IGNORE_CASE, RegexOption.MULTILINE)
-    val result = Regex(pattern, option).matchEntire(this)
+    val result = Regex(pattern, RegexOption.IGNORE_CASE).matchEntire(this)
     return result?.groups?.get(1)?.value
 }
 
@@ -46,6 +49,10 @@ fun String.toRequestBuilder(): Request.Builder {
     return Request.Builder().url(this)
 }
 
+fun String.decodeUrl(): String {
+    return URLDecoder.decode(this, "utf-8")
+}
+
 fun String.decodeHex(): ByteArray {
     return chunked(2).map { it.toInt(16).toByte() }.toByteArray()
 }
@@ -54,4 +61,18 @@ fun String.toClearKey(): ByteArray {
     val keyId = this.substringBefore(":").decodeHex().toBase64Url()
     val keyValue = this.substringAfter(":").decodeHex().toBase64Url()
     return """{"keys":[{"kty":"oct","k":"$keyValue","kid":"$keyId"}],"type":"temporary"}""".toByteArray()
+}
+
+fun String.toCRC32(): String {
+    val bytes = this.toByteArray()
+    return CRC32().apply { update(bytes) }.value.toString()
+}
+
+fun String.toUUID(): UUID {
+    return when {
+        this.contains("clearkey") -> C.CLEARKEY_UUID
+        this.contains("widevine") -> C.WIDEVINE_UUID
+        this.contains("playready") -> C.PLAYREADY_UUID
+        else -> C.UUID_NIL
+    }
 }

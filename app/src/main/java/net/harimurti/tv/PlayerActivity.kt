@@ -41,7 +41,6 @@ import net.harimurti.tv.model.Category
 import net.harimurti.tv.model.Channel
 import net.harimurti.tv.model.PlayData
 import net.harimurti.tv.model.Playlist
-import java.net.URLDecoder
 import java.util.*
 import kotlin.math.ceil
 import com.google.android.exoplayer2.PlaybackParameters
@@ -294,11 +293,9 @@ class PlayerActivity : AppCompatActivity() {
         bindingControl.buttonForward.visibility = visibility
     }
 
-    private fun isDeviceSupportDrm(widevine: Boolean): Boolean {
-        val uuid = if (widevine) C.WIDEVINE_UUID else C.CLEARKEY_UUID
-        val message = String.format(getString(R.string.device_not_support_drm),
-            if (widevine) "Widevine" else "ClearKey")
-        if (MediaDrm.isCryptoSchemeSupported(uuid)) return true
+    private fun isDeviceSupportDrm(type: String): Boolean {
+        val message = String.format(getString(R.string.device_not_support_drm), type.uppercase())
+        if (MediaDrm.isCryptoSchemeSupported(type.toUUID())) return true
         AlertDialog.Builder(this).apply {
             setTitle(R.string.player_playback_error)
             setMessage(message)
@@ -321,9 +318,9 @@ class PlayerActivity : AppCompatActivity() {
         bindingRoot.channelName.text = current?.name?.trim()
 
         // split streamurl with referer, user-agent
-        var streamUrl = URLDecoder.decode(current?.streamUrl, "utf-8")
-        var userAgent = streamUrl.findPattern(".*user-agent=(.+?)(\\|.*)?")
-        val referer = streamUrl.findPattern(".*referer=(.+?)(\\|.*)?")
+        var streamUrl = current?.streamUrl?.decodeUrl()
+        var userAgent = streamUrl.findPattern(".*|user-agent=(.+?)(\\|.*)?")
+        val referer = streamUrl.findPattern(".*|referer=(.+?)(\\|.*)?")
 
         // clean streamurl & set mediaitem
         streamUrl = streamUrl.findPattern("(.+?)(\\|.*)?") ?: streamUrl
@@ -352,20 +349,20 @@ class PlayerActivity : AppCompatActivity() {
 
         // drm factory
         val drmLicense = Playlist.cached.drmLicenses.firstOrNull {
-            current?.drmName?.equals(it.name) == true
-        }?.url
-        if (drmLicense?.isNotEmpty() == true) {
-            val uuid = if (drmLicense.isLinkUrl()) C.WIDEVINE_UUID else C.CLEARKEY_UUID
-            val drmCallback = if (drmLicense.isLinkUrl()) HttpMediaDrmCallback(drmLicense, httpDataSourceFactory)
-                    else LocalMediaDrmCallback(drmLicense.toClearKey())
+            current?.drmId?.equals(it.id) == true
+        }
+        if (drmLicense != null) {
+            val uuid = drmLicense.type.toUUID()
+            val drmCallback = if (uuid != C.CLEARKEY_UUID) HttpMediaDrmCallback(drmLicense.key, httpDataSourceFactory)
+                    else LocalMediaDrmCallback(drmLicense.key.toClearKey())
             val drmSessionManager = DefaultDrmSessionManager.Builder()
                     .setUuidAndExoMediaDrmProvider(uuid, FrameworkMediaDrm.DEFAULT_PROVIDER)
-                    .setMultiSession(drmLicense.isLinkUrl())
+                    .setMultiSession(uuid != C.CLEARKEY_UUID)
                     .build(drmCallback)
             mediaSource = mediaSourceFactory.setDrmSessionManager(drmSessionManager)
                     .createMediaSource(mediaItem)
 
-            if (!isDeviceSupportDrm(drmLicense.isLinkUrl())) return
+            if (!isDeviceSupportDrm(drmLicense.type)) return
         }
         else mediaSource = mediaSourceFactory.createMediaSource(mediaItem)
 

@@ -10,7 +10,7 @@ fun Favorites?.insert(channel: Channel): Boolean {
     val filter = this.channels.lastOrNull {
             c -> c.name == channel.name &&
             c.streamUrl == channel.streamUrl &&
-            c.drmName == channel.drmName
+            c.drmId == channel.drmId
     }
     return if (filter == null) {
         this.channels.add(channel)
@@ -25,7 +25,7 @@ fun Favorites?.remove(channel: Channel): Boolean {
     val filter = this.channels.filter {
             c -> c.name == channel.name &&
             c.streamUrl == channel.streamUrl &&
-            c.drmName == channel.drmName
+            c.drmId == channel.drmId
     }
     return if (!filter.isNullOrEmpty()) {
         this.channels.removeAll(filter)
@@ -47,7 +47,7 @@ fun Favorites?.trimNotExistFrom(playlist: Playlist): Favorites? {
             cat.channels?.lastOrNull { ch ->
                 ch.name == item.name &&
                         ch.streamUrl == item.streamUrl &&
-                        ch.drmName == item.drmName
+                        ch.drmId == item.drmId
             } != null
         }
         if (filter != null) verified.add(item)

@@ -4,8 +4,10 @@ import com.google.gson.annotations.SerializedName
 
 class Channel {
     var name: String? = null
+    @SerializedName("logo_url")
+    var logoUrl: String? = null
     @SerializedName("stream_url")
     var streamUrl: String? = null
-    @SerializedName("drm_name")
-    var drmName: String? = null
+    @SerializedName("drm_id")
+    var drmId: String? = null
 }

@@ -5,71 +5,6 @@ import com.google.gson.JsonParseException
 import net.harimurti.tv.extra.M3uTool
 import net.harimurti.tv.model.*
 
-fun List<M3U>?.toPlaylist(): Playlist? {
-    if (this == null) return null
-    val playlist = Playlist()
-
-    val hashMap= HashMap<String, ArrayList<Channel>>()
-    var map: ArrayList<Channel>?
-
-    val hashSet = HashSet<DrmLicense>()
-    val drms = ArrayList<DrmLicense>()
-    val cats= ArrayList<Category>()
-
-    var category: Category?
-    var ch: Channel?
-    var drm: DrmLicense?
-
-    for (item in this) {
-
-        for (i in item.streamUrl!!.indices) {
-            //hashset drm (disable same value)
-            if (!item.licenseKey.isNullOrEmpty()) {
-                drm = DrmLicense()
-                drm.name = item.licenseName
-                drm.url = item.licenseKey
-                if (hashSet.none { d -> d.name == item.licenseName })
-                    hashSet.add(drm)
-            }
-
-            //hashmap (map same groupname as key)
-            map = hashMap[item.groupName]
-            //set map value as channel
-            ch = Channel()
-            if (map != null) {
-                ch.name =
-                    if (i > 0) item.channelName + " #$i" else item.channelName
-                ch.streamUrl = item.streamUrl!![i]
-                ch.drmName = item.licenseName
-                map.add(ch)
-            }else {
-                map = ArrayList()
-                ch.name =
-                    if (i > 0) item.channelName + " #$i" else item.channelName
-                ch.streamUrl = item.streamUrl!![i]
-                ch.drmName = item.licenseName
-                map.add(ch)
-            }
-            hashMap[item.groupName.toString()] = map
-        }
-    }
-
-    //set map as categories
-    for(entry in hashMap){
-        category = Category()
-        category.name = entry.key
-        category.channels = entry.value
-        cats.add(category)
-    }
-    playlist.categories = cats
-
-    //set drm licenses
-    drms.addAll(hashSet)
-    playlist.drmLicenses = drms
-
-    return playlist
-}
-
 fun Playlist?.sortCategories() {
     this?.categories?.sortBy { category -> category.name?.lowercase() }
 }
@@ -114,7 +49,7 @@ fun String?.toPlaylist(): Playlist? {
     catch (e: JsonParseException) { e.printStackTrace() }
 
     // if not json then m3u
-    try { return M3uTool.parse(this).toPlaylist() }
+    try { return M3uTool().parse(this) }
     catch (e: Exception) { e.printStackTrace() }
 
     // content cant be parsed
@@ -122,5 +57,6 @@ fun String?.toPlaylist(): Playlist? {
 }
 
 fun Playlist?.isCategoriesEmpty(): Boolean {
-    return this?.categories?.isEmpty() == true
+    if (this?.categories?.isEmpty() == true) return true
+    return (this?.categories?.count() == 1) && (this.categories[0].channels?.count() == 0)
 }
