@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
@@ -50,9 +51,6 @@ class SearchAdapter (val channels: ArrayList<Channel>, private val listdata: Arr
         viewHolder.itemChBinding.catId = playdata.catId
         viewHolder.itemChBinding.chId = playdata.chId
         viewHolder.itemChBinding.clickListener = this
-        viewHolder.itemChBinding.btnPlay.setOnFocusChangeListener { v, hasFocus ->
-            v.startAnimation(hasFocus)
-        }
     }
 
     override fun getItemCount(): Int {
@@ -117,5 +115,9 @@ class SearchAdapter (val channels: ArrayList<Channel>, private val listdata: Arr
         Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
 
         return true
+    }
+
+    override fun onFocusChanged(v: View, hasFocus: Boolean) {
+        v.startAnimation(hasFocus)
     }
 }
