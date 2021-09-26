@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_1">
+
+        <item
+            android:id="@+id/speed_back"
+            android:title="@string/playback_speed"
+            android:icon="@drawable/ic_clear"/>
+    </group>
+    <group
+        android:id="@+id/group_2"
+        android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/speed_0_25"
+            android:title="@string/speed_0_25" />
+        <item
+            android:id="@+id/speed_0_50"
+            android:title="@string/speed_0_5" />
+        <item
+            android:id="@+id/speed_0_75"
+            android:title="@string/speed_0_75" />
+        <item
+            android:id="@+id/speed_1_00"
+            android:title="@string/speed_normal" />
+        <item
+            android:id="@+id/speed_1_25"
+            android:title="@string/speed_1_25" />
+        <item
+            android:id="@+id/speed_1_50"
+            android:title="@string/speed_1_5" />
+        <item
+            android:id="@+id/speed_1_75"
+            android:title="@string/speed_1_75" />
+        <item
+            android:id="@+id/speed_2_00"
+            android:title="@string/speed_2" />
+    </group>
+
+</menu>

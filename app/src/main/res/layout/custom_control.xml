@@ -78,7 +78,7 @@
             android:id="@+id/screen_mode"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/track_selection"
-            app:srcCompat="@drawable/ic_aspect_ratio"
+            app:srcCompat="@drawable/ic_settings"
             style="@style/ImageButtonControl" />
 
         <ImageButton
