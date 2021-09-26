@@ -32,6 +32,7 @@ class Preferences {
         private const val CONTRIBUTORS = "CONTRIBUTORS"
         private const val RESIZE_MODE = "RESIZE_MODE"
         private const val SPEED_MODE = "SPEED_MODE"
+        private const val VOLUME_CONTROL = "VOLUME_CONTROL"
         private const val SOURCES_PLAYLIST = "SOURCES_PLAYLIST"
         private const val COUNTRY_ID = "COUNTRY_ID"
     }
@@ -180,6 +181,14 @@ class Preferences {
         set(value) {
             editor = preferences.edit()
             editor.putFloat(SPEED_MODE, value)
+            editor.apply()
+        }
+
+    var volume: Float
+        get() = preferences.getFloat(VOLUME_CONTROL, 1F)
+        set(value) {
+            editor = preferences.edit()
+            editor.putFloat(VOLUME_CONTROL, value)
             editor.apply()
         }
 }

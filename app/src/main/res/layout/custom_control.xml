@@ -27,6 +27,10 @@
             android:orientation="horizontal">
 
             <ImageButton
+                android:id="@+id/button_volume"
+                app:srcCompat="@drawable/ic_volume_on"
+                style="@style/ImageButtonControl" />
+            <ImageButton
                 android:id="@+id/button_previous"
                 app:srcCompat="@drawable/ic_player_previous"
                 style="@style/ImageButtonControl" />
@@ -132,6 +136,25 @@
                 tools:text="56:78" />
 
         </LinearLayout>
+
+        <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper
+            android:id="@+id/volume_layout"
+            android:layout_width="@dimen/btn_control_size"
+            android:layout_height="180dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginBottom="10dp"
+            android:nextFocusRight="@id/button_volume"
+            android:visibility="gone"
+            android:background="@drawable/button_control_background"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/layout_seekbar"
+            tools:visibility="visible">
+            <com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBar
+                android:id="@+id/volume_seek"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:seekBarRotation="CW270" />
+        </com.h6ah4i.android.widget.verticalseekbar.VerticalSeekBarWrapper>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

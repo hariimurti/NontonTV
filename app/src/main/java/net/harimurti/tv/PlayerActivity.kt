@@ -16,6 +16,8 @@ import android.util.Log
 import android.view.*
 import android.view.animation.AlphaAnimation
 import android.widget.ImageButton
+import android.widget.SeekBar
+import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
@@ -178,6 +180,8 @@ class PlayerActivity : AppCompatActivity() {
                 lockControl(!isLocked); true
             }
         }
+        bindingControl.buttonVolume.setOnClickListener { showVolumeMenu() }
+        isMute(bindingControl.buttonVolume)
     }
 
     @SuppressLint("SetTextI18n")
@@ -243,6 +247,8 @@ class PlayerActivity : AppCompatActivity() {
         if (isLocked) return
         bindingRoot.layoutInfo.visibility =
             if (visible && !isPipMode) View.VISIBLE else View.INVISIBLE
+        bindingControl.volumeLayout.visibility =
+            if (visible || isPipMode) View.INVISIBLE else View.VISIBLE
 
         if (isPipMode) return
         if (visible == bindingRoot.playerView.isControllerVisible) return
@@ -404,6 +410,7 @@ class PlayerActivity : AppCompatActivity() {
         player?.setMediaSource(mediaSource)
         player?.prepare()
         player?.playbackParameters = PlaybackParameters(preferences.speedMode)
+        player?.volume = preferences.volume
     }
 
     private fun switchChannel(mode: Int): Boolean {
@@ -704,6 +711,32 @@ class PlayerActivity : AppCompatActivity() {
             popupMenu.show()
         }
 
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun showVolumeMenu() {
+        bindingControl.volumeLayout.visibility = View.VISIBLE
+        bindingControl.volumeSeek.apply {
+            progress = (preferences.volume * 100).toInt()
+            setOnSeekBarChangeListener(object :
+                OnSeekBarChangeListener {
+                override fun onProgressChanged(seekBar: SeekBar, i: Int, b: Boolean) {
+                    preferences.volume = i.toFloat() / 100
+                    player?.volume = preferences.volume
+                    isMute(bindingControl.buttonVolume)
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar) {}
+                override fun onStopTrackingTouch(seekBar: SeekBar) {}
+            })
+        }
+    }
+
+    private fun isMute(v: ImageButton){
+        when (preferences.volume) {
+            0F -> v.setImageResource(R.drawable.ic_volume_off)
+            else -> v.setImageResource(R.drawable.ic_volume_on)
+        }
     }
 
     override fun onResume() {
