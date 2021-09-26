@@ -31,6 +31,7 @@ class Preferences {
         private const val REVERSE_NAVIGATION = "REVERSE_NAVIGATION"
         private const val CONTRIBUTORS = "CONTRIBUTORS"
         private const val RESIZE_MODE = "RESIZE_MODE"
+        private const val SPEED_MODE = "SPEED_MODE"
         private const val SOURCES_PLAYLIST = "SOURCES_PLAYLIST"
         private const val COUNTRY_ID = "COUNTRY_ID"
     }
@@ -171,6 +172,14 @@ class Preferences {
         set(value) {
             editor = preferences.edit()
             editor.putInt(RESIZE_MODE, value)
+            editor.apply()
+        }
+
+    var speedMode: Float
+        get() = preferences.getFloat(SPEED_MODE, 1F)
+        set(value) {
+            editor = preferences.edit()
+            editor.putFloat(SPEED_MODE, value)
             editor.apply()
         }
 }

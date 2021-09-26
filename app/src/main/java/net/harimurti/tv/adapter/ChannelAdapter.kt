@@ -3,6 +3,7 @@ package net.harimurti.tv.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -21,6 +22,7 @@ import net.harimurti.tv.model.Playlist
 interface ChannelClickListener {
     fun onClicked(ch: Channel, catId: Int, chId: Int)
     fun onLongClicked(ch: Channel, catId: Int, chId: Int): Boolean
+    fun onFocusChanged(v: View, hasFocus: Boolean)
 }
 
 class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int, private val isFav: Boolean) :
@@ -48,11 +50,6 @@ class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int,
         viewHolder.itemChBinding.catId = catId
         viewHolder.itemChBinding.chId = position
         viewHolder.itemChBinding.clickListener = this
-        viewHolder.itemChBinding.btnPlay.apply {
-            setOnFocusChangeListener { v, hasFocus ->
-                v.startAnimation(hasFocus)
-            }
-        }
     }
 
     override fun getItemCount(): Int {
@@ -93,6 +90,10 @@ class ChannelAdapter (val channels: ArrayList<Channel>?, private val catId: Int,
         }
         fav.save()
         return true
+    }
+
+    override fun onFocusChanged(v: View, hasFocus: Boolean) {
+        v.startAnimation(hasFocus)
     }
 
     private fun sendBroadcast(isInserted: Boolean) {

@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:id="@+id/group_1">
+
+        <item
+            android:id="@+id/mode_back"
+            android:title="@string/screen_size"
+            android:icon="@drawable/ic_clear"/>
+    </group>
+    <group
+        android:id="@+id/group_2"
+        android:checkableBehavior="single">
+
     <item
         android:id="@+id/mode_fit"
         android:title="@string/mode_fit" />
@@ -15,4 +27,6 @@
     <item
         android:id="@+id/mode_zoom"
         android:title="@string/mode_zoom" />
+    </group>
+
 </menu>

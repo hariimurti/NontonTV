@@ -42,6 +42,8 @@ import net.harimurti.tv.model.Playlist
 import java.net.URLDecoder
 import java.util.*
 import kotlin.math.ceil
+import com.google.android.exoplayer2.PlaybackParameters
+import com.google.android.exoplayer2.C
 
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
@@ -158,7 +160,7 @@ class PlayerActivity : AppCompatActivity() {
         bindingControl.buttonRewind.setOnClickListener { player?.seekBack() }
         bindingControl.buttonForward.setOnClickListener { player?.seekForward() }
         bindingControl.buttonNext.setOnClickListener { switchChannel(CHANNEL_NEXT) }
-        bindingControl.screenMode.setOnClickListener { showScreenMenu(it) }
+        bindingControl.screenMode.setOnClickListener { showMenu(it) }
         bindingControl.trackSelection.setOnClickListener { showTrackSelector() }
         bindingControl.buttonLock.apply {
             visibility = if (isTelevision) View.GONE else View.VISIBLE
@@ -178,7 +180,7 @@ class PlayerActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun doubleTapLeft(clicks: Int) {
-        if(player?.isCurrentWindowSeekable == true) {
+        if(player?.isCurrentWindowLive == false) {
             bindingRoot.seekBack.text = "- ${timeToString((clicks * 10).toDouble())}"
             bindingRoot.seekBack.alpha = 1f
             val seekAnimation = AlphaAnimation(0f, 1f)
@@ -189,7 +191,7 @@ class PlayerActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun doubleTapRight(clicks: Int) {
-        if(player?.isCurrentWindowSeekable == true) {
+        if(player?.isCurrentWindowLive == false) {
             bindingRoot.seekForward.text = "+ ${timeToString((clicks * 10).toDouble())}"
             bindingRoot.seekForward.alpha = 1f
             val seekAnimation = AlphaAnimation(0f, 1f)
@@ -199,15 +201,14 @@ class PlayerActivity : AppCompatActivity() {
     }
 
     private fun doubleTapFinish(clicks: Int, isLeft:Boolean) {
-        if(player?.isCurrentWindowSeekable == true) {
+        if(player?.isCurrentWindowLive == false) {
             val click = if (isLeft) clicks * -1 else clicks
-            seekTime((click * 10000).toLong())
-
             val seekAnimation = AlphaAnimation(1f, 0f)
-            seekAnimation.duration = 2000
+            seekAnimation.duration = 1800
             seekAnimation.fillAfter = true
             if (isLeft) bindingRoot.seekBack.startAnimation(seekAnimation)
             else bindingRoot.seekForward.startAnimation(seekAnimation)
+            seekTime((click * 10000).toLong())
         }
     }
 
@@ -391,6 +392,7 @@ class PlayerActivity : AppCompatActivity() {
         player?.playWhenReady = true
         player?.setMediaItem(mediaItem)
         player?.prepare()
+        player?.playbackParameters = PlaybackParameters(preferences.speedMode)
     }
 
     private fun switchChannel(mode: Int): Boolean {
@@ -572,30 +574,123 @@ class PlayerActivity : AppCompatActivity() {
         return true
     }
 
+    private fun showMenu(view: View) {
+        PopupMenu(this, view).apply {
+            inflate(R.menu.setting_mode)
+            setOnMenuItemClickListener { m: MenuItem ->
+                when(m.itemId) {
+                    R.id.speed_mode -> showSpeedMenu(view)
+                    else -> showScreenMenu(view)
+                }
+                true
+            }
+            show()
+        }
+    }
+
     private fun showScreenMenu(view: View) {
         val timeout = bindingRoot.playerView.controllerShowTimeoutMs
         bindingRoot.playerView.controllerShowTimeoutMs = 0
-        PopupMenu(this, view).apply {
+        val popupMenu = PopupMenu(this, view).apply {
             inflate(R.menu.screen_resize_mode)
             setOnMenuItemClickListener { m: MenuItem ->
                 val mode = when(m.itemId) {
+                    R.id.mode_fit -> 0
                     R.id.mode_fixed_width -> 1
                     R.id.mode_fixed_height -> 2
                     R.id.mode_fill -> 3
                     R.id.mode_zoom -> 4
-                    else -> 0
+                    else -> 5
                 }
-                if (bindingRoot.playerView.resizeMode != mode) {
+                if (bindingRoot.playerView.resizeMode != mode && mode != 5) {
                     bindingRoot.playerView.resizeMode = mode
                     preferences.resizeMode = mode
                 }
+                if(m.itemId == R.id.mode_back) showMenu(view) else showScreenMenu(view)
                 true
+            }
+            //set check preference
+            when(preferences.resizeMode) {
+                0 -> menu.findItem(R.id.mode_fit).isChecked = true
+                1 -> menu.findItem(R.id.mode_fixed_width).isChecked = true
+                2 -> menu.findItem(R.id.mode_fixed_height).isChecked = true
+                3 -> menu.findItem(R.id.mode_fill).isChecked = true
+                4 -> menu.findItem(R.id.mode_zoom).isChecked = true
             }
             setOnDismissListener {
                 bindingRoot.playerView.controllerShowTimeoutMs = timeout
             }
-            show()
         }
+        //force show icon
+        try {
+            val popup = PopupMenu::class.java.getDeclaredField("mPopup")
+            popup.isAccessible = true
+            val menu = popup.get(popupMenu)
+            menu.javaClass
+                .getDeclaredMethod("setForceShowIcon",Boolean::class.java)
+                .invoke(menu,true)
+        }catch (e:Exception){
+            e.printStackTrace()
+        } finally {
+            popupMenu.show()
+        }
+    }
+
+    private fun showSpeedMenu(view: View) {
+        val timeout = bindingRoot.playerView.controllerShowTimeoutMs
+        bindingRoot.playerView.controllerShowTimeoutMs = 0
+        val popupMenu = PopupMenu(this, view).apply {
+            inflate(R.menu.playback_speed_mode)
+            setOnMenuItemClickListener { m: MenuItem ->
+                val speed = when(m.itemId) {
+                    R.id.speed_0_25 -> 0.25F
+                    R.id.speed_0_50 -> 0.5F
+                    R.id.speed_0_75 -> 0.75F
+                    R.id.speed_1_00 -> 1F
+                    R.id.speed_1_25 -> 1.25F
+                    R.id.speed_1_50 -> 1.5F
+                    R.id.speed_1_75 -> 1.75F
+                    R.id.speed_2_00 -> 2F
+                    else -> 0F
+                }
+                if(preferences.speedMode != speed && speed != 0F) {
+                    player?.playbackParameters = PlaybackParameters(speed)
+                    preferences.speedMode = speed
+                    showSpeedMenu(view)
+                }
+
+                if(m.itemId == R.id.speed_back) showMenu(view)// else showSpeedMenu(view)
+                true
+            }
+            //set check preference
+            when(preferences.speedMode) {
+                0.25F -> menu.findItem(R.id.speed_0_25).isChecked = true
+                0.5F -> menu.findItem(R.id.speed_0_50).isChecked = true
+                0.75F -> menu.findItem(R.id.speed_0_75).isChecked = true
+                1F -> menu.findItem(R.id.speed_1_00).isChecked = true
+                1.25F -> menu.findItem(R.id.speed_1_25).isChecked = true
+                1.5F -> menu.findItem(R.id.speed_1_50).isChecked = true
+                1.75F -> menu.findItem(R.id.speed_1_75).isChecked = true
+                2F -> menu.findItem(R.id.speed_2_00).isChecked = true
+            }
+            setOnDismissListener {
+                bindingRoot.playerView.controllerShowTimeoutMs = timeout
+            }
+        }
+        //force show icon
+        try {
+            val popup = PopupMenu::class.java.getDeclaredField("mPopup")
+            popup.isAccessible = true
+            val menu = popup.get(popupMenu)
+            menu.javaClass
+                .getDeclaredMethod("setForceShowIcon",Boolean::class.java)
+                .invoke(menu,true)
+        }catch (e:Exception){
+            e.printStackTrace()
+        } finally {
+            popupMenu.show()
+        }
+
     }
 
     override fun onResume() {
