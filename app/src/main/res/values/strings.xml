@@ -47,7 +47,7 @@
     <string name="playlist_cant_be_parsed">Playlist doesn\'t exist, can\'t be parsed?</string>
     <string name="btn_next_channel">Next Channel</string>
     <string name="player_error_message">Code : %s\nCodeName : %s\nError Message : %s</string>
-    <string name="device_not_support_widevine">Your device does not support DRM Widevine!</string>
+    <string name="device_not_support_drm">Your device does not support DRM %s!</string>
     <string name="favorite_channel">Favorite Channel</string>
     <string name="removed_from_favorite">%s has been removed from Favorite</string>
     <string name="added_into_favorite">%s has been added into Favorite</string>

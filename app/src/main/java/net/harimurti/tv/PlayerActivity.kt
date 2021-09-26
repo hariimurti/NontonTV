@@ -290,10 +290,12 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun isDeviceSupportDrm(widevine: Boolean): Boolean {
         val uuid = if (widevine) C.WIDEVINE_UUID else C.CLEARKEY_UUID
+        val message = String.format(getString(R.string.device_not_support_drm),
+            if (widevine) "Widevine" else "ClearKey")
         if (MediaDrm.isCryptoSchemeSupported(uuid)) return true
         AlertDialog.Builder(this).apply {
             setTitle(R.string.player_playback_error)
-            setMessage(R.string.device_not_support_widevine)
+            setMessage(message)
             setCancelable(false)
             setPositiveButton(getString(R.string.btn_next_channel)) { _,_ -> switchChannel(CHANNEL_NEXT) }
             setNegativeButton(R.string.btn_close) { _,_ -> finish() }

@@ -36,7 +36,7 @@
     <string name="playlist_cant_be_parsed">Playlist tidak ada, tidak bisa diuraikan?</string>
     <string name="btn_next_channel">Saluran Berikutnya</string>
     <string name="player_error_message">Kode : %s\nNamaKode : %s\nPesan Error : %s</string>
-    <string name="device_not_support_widevine">Perangkat anda tidak mendukung DRM Widevine!</string>
+    <string name="device_not_support_drm">Perangkat anda tidak mendukung DRM %s!</string>
     <string name="favorite_channel">Saluran Favorit</string>
     <string name="removed_from_favorite">%s telah dihapus dari Favorit</string>
     <string name="added_into_favorite">%s telah ditambahkan ke Favorit</string>
