@@ -1,0 +1,55 @@
+{
+  "categories": [
+    {
+      "name": "Category 1",
+      "channels": [
+        {
+          "name": "Channel 1",
+          "stream_url": "https://.../ch1.m3u8"
+        }
+      ]
+    },
+    {
+      "name": "Category 2",
+      "channels": [
+        {
+          "name": "Channel 2",
+          "drm_id": "aaaaaa",
+          "stream_url": "https://.../ch2.mpd"
+        }
+      ]
+    },
+    {
+      "name": "Category 3",
+      "channels": [
+        {
+          "name": "Channel 3",
+          "drm_id": "bbbbbb",
+          "stream_url": "https://.../ch3.mpd"
+        },
+        {
+          "name": "Channel 4",
+          "drm_id": "cccccc",
+          "stream_url": "https://.../ch4.mpd"
+        }
+      ]
+    }
+  ],
+  "drm_licenses": [
+    {
+      "drm_id": "aaaaaa",
+      "drm_type": "clearkey",
+      "drm_key": "xxxxxxxxxx:xxxxxxxxxx"
+    },
+    {
+      "drm_id": "bbbbbb",
+      "drm_type": "widevine",
+      "drm_key": "https://..."
+    },
+    {
+      "drm_id": "cccccc",
+      "drm_type": "playready",
+      "drm_key": "https://..."
+    }
+  ]
+}
