@@ -319,25 +319,13 @@ class PlayerActivity : AppCompatActivity() {
 
         // split streamurl with referer, user-agent
         var streamUrl = current?.streamUrl?.decodeUrl()
-        var userAgent = streamUrl.findPattern(".*|user-agent=(.+?)(\\|.*)?")
-        val referer = streamUrl.findPattern(".*|referer=(.+?)(\\|.*)?")
+        val userAgent = streamUrl.findPattern(".*\\|user-agent=(.+?)(\\|.*)?") ?:
+                "NontonTV/${BuildConfig.VERSION_NAME} (Android ${Build.VERSION.RELEASE})"
+        val referer = streamUrl.findPattern(".*\\|referer=(.+?)(\\|.*)?")
 
         // clean streamurl & set mediaitem
         streamUrl = streamUrl.findPattern("(.+?)(\\|.*)?") ?: streamUrl
         val mediaItem = MediaItem.fromUri(Uri.parse(streamUrl))
-
-        // if null set User-Agent with existing resources
-        if (userAgent == null) {
-            val userAgents = listOf(*resources.getStringArray(R.array.user_agent))
-            userAgent = userAgents.firstOrNull {
-                current?.streamUrl?.contains(
-                    it.substring(0, it.indexOf("/")).lowercase(Locale.getDefault())
-                ) == true
-            }
-            if (userAgent.isNullOrEmpty()) {
-                userAgent = userAgents[Random().nextInt(userAgents.size)]
-            }
-        }
 
         // create factory
         val httpDataSourceFactory = DefaultHttpDataSource.Factory()
