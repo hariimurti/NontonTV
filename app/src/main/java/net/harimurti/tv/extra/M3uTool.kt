@@ -84,10 +84,10 @@ class M3uTool {
                     )
                 }
                 else {
-                    val lastIndex = category.channels?.indexOfLast { c -> c.name == chRaw.name } ?: -1
-                    if (lastIndex >= 0) {
-                        channel.name = "${chRaw.name} #${lastIndex + 1}"
-                    }
+                    val duplicate = category.channels?.count { c ->
+                        c.name?.substringBefore(" #") == chRaw.name
+                    } ?: 0
+                    if (duplicate > 0) channel.name = "${chRaw.name} #${duplicate}"
                     category.channels?.add(channel)
                 }
             }
