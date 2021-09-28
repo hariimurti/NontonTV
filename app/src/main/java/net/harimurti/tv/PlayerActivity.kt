@@ -317,28 +317,25 @@ class PlayerActivity : AppCompatActivity() {
         bindingRoot.categoryName.text = category?.name?.trim()
         bindingRoot.channelName.text = current?.name?.trim()
 
-        // split streamurl with referer, user-agent
-        var streamUrl = current?.streamUrl?.decodeUrl()
-        val userAgent = streamUrl.findPattern(".*\\|user-agent=(.+?)(\\|.*)?") ?:
-                "NontonTV/${BuildConfig.VERSION_NAME} (Android ${Build.VERSION.RELEASE})"
-        val referer = streamUrl.findPattern(".*\\|referer=(.+?)(\\|.*)?")
-
-        // clean streamurl & set mediaitem
-        streamUrl = streamUrl.findPattern("(.+?)(\\|.*)?") ?: streamUrl
+        // create mediaitem
+        val userAgent = current?.userAgent ?: "NontonTV/${BuildConfig.VERSION_NAME} (Android ${Build.VERSION.RELEASE})"
+        val referer = current?.referer.toString()
+        val streamUrl = current?.streamUrl?.decodeUrl()
         val mediaItem = MediaItem.fromUri(Uri.parse(streamUrl))
 
-        // create factory
+        // create some factory
         val httpDataSourceFactory = DefaultHttpDataSource.Factory()
             .setAllowCrossProtocolRedirects(true)
             .setUserAgent(userAgent)
-        if (referer != null) httpDataSourceFactory.setDefaultRequestProperties(mapOf(Pair("referer", referer)))
+        if (current?.referer != null)
+            httpDataSourceFactory.setDefaultRequestProperties(mapOf(Pair("referer", referer)))
         val dataSourceFactory = DefaultDataSourceFactory(this, httpDataSourceFactory)
         val mediaSourceFactory = DefaultMediaSourceFactory(dataSourceFactory)
-
-        // drm factory
         val drmLicense = Playlist.cached.drmLicenses.firstOrNull {
             current?.drmId?.equals(it.id) == true
         }
+        
+        // create mediaSource with/without drm factory
         if (drmLicense != null) {
             val uuid = drmLicense.type.toUUID()
             val drmCallback = if (uuid != C.CLEARKEY_UUID) HttpMediaDrmCallback(drmLicense.key, httpDataSourceFactory)

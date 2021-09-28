@@ -50,11 +50,9 @@ class M3uTool {
             }
             if (it.isStreamUrl()) {
                 chReset = true
-                chRaw.streamUrl = it.trim()
-                if (!chRaw.userAgent.isNullOrBlank())
-                    chRaw.streamUrl += "|user-agent=${chRaw.userAgent}"
-                if (!chRaw.referer.isNullOrBlank())
-                    chRaw.streamUrl += "|referer=${chRaw.referer}"
+                chRaw.streamUrl = it.findPattern("(.+?)(\\|.*)?")?.trim() ?: it.trim()
+                chRaw.userAgent = chRaw.userAgent ?: it.findPattern(".*\\|user-agent=(.+?)(\\|.*)?")
+                chRaw.referer = chRaw.referer ?: it.findPattern(".*\\|referer=(.+?)(\\|.*)?")
 
                 val drmId = chRaw.drmKey?.toCRC32()
                 val drmIsExist = result.drmLicenses.firstOrNull { d -> d.id == drmId } != null
@@ -72,6 +70,8 @@ class M3uTool {
                     logoUrl = chRaw.logoUrl
                     streamUrl = chRaw.streamUrl
                     this.drmId = drmId
+                    userAgent = chRaw.userAgent
+                    referer = chRaw.referer
                 }
                 val catName = chRaw.group.normalize()
                 val category = result.categories.firstOrNull { c -> c.name == catName }
