@@ -1,0 +1,45 @@
+#EXTM3U
+
+#EXTINF:-1 group-title="Sample Basic",Channel Basic
+https://.../basic.m3u8
+
+#EXTINF:-1 group-title="Sample Basic",Channel Double
+https://.../double.m3u8
+https://.../double-hash-one.m3u8
+
+#EXTINF:-1 group-title="Sample with DRM",Channel ClearKey
+#KODIPROP:inputstream.adaptive.license_type=clearkey
+#KODIPROP:inputstream.adaptive.license_key=AAAABBBB:00001111
+https://.../clearkey.mpd
+
+#KODIPROP:inputstream.adaptive.license_type=com.widevine.alpha
+#KODIPROP:inputstream.adaptive.license_key=https://...
+#EXTINF:-1 group-title="Sample with DRM",Channel Widevine
+https://.../widevine.mpd
+
+#EXTINF:-1 group-title="Sample with DRM",Channel PlayReady
+#KODIPROP:inputstream.adaptive.license_type=com.microsoft.playready
+#KODIPROP:inputstream.adaptive.license_key=https://...
+https://.../playready.mpd
+
+#EXTINF:-1 group-title="Sample with UA+Referer",Channel /w UserAgent
+#EXTVLCOPT:http-user-agent=VLCPlayer (Android 12)
+https://.../useragent.m3u8
+
+#EXTINF:-1 group-title="Sample with UA+Referer",Channel /w UserAgent #1
+https://.../sample.m3u8|user-agent=VLCPlayer (Android 12)
+
+#EXTINF:-1 group-title="Sample with UA+Referer",Channel /w Referer
+#EXTVLCOPT:http-referrer=https://...
+https://.../referer.m3u8
+
+#EXTINF:-1 group-title="Sample with UA+Referer",Channel /w Referer #1
+https://.../sample.m3u8|referer=https://...
+
+#EXTINF:-1 group-title="Sample with UA+Referer",Channel /w UA+Referer
+#EXTVLCOPT:http-user-agent=VLCPlayer (Android 12)
+#EXTVLCOPT:http-referrer=https://...
+https://.../ua-referer.m3u8
+
+#EXTINF:-1 group-title="Sample with UA+Referer",Channel /w UA+Referer #1
+https://.../sample.m3u8|user-agent=VLCPlayer (Android 12)|referer=https://...

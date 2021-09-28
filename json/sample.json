@@ -1,53 +1,69 @@
 {
   "categories": [
     {
-      "name": "Category 1",
+      "name": "Sample Basic",
       "channels": [
         {
-          "name": "Channel 1",
-          "stream_url": "https://.../ch1.m3u8"
+          "name": "Channel Basic",
+          "stream_url": "https://.../basic.m3u8"
         }
       ]
     },
     {
-      "name": "Category 2",
+      "name": "Sample with DRM",
       "channels": [
         {
-          "name": "Channel 2",
-          "drm_id": "aaaaaa",
-          "stream_url": "https://.../ch2.mpd"
-        }
-      ]
-    },
-    {
-      "name": "Category 3",
-      "channels": [
-        {
-          "name": "Channel 3",
-          "drm_id": "bbbbbb",
-          "stream_url": "https://.../ch3.mpd"
+          "name": "Channel ClearKey",
+          "drm_id": "drm_ck",
+          "stream_url": "https://.../clearkey.mpd"
         },
         {
-          "name": "Channel 4",
-          "drm_id": "cccccc",
-          "stream_url": "https://.../ch4.mpd"
+          "name": "Channel Widevine",
+          "drm_id": "drm_wv",
+          "stream_url": "https://.../widevine.mpd"
+        },
+        {
+          "name": "Channel PlayReady",
+          "drm_id": "drm_pr",
+          "stream_url": "https://.../playready.mpd"
+        }
+      ]
+    },
+    {
+      "name": "Sample with UserAgent & Referer",
+      "channels": [
+        {
+          "name": "Channel /w UserAgent",
+          "stream_url": "https://.../useragent.m3u8",
+          "user_agent": "VLCPlayer (Android 12)"
+        },
+        {
+          "name": "Channel /w Referer",
+          "stream_url": "https://.../referer.m3u8",
+          "referer": "https://..."
+        },
+        {
+          "name": "Channel /w UA+Referer",
+          "stream_url": "https://.../ua-referer.m3u8",
+          "user_agent": "VLCPlayer (Android 12)",
+          "referer": "https://..."
         }
       ]
     }
   ],
   "drm_licenses": [
     {
-      "drm_id": "aaaaaa",
+      "drm_id": "drm_ck",
       "drm_type": "clearkey",
-      "drm_key": "xxxxxxxxxx:xxxxxxxxxx"
+      "drm_key": "AAAABBBB:00001111"
     },
     {
-      "drm_id": "bbbbbb",
+      "drm_id": "drm_wv",
       "drm_type": "widevine",
       "drm_key": "https://..."
     },
     {
-      "drm_id": "cccccc",
+      "drm_id": "drm_pr",
       "drm_type": "playready",
       "drm_key": "https://..."
     }
