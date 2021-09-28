@@ -3,6 +3,7 @@ package net.harimurti.tv.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -47,6 +48,21 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) :
         viewHolder.itemCatBinding.chAdapter = ChannelAdapter(category?.channels, position, isFav)
         viewHolder.itemCatBinding.rvChannels.layoutManager =
                 StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.HORIZONTAL)
+
+        val dm = context.resources.displayMetrics
+        val dp = (dm.density + 0.5f).toInt()
+        val maxWidth = dm.widthPixels * dp
+        val marginEnd = 200 * dp
+        val wrapContent = LinearLayout.LayoutParams.WRAP_CONTENT
+        if (position == 0) {
+            viewHolder.itemCatBinding.textCategory.layoutParams =
+                LinearLayout.LayoutParams(wrapContent, wrapContent).apply {
+                    setMargins(0, 0, marginEnd, 0)
+                }
+        }
+        else {
+            viewHolder.itemCatBinding.textCategory.maxWidth = maxWidth
+        }
 
         viewHolder.bind(category)
     }
