@@ -16,7 +16,7 @@ class Preferences {
     private val context = App.context
     private val preferences: SharedPreferences =
         PreferenceManager.getDefaultSharedPreferences(context)
-    private lateinit var editor: SharedPreferences.Editor
+    private val editor = preferences.edit()
 
     companion object {
         private const val FIRST_TIME = "FIRST_TIME"
@@ -40,7 +40,6 @@ class Preferences {
     var isFirstTime: Boolean
         get() = preferences.getBoolean(FIRST_TIME, true)
         set(value) {
-            editor = preferences.edit()
             editor.putBoolean(FIRST_TIME, value)
             editor.apply()
         }
@@ -48,7 +47,6 @@ class Preferences {
     var ignoredVersion: Int
         get() = preferences.getInt(IGNORED_VERSION, 0)
         set(value) {
-            editor = preferences.edit()
             editor.putInt(IGNORED_VERSION, value)
             editor.apply()
         }
@@ -56,7 +54,6 @@ class Preferences {
     var launchAtBoot: Boolean
         get() = preferences.getBoolean(LAUNCH_AT_BOOT, false)
         set(value) {
-            editor = preferences.edit()
             editor.putBoolean(LAUNCH_AT_BOOT, value)
             editor.apply()
         }
@@ -64,7 +61,6 @@ class Preferences {
     var playLastWatched: Boolean
         get() = preferences.getBoolean(OPEN_LAST_WATCHED, false)
         set(value) {
-            editor = preferences.edit()
             editor.putBoolean(OPEN_LAST_WATCHED, value)
             editor.apply()
         }
@@ -72,7 +68,6 @@ class Preferences {
     var sortFavorite: Boolean
         get() = preferences.getBoolean(SORT_FAVORITE, false)
         set(value) {
-            editor = preferences.edit()
             editor.putBoolean(SORT_FAVORITE, value)
             editor.apply()
         }
@@ -80,7 +75,6 @@ class Preferences {
     var sortCategory: Boolean
         get() = preferences.getBoolean(SORT_CATEGORY, false)
         set(value) {
-            editor = preferences.edit()
             editor.putBoolean(SORT_CATEGORY, value)
             editor.apply()
         }
@@ -88,7 +82,6 @@ class Preferences {
     var sortChannel: Boolean
         get() = preferences.getBoolean(SORT_CHANNEL, true)
         set(value) {
-            editor = preferences.edit()
             editor.putBoolean(SORT_CHANNEL, value)
             editor.apply()
         }
@@ -97,7 +90,6 @@ class Preferences {
         get() = Gson().fromJson(preferences.getString(LAST_WATCHED, "{}").toString(), PlayData::class.java)
         set(value) {
             val json = Gson().toJson(value)
-            editor = preferences.edit()
             editor.putString(LAST_WATCHED, json)
             editor.apply()
         }
@@ -105,7 +97,6 @@ class Preferences {
     var optimizePrebuffer: Boolean
         get() = preferences.getBoolean(OPTIMIZE_PREBUFFER, true)
         set(value) {
-            editor = preferences.edit()
             editor.putBoolean(OPTIMIZE_PREBUFFER, value)
             editor.apply()
         }
@@ -113,7 +104,6 @@ class Preferences {
     var reverseNavigation: Boolean
         get() = preferences.getBoolean(REVERSE_NAVIGATION, false)
         set(value) {
-            editor = preferences.edit()
             editor.putBoolean(REVERSE_NAVIGATION, value)
             editor.apply()
         }
@@ -121,7 +111,6 @@ class Preferences {
     var countryId: String
         get() = preferences.getString(COUNTRY_ID, "id").toString()
     set(value) {
-        editor = preferences.edit()
         editor.putString(COUNTRY_ID, value)
         editor.apply()
     }
@@ -134,8 +123,8 @@ class Preferences {
                 active = true
             }
             try {
-                val json = preferences.getString(SOURCES_PLAYLIST, "").toString()
-                if (json.isBlank()) throw Exception("no playlist sources in preference")
+                val json = preferences.getString(SOURCES_PLAYLIST, null)
+                if (json.isNullOrBlank()) throw Exception("no playlist sources in preference")
                 val list = Gson().fromJson(json, Array<Source>::class.java)
                 if (list == null || list.isEmpty()) throw Exception("cannot parse sources?")
                 list.first().path = default.path
@@ -155,7 +144,6 @@ class Preferences {
         }
         set(value) {
             val json = Gson().toJson(value)
-            editor = preferences.edit()
             editor.putString(SOURCES_PLAYLIST, json)
             editor.apply()
         }
@@ -163,7 +151,6 @@ class Preferences {
     var contributors: String?
         get() = preferences.getString(CONTRIBUTORS, context.getString(R.string.main_contributors))
         set(value) {
-            editor = preferences.edit()
             editor.putString(CONTRIBUTORS, value)
             editor.apply()
         }
@@ -171,7 +158,6 @@ class Preferences {
     var resizeMode: Int
         get() = preferences.getInt(RESIZE_MODE, 0)
         set(value) {
-            editor = preferences.edit()
             editor.putInt(RESIZE_MODE, value)
             editor.apply()
         }
@@ -179,7 +165,6 @@ class Preferences {
     var speedMode: Float
         get() = preferences.getFloat(SPEED_MODE, 1F)
         set(value) {
-            editor = preferences.edit()
             editor.putFloat(SPEED_MODE, value)
             editor.apply()
         }
@@ -187,7 +172,6 @@ class Preferences {
     var volume: Float
         get() = preferences.getFloat(VOLUME_CONTROL, 1F)
         set(value) {
-            editor = preferences.edit()
             editor.putFloat(VOLUME_CONTROL, value)
             editor.apply()
         }
