@@ -6,7 +6,6 @@ import android.app.PictureInPictureParams
 import android.content.*
 import android.content.pm.ActivityInfo
 import android.content.res.Configuration
-import android.media.MediaDrm
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -295,7 +294,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun isDeviceSupportDrm(type: String): Boolean {
         val message = String.format(getString(R.string.device_not_support_drm), type.uppercase())
-        if (MediaDrm.isCryptoSchemeSupported(type.toUUID())) return true
+        if (FrameworkMediaDrm.isCryptoSchemeSupported(type.toUUID())) return true
         AlertDialog.Builder(this).apply {
             setTitle(R.string.player_playback_error)
             setMessage(message)
@@ -336,7 +335,7 @@ class PlayerActivity : AppCompatActivity() {
         }
         
         // create mediaSource with/without drm factory
-        if (drmLicense != null) {
+        if (drmLicense != null && drmLicense.type.toUUID() != C.UUID_NIL) {
             val uuid = drmLicense.type.toUUID()
             val drmCallback = if (uuid != C.CLEARKEY_UUID) HttpMediaDrmCallback(drmLicense.key, httpDataSourceFactory)
                     else LocalMediaDrmCallback(drmLicense.key.toClearKey())
