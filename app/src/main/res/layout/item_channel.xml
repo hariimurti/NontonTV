@@ -32,7 +32,7 @@
             android:text="@{modelChannel.name}"
             android:onClick="@{() -> clickListener.onClicked(modelChannel, catId, chId)}"
             android:onLongClick="@{() -> clickListener.onLongClicked(modelChannel, catId, chId)}"
-            app:onFocusChangeListener="@{clickListener.onFocusChanged}"/>
+            app:onFocusChangeListener="@{clickListener::onFocusChanged}"/>
 
     </FrameLayout>
 </layout>

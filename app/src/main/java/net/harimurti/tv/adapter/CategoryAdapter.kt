@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import net.harimurti.tv.BR
 import net.harimurti.tv.R
 import net.harimurti.tv.databinding.ItemCategoryBinding
@@ -14,7 +13,6 @@ import net.harimurti.tv.extension.*
 import net.harimurti.tv.extra.Preferences
 import net.harimurti.tv.model.Category
 import net.harimurti.tv.model.Playlist
-import kotlin.math.round
 
 class CategoryAdapter (private val categories: ArrayList<Category>?) :
     RecyclerView.Adapter<CategoryAdapter.ViewHolder>() {
@@ -38,16 +36,10 @@ class CategoryAdapter (private val categories: ArrayList<Category>?) :
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         val category: Category? = categories?.get(position)
         val chCount = category?.channels?.size ?: 0
-        val spanCount = when {
-            chCount > 30 -> chCount.toDouble().div(20).let { round(it).toInt() }
-            chCount > 20 -> 2
-            else -> 1
-        }
-
         val isFav = category.isFavorite() && position == 0
-        viewHolder.itemCatBinding.chAdapter = ChannelAdapter(category?.channels, position, isFav)
-        viewHolder.itemCatBinding.rvChannels.layoutManager =
-                StaggeredGridLayoutManager(spanCount, StaggeredGridLayoutManager.HORIZONTAL)
+        viewHolder.itemCatBinding.chCount = chCount
+        viewHolder.itemCatBinding.position = position
+        viewHolder.itemCatBinding.isFav = isFav
 
         val dm = context.resources.displayMetrics
         val dp = (dm.density + 0.5f).toInt()
