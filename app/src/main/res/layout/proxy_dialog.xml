@@ -61,7 +61,7 @@
             android:layout_height="0dp"
             android:orientation="vertical"
             android:gravity="center"
-            app:layout_constraintWidth_percent="0.65"
+            app:layout_constraintWidth_percent="0.75"
             app:layout_constraintStart_toEndOf="@id/country"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"

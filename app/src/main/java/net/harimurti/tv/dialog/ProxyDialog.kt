@@ -113,7 +113,7 @@ class ProxyDialog : DialogFragment(), OnCountryClickedListener, OnProxyClickedLi
 
     private fun spanColumn(): Int {
         val screenWidthDp = resources.displayMetrics.widthPixels / resources.displayMetrics.density
-        return (screenWidthDp / 300 + 0.5).toInt()
+        return ((screenWidthDp * 0.75) / 300 + 0.5).toInt()
     }
 
     private fun refreshProxy(){
