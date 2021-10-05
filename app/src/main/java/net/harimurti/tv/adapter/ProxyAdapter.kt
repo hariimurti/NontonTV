@@ -23,7 +23,7 @@ class ProxyAdapter(private val proxies: ArrayList<ProxyData>) :
 
     lateinit var context: Context
     var listProxy: ArrayList<ProxyData> = ArrayList()
-    lateinit var mCallback: OnProxyClickedListener
+    private lateinit var mCallback: OnProxyClickedListener
 
     class ViewHolder(var itemBinding: ItemProxyBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
@@ -71,7 +71,10 @@ class ProxyAdapter(private val proxies: ArrayList<ProxyData>) :
                 } else {
                     val listPr: ArrayList<ProxyData> = ArrayList()
                     for (id in proxies.indices) {
-                        if (proxies[id].country.equals(constraint.toString(), true)) {
+                        if (proxies[id].country?.contains(constraint.toString(), true) == true) {
+                            listPr.add(proxies[id])
+                        }
+                        else if (proxies[id].isp?.contains(constraint.toString(), true) == true) {
                             listPr.add(proxies[id])
                         }
                     }

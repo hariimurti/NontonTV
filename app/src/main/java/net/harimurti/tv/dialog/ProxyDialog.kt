@@ -4,6 +4,8 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.content.res.AssetManager
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -67,6 +69,23 @@ class ProxyDialog : DialogFragment(), OnCountryClickedListener, OnProxyClickedLi
         val dialogView = binding.root
 
         setAdapter()
+
+        //edittext
+        binding.searchInput.apply {
+            addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+                override fun afterTextChanged(s: Editable) {
+                    proxyAdapter.filter.filter(s)
+                    binding.searchReset.visibility = if(s.isNotEmpty()) View.VISIBLE else View.GONE
+                }
+            })
+        }
+
+        //button cleartext
+        binding.searchReset.setOnClickListener {
+            binding.searchInput.text?.clear()
+        }
 
         //button Refresh
         binding.proxyRefresh.setOnClickListener {

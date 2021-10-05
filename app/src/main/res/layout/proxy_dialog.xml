@@ -14,16 +14,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/country"
+        <RelativeLayout
+            android:id="@+id/country_lay"
             android:layout_width="0dp"
             android:layout_height="0dp"
             app:layout_constraintWidth_percent="0.25"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/proxy_close">
+            app:layout_constraintBottom_toBottomOf="parent">
             <RelativeLayout
+                android:id="@+id/country"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/corner_right">
@@ -52,9 +53,18 @@
                 android:layout_height="match_parent"
                 app:layoutManager="LinearLayoutManager"
                 tools:listitem="@layout/item_country"
+                android:layout_below="@id/country"
+                android:layout_above="@id/proxy_close"
                 android:adapter="@{countryAdapter}"/>
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/proxy_close"
+                style="?android:attr/borderlessButtonStyle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:text="@string/btn_close" />
+        </RelativeLayout>
 
         <LinearLayout
             android:layout_width="0dp"
@@ -62,10 +72,54 @@
             android:orientation="vertical"
             android:gravity="center"
             app:layout_constraintWidth_percent="0.75"
-            app:layout_constraintStart_toEndOf="@id/country"
+            app:layout_constraintStart_toEndOf="@id/country_lay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/proxy_close">
+            app:layout_constraintBottom_toBottomOf="parent">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/search_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="30dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/search_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:lines="1"
+                    android:maxLines="1"
+                    android:imeOptions="flagNoFullscreen"
+                    android:inputType="text"
+                    android:paddingStart="38dp"
+                    android:paddingEnd="38dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/search_reset"
+                    style="@style/ImageButtonBase"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/ic_clear"
+                    app:layout_constraintBottom_toBottomOf="@+id/search_input"
+                    app:layout_constraintEnd_toEndOf="@+id/search_input"
+                    app:layout_constraintTop_toTopOf="@+id/search_input"
+                    android:visibility="gone"
+                    tools:ignore="ContentDescription" />
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    app:srcCompat="@drawable/ic_search"
+                    app:layout_constraintBottom_toBottomOf="@+id/search_input"
+                    app:layout_constraintStart_toStartOf="@+id/search_input"
+                    app:layout_constraintTop_toTopOf="@+id/search_input"
+                    tools:ignore="ContentDescription" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/proxy_list"
                 android:layout_width="wrap_content"
@@ -78,15 +132,6 @@
                 app:spanCount="2"
                 tools:itemCount="50"/>
         </LinearLayout>
-        <Button
-            android:id="@+id/proxy_close"
-            style="?android:attr/borderlessButtonStyle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:text="@string/btn_close" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
