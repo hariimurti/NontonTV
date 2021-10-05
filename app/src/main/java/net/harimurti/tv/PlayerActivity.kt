@@ -46,6 +46,9 @@ import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.C
 import com.google.android.exoplayer2.drm.*
 import com.google.android.exoplayer2.source.MediaSource
+import java.net.InetSocketAddress
+import java.net.Proxy
+import okhttp3.*
 
 class PlayerActivity : AppCompatActivity() {
     private var doubleBackToExitPressedOnce = false
@@ -323,9 +326,34 @@ class PlayerActivity : AppCompatActivity() {
         val mediaItem = MediaItem.fromUri(Uri.parse(streamUrl))
 
         // create some factory
-        val httpDataSourceFactory = DefaultHttpDataSource.Factory()
-            .setAllowCrossProtocolRedirects(true)
-            .setUserAgent(userAgent)
+        val httpDataSourceFactory =
+            if(preferences.useProxy) {
+                val proxies = preferences.proxy
+                val type = when (proxies.type) {
+                    "HTTP" -> Proxy.Type.HTTP
+                    else -> Proxy.Type.SOCKS
+                }
+                /*val proxyAuthenticator = Authenticator { _, response ->
+                    val credential: String =
+                        Credentials.basic("user", "password")
+                    response.request().newBuilder()
+                        .header("Proxy-Authorization", credential)
+                        .build()
+                }*/
+                val proxy = Proxy(type,InetSocketAddress(proxies.ip, proxies.port!!.toInt()))
+                val client = OkHttpClient.Builder()
+                    .proxy(proxy)
+                    //.callTimeout(5000,TimeUnit.MILLISECONDS)
+                    //.proxyAuthenticator(proxyAuthenticator)
+                    .build()
+                OkHttpDataSource.Factory(client)
+                    .setAllowCrossProtocolRedirects(true)
+                    .setUserAgent(userAgent)
+            }else{
+                DefaultHttpDataSource.Factory()
+                    .setAllowCrossProtocolRedirects(true)
+                    .setUserAgent(userAgent)
+            }
         if (current?.referer != null)
             httpDataSourceFactory.setDefaultRequestProperties(mapOf(Pair("referer", referer)))
         val dataSourceFactory = DefaultDataSourceFactory(this, httpDataSourceFactory)
