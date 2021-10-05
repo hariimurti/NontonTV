@@ -1,6 +1,7 @@
 package net.harimurti.tv.dialog
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.res.AssetManager
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -54,6 +55,7 @@ class ProxyDialog : DialogFragment(), OnCountryClickedListener, OnProxyClickedLi
         val dialog = AppCompatDialog(activity, R.style.ProxyDialogThemeOverlay)
         dialog.setCanceledOnTouchOutside(false)
 
+        Preferences().proxy = ProxyData()
         proxySources = Gson().fromJson(
             requireContext().assets.readAssetsFile("proxy_list.json"), ProxySource::class.java)
 
@@ -104,6 +106,11 @@ class ProxyDialog : DialogFragment(), OnCountryClickedListener, OnProxyClickedLi
         binding.countryAdapter = countryAdapter
         countryAdapter.setOnShareClickedListener(this)
 
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        super.onDismiss(dialog)
+        if(Preferences().proxy.ip.isNullOrEmpty()) Preferences().useProxy = false
     }
 
     override fun onDestroyView() {
