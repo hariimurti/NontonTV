@@ -76,7 +76,8 @@ class ProxyDialog : DialogFragment(), OnCountryClickedListener, OnProxyClickedLi
                 override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
                 override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
                 override fun afterTextChanged(s: Editable) {
-                    proxyAdapter.filter.filter(s)
+                    if(s.length > 2) proxyAdapter.filter.filter(s)
+                    else proxyAdapter.filter.filter("")
                     binding.searchReset.visibility = if(s.isNotEmpty()) View.VISIBLE else View.GONE
                 }
             })
@@ -85,6 +86,7 @@ class ProxyDialog : DialogFragment(), OnCountryClickedListener, OnProxyClickedLi
         //button cleartext
         binding.searchReset.setOnClickListener {
             binding.searchInput.text?.clear()
+            proxyAdapter.filter.filter("")
         }
 
         //button Refresh

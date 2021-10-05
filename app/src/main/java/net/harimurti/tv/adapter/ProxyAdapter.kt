@@ -71,8 +71,10 @@ class ProxyAdapter(private val proxies: ArrayList<ProxyData>) :
                 } else {
                     val listPr: ArrayList<ProxyData> = ArrayList()
                     for (id in proxies.indices) {
-                        if (proxies[id].country?.contains(constraint.toString(), true) == true) {
-                            listPr.add(proxies[id])
+                        if (constraint.length == 2) {
+                            if (proxies[id].country?.equals(constraint.toString(), true) == true) {
+                                listPr.add(proxies[id])
+                            }
                         }
                         else if (proxies[id].isp?.contains(constraint.toString(), true) == true) {
                             listPr.add(proxies[id])
