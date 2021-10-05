@@ -3,6 +3,7 @@ package net.harimurti.tv.adapter
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import net.harimurti.tv.BR
@@ -11,7 +12,7 @@ import net.harimurti.tv.databinding.ItemCountryBinding
 import net.harimurti.tv.model.ProxySource
 
 interface CountryClickListener {
-    fun onCountryClicked(countryCode: String)
+    fun onCountryClicked(countryCode: String,position: Int)
 }
 interface OnCountryClickedListener {
     fun onCountryClicked(countryCode: String?)
@@ -21,6 +22,7 @@ class CountryAdapter(private val country: ArrayList<ProxySource.Country>):
     RecyclerView.Adapter<CountryAdapter.ViewHolder>(), CountryClickListener {
     lateinit var context: Context
     private lateinit var mCallback: OnCountryClickedListener
+    private var lastClick = -1
 
     class ViewHolder(var itemBinding: ItemCountryBinding) :
         RecyclerView.ViewHolder(itemBinding.root) {
@@ -41,6 +43,9 @@ class CountryAdapter(private val country: ArrayList<ProxySource.Country>):
         val country = country[position]
         viewHolder.bind(country)
         viewHolder.itemBinding.clickListener = this
+        viewHolder.itemBinding.position = position
+        viewHolder.itemBinding.country.setBackgroundColor(
+            ContextCompat.getColor(context,if(lastClick == position) R.color.btn_focused else R.color.btn_default))
     }
 
     override fun getItemCount(): Int {
@@ -53,8 +58,11 @@ class CountryAdapter(private val country: ArrayList<ProxySource.Country>):
         notifyItemRangeRemoved(0, size)
     }
 
-    override fun onCountryClicked(countryCode: String) {
+    override fun onCountryClicked(countryCode: String,position: Int) {
         mCallback.onCountryClicked(countryCode)
+        notifyItemChanged(lastClick)
+        lastClick = position
+        notifyItemChanged(position)
     }
 
     fun setOnShareClickedListener(mCallback: OnCountryClickedListener) {
