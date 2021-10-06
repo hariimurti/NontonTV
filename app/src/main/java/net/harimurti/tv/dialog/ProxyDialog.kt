@@ -121,12 +121,17 @@ class ProxyDialog : DialogFragment(), OnCountryClickedListener, OnProxyClickedLi
         binding.proxyAdapter = proxyAdapter
         proxyAdapter.filter.filter("")
         binding.proxyList.layoutManager = GridLayoutManager(context, spanColumn())
-        proxyAdapter.setOnProxyClickedListener(this)
 
         countryAdapter = CountryAdapter(country)
         binding.countryAdapter = countryAdapter
-        countryAdapter.setOnShareClickedListener(this)
 
+        setShimmer(false)
+        proxyAdapter.setOnProxyClickedListener(this)
+        countryAdapter.setOnShareClickedListener(this)
+    }
+
+    private fun setShimmer(show: Boolean){
+        binding.showShimmer = show
     }
 
     override fun onDismiss(dialog: DialogInterface) {
@@ -145,6 +150,7 @@ class ProxyDialog : DialogFragment(), OnCountryClickedListener, OnProxyClickedLi
     }
 
     private fun refreshProxy(){
+        setShimmer(true)
         binding.proxyAdapter?.clear()
         binding.countryAdapter?.clear()
         val proxyListSet = ProxyList()

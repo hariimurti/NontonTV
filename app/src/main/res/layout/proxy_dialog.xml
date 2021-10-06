@@ -3,6 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <data>
+        <import type="android.view.View"/>
+        <variable
+            name="showShimmer"
+            type="boolean" />
         <variable
             name="proxyAdapter"
             type="net.harimurti.tv.adapter.ProxyAdapter" />
@@ -22,7 +26,8 @@
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{showShimmer ? View.GONE : View.VISIBLE }">
             <RelativeLayout
                 android:id="@+id/country"
                 android:layout_width="match_parent"
@@ -66,7 +71,7 @@
                 android:text="@string/btn_close" />
         </RelativeLayout>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:orientation="vertical"
@@ -75,7 +80,8 @@
             app:layout_constraintStart_toEndOf="@id/country_lay"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:visibility="@{showShimmer ? View.GONE : View.VISIBLE }">
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/search_layout"
@@ -120,10 +126,13 @@
                     tools:ignore="ContentDescription" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/proxy_list"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_below="@id/search_layout"
+                android:layout_centerHorizontal="true"
                 android:padding="@dimen/btn_channel_padding"
                 tools:listitem="@layout/item_proxy"
                 android:orientation="vertical"
@@ -131,7 +140,22 @@
                 android:adapter="@{proxyAdapter}"
                 app:spanCount="2"
                 tools:itemCount="50"/>
-        </LinearLayout>
+        </RelativeLayout>
+
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/loading"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerHorizontal="true"
+            app:shimmer_auto_start="true"
+            android:visibility="@{showShimmer ? View.VISIBLE : View.GONE }">
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:src="@mipmap/ic_banner"
+                tools:ignore="ContentDescription" />
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
