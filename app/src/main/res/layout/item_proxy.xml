@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="modelProxy"
+            type="net.harimurti.tv.model.ProxyData" />
+    </data>
+    <RelativeLayout
+        android:id="@+id/proxy"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:focusable="true"
+        android:clickable="true"
+        android:background="@drawable/button_channel"
+        android:padding="@dimen/btn_channel_padding">
+
+        <TextView
+            android:id="@+id/ip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:gravity="start|center"
+            tools:text="255.255.255.255:123456"
+            android:text="@{modelProxy.ip+':'+modelProxy.port+'/'+modelProxy.response}"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ip"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:gravity="start|center"
+            tools:text="DUMMY ISP WITH LONG NAME IN IT"
+            android:text="@{modelProxy.country+'/'+modelProxy.isp}"/>
+
+    </RelativeLayout>
+</layout>

@@ -26,6 +26,10 @@
         <item name="android:windowSoftInputMode">adjustPan</item>
     </style>
 
+    <style name="ProxyDialogThemeOverlay" parent="ThemeOverlay.AppCompat.Dialog.Alert">
+        <item name="windowNoTitle">true</item>
+    </style>
+
     <style name="ImageButtonBase" parent="Widget.AppCompat.ImageButton">
         <item name="android:background">@drawable/button_rounded_background</item>
         <item name="android:focusable">true</item>
