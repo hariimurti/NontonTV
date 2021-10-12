@@ -337,7 +337,7 @@ class PlayerActivity : AppCompatActivity() {
         // create mediaSource with/without drm factory
         if (drmLicense != null && drmLicense.type.toUUID() != C.UUID_NIL) {
             val uuid = drmLicense.type.toUUID()
-            val drmCallback = if (uuid != C.CLEARKEY_UUID) HttpMediaDrmCallback(drmLicense.key, httpDataSourceFactory)
+            val drmCallback = if (drmLicense.key.isLinkUrl()) HttpMediaDrmCallback(drmLicense.key, httpDataSourceFactory)
                     else LocalMediaDrmCallback(drmLicense.key.toClearKey())
             val drmSessionManager = DefaultDrmSessionManager.Builder()
                     .setUuidAndExoMediaDrmProvider(uuid, FrameworkMediaDrm.DEFAULT_PROVIDER)
