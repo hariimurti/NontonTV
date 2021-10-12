@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import net.harimurti.tv.databinding.SettingAppFragmentBinding
-import net.harimurti.tv.extra.Preferences
 
 class SettingAppFragment : Fragment() {
     companion object {
@@ -71,15 +70,6 @@ class SettingAppFragment : Fragment() {
             isChecked = reverseNavigation
             setOnClickListener {
                 reverseNavigation = isChecked
-            }
-        }
-
-        binding.useProxy.apply {
-            isChecked = Preferences().useProxy
-            setOnClickListener {
-                Preferences().useProxy = isChecked
-                if(this.isChecked)
-                ProxyDialog().show(childFragmentManager.beginTransaction(),null)
             }
         }
 

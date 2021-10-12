@@ -138,15 +138,6 @@
                 android:layout_marginEnd="@dimen/setting_switch_margin"
                 android:minHeight="@dimen/setting_switch_min_height"
                 android:text="@string/reverse_player_navigation" />
-
-            <androidx.appcompat.widget.SwitchCompat
-                android:id="@+id/use_proxy"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/setting_switch_margin"
-                android:layout_marginEnd="@dimen/setting_switch_margin"
-                android:minHeight="@dimen/setting_switch_min_height"
-                android:text="@string/use_proxy" />
             
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

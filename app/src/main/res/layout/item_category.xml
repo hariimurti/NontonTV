@@ -4,15 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
         <variable
-            name="chCount"
-            type="int" />
-        <variable
-            name="position"
-            type="int" />
-        <variable
-            name="isFav"
-            type="boolean" />
-        <variable
             name="catModel"
             type="net.harimurti.tv.model.Category" />
 
@@ -51,14 +42,10 @@
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/cat_layout_padding_bottom"
             android:orientation="horizontal"
-            tools:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
-            tools:spanCount="2"
+            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+            app:spanCount="2"
             tools:listitem="@layout/item_channel"
-            android:adapter="@{chAdapter}"
-            app:spanCountBind="@{chCount}"
-            app:channels="@{catModel.channels}"
-            app:position="@{position}"
-            app:isFav="@{isFav}"/>
+            android:adapter="@{chAdapter}"/>
 
     </LinearLayout>
 </layout>

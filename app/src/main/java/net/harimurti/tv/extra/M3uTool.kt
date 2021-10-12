@@ -87,7 +87,7 @@ class M3uTool {
                     val duplicate = category.channels?.count { c ->
                         c.name?.substringBefore(" #") == chRaw.name
                     } ?: 0
-                    if (duplicate > 0) channel.name = "${chRaw.name.normalize()} #${duplicate}"
+                    if (duplicate > 0) channel.name = "${chRaw.name} #${duplicate}"
                     category.channels?.add(channel)
                 }
             }

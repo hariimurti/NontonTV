@@ -7,7 +7,8 @@ import net.harimurti.tv.App
 import net.harimurti.tv.R
 import net.harimurti.tv.extension.isLinkUrl
 import net.harimurti.tv.extension.isPathExist
-import net.harimurti.tv.model.*
+import net.harimurti.tv.model.PlayData
+import net.harimurti.tv.model.Source
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -34,9 +35,6 @@ class Preferences {
         private const val VOLUME_CONTROL = "VOLUME_CONTROL"
         private const val SOURCES_PLAYLIST = "SOURCES_PLAYLIST"
         private const val COUNTRY_ID = "COUNTRY_ID"
-        private const val USE_PROXY = "USE_PROXY"
-        private const val PROXY_LIST = "PROXY_LIST"
-        private const val PROXY_DATA = "PROXY_DATA"
     }
 
     var isFirstTime: Boolean
@@ -175,42 +173,6 @@ class Preferences {
         get() = preferences.getFloat(VOLUME_CONTROL, 1F)
         set(value) {
             editor.putFloat(VOLUME_CONTROL, value)
-            editor.apply()
-        }
-
-    var useProxy: Boolean
-        get() = preferences.getBoolean(USE_PROXY, false)
-        set(value) {
-            editor.putBoolean(USE_PROXY, value)
-            editor.apply()
-        }
-
-    var proxies: ArrayList<ProxyData>?
-        get() {
-            val result = ArrayList<ProxyData>()
-            try {
-                val json = preferences.getString(PROXY_LIST, null)
-                val list = Gson().fromJson(json, Array<ProxyData>::class.java)
-                list.forEach {
-                    result.add(it)
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
-
-            return result
-        }
-        set(value) {
-            val json = Gson().toJson(value)
-            editor.putString(PROXY_LIST, json)
-            editor.apply()
-        }
-
-    var proxy: ProxyData
-        get() = Gson().fromJson(preferences.getString(PROXY_DATA, "{}").toString(), ProxyData::class.java)
-        set(value) {
-            val json = Gson().toJson(value)
-            editor.putString(PROXY_DATA, json)
             editor.apply()
         }
 }

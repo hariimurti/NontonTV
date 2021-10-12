@@ -73,7 +73,6 @@
     <string name="player">Pemutar</string>
     <string name="optimize_prebuffer">Mengoptimalkan Prebuffer</string>
     <string name="reverse_player_navigation">Navigasi DPAD Terbalik</string>
-    <string name="use_proxy">Pakai Proxy</string>
     <string name="tab_about">Tentang</string>
     <string name="tab_sources">Daftar Putar</string>
     <string name="tab_app">Aplikasi</string>
@@ -85,5 +84,4 @@
     <string name="link_copied_to_clipboard">Tautan disalin ke papan klip!</string>
     <string name="warning_none_source_active">Tidak ada sumber yang aktif, default akan diaktifkan!</string>
     <string name="more_information">Informasi Lain :</string>
-    <string name="select_country">Pilih Negara</string>
 </resources>
