@@ -16,7 +16,7 @@ fun String?.isLinkUrl(): Boolean {
 
 fun String?.isStreamUrl(): Boolean {
     if (this == null) return false
-    return Regex("^(?:https?|rtmp)://(?:[\\w.-]+\\.[a-zA-Z]{2,6}|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})(?::\\d+)?(?:/.*)?\$")
+    return Regex("^(?:https?|rt[m|s]?p)://(?:[\\w.-]+\\.[a-zA-Z]{2,6}|\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3})(?::\\d+)?(?:/.*)?\$")
         .matches(this)
 }
 
