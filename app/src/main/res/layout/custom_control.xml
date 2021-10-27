@@ -79,17 +79,17 @@
             tools:visibility="visible"/>
 
         <ImageButton
-            android:id="@+id/screen_mode"
+            android:id="@+id/track_selection"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/track_selection"
-            app:srcCompat="@drawable/ic_settings"
+            app:layout_constraintEnd_toStartOf="@id/screen_mode"
+            app:srcCompat="@drawable/ic_track_selector"
             style="@style/ImageButtonControl" />
 
         <ImageButton
-            android:id="@+id/track_selection"
+            android:id="@+id/screen_mode"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/button_lock"
-            app:srcCompat="@drawable/ic_track_selector"
+            app:srcCompat="@drawable/ic_settings"
             style="@style/ImageButtonControl" />
 
         <ImageButton
