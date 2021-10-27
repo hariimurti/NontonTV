@@ -333,7 +333,7 @@ class PlayerActivity : AppCompatActivity() {
         val drmLicense = Playlist.cached.drmLicenses.firstOrNull {
             current?.drmId?.equals(it.id) == true
         }
-        
+
         // create mediaSource with/without drm factory
         if (drmLicense != null && drmLicense.type.toUUID() != C.UUID_NIL) {
             val uuid = drmLicense.type.toUUID()
@@ -496,6 +496,7 @@ class PlayerActivity : AppCompatActivity() {
         }
 
         override fun onPlayerError(error: PlaybackException) {
+            if (player?.playWhenReady == false) return
             // if error more than 5 times, then show message dialog
             if (errorCounter < 5 && network.isConnected()) {
                 errorCounter++
