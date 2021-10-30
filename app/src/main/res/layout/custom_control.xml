@@ -73,7 +73,7 @@
             android:focusable="false"
             android:visibility="gone"
             app:layout_constraintStart_toEndOf="@id/layout_control"
-            app:layout_constraintEnd_toStartOf="@id/screen_mode"
+            app:layout_constraintEnd_toStartOf="@id/track_selection"
             app:layout_constraintBottom_toBottomOf="parent"
             style="@style/ImageButtonControl"
             tools:visibility="visible"/>
