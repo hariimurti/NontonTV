@@ -3,10 +3,9 @@
 Nonton siaran televisi dimana aja dan kapan aja, asalkan kuota banyak & internet kenceng. Cocok untuk dipasang ke android stb/box. Aplikasi bisa diunduh [disini](https://github.com/hariimurti/NontonTV/releases).
 
 
-## Peringatan Keras
-**DILARANG MEMPERJUAL-BELIKAN APLIKASI INI!!!**
-
-**HARAP MENCANTUMKAN CREDIT, BILA MANA ANDA MAU MENGEDIT/MEMPUBLISH APLIKASI INI DENGAN NAMA LAIN!!!**
+# PERINGATAN & LARANGAN
+# DILARANG MEMPERJUAL-BELIKAN SOURCE-CODE/APLIKASI INI!!!
+# HARAP MENCANTUMKAN CREDIT, BILA MANA ANDA MAU MENGEDIT/MEMPUBLISH APLIKASI INI DENGAN NAMA LAIN!!!
 
 
 ## Fitur
